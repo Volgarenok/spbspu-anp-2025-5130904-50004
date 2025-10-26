@@ -1,5 +1,5 @@
 #include <iostream>
-int main()\ //laba nomer 0
+int main()
 {
   std::cout << "em.maksim\n";
 }
