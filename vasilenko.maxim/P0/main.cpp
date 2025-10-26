@@ -1,5 +1,6 @@
 #include <iostream>
+
 int main()
 {
- std::cout << "vasilenko.maxim\n";
+  std::cout << "vasilenko.maxim\n";
 }
