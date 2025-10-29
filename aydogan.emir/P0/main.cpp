@@ -2,7 +2,7 @@
 
 int main()
 {
-  std::cout << "aydogan.emir"; 
+  std::cout << "aydogan.emir\n"; 
 }
 
 
