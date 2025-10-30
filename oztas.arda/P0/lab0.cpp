@@ -1,6 +1,8 @@
 #include <iostream>
-int main() {
-    std::cout << "oztas.arda" << std::endl;
-    return 0;
+
+int main()
+{
+    std::cout << "oztas.arda\n";
 }
+
 
