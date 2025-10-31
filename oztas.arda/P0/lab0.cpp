@@ -1,5 +1,5 @@
 #include <iostream>
 int main()
 {
-    std::cout << "oztas.arda\n";
+  std::cout << "oztas.arda\n";
 }
