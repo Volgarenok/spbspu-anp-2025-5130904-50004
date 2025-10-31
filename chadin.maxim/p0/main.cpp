@@ -1,6 +1,5 @@
 #include <iostream>
-
 int main()
 {
-	std::cout << "chadin.maxim\n";
+  std::cout << "chadin.maxim\n";
 }
