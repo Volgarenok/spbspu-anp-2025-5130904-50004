@@ -4,14 +4,12 @@ namespace ivanov {
     struct Dynamic {
         int rows, cols;
         int * matrix = reinterpret_cast< int * >(malloc(sizeof(int) * (rows * cols)));
-        int get_elem(int row, int col) const;
         void fllincwav();
         int maxsummdg() const;
     };
     struct Static {
         int rows, cols;
         int matrix[1000] = {};
-        int get_elem(int row, int col) const;
         void fllincwav();
         int maxsummdg() const;
     };
@@ -68,15 +66,8 @@ int main(int argc, char ** argv)
             output << d.matrix[i] << " ";
         }
         output << "\n" << d.maxsummdg() << "\n";
+        free(d.matrix);
     }
-}
-int ivanov::Static::get_elem(int row, int col) const
-{
-    return matrix[cols*row + col];
-}
-int ivanov::Dynamic::get_elem(int row, int col) const
-{
-    return matrix[cols*row + col];
 }
 void ivanov::Static::fllincwav()
 {
@@ -106,9 +97,69 @@ void ivanov::Dynamic::fllincwav()
 }
 int ivanov::Static::maxsummdg() const
 {
-
+    int ans = matrix[0];
+    int curr = 0;
+    for (int c = 1; c < cols - 1; ++c)
+    {
+        curr = 0;
+        for (int row = 0; row < c; ++row)
+        {
+            curr += matrix[cols*row + c - row];
+        }
+        if (curr > ans)
+        {
+            ans = curr;
+        }
+    }
+    for (int c = 1; c < cols - 1; ++c)
+    {
+        curr = 0;
+        for (int row = rows; row > rows - c; --row)
+        {
+            curr += matrix[cols*row + c - row];
+        }
+        if (curr > ans)
+        {
+            ans = curr;
+        }
+    }
+    if (matrix[cols*rows - 1] > ans)
+    {
+        ans = matrix[cols*rows - 1];
+    }
+    return ans;
 }
 int ivanov::Dynamic::maxsummdg() const
 {
-
+    int ans = matrix[0];
+    int curr = 0;
+    for (int c = 1; c < cols - 1; ++c)
+    {
+        curr = 0;
+        for (int row = 0; row < c; ++row)
+        {
+            curr += matrix[cols*row + c - row];
+        }
+        if (curr > ans)
+        {
+            ans = curr;
+        }
+    }
+    for (int c = 1; c < cols - 1; ++c)
+    {
+        curr = 0;
+        for (int row = rows; row > rows - c; --row)
+        {
+            curr += matrix[cols*row + c - row];
+        }
+        if (curr > ans)
+        {
+            ans = curr;
+        }
+    }
+    if (matrix[cols*rows - 1] > ans)
+    {
+        ans = matrix[cols*rows - 1];
+    }
+    return ans;
 }
