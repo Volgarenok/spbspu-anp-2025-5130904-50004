@@ -4,12 +4,14 @@ namespace ivanov {
     struct Dynamic {
         int rows, cols;
         int * matrix = reinterpret_cast< int * >(malloc(sizeof(int) * (rows * cols)));
+        int get_elem(int row, int col) const;
         void fllincwav();
         int maxsummdg() const;
     };
     struct Static {
         int rows, cols;
         int matrix[1000] = {};
+        int get_elem(int row, int col) const;
         void fllincwav();
         int maxsummdg() const;
     };
@@ -67,4 +69,28 @@ int main(int argc, char ** argv)
         }
         output << "\n" << d.maxsummdg() << "\n";
     }
+}
+int ivanov::Static::get_elem(int row, int col) const
+{
+    return matrix[rows*row + col];
+}
+int ivanov::Dynamic::get_elem(int row, int col) const
+{
+    return matrix[rows*row + col];
+}
+void ivanov::Static::fllincwav()
+{
+
+}
+void ivanov::Dynamic::fllincwav()
+{
+
+}
+int ivanov::Static::maxsummdg() const
+{
+
+}
+int ivanov::Dynamic::maxsummdg() const
+{
+
 }
