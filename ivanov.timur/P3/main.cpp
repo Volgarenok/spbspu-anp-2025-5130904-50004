@@ -48,6 +48,11 @@ int main(int argc, char** argv)
         {
             input >> s.matrix[i];
         }
+        if (input.fail() || input.eof())
+        {
+            std::cerr << "Input fail";
+            return 1;
+        }
         input.close();
         s.fllincwav();
         std::ofstream output(argv[3]);
@@ -66,6 +71,11 @@ int main(int argc, char** argv)
         }
         ivanov::Dynamic d;
         input >> d.rows >> d.cols;
+        if (input.fail() || input.eof())
+        {
+            std::cerr << "Input fail";
+            return 1;
+        }
         d.matrix = reinterpret_cast<int*>(malloc(sizeof(int) * (d.rows * d.cols)));
         if (!d.matrix) {
             std::cerr << "Memory allocation failed";
@@ -76,11 +86,11 @@ int main(int argc, char** argv)
         {
             input >> d.matrix[i];
         }
-        if (!input)
+        if (input.fail() || input.eof())
         {
-            std::cerr << "Error reading matrix data";
-            free(d.matrix);
-            return 2;
+            std::cerr << "Input fail";
+            d.freed();
+            return 1;
         }
         input.close();
         d.fllincwav();
