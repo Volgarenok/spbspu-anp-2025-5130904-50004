@@ -5,14 +5,14 @@
 #include <memory>
 namespace ivanov {
     struct Dynamic {
-        size_t rows, cols;
+        int rows, cols;
         int* matrix = nullptr;
         void freed();
         void fllincwav();
         int maxsummdg() const;
     };
     struct Static {
-        size_t rows, cols;
+        int rows, cols;
         int matrix[1000] = {};
         void fllincwav();
         int maxsummdg() const;
@@ -44,14 +44,14 @@ int main(int argc, char** argv)
             std::cerr << "Input fail";
             return 1;
         }
-        for (size_t i = 0; i < s.rows * s.cols; ++i)
+        for (int i = 0; i < s.rows * s.cols; ++i)
         {
             input >> s.matrix[i];
         }
         input.close();
         s.fllincwav();
         std::ofstream output(argv[3]);
-        for (size_t i = 0; i < s.rows * s.cols; ++i)
+        for (int i = 0; i < s.rows * s.cols; ++i)
         {
             output << s.matrix[i] << " ";
         }
@@ -72,7 +72,7 @@ int main(int argc, char** argv)
             d.freed();
             return 1;
         }
-        for (size_t i = 0; i < d.rows * d.cols; ++i)
+        for (int i = 0; i < d.rows * d.cols; ++i)
         {
             input >> d.matrix[i];
         }
@@ -85,7 +85,7 @@ int main(int argc, char** argv)
         input.close();
         d.fllincwav();
         std::ofstream output(argv[3]);
-        for (size_t i = 0; i < d.rows * d.cols; ++i)
+        for (int i = 0; i < d.rows * d.cols; ++i)
         {
             output << d.matrix[i] << " ";
         }
