@@ -106,8 +106,10 @@ int main(int argc, char** argv)
 }
 void ivanov::Static::fllincwav()
 {
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i)
+    {
+        for (int j = 0; j < cols; ++j)
+        {
             int layer = std::min(std::min(i, rows-1-i), std::min(j, cols-1-j));
             matrix[i*cols + j] += (layer + 1);
         }
@@ -115,8 +117,10 @@ void ivanov::Static::fllincwav()
 }
 void ivanov::Dynamic::fllincwav()
 {
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i)
+     {
+        for (int j = 0; j < cols; ++j)
+        {
             int layer = std::min(std::min(i, rows-1-i), std::min(j, cols-1-j));
             matrix[i*cols + j] += (layer + 1);
         }
@@ -125,11 +129,14 @@ void ivanov::Dynamic::fllincwav()
 int ivanov::Static::maxsummdg() const
 {
     int ans = 0;
-    for (int d = 0; d < rows + cols - 1; ++d) {
+    for (int d = 0; d < rows + cols - 1; ++d)
+    {
         int curr = 0;
-        for (int i = 0; i < rows; ++i) {
+        for (int i = 0; i < rows; ++i)
+        {
             int j = d - i;
-            if (j >= 0 && j < cols) {
+            if (j >= 0 && j < cols)
+            {
                 curr += matrix[i * cols + j];
             }
         }
@@ -142,15 +149,19 @@ int ivanov::Static::maxsummdg() const
 int ivanov::Dynamic::maxsummdg() const
 {
     int ans = 0;
-    for (int d = 0; d < rows + cols - 1; ++d) {
+    for (int d = 0; d < rows + cols - 1; ++d)
+    {
         int curr = 0;
-        for (int i = 0; i < rows; ++i) {
+        for (int i = 0; i < rows; ++i)
+        {
             int j = d - i;
-            if (j >= 0 && j < cols) {
+            if (j >= 0 && j < cols)
+            {
                 curr += matrix[i * cols + j];
             }
         }
-        if (curr > ans) {
+        if (curr > ans)
+        {
             ans = curr;
         }
     }
