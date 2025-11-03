@@ -72,19 +72,37 @@ int main(int argc, char ** argv)
 }
 int ivanov::Static::get_elem(int row, int col) const
 {
-    return matrix[rows*row + col];
+    return matrix[cols*row + col];
 }
 int ivanov::Dynamic::get_elem(int row, int col) const
 {
-    return matrix[rows*row + col];
+    return matrix[cols*row + col];
 }
 void ivanov::Static::fllincwav()
 {
-
+    for (int row = 0; row < (rows/2 + rows%2); ++row)
+    {
+        for (int i = row; i < cols - row; ++i)
+        {
+            matrix[cols*row + i]+=(row+1);
+            matrix[cols*(rows-row-1) + i]+=(row+1);
+            matrix[cols*i + row]+=(row+1);
+            matrix[cols*(rows-i-1) + row]+=(row+1);
+        }
+    }
 }
 void ivanov::Dynamic::fllincwav()
 {
-
+    for (int row = 0; row < (rows/2 + rows%2); ++row)
+    {
+        for (int i = row; i < cols - row; ++i)
+        {
+            matrix[cols*row + i]+=(row+1);
+            matrix[cols*(rows-row-1) + i]+=(row+1);
+            matrix[cols*i + row]+=(row+1);
+            matrix[cols*(rows-i-1) + row]+=(row+1);
+        }
+    }
 }
 int ivanov::Static::maxsummdg() const
 {
