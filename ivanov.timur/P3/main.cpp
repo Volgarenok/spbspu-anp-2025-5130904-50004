@@ -35,5 +35,36 @@ int main(int argc, char ** argv)
         {
             input >> s.matrix[i];
         }
+        input.close();
+        s.fllincwav();
+        std::ofstream output(argv[3]);
+        for (size_t i = 0; i < s.rows*s.cols; ++i)
+        {
+            output << s.matrix[i] << " ";
+        }
+        output << "\n" << s.maxsummdg() << "\n";
+    }
+    else
+    {
+        std::fstream input(argv[2]);
+        ivanov::Dynamic d;
+        input >> d.rows >> d.cols;
+        for (size_t i = 0; i < d.rows*d.cols; ++i)
+        {
+            input >> d.matrix[i];
+        }
+        if (!input)
+        {
+            free(d.matrix);
+            return 2;
+        }
+        input.close();
+        d.fllincwav();
+        std::ofstream output(argv[3]);
+        for (size_t i = 0; i < d.rows*d.cols; ++i)
+        {
+            output << d.matrix[i] << " ";
+        }
+        output << "\n" << d.maxsummdg() << "\n";
     }
 }
