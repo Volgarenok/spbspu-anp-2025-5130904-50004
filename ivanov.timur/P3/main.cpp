@@ -5,14 +5,14 @@
 #include <memory>
 namespace ivanov {
     struct Dynamic {
-        int rows, cols;
+        size_t rows, cols;
         int* matrix = nullptr;
         void freed();
         void fllincwav();
         int maxsummdg() const;
     };
     struct Static {
-        int rows, cols;
+        size_t rows, cols;
         int matrix[1000] = {};
         void fllincwav();
         int maxsummdg() const;
