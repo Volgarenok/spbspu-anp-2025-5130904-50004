@@ -99,6 +99,16 @@ namespace kuchukbaeva
       free(matrix);
     }
   }
+  bool Res(const std::string& filename, int res)
+  {
+    std::ofstream file(filename);
+    if (!file.is_open())
+    {
+      return false;
+    }
+    file << res;
+    return true;
+  }
 }
 int main()
 {
