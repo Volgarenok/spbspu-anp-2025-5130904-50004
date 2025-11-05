@@ -57,6 +57,48 @@ namespace kuchukbaeva
     }
     return true;
   }
+  bool readMatrixStatic(const std::string& filename, int** matrix, size_t& rows, size_t& cols, size_t max_rows, size_t max_cols)
+  {
+    std::ifstream file(filename);
+    if (!file.is_open())
+    {
+      return false;
+    }
+    if (!(file >> rows >> cols))
+    {
+      return false;
+    }
+    if (rows == 0 || cols == 0)
+    {
+      return true;
+    }
+    if (rows > max_rows || cols > max_cols)
+    {
+      return false;
+    }
+    for (size_t i = 0; i < rows; i++)
+    {
+      for (size_t j = 0; j < cols; j++)
+      {
+        if (!(file >> matrix[i][j]))
+        {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+  void freMatrix(int** matrix, size_t rows)
+  {
+    if (matrix != nullptr)
+    {
+      for (size_t i = 0; i < rows; i++)
+      {
+        free(matrix[i]);
+      }
+      free(matrix);
+    }
+  }
 }
 int main()
 {
