@@ -12,20 +12,85 @@ namespace zinovev
 
 int main(int argc, char** argv)
 {
+    if (argc < 4)
+    {
+        std::cerr << "Not enough arguments" << "\n";
+        return 1;
+    }
+    else if (argc > 4)
+    {
+        std::cerr << "Too many arguments" << "\n";
+        return 1;
+    }
+
+    int size = 0;
+    while (argv[1][size] != '\0')
+    {
+        ++size;
+    }
+
+    if (size != 1)
+    {
+        std::cerr << "First parameter is not a number" << "\n";
+        return 1;
+    }
+
+    if (argv[1][0] != '1' && argv[1][0] != '2')
+    {
+        std::cerr << "First parameter is out of range" << "\n";
+        return 1;
+    }
+
     std::ifstream input(argv[2]);
     std::ofstream output(argv[3]);
+
+    if (!input.is_open())
+    {
+        std::cerr << "ERROR: " << argv[2] << " is not open" << '\n';
+        return 1;
+    }
+    else if (!output.is_open())
+    {
+        std::cerr << "ERROR: " << argv[3] << " is not open" << '\n';
+        return 1;
+    }
 
     int rows = 0;
     int cols = 0;
     int result = 0;
 
-    input >> rows >> cols;
+    if (!(input >> rows))
+    {
+        std::cerr << "ERROR: Incorrect number of rows entered" << "\n";
+        return 2;
+    }
+    else if (!(input >> cols))
+    {
+        std::cerr << "ERROR: Incorrect number of columns entered" << "\n";
+        return 2;
+    }
+    else if (rows < 0 || cols < 0)
+    {
+        std::cerr << "ERROR: Rows and columns must be non-negative" << "\n";
+        return 2;
+    }
 
     if (argv[1][0] == '1')
     {
+        if (rows * cols > 1000)
+        {
+            std::cerr << "ERROR: The array is too large" << "\n";
+            return 1;
+        }
+
         int array[10000] = {};
 
         zinovev::readInput(input, array, rows, cols);
+
+        if (!input)
+        {
+            return 2;
+        }
 
         input.close();
 
@@ -41,6 +106,12 @@ int main(int argc, char** argv)
             array = new int[rows * cols] {};
 
             zinovev::readInput(input, array, rows, cols);
+
+            if (!input)
+            {
+                delete[] array;
+                return 2;
+            }
 
             input.close();
 
