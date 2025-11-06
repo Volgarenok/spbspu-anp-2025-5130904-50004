@@ -4,6 +4,29 @@
 #include <cstdlib>
 namespace kuchukbaeva
 {
+  bool CntLocMax(int** matrix, size_t rows, size_t cols, size_t i, size_t j)
+  {
+    if (i == 0 || i == rows - 1 || j == 0 || j == cols - 1)
+    {
+      return false;
+    }
+    int m = matrix[i][j];
+    for (int k = -1; k <= 1; ++k)
+    {
+      for (int f = -1; f <= 1; ++f)
+      {
+        if (k == 0 && f == 0)
+        {
+          continue;
+        }
+        if (matrix[i + k][j + f] >= m)
+        {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
   bool readMatrix(const std::string& filename, int*** matrix, size_t& rows, size_t& cols)
   {
     std::ifstream file(filename);
