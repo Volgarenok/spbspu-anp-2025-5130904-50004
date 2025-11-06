@@ -45,14 +45,14 @@ namespace kuchukbaeva
   void LftBotClk(int** matrix, size_t rows, size_t cols)
   {
     int top = 0;
-    int bottom = (int)rows - 1;
+    int bottom = static_cast<int>(rows) - 1;
     int left = 0;
-    int right = (int)cols - 1;
+    int right = static_cast<int>(cols) - 1;
     int schet = 1;
     while (top <= bottom && left <= right)
     {
       for (int i = bottom; i >= top; i--)
-      { 
+      {
         matrix[i][left] -= schet;
         schet++;
       }
@@ -257,7 +257,7 @@ int main(int argc,  char* argv[])
     }
     if (!kuch::readMatrixStatic(inputFile, row_po, rows, cols, stm, stm))
     {
-      std::cerr << "Cannot read matrix from file" << std::endl;
+      std::cerr << "Cannot read matrix from file" << "\n";
       return 2;
     }
     if (rows == 0 || cols == 0)
@@ -272,7 +272,7 @@ int main(int argc,  char* argv[])
     int** matrix = nullptr;
     if (!kuch::readMatrix(inputFile, &matrix, rows, cols))
     {
-      std::cerr << "Cannot read matrix from file" << std::endl;
+      std::cerr << "Cannot read matrix from file" << "\n";
       return 2;
     }
     if (matrix == nullptr)
