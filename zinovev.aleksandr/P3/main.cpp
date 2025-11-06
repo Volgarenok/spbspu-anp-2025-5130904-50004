@@ -134,7 +134,23 @@ int main(int argc, char** argv)
 
 std::istream& zinovev::readInput(std::istream& input, int* array, int rows, int cols)
 {
-    for (int i = 0; i < rows * cols && input >> array[i]; ++i);
+    size_t quantity = 0;
+
+    for (int i = 0; i < rows * cols && input >> array[i]; ++i)
+    {
+        ++quantity;
+    }
+
+    if (!input)
+    {
+        std::cerr << "ERROR: Incorrect input" << "\n"
+            << "Number of inputted items: " << quantity << "\n";
+    }
+    else if (rows * cols > quantity)
+    {
+        std::cerr << "ERROR: Not enough elements have been entered" << "\n"
+            << "Number of inputted items: " << quantity << "\n";
+    }
 
     return input;
 }
