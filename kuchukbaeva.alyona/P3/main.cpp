@@ -27,6 +27,21 @@ namespace kuchukbaeva
     }
     return true;
   }
+  int countLocMax(int** matrix, size_t rows, size_t cols)
+  {
+    int count = 0;
+    for (size_t i = 1; i < rows - 1; i++)
+    {
+      for (size_t j = 1; j < cols - 1; j++)
+      {
+        if (CntLocMax(matrix, rows, cols, i, j))
+        {
+          count++;
+        }
+      }
+    }
+    return count;
+  }
   bool readMatrix(const std::string& filename, int*** matrix, size_t& rows, size_t& cols)
   {
     std::ifstream file(filename);
