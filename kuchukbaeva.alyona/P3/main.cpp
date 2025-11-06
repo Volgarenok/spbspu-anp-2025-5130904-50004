@@ -147,6 +147,24 @@ namespace kuchukbaeva
     file << res;
     return true;
   }
+  bool writeMatrix(const std::string& filename, int** matrix, size_t rows, size_t cols, int locMaxCount)
+  {
+    std::ofstream file(filename);
+    if (!file.is_open())
+    {
+      return false;
+    }
+    file << locMaxCount << "\n";
+    file << rows << " " << cols;
+    for (size_t i = 0; i < rows; i++)
+    {
+      for (size_t j = 0; j < cols; j++)
+      {
+        file << " " << matrix[i][j];
+      }
+    }
+    return true;
+  }
 }
 int main(int argc,  char* argv[])
 {
