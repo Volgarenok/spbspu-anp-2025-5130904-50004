@@ -1,8 +1,9 @@
 #include <iostream>
+#include <fstream>
 
 int main(int argc, char ** argv)
 {
-  for (char ** i = argv; i < argv + argc; ++i) {
-    std::cout << *i << "\n";
-  }
+  std::ifstream input(argv[2]);
+  std::ofstream output(argv[3]);
+
 }
