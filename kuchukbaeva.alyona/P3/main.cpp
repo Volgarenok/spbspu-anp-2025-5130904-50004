@@ -42,6 +42,53 @@ namespace kuchukbaeva
     }
     return count;
   }
+  void LftBotClk(int** matrix, size_t rows, size_t cols)
+  {
+    int top = 0;
+    int bottom = (int)rows - 1;
+    int left = 0;
+    int right = (int)cols - 1;
+    int schet = 1;
+    while (top <= bottom && left <= right)
+    {
+      for (int i = bottom; i >= top; i--)
+      { 
+        matrix[i][left] -= schet;
+        schet++;
+      }
+      left++;
+      if (left > right)
+      {
+        break;
+      }
+      for (int j = left; j <= right; j++)
+      {
+        matrix[top][j] -= schet;
+        schet++;
+      }
+      top++;
+      if (top > bottom)
+      {
+        break;
+      }
+      for (int i = top; i <= bottom; i++)
+      {
+        matrix[i][right] -= schet;
+        schet++;
+      }
+      right--;
+      if (left > right)
+      {
+        break;
+      }
+      for (int j = right; j >= left; j--)
+      {
+        matrix[bottom][j] -= schet;
+        schet++;
+      }
+      bottom--;
+    }
+  }
   bool readMatrix(const std::string& filename, int*** matrix, size_t& rows, size_t& cols)
   {
     std::ifstream file(filename);
