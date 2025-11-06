@@ -5,7 +5,7 @@
 namespace zinovev
 {
     std::istream& readInput(std::istream& input, int* array, int rows, int cols);
-    void fillSpiral();
+    void fillSpiral(int* array, int rows, int cols);
     int findLongestColumn(int* array, int rows, int cols);
     std::ostream& writeOutput(std::ostream& output, const int* array, int rows, int cols, int result);
 }
@@ -30,7 +30,7 @@ int main(int argc, char** argv)
         input.close();
 
         result = zinovev::findLongestColumn(array, rows, cols);
-        zinovev::fillSpiral();
+        zinovev::fillSpiral(array, rows, cols);
         zinovev::writeOutput(output, array, rows, cols, result);
     }
     else if (argv[1][0] == '2')
@@ -45,7 +45,7 @@ int main(int argc, char** argv)
             input.close();
 
             result = zinovev::findLongestColumn(array, rows, cols);
-            zinovev::fillSpiral();
+            zinovev::fillSpiral(array, rows, cols);
             zinovev::writeOutput(output, array, rows, cols, result);
 
             delete[] array;
@@ -68,9 +68,76 @@ std::istream& zinovev::readInput(std::istream& input, int* array, int rows, int 
     return input;
 }
 
-void zinovev::fillSpiral()
+void zinovev::fillSpiral(int* array, int rows, int cols)
 {
+    int number = 1;
+    int position = (rows - 1) * cols;
 
+    for (int layer = 0; number <= rows * cols; layer++)
+    {
+        for (int i = 0; i < (cols - 2 * layer) && number <= rows * cols; i++)
+        {
+            if (position >= 0 && position < rows * cols)
+            {
+                array[position] += number;
+            }
+            position++;
+            number++;
+        }
+
+        if (number > rows * cols)
+        {
+            break;
+        }
+
+        position -= (cols + 1);
+
+        for (int i = 0; i < (rows - 2 * layer - 1) && number <= rows * cols; i++)
+        {
+            if (position >= 0 && position < rows * cols)
+            {
+                array[position] += number;
+            }
+            position -= cols;
+            number++;
+        }
+
+        if (number > rows * cols)
+        {
+            break;
+        }
+
+        position += (cols - 1);
+
+        for (int i = 0; i < (cols - 2 * layer - 1) && number <= rows * cols; i++)
+        {
+            if (position >= 0 && position < rows * cols)
+            {
+                array[position] += number;
+            }
+            position--;
+            number++;
+        }
+
+        if (number > rows * cols)
+        {
+            break;
+        }
+
+        position += (cols + 1);
+
+        for (int i = 0; i < (rows - 2 * layer - 2) && number <= rows * cols; i++)
+        {
+            if (position >= 0 && position < rows * cols)
+            {
+                array[position] += number;
+            }
+            position += cols;
+            number++;
+        }
+
+        position -= (cols - 1);
+    }
 }
 
 int zinovev::findLongestColumn(int* array, int rows, int cols)
@@ -120,3 +187,4 @@ std::ostream& zinovev::writeOutput(std::ostream& output, const int* array, int r
 
     return output;
 }
+
