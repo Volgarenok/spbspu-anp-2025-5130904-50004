@@ -1,12 +1,16 @@
 #include <iostream>
 #include <fstream>
+#include <cstddef>
+#include "io_matrix.h"
 
 namespace alekseev {
-  bool check_cl_args(int argc, char *argv[]);
+  bool check_cl_args(int argc, char ** argv);
 }
+
 
 int main(int argc, char ** argv)
 {
+  size_t SIZE = 10000;
   try {
     alekseev::check_cl_args(argc, argv);
   } catch (const std::exception & e) {
@@ -14,13 +18,25 @@ int main(int argc, char ** argv)
     return 1;
   }
 
-  char num = argv[1][0];
-  std::cout << num << "\n";
+  std::ifstream input(argv[2]);
+  size_t n = 0ull, m = 0ull;
+  input >> n >> m;
+  char num = argv[1][0] == '1' ? 1 : 2;
+  int * matrix = nullptr;
+  if (num == 1) {
+    int temp[SIZE];
+    matrix = temp;
+  } else {
+    matrix = new int[n * m];
+  }
 
+  alekseev::input_matrix(input, matrix, n, m);
+  std::ofstream output(argv[3]);
+  alekseev::output_matrix(output, matrix, n, m);
 }
 
 
-bool alekseev::check_cl_args(int argc, char * argv[])
+bool alekseev::check_cl_args(int argc, char ** argv)
 {
   if (argc < 4) {
     throw std::invalid_argument("Not enough arguments");
