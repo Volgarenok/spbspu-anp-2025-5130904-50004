@@ -12,7 +12,7 @@ namespace ivantsova
 
 std::istream & ivantsova::readArr(std::istream & input, int * arr, size_t rows, size_t cols)
 {
-  int number = 0;
+  size_t number = 0;
   for (size_t i = 0; i < rows * cols && input >> arr[i]; i++)
   {
     ++number;
