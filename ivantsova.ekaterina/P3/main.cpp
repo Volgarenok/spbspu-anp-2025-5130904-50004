@@ -44,6 +44,61 @@ std::ostream & ivantsova::writeArr(std::ostream & output, const int * arr, size_
 
 void ivantsova::reduceElements(int * arr, size_t rows, size_t cols)
 {
+  size_t t = rows * cols;
+  int * temp = new int [t];
+  for (size_t i = 0; i < t; i++)
+  {
+    temp[i] = arr[i];
+  }
+  int left = 0;
+  int right = cols - 1;
+  int up = 0;
+  int down = rows - 1;
+  int step = 1;
+  while (left <= right && up <= down)
+  {
+    for (int i = down; i >= up; i--)
+    {
+      size_t index = i * cols + left;
+      temp[index] -= step++;
+    }
+    left++;
+    if (left > right)
+    {
+      break;
+    }
+    for (int i = left; i <= right; i++)
+    {
+      size_t index = up * cols + i;
+      temp[index] -= step++;
+    }
+    up++;
+    if (up > down)
+    {
+      break;
+    }
+    for (int i = up; i <= down; i++)
+    {
+      size_t index = i * cols + right;
+      temp[index] -= step++;
+    }
+    right--;
+    if (left > right)
+    {
+      break;
+    }
+    for (int i = right; i >= left; i--)
+    {
+      size_t index = down * cols + i;
+      temp[index] -= step++;
+    }
+    down--;
+  }
+  for (size_t i = 0; i < t; i++)
+  {
+    arr[i] = temp[i];
+  }
+  delete[] temp;
 }
 
 int ivantsova::countColumns(int * arr, size_t rows, size_t cols)
