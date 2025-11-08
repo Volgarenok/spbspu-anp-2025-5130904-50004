@@ -48,6 +48,24 @@ void ivantsova::reduceElements(int * arr, size_t rows, size_t cols)
 
 int ivantsova::countColumns(int * arr, size_t rows, size_t cols)
 {
+  int count = 0;
+  for (size_t j = 0; j < cols; j++)
+  {
+    bool rep = false;
+    for (size_t i = 0; i + 1 < rows; i++)
+    {
+      if (arr[i * cols + j] == arr[(i + 1) * cols + j])
+      {
+        rep = true;
+        break;
+      }
+    }
+    if (!rep)
+    {
+      count++;
+    }
+  }
+  return count;
 }
 
 int main()
