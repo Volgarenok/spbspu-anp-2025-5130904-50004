@@ -9,7 +9,6 @@ namespace haliullin
   int NumColLsr(int *arr, size_t rows, size_t cols);
 }
 
-
 int main(int argc, char **argv)
 {
 
