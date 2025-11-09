@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <cstdlib>
 namespace haliullin
 {
   std::istream& readMatrix(std::istream& in, int *arr, size_t rows, size_t cols);
@@ -142,9 +141,26 @@ std::istream& haliullin::readMatrix(std::istream& in, int *arr, size_t rows, siz
 
 void haliullin::FllIncrementWave(int *arr, size_t rows, size_t cols)
 {
-  (void)arr;
-  (void)rows;
-  (void)cols;
+  size_t val = (std::min(rows, cols) + 1) / 2;
+  for (size_t k = 0; k < val; ++k)
+  {
+
+    for (size_t j = k; j < cols - k; ++j)
+    {
+      arr[k * cols + j] += (k + 1);
+      if (2*k < rows - 1)
+      {
+        arr[(rows - (k + 1)) * cols + j] += (k + 1);
+      }
+    }
+
+    for (size_t i = k + 1; i < rows - (k + 1); ++i)
+    {
+      arr[i * cols + k] += (k + 1);
+      arr[i * cols + cols - (k + 1)] += (k + 1);
+    }
+  }
+
 }
 
 size_t haliullin::NumColLsr(const int *arr, size_t rows, size_t cols)
