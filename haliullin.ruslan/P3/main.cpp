@@ -34,6 +34,16 @@ std::istream& haliullin::input(std::istream& in, int *arr, size_t rows, size_t c
 
 std::ostream& haliullin::output(std::ostream& out, const int *arr, size_t rows, size_t cols, size_t res)
 {
+  out << res << "\n";
+  for (size_t i = 0; i < rows; ++i)
+  {
+    for (size_t j = 0; j < cols-1; ++j)
+    {
+      out << arr[i * cols + j] << " ";
+    }
+    out << arr[i * cols + cols - 1] << "\n";
+  }
+  return out;
 }
 
 void haliullin::FllIncrementWave(int *arr, size_t rows, size_t cols)
