@@ -1,11 +1,12 @@
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
 namespace haliullin
 {
   std::istream& readMatrix(std::istream& in, int *arr, size_t rows, size_t cols);
-  std::ostream& writeMatrix(std::ostream& out, const int *arr, size_t rows, size_t cols, size_t res);
   void FllIncrementWave(int *arr, size_t rows, size_t cols);
-  size_t NumColLsr(int *arr, size_t rows, size_t cols);
+  size_t NumColLsr(const int *arr, size_t rows, size_t cols);
+  std::ostream& writeMatrix(std::ostream& out, const int *arr, size_t rows, size_t cols, size_t res);
 }
 
 int main(int argc, char **argv)
@@ -80,6 +81,7 @@ int main(int argc, char **argv)
 
 
     in.close();
+
     hal::FllIncrementWave(arr, rows, cols);
     res = hal::NumColLsr(arr, rows, cols);
     hal::writeMatrix(out, arr, rows, cols, res);
@@ -89,9 +91,36 @@ int main(int argc, char **argv)
 
   else if (argv[1][0] == '2')
   {
-    //
+    int *arr = nullptr;
+    try
+    {
+      arr = new int[rows*cols];
+      hal::readMatrix(in, arr, rows, cols);
 
+      if (!in)
+      {
+        std::cerr  << "Error of reading array" << "\n";
+        delete[] arr;
+        return 1;
+      }
+
+      in.close();
+
+      hal::FllIncrementWave(arr, rows, cols);
+      res = hal::NumColLsr(arr, rows, cols);
+      hal::writeMatrix(out, arr, rows, cols, res);
+
+      delete[] arr;
+
+    }
+    catch(const std::bad_alloc &e)
+    {
+      std::cerr << e.what() << "\n";
+      return 2;
+    }
   }
+  return 0;
+
 }
 std::istream& haliullin::readMatrix(std::istream& in, int *arr, size_t rows, size_t cols)
 {
@@ -111,6 +140,50 @@ std::istream& haliullin::readMatrix(std::istream& in, int *arr, size_t rows, siz
   return in;
 }
 
+void haliullin::FllIncrementWave(int *arr, size_t rows, size_t cols)
+{
+  (void)arr;
+  (void)rows;
+  (void)cols;
+}
+
+size_t haliullin::NumColLsr(const int *arr, size_t rows, size_t cols)
+{
+  size_t res = 0;
+  size_t cur_length = 1;
+  size_t max_length = 1;
+  size_t max_length_total = 1;
+  int prev = 0;
+  for (size_t j = 0; j < cols; ++j)
+  {
+    cur_length = 1;
+    max_length = 1;
+    for (size_t i = 1; i < rows; ++i)
+    {
+      int cur = arr[i * cols + j];
+      prev = arr[(i-1) * cols + j];
+
+      if (cur == prev)
+      {
+        ++cur_length;
+        max_length = std::max(cur_length, max_length);
+      }
+      else
+      {
+        cur_length = 1;
+      }
+    }
+
+    if (max_length > max_length_total)
+    {
+      max_length_total = max_length;
+      res = j;
+    }
+  }
+  return res;
+}
+
+
 std::ostream& haliullin::writeMatrix(std::ostream& out, const int *arr, size_t rows, size_t cols, size_t res)
 {
   out << res << "\n";
@@ -124,13 +197,3 @@ std::ostream& haliullin::writeMatrix(std::ostream& out, const int *arr, size_t r
   }
   return out;
 }
-
-void haliullin::FllIncrementWave(int *arr, size_t rows, size_t cols)
-{
-}
-
-size_t haliullin::NumColLsr(int *arr, size_t rows, size_t cols)
-{
-}
-
-
