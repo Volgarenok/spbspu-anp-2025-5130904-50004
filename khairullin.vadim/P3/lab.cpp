@@ -42,6 +42,33 @@ int localmax(int * array, int rows, int cols)
   return CounterOfMax;
 }
 
+bool triangle(int *array, int size)
+{
+    int SumOfZeroes = 0;
+    int CountOfNullsOnRow = size - 1;
+    int counter = 0;
+    const int COUNT_OF_ROWS_WITH_ZEROES = size - 1;
+    for ( int i = 0; i < COUNT_OF_ROWS_WITH_ZEROES; ++i)
+    {
+        for ( int j = 0; j < size; ++j)
+        {
+            if (j != size - 1)
+            {
+                counter += CheckZero(array, i, j, size);
+            }
+            
+        }
+        if (CountOfNullsOnRow - 1 == counter)
+        {
+            SumOfZeroes++;
+            counter = 0;
+            CountOfNullsOnRow--;
+        }
+      
+    }
+    return (SumOfZeroes == COUNT_OF_ROWS_WITH_ZEROES);
+}
+
 int check_arguments(int argc, char ** argv, int command)
 {
   if (argc < 4)
