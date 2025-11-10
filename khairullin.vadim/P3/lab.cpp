@@ -174,18 +174,27 @@ void khairullin::work_with_dinamic(int rows, int cols, std::ifstream & input, st
 }
 int main (int argc, char ** argv)
 {
+  int command = 0;
+  if (argc != 1)
+  {
+    command = argv[1][0] - '0';
+  }
+  else
+  {
+    std::cerr << "No arguments\n";
+    return 1;
+  }
   namespace khair = khairullin;
-  int command = argv[1][0] - '0';
-  std::ifstream input(argv[2]);
-  std::ofstream output(argv[3]);
   try
   {
-    int rows = 0, cols = 0;
-    input >> rows >> cols;
     if (khair::check_arguments(argc, argv, command))
     {
       return 1;
     }
+    std::ifstream input(argv[2]);
+    std::ofstream output(argv[3]);
+    int rows = 0, cols = 0;
+    input >> rows >> cols;
     if (!input)
     {
       throw std::logic_error("File is empty");
@@ -229,6 +238,11 @@ int main (int argc, char ** argv)
   catch (std::logic_error & exc)
   {
     std::cerr << "ERROR: " << exc.what() << "\n";
+    return 2;
+  }
+  catch(...)
+  {
+    std::cerr << "Error\n";
     return 2;
   }
 }
