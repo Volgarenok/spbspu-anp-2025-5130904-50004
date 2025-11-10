@@ -78,7 +78,17 @@ void work_with_static(int rows, int cols,
   int array[10000] = {};
   filling(array, input, rows, cols, command);
   output << localmax(array, rows, cols) << "\n";
-  
+  int square_array[10000] = {};
+  const int MIN_SIZE = std::min(rows, cols);
+  const int MAX_SIZE = std::max(rows, cols);
+  for (int i = 0; i < MIN_SIZE; ++i)
+  {
+    for(int j = 0; j < MIN_SIZE; ++j)
+    {
+      square_array[i * MIN_SIZE + j] = 
+        array[i * MAX_SIZE + j];
+    }
+  } 
 }
 
 void worl_with_dinamic(int rows, int cols,
@@ -94,6 +104,20 @@ void worl_with_dinamic(int rows, int cols,
   }
   filling(array, input, rows, cols, command);
   output << localmax(array rows, cols) << "\n";
+  int * square_array = reinterpret_cast<int *>
+    (std::malloc(MIN_SIZE * MIN_SIZE * sizeof(int)));
+  if (square_array == nullptr)
+  {
+    throw std::bad_alloc();
+  }
+  for (int i = 0; i < MIN_SIZE; i++)
+    {
+      for (int j = 0; j < MIN_SIZE; ++j)
+      {
+        square_array[MIN_SIZE * i + j] = array[MAX_SIZE * i + j];
+      }
+    }
+  free(array);
 }
 
 int main (int argc, char ** argv)
