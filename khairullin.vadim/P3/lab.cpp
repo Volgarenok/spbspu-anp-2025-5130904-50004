@@ -21,6 +21,21 @@ void filling(int * array, std::ifstream &
   input.close();
 }
 
+int CheckZero(int * array,
+  int index1,int index2, int size)
+{
+  if (array[index1 * size + index2] ==
+    array[index1 * size + index2 + 1] and 
+      array[index1 * size + index2] == 0)
+  {
+    return 1;
+  }
+  else
+  {
+    return 0;
+  }
+}
+
 int localmax(int * array, int rows, int cols)
 {
    int CounterOfMax = 0;
@@ -44,29 +59,27 @@ int localmax(int * array, int rows, int cols)
 
 bool triangle(int *array, int size)
 {
-    int SumOfZeroes = 0;
-    int CountOfNullsOnRow = size - 1;
-    int counter = 0;
-    const int COUNT_OF_ROWS_WITH_ZEROES = size - 1;
-    for ( int i = 0; i < COUNT_OF_ROWS_WITH_ZEROES; ++i)
+  int SumOfZeroes = 0;
+  int CountOfNullsOnRow = size - 1;
+  int counter = 0;
+  const int COUNT_OF_ROWS_WITH_ZEROES = size - 1;
+  for ( int i = 0; i < COUNT_OF_ROWS_WITH_ZEROES; ++i)
+  {
+    for ( int j = 0; j < size; ++j)
     {
-        for ( int j = 0; j < size; ++j)
+      if (j != size - 1)
         {
-            if (j != size - 1)
-            {
-                counter += CheckZero(array, i, j, size);
-            }
-            
-        }
-        if (CountOfNullsOnRow - 1 == counter)
-        {
-            SumOfZeroes++;
-            counter = 0;
-            CountOfNullsOnRow--;
-        }
-      
+          counter += CheckZero(array, i, j, size);
+        }    
     }
-    return (SumOfZeroes == COUNT_OF_ROWS_WITH_ZEROES);
+    if (CountOfNullsOnRow - 1 == counter)
+    {
+      SumOfZeroes++;
+      counter = 0;
+      CountOfNullsOnRow--;
+    }  
+  }
+  return (SumOfZeroes == COUNT_OF_ROWS_WITH_ZEROES);
 }
 
 int check_arguments(int argc, char ** argv, int command)
