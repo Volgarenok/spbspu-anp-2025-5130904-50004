@@ -19,9 +19,13 @@ int main(int argc, char ** argv)
   }
 
   std::ifstream input(argv[2]);
+  if (!input.is_open()) {
+    std::cerr << "Failed to open file " << argv[2] << "\n";
+    return 2;
+  }
   size_t n = 0ull, m = 0ull;
   input >> n >> m;
-  char num = argv[1][0] == '1' ? 1 : 2;
+  int num = argv[1][0] == '1' ? 1 : 2;
   int * matrix = nullptr;
   if (num == 1) {
     int temp[SIZE];
