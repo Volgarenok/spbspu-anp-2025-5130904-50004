@@ -128,6 +128,14 @@ void work_with_static(int rows, int cols,
       square_array[i * MIN_SIZE + j] = 
         array[i * MAX_SIZE + j];
     }
+  }
+  if (triangle(square_array, MIN_SIZE))
+  {
+    output << "True\n";
+  }
+  else
+  {
+    output << "False\n";
   } 
 }
 
@@ -158,6 +166,15 @@ void worl_with_dinamic(int rows, int cols,
       }
     }
   free(array);
+  if (triangle(square_array, MIN_SIZE))
+  {  
+    output << "True\n";
+  }  
+  else
+  {  
+    output << "False\n";
+  }
+  free(square_array);
 }
 
 int main (int argc, char ** argv)
