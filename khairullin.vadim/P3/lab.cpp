@@ -71,9 +71,9 @@ bool khairullin::triangle(int *array, int size)
   int CountOfNullsOnRow = size - 1;
   int counter = 0;
   const int COUNT_OF_ROWS_WITH_ZEROES = size - 1;
-  for ( int i = 0; i < COUNT_OF_ROWS_WITH_ZEROES; ++i)
+  for (int i = 0; i < COUNT_OF_ROWS_WITH_ZEROES; ++i)
   {
-    for ( int j = 0; j < size; ++j)
+    for (int j = 0; j < size; ++j)
     {
       if (j != size - 1)
       {
@@ -94,22 +94,22 @@ int khairullin::check_arguments(int argc, char ** argv, int command)
 {
   if (argc < 4)
   {
-    std::cerr << "Not enough arguments";
+    std::cerr << "Not enough arguments\n";
     return 1;
   }
   else if (argc > 4)
   {
-    std::cerr << "Too many arguments";
+    std::cerr << "Too many arguments\n";
     return 1;
   }
   else if (argv[1][1] != '\0')
   {
-    std::cerr << "First parameter is not a number";
+    std::cerr << "First parameter is not a number\n";
     return 1;
   }
   else if (command > 2 or command < 1)
   {
-    std::cerr << "First parameter is out of range";
+    std::cerr << "First parameter is out of range\n";
     return 1;
   }
   else if (command == 1 or command == 2)
@@ -240,3 +240,4 @@ int main (int argc, char ** argv)
     return 2;
   }
 }
+
