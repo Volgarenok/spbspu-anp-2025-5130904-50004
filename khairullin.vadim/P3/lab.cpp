@@ -12,7 +12,6 @@ namespace khairullin
   void work_with_dinamic(int rows, int cols,std::ifstream & input, std::ofstream & output, int command);
   void work_with_static(int rows, int cols, std::ifstream & input, std::ofstream & output, int command);
 }
-
 void khairullin::filling(int * array, std::ifstream & input, int rows, int cols, int command)
 {
   for (int i = 0; i < rows * cols; ++i)
@@ -29,7 +28,6 @@ void khairullin::filling(int * array, std::ifstream & input, int rows, int cols,
   }
   input.close();
 }
-
 int khairullin::CheckZero(int * array, int index1, int index2, int size)
 {
   if (array[index1 * size + index2] == array[index1 * size + index2 + 1] and array[index1 * size + index2] == 0)
@@ -41,7 +39,6 @@ int khairullin::CheckZero(int * array, int index1, int index2, int size)
     return 0;
   }
 }
-
 int khairullin::localmax(int * array, int rows, int cols)
 {
   int counter_of_max = 0;
@@ -89,7 +86,6 @@ bool khairullin::triangle(int *array, int size)
   }
   return (sum_of_zeroes == COUNT_OF_ROWS_WITH_ZEROES);
 }
-
 int khairullin::check_arguments(int argc, char ** argv, int command)
 {
   if (argc < 4)
@@ -118,7 +114,6 @@ int khairullin::check_arguments(int argc, char ** argv, int command)
   }
   return 0;
 }
-
 void khairullin::work_with_static(int rows, int cols, std::ifstream & input, std::ofstream & output, int command)
 {
   int array[10000] = {};
@@ -143,7 +138,6 @@ void khairullin::work_with_static(int rows, int cols, std::ifstream & input, std
     output << "False\n";
   }
 }
-
 void khairullin::work_with_dinamic(int rows, int cols, std::ifstream & input, std::ofstream & output, int command)
 {
   int * array = reinterpret_cast<int *> (std::malloc(rows * cols * sizeof(int)));
@@ -155,8 +149,7 @@ void khairullin::work_with_dinamic(int rows, int cols, std::ifstream & input, st
   output << khairullin::localmax(array, rows, cols) << "\n";
   const int MIN_SIZE = std::min(rows, cols);
   const int MAX_SIZE = std::max(rows, cols);
-  int * square_array = reinterpret_cast<int *>
-    (std::malloc(MIN_SIZE * MIN_SIZE * sizeof(int)));
+  int * square_array = reinterpret_cast<int *>(std::malloc(MIN_SIZE * MIN_SIZE * sizeof(int)));
   if (square_array == nullptr)
   {
     throw std::bad_alloc();
@@ -170,16 +163,15 @@ void khairullin::work_with_dinamic(int rows, int cols, std::ifstream & input, st
   }
   free(array);
   if (khairullin::triangle(square_array, MIN_SIZE))
-  {  
+  {
     output << "True\n";
-  }  
+  }
   else
-  {  
+  {
     output << "False\n";
   }
   free(square_array);
 }
-
 int main (int argc, char ** argv)
 {
   namespace khair = khairullin;
@@ -240,4 +232,3 @@ int main (int argc, char ** argv)
     return 2;
   }
 }
-
