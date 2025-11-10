@@ -1,50 +1,66 @@
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 void filling(int * array, std::ifstream &
-  input, int rows, int cols)
+  input, int rows, int cols, int command)
 {
-  for (size_t i = 0; i < rows * cols; ++i)
+  for (int i = 0; i < rows * cols; ++i)
   {
+    input >> array[i];
     if (std::cin.fail() or std::cin.eof())
     {
+      if (command == 2)
+      {
+        free(array);
+      }
       throw std::invalid_argument("Error:
         file includes the mistake");
     }
-    input >> array[i];
   }
+  input.close();
 }
 
-int check_arguments(int argc, char ** argv)
+int check_arguments(int argc, char ** argv, int command)
 {
   if (argc < 4)
   {
     std::cerr << "Not enough arguments";
+    return 1;
   }
   else if (argc > 4)
   {
     std::cerr << "Too many arguments";
+    return 1;
   }
-  else if (argv[1][0] > 2 or argv[1][0] < 1)
-  {
-    std::cerr << "First parameter is out of range";
-  }
-  else
+  else if (argv[1][1] != '\0')
   {
     std::cerr << "First parameter is not a number";
+    return 1;
   }
-  return 1;
+  else if (command > 2 or command < 1)
+  {
+    std::cerr << "First parameter is out of range";
+    return 1;
+  }
+  else if (command == 1 or command == 2)
+  {
+    return 0;
+  }
+  return 0;
 }
 
 void work_with_static(int rows, int cols,
-  std::ifstream & input)
+  std::ifstream & input, std::ofstream & 
+    output, int command)
 {
   int array[10000] = {};
-  filling(array, input, rows, cols);
+  filling(array, input, rows, cols, command);
 }
 
 void worl_with_dinamic(int rows, int cols,
-  std::ifstream & input)
+  std::ifstream & input, std::ofstream & 
+    output, int command)
 {
   int * array = reinterpret_cast<int *> 
     (std::malloc(rows * cols *
@@ -53,35 +69,42 @@ void worl_with_dinamic(int rows, int cols,
   {
     throw std::bad_alloc();
   }
-  filling(array, input, rows, cols);
+  filling(array, input, rows, cols, command);
 }
 
 int main (int argc, char ** argv)
 {
   int rows = 0, cols = 0;
+  int command = argv[1][0] - '0';
   std::ifstream input(argv[2]);
   std::ofstream output(argv[3]);
   input >> rows >> cols;
-  check_arguments(argc, argv);
-  if (rows != 0 and cols != 0)
+  if (check_arguments(argc, argv))
   {
-    if (argv[1][0] == 1)
-    {
-      work_with_static(rows, cols, input);
-    }
-    else if (argv[1][0] == 2)
-    {
-      work_with_dinamic(rows, cols, input);
-    }
+    return 1;
   }
-  else if ((rows == 0 and cols != 0) or
-    (rows != 0 and cols == 0))
+  if (!input)
+  {
+    throw std::logic_error("File is empty");
+  }
+  else if ((rows == 0 and cols != 0) || (rows != 0 and cols == 0) || (rows < 0 or cols < 0))
   {
     throw std::runtime_error("Invalid rows or columns");
+  }
+  else if (rows != 0 and cols != 0)
+  {
+    if (argv[1][0] == '1')
+      {
+        work_with_static(rows, cols, input, output, command);        
+      }
+    else if (argv[1][0] == '2')
+      {
+        work_with_dinamic(rows, cols, input, output, command);
+      }
   }
   else if (rows == 0 and cols == 0)
   {
     output << "Count of local maximums - 0\n";
-    output << "False";
+    output << "False\n";
   }
 }
