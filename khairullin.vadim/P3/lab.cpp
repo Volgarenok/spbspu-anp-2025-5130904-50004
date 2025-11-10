@@ -21,7 +21,7 @@ void filling(int * array, std::ifstream &
   input.close();
 }
 
-int khairullin::localmax(int * array, int rows, int cols)
+int localmax(int * array, int rows, int cols)
 {
    int CounterOfMax = 0;
      for (int i = 0; i < rows; ++i){
@@ -77,6 +77,7 @@ void work_with_static(int rows, int cols,
 {
   int array[10000] = {};
   filling(array, input, rows, cols, command);
+  output << localmax(array, rows, cols) << "\n";
   
 }
 
@@ -92,6 +93,7 @@ void worl_with_dinamic(int rows, int cols,
     throw std::bad_alloc();
   }
   filling(array, input, rows, cols, command);
+  output << localmax(array rows, cols) << "\n";
 }
 
 int main (int argc, char ** argv)
