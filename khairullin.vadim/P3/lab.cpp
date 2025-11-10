@@ -4,47 +4,35 @@
 
 namespace khairullin
 {
-  int check_arguments(int argc, char ** argv,
-    int command);
-  void filling(int * array, std::ifstream &
-    input, int rows, int cols, int command);
+  int check_arguments(int argc, char ** argv, int command);
+  void filling(int * array, std::ifstream & input, int rows, int cols, int command);
   int localmax(int * array, int rows, int cols);
-  int CheckZero(int * array, int index1,int 
-    index2, int size);
+  int CheckZero(int * array, int index1,int index2, int size);
   bool triangle(int *array, int size);
-  void work_with_dinamic(int rows, int cols,
-    std::ifstream & input, std::ofstream & output,
-      int command);
-  void work_with_static(int rows, int cols, 
-    std::ifstream & input, std::ofstream & output,
-      int command);
+  void work_with_dinamic(int rows, int cols,std::ifstream & input, std::ofstream & output, int command);
+  void work_with_static(int rows, int cols, std::ifstream & input, std::ofstream & output, int command);
 }
 
-void khairullin::filling(int * array, std::ifstream &
-  input, int rows, int cols, int command)
+void khairullin::filling(int * array, std::ifstream & input, int rows, int cols, int command)
 {
   for (int i = 0; i < rows * cols; ++i)
   {
     input >> array[i];
-    if (std::cin.fail() or std::cin.eof())
+    if (input.fail() or input.eof())
     {
       if (command == 2)
       {
         free(array);
       }
-      throw std::invalid_argument("Error:
-        file includes the mistake");
+      throw std::invalid_argument("Error: file includes the mistake");
     }
   }
   input.close();
 }
 
-int khairullin::CheckZero(int * array,
-  int index1,int index2, int size)
+int khairullin::CheckZero(int * array, int index1, int index2, int size)
 {
-  if (array[index1 * size + index2] ==
-    array[index1 * size + index2 + 1] and 
-      array[index1 * size + index2] == 0)
+  if (array[index1 * size + index2] == array[index1 * size + index2 + 1] and array[index1 * size + index2] == 0)
   {
     return 1;
   }
@@ -56,22 +44,25 @@ int khairullin::CheckZero(int * array,
 
 int khairullin::localmax(int * array, int rows, int cols)
 {
-   int CounterOfMax = 0;
-     for (int i = 0; i < rows; ++i){
-       for (int j = 0; j < cols; ++j){
-         if (i != 0 and j != 0 and i != rows - 1
-           and j != cols - 1){
-             if(array[i*cols + j] > array[(i-1)*cols+j]
-               and array[i * cols + j] > array[(i+1)*cols 
-                 + j]  and array[i*cols + j] > array[i * 
-                   cols + j-1] and array[i*cols + j] > 
-                     array[i*cols + j+1])
-                     {
-                       CounterOfMax++;
-                     }
-                   } 
-                 }
-               }
+  int CounterOfMax = 0;
+    for (int i = 0; i < rows; ++i)
+    {
+      for (int j = 0; j < cols; ++j)
+      {
+        if (i != 0 and j != 0 and i != rows - 1
+          and j != cols - 1)
+        {
+            if(array[i*cols + j] > array[(i-1)*cols+j]
+              and array[i * cols + j] > array[(i+1)*cols 
+                + j]  and array[i*cols + j] > array[i * 
+                  cols + j-1] and array[i*cols + j] > 
+                    array[i*cols + j+1])
+            {
+              CounterOfMax++;
+            }
+        } 
+      }
+    }
   return CounterOfMax;
 }
 
@@ -86,9 +77,9 @@ bool khairullin::triangle(int *array, int size)
     for ( int j = 0; j < size; ++j)
     {
       if (j != size - 1)
-        {
-          counter += khairullin::CheckZero(array, i, j, size);
-        }    
+      {
+        counter += khairullin::CheckZero(array, i, j, size);
+      }    
     }
     if (CountOfNullsOnRow - 1 == counter)
     {
@@ -143,8 +134,7 @@ void khairullin::work_with_static(int rows, int cols,
   {
     for(int j = 0; j < MIN_SIZE; ++j)
     {
-      square_array[i * MIN_SIZE + j] = 
-        array[i * MAX_SIZE + j];
+      square_array[i * MIN_SIZE + j] = array[i * MAX_SIZE + j];
     }
   }
   if (khairullin::triangle(square_array, MIN_SIZE))
@@ -157,7 +147,7 @@ void khairullin::work_with_static(int rows, int cols,
   } 
 }
 
-void khairullin::worl_with_dinamic(int rows, int cols,
+void khairullin::work_with_dinamic(int rows, int cols,
   std::ifstream & input, std::ofstream & 
     output, int command)
 {
@@ -169,7 +159,9 @@ void khairullin::worl_with_dinamic(int rows, int cols,
     throw std::bad_alloc();
   }
   khairullin::filling(array, input, rows, cols, command);
-  output << khairullin::localmax(array rows, cols) << "\n";
+  output << khairullin::localmax(array, rows, cols) << "\n";
+  const int MIN_SIZE = std::min(rows, cols);
+  const int MAX_SIZE = std::max(rows, cols);
   int * square_array = reinterpret_cast<int *>
     (std::malloc(MIN_SIZE * MIN_SIZE * sizeof(int)));
   if (square_array == nullptr)
@@ -177,12 +169,12 @@ void khairullin::worl_with_dinamic(int rows, int cols,
     throw std::bad_alloc();
   }
   for (int i = 0; i < MIN_SIZE; i++)
+  {
+    for (int j = 0; j < MIN_SIZE; ++j)
     {
-      for (int j = 0; j < MIN_SIZE; ++j)
-      {
-        square_array[MIN_SIZE * i + j] = array[MAX_SIZE * i + j];
-      }
+      square_array[MIN_SIZE * i + j] = array[MAX_SIZE * i + j];
     }
+  }
   free(array);
   if (khairullin::triangle(square_array, MIN_SIZE))
   {  
@@ -205,7 +197,7 @@ int main (int argc, char ** argv)
   {
     int rows = 0, cols = 0;
     input >> rows >> cols;
-    if (khair::check_arguments(argc, argv))
+    if (khair::check_arguments(argc, argv, command))
     {
       return 1;
     }
@@ -213,9 +205,7 @@ int main (int argc, char ** argv)
     {
       throw std::logic_error("File is empty");
     }
-    else if ((rows == 0 and cols != 0) || 
-      (rows != 0 and cols == 0) 
-        || (rows < 0 or cols < 0))
+    else if ((rows == 0 and cols != 0) || (rows != 0 and cols == 0) || (rows < 0 or cols < 0))
     {
       throw std::runtime_error("Invalid rows or columns");
     }
@@ -255,9 +245,5 @@ int main (int argc, char ** argv)
   {
     std::cerr << "ERROR: " << exc.what() << "\n";
     return 2;
-  }
-  catch (...)
-  {
-    std::cerr << "Unknown error\n";
   }
 }
