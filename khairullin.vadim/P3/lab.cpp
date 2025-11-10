@@ -179,37 +179,66 @@ void worl_with_dinamic(int rows, int cols,
 
 int main (int argc, char ** argv)
 {
-  int rows = 0, cols = 0;
   int command = argv[1][0] - '0';
   std::ifstream input(argv[2]);
   std::ofstream output(argv[3]);
-  input >> rows >> cols;
-  if (check_arguments(argc, argv))
+  try
   {
-    return 1;
-  }
-  if (!input)
-  {
-    throw std::logic_error("File is empty");
-  }
-  else if ((rows == 0 and cols != 0) || (rows != 0 and cols == 0) || (rows < 0 or cols < 0))
-  {
-    throw std::runtime_error("Invalid rows or columns");
-  }
-  else if (rows != 0 and cols != 0)
-  {
-    if (argv[1][0] == '1')
+    int rows = 0, cols = 0;
+    input >> rows >> cols;
+    if (check_arguments(argc, argv))
+    {
+      return 1;
+    }
+    if (!input)
+    {
+      throw std::logic_error("File is empty");
+    }
+    else if ((rows == 0 and cols != 0) || 
+      (rows != 0 and cols == 0) 
+        || (rows < 0 or cols < 0))
+    {
+      throw std::runtime_error("Invalid rows or columns");
+    }
+    else if (rows != 0 and cols != 0)
+    {
+      if (argv[1][0] == '1')
       {
         work_with_static(rows, cols, input, output, command);        
       }
-    else if (argv[1][0] == '2')
+      else if (argv[1][0] == '2')
       {
         work_with_dinamic(rows, cols, input, output, command);
       }
+    }
+    else if (rows == 0 and cols == 0)
+    {
+      output << "Count of local maximums - 0\n";
+      output << "False\n";
+    }
   }
-  else if (rows == 0 and cols == 0)
+  catch (const std::runtime_error & err)
   {
-    output << "Count of local maximums - 0\n";
-    output << "False\n";
+    std::cerr << "ERROR: " << err.what() << "\n";
+    return 2;
+  }
+  catch(const std::invalid_argument & msg)
+  {
+    std::cerr << "ERROR: " << msg.what() << "\n";
+    return 2;
+  }
+  catch(const std::bad_alloc & e)
+  {
+    std::cerr << "ERROR: " << e.what() << "\n";
+    return 2;
+  }
+  catch (std::logic_error & exc)
+  {
+    std::cerr << "ERROR: " << exc.what() << "\n";
+    return 2;
+  }
+  catch (...)
+  {
+    std::cerr << "Unknown error\n";
   }
 }
