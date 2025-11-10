@@ -49,18 +49,17 @@ int khairullin::localmax(int * array, int rows, int cols)
     {
       for (int j = 0; j < cols; ++j)
       {
-        if (i != 0 and j != 0 and i != rows - 1
-          and j != cols - 1)
+        if (i != 0 and j != 0 and i != rows - 1 and j != cols - 1)
         {
             if(array[i*cols + j] > array[(i-1)*cols+j]
-              and array[i * cols + j] > array[(i+1)*cols 
-                + j]  and array[i*cols + j] > array[i * 
-                  cols + j-1] and array[i*cols + j] > 
+              and array[i * cols + j] > array[(i+1)*cols
+                + j]  and array[i*cols + j] > array[i *
+                  cols + j-1] and array[i*cols + j] >
                     array[i*cols + j+1])
             {
               CounterOfMax++;
             }
-        } 
+        }
       }
     }
   return CounterOfMax;
@@ -79,14 +78,14 @@ bool khairullin::triangle(int *array, int size)
       if (j != size - 1)
       {
         counter += khairullin::CheckZero(array, i, j, size);
-      }    
+      }
     }
     if (CountOfNullsOnRow - 1 == counter)
     {
       SumOfZeroes++;
       counter = 0;
       CountOfNullsOnRow--;
-    }  
+    }
   }
   return (SumOfZeroes == COUNT_OF_ROWS_WITH_ZEROES);
 }
@@ -120,9 +119,7 @@ int khairullin::check_arguments(int argc, char ** argv, int command)
   return 0;
 }
 
-void khairullin::work_with_static(int rows, int cols,
-  std::ifstream & input, std::ofstream & 
-    output, int command)
+void khairullin::work_with_static(int rows, int cols, std::ifstream & input, std::ofstream & output, int command)
 {
   int array[10000] = {};
   khairullin::filling(array, input, rows, cols, command);
@@ -144,16 +141,12 @@ void khairullin::work_with_static(int rows, int cols,
   else
   {
     output << "False\n";
-  } 
+  }
 }
 
-void khairullin::work_with_dinamic(int rows, int cols,
-  std::ifstream & input, std::ofstream & 
-    output, int command)
+void khairullin::work_with_dinamic(int rows, int cols, std::ifstream & input, std::ofstream & output, int command)
 {
-  int * array = reinterpret_cast<int *> 
-    (std::malloc(rows * cols *
-      sizeof(int)));
+  int * array = reinterpret_cast<int *> (std::malloc(rows * cols * sizeof(int)));
   if (array == nullptr)
   {
     throw std::bad_alloc();
@@ -213,7 +206,7 @@ int main (int argc, char ** argv)
     {
       if (argv[1][0] == '1')
       {
-        khair::work_with_static(rows, cols, input, output, command);        
+        khair::work_with_static(rows, cols, input, output, command);
       }
       else if (argv[1][0] == '2')
       {
@@ -246,5 +239,5 @@ int main (int argc, char ** argv)
     std::cerr << "ERROR: " << exc.what() << "\n";
     return 2;
   }
-} 
+}
 
