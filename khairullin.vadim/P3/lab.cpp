@@ -44,31 +44,31 @@ int khairullin::CheckZero(int * array, int index1, int index2, int size)
 
 int khairullin::localmax(int * array, int rows, int cols)
 {
-  int CounterOfMax = 0;
-    for (int i = 0; i < rows; ++i)
+  int counter_of_max = 0;
+  for (int i = 0; i < rows; ++i)
+  {
+    for (int j = 0; j < cols; ++j)
     {
-      for (int j = 0; j < cols; ++j)
+      if (i != 0 and j != 0 and i != rows - 1 and j != cols - 1)
       {
-        if (i != 0 and j != 0 and i != rows - 1 and j != cols - 1)
-        {
-            if(array[i*cols + j] > array[(i-1)*cols+j]
-              and array[i * cols + j] > array[(i+1)*cols
+        if(array[i*cols + j] > array[(i-1)*cols+j]
+            and array[i * cols + j] > array[(i+1)*cols
                 + j]  and array[i*cols + j] > array[i *
-                  cols + j-1] and array[i*cols + j] >
-                    array[i*cols + j+1])
+                    cols + j-1] and array[i*cols + j] >
+                        array[i*cols + j+1])
             {
-              CounterOfMax++;
+              counter_of_max++;
             }
         }
       }
     }
-  return CounterOfMax;
+  return counter_of_max;
 }
 
 bool khairullin::triangle(int *array, int size)
 {
-  int SumOfZeroes = 0;
-  int CountOfNullsOnRow = size - 1;
+  int sum_of_zeroes = 0;
+  int count_of_nulls_on_row = size - 1;
   int counter = 0;
   const int COUNT_OF_ROWS_WITH_ZEROES = size - 1;
   for (int i = 0; i < COUNT_OF_ROWS_WITH_ZEROES; ++i)
@@ -80,14 +80,14 @@ bool khairullin::triangle(int *array, int size)
         counter += khairullin::CheckZero(array, i, j, size);
       }
     }
-    if (CountOfNullsOnRow - 1 == counter)
+    if (count_of_nulls_on_row - 1 == counter)
     {
-      SumOfZeroes++;
+      sum_of_zeroes++;
       counter = 0;
-      CountOfNullsOnRow--;
+      count_of_nulls_on_row--;
     }
   }
-  return (SumOfZeroes == COUNT_OF_ROWS_WITH_ZEROES);
+  return (sum_of_zeroes == COUNT_OF_ROWS_WITH_ZEROES);
 }
 
 int khairullin::check_arguments(int argc, char ** argv, int command)
