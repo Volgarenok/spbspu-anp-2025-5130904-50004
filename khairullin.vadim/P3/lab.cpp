@@ -246,4 +246,5 @@ int main (int argc, char ** argv)
     std::cerr << "ERROR: " << exc.what() << "\n";
     return 2;
   }
-}
+} 
+
