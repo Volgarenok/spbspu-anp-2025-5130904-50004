@@ -2,7 +2,25 @@
 #include <fstream>
 #include <algorithm>
 
-void filling(int * array, std::ifstream &
+namespace khairullin
+{
+  int check_arguments(int argc, char ** argv,
+    int command);
+  void filling(int * array, std::ifstream &
+    input, int rows, int cols, int command);
+  int localmax(int * array, int rows, int cols);
+  int CheckZero(int * array, int index1,int 
+    index2, int size);
+  bool triangle(int *array, int size);
+  void work_with_dinamic(int rows, int cols,
+    std::ifstream & input, std::ofstream & output,
+      int command);
+  void work_with_static(int rows, int cols, 
+    std::ifstream & input, std::ofstream & output,
+      int command);
+}
+
+void khairullin::filling(int * array, std::ifstream &
   input, int rows, int cols, int command)
 {
   for (int i = 0; i < rows * cols; ++i)
@@ -21,7 +39,7 @@ void filling(int * array, std::ifstream &
   input.close();
 }
 
-int CheckZero(int * array,
+int khairullin::CheckZero(int * array,
   int index1,int index2, int size)
 {
   if (array[index1 * size + index2] ==
@@ -36,7 +54,7 @@ int CheckZero(int * array,
   }
 }
 
-int localmax(int * array, int rows, int cols)
+int khairullin::localmax(int * array, int rows, int cols)
 {
    int CounterOfMax = 0;
      for (int i = 0; i < rows; ++i){
@@ -57,7 +75,7 @@ int localmax(int * array, int rows, int cols)
   return CounterOfMax;
 }
 
-bool triangle(int *array, int size)
+bool khairullin::triangle(int *array, int size)
 {
   int SumOfZeroes = 0;
   int CountOfNullsOnRow = size - 1;
@@ -69,7 +87,7 @@ bool triangle(int *array, int size)
     {
       if (j != size - 1)
         {
-          counter += CheckZero(array, i, j, size);
+          counter += khairullin::CheckZero(array, i, j, size);
         }    
     }
     if (CountOfNullsOnRow - 1 == counter)
@@ -82,7 +100,7 @@ bool triangle(int *array, int size)
   return (SumOfZeroes == COUNT_OF_ROWS_WITH_ZEROES);
 }
 
-int check_arguments(int argc, char ** argv, int command)
+int khairullin::check_arguments(int argc, char ** argv, int command)
 {
   if (argc < 4)
   {
@@ -111,13 +129,13 @@ int check_arguments(int argc, char ** argv, int command)
   return 0;
 }
 
-void work_with_static(int rows, int cols,
+void khairullin::work_with_static(int rows, int cols,
   std::ifstream & input, std::ofstream & 
     output, int command)
 {
   int array[10000] = {};
-  filling(array, input, rows, cols, command);
-  output << localmax(array, rows, cols) << "\n";
+  khairullin::filling(array, input, rows, cols, command);
+  output << khairullin::localmax(array, rows, cols) << "\n";
   int square_array[10000] = {};
   const int MIN_SIZE = std::min(rows, cols);
   const int MAX_SIZE = std::max(rows, cols);
@@ -129,7 +147,7 @@ void work_with_static(int rows, int cols,
         array[i * MAX_SIZE + j];
     }
   }
-  if (triangle(square_array, MIN_SIZE))
+  if (khairullin::triangle(square_array, MIN_SIZE))
   {
     output << "True\n";
   }
@@ -139,7 +157,7 @@ void work_with_static(int rows, int cols,
   } 
 }
 
-void worl_with_dinamic(int rows, int cols,
+void khairullin::worl_with_dinamic(int rows, int cols,
   std::ifstream & input, std::ofstream & 
     output, int command)
 {
@@ -150,8 +168,8 @@ void worl_with_dinamic(int rows, int cols,
   {
     throw std::bad_alloc();
   }
-  filling(array, input, rows, cols, command);
-  output << localmax(array rows, cols) << "\n";
+  khairullin::filling(array, input, rows, cols, command);
+  output << khairullin::localmax(array rows, cols) << "\n";
   int * square_array = reinterpret_cast<int *>
     (std::malloc(MIN_SIZE * MIN_SIZE * sizeof(int)));
   if (square_array == nullptr)
@@ -166,7 +184,7 @@ void worl_with_dinamic(int rows, int cols,
       }
     }
   free(array);
-  if (triangle(square_array, MIN_SIZE))
+  if (khairullin::triangle(square_array, MIN_SIZE))
   {  
     output << "True\n";
   }  
@@ -179,6 +197,7 @@ void worl_with_dinamic(int rows, int cols,
 
 int main (int argc, char ** argv)
 {
+  namespace khair = khairullin;
   int command = argv[1][0] - '0';
   std::ifstream input(argv[2]);
   std::ofstream output(argv[3]);
@@ -186,7 +205,7 @@ int main (int argc, char ** argv)
   {
     int rows = 0, cols = 0;
     input >> rows >> cols;
-    if (check_arguments(argc, argv))
+    if (khair::check_arguments(argc, argv))
     {
       return 1;
     }
@@ -204,11 +223,11 @@ int main (int argc, char ** argv)
     {
       if (argv[1][0] == '1')
       {
-        work_with_static(rows, cols, input, output, command);        
+        khair::work_with_static(rows, cols, input, output, command);        
       }
       else if (argv[1][0] == '2')
       {
-        work_with_dinamic(rows, cols, input, output, command);
+        khair::work_with_dinamic(rows, cols, input, output, command);
       }
     }
     else if (rows == 0 and cols == 0)
