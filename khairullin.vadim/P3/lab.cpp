@@ -21,6 +21,27 @@ void filling(int * array, std::ifstream &
   input.close();
 }
 
+int khairullin::localmax(int * array, int rows, int cols)
+{
+   int CounterOfMax = 0;
+     for (int i = 0; i < rows; ++i){
+       for (int j = 0; j < cols; ++j){
+         if (i != 0 and j != 0 and i != rows - 1
+           and j != cols - 1){
+             if(array[i*cols + j] > array[(i-1)*cols+j]
+               and array[i * cols + j] > array[(i+1)*cols 
+                 + j]  and array[i*cols + j] > array[i * 
+                   cols + j-1] and array[i*cols + j] > 
+                     array[i*cols + j+1])
+                     {
+                       CounterOfMax++;
+                     }
+                   } 
+                 }
+               }
+  return CounterOfMax;
+}
+
 int check_arguments(int argc, char ** argv, int command)
 {
   if (argc < 4)
@@ -56,6 +77,7 @@ void work_with_static(int rows, int cols,
 {
   int array[10000] = {};
   filling(array, input, rows, cols, command);
+  
 }
 
 void worl_with_dinamic(int rows, int cols,
