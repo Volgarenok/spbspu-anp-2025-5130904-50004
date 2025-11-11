@@ -19,10 +19,6 @@ int main(int argc, char ** argv)
   }
 
   std::ifstream input(argv[2]);
-  if (!input.is_open()) {
-    std::cerr << "Failed to open file " << argv[2] << "\n";
-    return 2;
-  }
   size_t n = 0ull, m = 0ull;
   input >> n >> m;
   int num = argv[1][0] == '1' ? 1 : 2;
@@ -35,7 +31,7 @@ int main(int argc, char ** argv)
   }
 
   alekseev::input_matrix(input, matrix, n, m);
-  alekseev::lft_bot_clk(matrix, n, m);
+  alekseev::lft_top_clk(matrix, n, m);
   std::ofstream output(argv[3]);
   alekseev::output_matrix(output, matrix, n, m);
 }

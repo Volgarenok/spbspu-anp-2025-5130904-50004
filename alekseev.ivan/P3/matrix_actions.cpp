@@ -29,45 +29,45 @@ namespace alekseev {
   }
 
 
-  void lft_bot_clk(int * matrix, size_t n, size_t m)
+  void lft_top_clk(int * matrix, size_t n, size_t m)
   {
-    int mods[4]{-1, 0, 1, 0};
-    size_t modificator_id = 0;
-    size_t i = n, j = 0ull;
-    size_t top = 0ull, bot = n - 1ull, left = 0ull, right = m - 1ull;
-    matrix[i * m + j] += 1;
-    for (size_t k = 1ull; k < n * m; ++k) {
-      i += mods[modificator_id % 4];
-      j += mods[(modificator_id + 1) % 4];
-      modify(top, bot, left, right, i, j, modificator_id);
-      matrix[i * m + j] -= k + 1;
+    int modifiers[4]{0, 1, 0, -1};
+    int modifier_id = 0;
+    size_t i = 1ull, j = 1ull;
+    size_t top = 1ull, bottom = n, left = 1ull, right = m;
+    for (size_t k = 0ull; k < n * m; ++k) {
+      matrix[(i - 1) * m + (j - 1)] -= k + 1;
+
+      i += modifiers[modifier_id];
+      j += modifiers[modifier_id + 1];
+      modify(i, j, modifier_id,top, bottom, left, right);
     }
   }
 
 
-  void modify(size_t & top, size_t & bot, size_t & left, size_t & right,
-              size_t & i, size_t & j, size_t & modificator_id)
+  void modify(size_t & i, size_t & j, int & modifier_id,
+              size_t & top, size_t & bottom, size_t & left, size_t & right)
   {
-    if (i > top) {
-      --top;
-      --i;
-      ++j;
-      ++modificator_id;
-    } else if (j > right) {
+    if (j > right) {
+      ++top;
+      j = right;
+      ++i;
+      modifier_id = (modifier_id + 1) % 4;
+    } else if (i > bottom) {
       --right;
+      i = bottom;
       --j;
-      ++i;
-      ++modificator_id;
-    } else if (i < bot) {
-      ++bot;
-      ++i;
-      --j;
-      ++modificator_id;
+      modifier_id = (modifier_id + 1) % 4;
     } else if (j < left) {
-      ++left;
-      ++j;
+      --bottom;
+      j = left;
       --i;
-      ++modificator_id;
+      modifier_id = (modifier_id + 1) % 4;
+    } else if (i < top) {
+      ++left;
+      i = top;
+      ++j;
+      modifier_id = (modifier_id + 1) % 4;
     }
   }
 }
