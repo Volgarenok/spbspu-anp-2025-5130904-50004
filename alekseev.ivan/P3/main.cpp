@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstddef>
-#include "io_matrix.h"
+#include "matrix_actions.h"
 
 namespace alekseev {
   bool check_cl_args(int argc, char ** argv);
@@ -35,6 +35,7 @@ int main(int argc, char ** argv)
   }
 
   alekseev::input_matrix(input, matrix, n, m);
+  alekseev::lft_bot_clk(matrix, n, m);
   std::ofstream output(argv[3]);
   alekseev::output_matrix(output, matrix, n, m);
 }
