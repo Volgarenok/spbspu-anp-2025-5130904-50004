@@ -40,7 +40,7 @@ namespace alekseev {
 
       i += modifiers[modifier_id];
       j += modifiers[modifier_id + 1];
-      modify(i, j, modifier_id,top, bottom, left, right);
+      modify(i, j, modifier_id, top, bottom, left, right);
     }
   }
 
@@ -69,5 +69,17 @@ namespace alekseev {
       ++j;
       modifier_id = (modifier_id + 1) % 4;
     }
+  }
+
+
+  size_t min(int * start, const int * end)
+  {
+    int * m = start;
+    for (int * id = start + 1; id < end; ++id) {
+      if (*id < *m) {
+        m = id;
+      }
+    }
+    return m - start;
   }
 }
