@@ -130,6 +130,24 @@ void velizade::leftTopClockwise(int* arr, size_t rows, size_t cols)
   delete[] temp;
 }
 
-int main()
+int main(int argc, char** argv)
 {
-}
+  if (argc > 4)
+  {
+    std::cerr << "Too many arguments" << "\n";
+    return 1;
+  }
+  if (argc < 4)
+  {
+    std::cerr << "Not enough arguments" << "\n";
+    return 1;
+  }
+
+
+  char num = argv[1][0];
+  if (num != '1' && num != '2')
+  {
+    std::cerr << "First parametr out of range or first parametr os nor a number" << "\n";
+    return 1;
+  }
+
