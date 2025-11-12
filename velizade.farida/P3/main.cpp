@@ -167,3 +167,47 @@ int main(int argc, char** argv)
     return 2;
   }
 
+  if (num == '1')
+  {
+    if (rows * cols > 10000)
+    {
+      std::cerr << "Too large matrix for fixed storage" << "\n";
+      return 2;
+    }
+
+    int arr[10000] = {};
+    if (!velizade::readArr(input, arr, rows, cols))
+    {
+      return 2;
+    }
+
+    int result = velizade::countLocalMins(arr, rows, cols);
+    velizade::writeResult(output, arr, rows, cols, result);
+  }
+  else
+  {
+    int* arr = nullptr;
+    try
+    {
+      arr = new int[rows * cols]();
+      if (!velizade::readArr(input, arr, rows, cols))
+      {
+        delete[] arr;
+        return 2;
+      }
+
+      velizade::leftTopClockwise(arr, rows, cols);
+      velizade::writeResult(output, arr, rows, cols, 0);
+
+      delete[] arr;
+    }
+    catch (const std::bad_alloc&)
+    {
+      std::cerr << "Memory allocation error" << "\n";
+      delete[] arr;
+      return 2;
+    }
+  }
+
+  return 0;
+}
