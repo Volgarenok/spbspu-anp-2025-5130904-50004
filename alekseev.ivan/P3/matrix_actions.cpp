@@ -32,42 +32,42 @@ namespace alekseev {
   void lft_top_clk(int * matrix, size_t n, size_t m)
   {
     int modifiers[4]{0, 1, 0, -1};
-    int modifier_id = 0;
+    size_t modifier_id = 0;
     size_t i = 1ull, j = 1ull;
     size_t top = 1ull, bottom = n, left = 1ull, right = m;
     for (size_t k = 0ull; k < n * m; ++k) {
       matrix[(i - 1) * m + (j - 1)] -= k + 1;
 
-      i += modifiers[modifier_id];
-      j += modifiers[modifier_id + 1];
+      i += modifiers[modifier_id % 4];
+      j += modifiers[(modifier_id + 1) % 4];
       modify(i, j, modifier_id, top, bottom, left, right);
     }
   }
 
 
-  void modify(size_t & i, size_t & j, int & modifier_id,
+  void modify(size_t & i, size_t & j, size_t & modifier_id,
               size_t & top, size_t & bottom, size_t & left, size_t & right)
   {
     if (j > right) {
       ++top;
       j = right;
       ++i;
-      modifier_id = (modifier_id + 1) % 4;
+      ++modifier_id;
     } else if (i > bottom) {
       --right;
       i = bottom;
       --j;
-      modifier_id = (modifier_id + 1) % 4;
+      ++modifier_id;
     } else if (j < left) {
       --bottom;
       j = left;
       --i;
-      modifier_id = (modifier_id + 1) % 4;
+      ++modifier_id;
     } else if (i < top) {
       ++left;
       i = top;
       ++j;
-      modifier_id = (modifier_id + 1) % 4;
+      ++modifier_id;
     }
   }
 
