@@ -31,8 +31,9 @@ int main(int argc, char ** argv)
   }
 
   alekseev::input_matrix(input, matrix, n, m);
-  std::cout << alekseev::cnt_sdl_pnt(matrix, n, m) << "\n";
   std::ofstream output(argv[3]);
+  output << alekseev::cnt_sdl_pnt(matrix, n, m) << "\n";
+  alekseev::lft_top_clk(matrix, n, m);
   alekseev::output_matrix(output, matrix, n, m);
 }
 
