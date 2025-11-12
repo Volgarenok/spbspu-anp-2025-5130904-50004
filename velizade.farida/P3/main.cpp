@@ -76,6 +76,60 @@ int velizade::countLocalMins(const int* arr, size_t rows, size_t cols)
   return count;
 }
 
+void velizade::leftTopClockwise(int* arr, size_t rows, size_t cols)
+{
+  if (rows == 0 || cols == 0) return;
+
+  int* temp = new int[rows * cols];
+  for (size_t i = 0; i < rows * cols; i++)
+  {
+    temp[i] = arr[i];
+  }
+
+  int top = 0, bottom = rows - 1;
+  int left = 0, right = cols - 1;
+  int decrement = 1;
+
+  while (top <= bottom && left <= right)
+  {
+    for (int j = left; j <= right; j++)
+    {
+      temp[top * cols + j] -= decrement++;
+    }
+    top++;
+
+    for (int i = top; i <= bottom; i++)
+    {
+      temp[i * cols + right] -= decrement++;
+    }
+    right--;
+
+    if (top <= bottom)
+    {
+      for (int j = right; j >= left; j--)
+      {
+        temp[bottom * cols + j] -= decrement++;
+      }
+      bottom--;
+    }
+
+    if (left <= right)
+    {
+      for (int i = bottom; i >= top; i--)
+      {
+        temp[i * cols + left] -= decrement++;
+      }
+      left++;
+    }
+  }
+
+  for (size_t i = 0; i < rows * cols; i++)
+  {
+    arr[i] = temp[i];
+  }
+  delete[] temp;
+}
+
 int main()
 {
 }
