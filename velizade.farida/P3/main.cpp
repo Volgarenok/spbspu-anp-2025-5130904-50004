@@ -10,6 +10,19 @@ namespace velizade
   void leftTopClockwise(int* arr, size_t rows, size_t cols);
 }
 
+std::istream& velizade::readArr(std::istream& input, int* arr, size_t rows, size_t cols)
+{
+  for (size_t i = 0; i < rows * cols; i++)
+  {
+    if (!(input >> arr[i]))
+    {
+      std::cerr << "Incorrect matrix input" << "\n";
+      return input;
+    }
+  }
+  return input;
+}
+
 int main()
 {
 }
