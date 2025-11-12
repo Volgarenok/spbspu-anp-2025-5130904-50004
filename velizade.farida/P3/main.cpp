@@ -143,11 +143,27 @@ int main(int argc, char** argv)
     return 1;
   }
 
-
   char num = argv[1][0];
   if (num != '1' && num != '2')
   {
     std::cerr << "First parametr out of range or first parametr os nor a number" << "\n";
     return 1;
+  }
+
+  std::ifstream input(argv[2]);
+  std::ofstream output(argv[3]);
+  if (!input.is_open() || !output.is_open())
+  {
+    std::cerr << "Error opening files" << "\n";
+    return 1;
+  }
+
+  size_t rows = 0;
+  size_t cols = 0;
+
+  if (!(input >> rows) || !(input >> cols))
+  {
+    std::cerr << "Incorrect matrix dimensions" << "\n";
+    return 2;
   }
 
