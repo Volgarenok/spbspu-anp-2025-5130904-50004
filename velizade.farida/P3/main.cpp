@@ -42,6 +42,40 @@ std::ostream& velizade::writeResult(std::ostream& output, const int* arr, size_t
   return output;
 }
 
+int velizade::countLocalMins(const int* arr, size_t rows, size_t cols)
+{
+  if (rows < 3 || cols < 3) return 0;
+
+  int count = 0;
+  for (size_t i = 1; i < rows - 1; i++)
+  {
+    for (size_t j = 1; j < cols - 1; j++)
+    {
+      int current = arr[i * cols + j];
+      bool isLocalMin = true;
+
+      for (int di = -1; di <= 1; di++)
+      {
+        for (int dj = -1; dj <= 1; dj++)
+        {
+          if (di == 0 && dj == 0) continue;
+          size_t ni = i + di;
+          size_t nj = j + dj;
+          if (current >= arr[ni * cols + nj])
+          {
+            isLocalMin = false;
+            break;
+          }
+        }
+        if (!isLocalMin) break;
+      }
+
+      if (isLocalMin) count++;
+    }
+  }
+  return count;
+}
+
 int main()
 {
 }
