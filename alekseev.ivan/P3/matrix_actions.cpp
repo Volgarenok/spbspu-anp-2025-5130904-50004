@@ -82,4 +82,21 @@ namespace alekseev {
     }
     return m - start;
   }
+
+
+  size_t cnt_sdl_pnt(int * matrix, size_t n, size_t m)
+  {
+    size_t counter = 0;
+    for (size_t i = 0ull; i < n; ++i) {
+      size_t str_min = min(matrix + i * m, matrix + (i + 1) * m);
+      bool is_col_max = true;
+      for (size_t j = 0ull; j < n; ++j) {
+        if (matrix[i * m + str_min] < matrix[j * m + str_min]) {
+          is_col_max = false;
+        }
+      }
+      counter += is_col_max;
+    }
+    return counter;
+  }
 }
