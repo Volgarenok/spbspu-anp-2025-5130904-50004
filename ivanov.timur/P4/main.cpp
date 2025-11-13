@@ -58,5 +58,44 @@ ivanov::Line &ivanov::Line::operator=(const Line l) {
   delete[] content;
   content = tmp;
   size = l.get_size();
+  return *this;
 }
+
+size_t ivanov::Line::get_size() const noexcept {
+  return size;
+}
+char ivanov::Line::get(size_t id) const noexcept {
+  return content[id];
+}
+void ivanov::Line::next(char s) {
+  char * tmp = new char[get_size() + 1];
+  for (size_t i = 0; i < get_size() - 1; ++i) {
+    tmp[i] = get(i);
+  }
+  tmp[get_size() - 1] = s;
+  tmp[get_size()] = 0;
+  delete[] content;
+  content = tmp;
+  size++;
+}
+void ivanov::Line::rmv(size_t id) noexcept {
+  char * tmp = new char[get_size() - 1];
+  for (size_t i = 0; i < id; ++i) {
+    tmp[i] = get(i);
+  }
+  for (size_t i = id + 1; i < get_size(); ++i) {
+    tmp[i - 1] = get(i);
+  }
+  delete[] content;
+  content = tmp;
+  size--;
+}
+void ivanov::Line::get_line() const noexcept {
+  for (size_t i = 0; i < get_size(); ++i) {
+    std::cout << get(i) << " ";
+  }
+  std::cout << "\n";
+}
+
+
 
