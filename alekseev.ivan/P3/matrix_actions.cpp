@@ -98,7 +98,7 @@ namespace alekseev {
 
   size_t cnt_sdl_pnt(int * matrix, size_t rows, size_t cols)
   {
-    bool str_mins[rows * cols];
+    bool * str_mins = new bool[rows * cols];
     for (size_t i = 0; i < rows; ++i) {
       int * start = matrix + i * cols;
       int * end = start + cols;
@@ -117,6 +117,7 @@ namespace alekseev {
         }
       }
     }
+    delete[] str_mins;
     return counter;
   }
 }

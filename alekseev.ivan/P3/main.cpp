@@ -23,8 +23,8 @@ int main(int argc, char ** argv)
   input >> rows >> cols;
   int num = argv[1][0] == '1' ? 1 : 2;
   int * matrix = nullptr;
+  int temp[SIZE];
   if (num == 1) {
-    int temp[SIZE];
     matrix = temp;
   } else {
     matrix = new int[rows * cols];
@@ -36,6 +36,9 @@ int main(int argc, char ** argv)
     output << alekseev::cnt_sdl_pnt(matrix, rows, cols) << "\n";
     alekseev::lft_top_clk(matrix, rows, cols);
     alekseev::output_matrix(output, matrix, rows, cols);
+    if (num == 2) {
+      delete[] matrix;
+    }
   } catch (const std::exception & e) {
     std::cerr << e.what() << "\n";
     if (num == 2) {
