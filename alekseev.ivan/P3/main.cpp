@@ -32,6 +32,10 @@ int main(int argc, char ** argv)
 
   try {
     alekseev::input_matrix(input, matrix, rows, cols);
+    std::ofstream output(argv[3]);
+    output << alekseev::cnt_sdl_pnt(matrix, rows, cols) << "\n";
+    alekseev::lft_top_clk(matrix, rows, cols);
+    alekseev::output_matrix(output, matrix, rows, cols);
   } catch (const std::exception & e) {
     std::cerr << e.what() << "\n";
     if (num == 2) {
@@ -39,10 +43,6 @@ int main(int argc, char ** argv)
     }
     return 2;
   }
-  std::ofstream output(argv[3]);
-  output << alekseev::cnt_sdl_pnt(matrix, rows, cols) << "\n";
-  alekseev::lft_top_clk(matrix, rows, cols);
-  alekseev::output_matrix(output, matrix, rows, cols);
 }
 
 
