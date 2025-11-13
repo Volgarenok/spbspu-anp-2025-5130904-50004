@@ -21,21 +21,26 @@ bool ifNumber (char ** m) {
 	return false;
 }
 
-std::ifstream& inputMatrix (std::ifstream& in, int * m, size_t rows, size_t cols) {
+std::ifstream& inputMatrix (std::ifstream& in, int ** m, size_t rows, size_t cols) {
 	in >> rows >> cols;
 	if (!(in >> rows >> cols)) {
 		throw "Wrong matris input";
 	}
 	for (size_t i = 0; i < rows; ++i) {
 		for (size_t j = 0; j < cols; ++j) {
-			in >> m[i*cols+j];
-			if (!(in >> rows >> cols)) {
+			in >> m[i][j];
+			if (!(in >> m[i][j])) {
 				throw "Wrong matris input";
 		  }
 	  }
   }
 	return in;
 }
+
+// void clearMatrix (int * m, size_t rows, size_t cols) {
+// 	delete[] 
+// }
+
 
 int main(int argc, char ** argv)
 {
