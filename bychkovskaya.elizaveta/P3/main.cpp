@@ -1,13 +1,53 @@
 #include <iostream>
-// #include <fstream>
+#include <fstream>
 
-int main(int, char ** argv)
-{
-	char num = argv[1][0];
-	if (num == '1') {
-		//массив фиксированной длины
+//проверить, является ли первый параметр кмд числом
+bool ifNumber (char ** m) {
+	size_t k = 0;
+	size_t k1 = 0;
+	for (size_t i = 0; m[1][i]!='\0'; ++i) {
+		for (size_t j = 0; j < 10; j++) {
+			char tmp;
+		  tmp = j;
+			if (m[1][i] == tmp + '0') {
+				++k;
+			}
+		}
+		++k1;
 	}
-	if (num == '2') {
-		//динамический массив
+	if (k==k1) {
+			return true;
+	}
+	return false;
+}
+
+
+int main(int argc, char ** argv)
+{
+	if (argc > 4) {
+		std::cerr << "Too many arguments" << "\n";
+		return 1;
+	}
+	else if (argc < 4) {
+		std::cerr << "Not enough arguments" << "\n";
+	}
+	if (argc == 4) {
+		char num = argv[1][0];
+		if (num == '1') {
+			// int statmatrix[10000];
+		}
+		else if (num == '2') {
+			//динамичсекий массив
+		}
+		else {
+			if (ifNumber (argv) == 1) {
+				std::cerr << "First parameter is out of range" << "\n";
+				return 1;
+			}
+			if (ifNumber (argv) == 0) {
+				std::cerr << "First parameter is not a number" << "\n";
+				return 1;
+			}
+		}
 	}
 } 
