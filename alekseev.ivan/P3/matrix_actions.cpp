@@ -83,6 +83,7 @@ namespace alekseev {
     return m;
   }
 
+
   int * max_of_column(int * matrix, const size_t rows, const size_t cols, size_t j)
   {
     int * ma = matrix + j;
