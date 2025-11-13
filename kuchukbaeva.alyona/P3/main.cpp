@@ -1,4 +1,4 @@
-#include "toy.hpp"
+#include "functions.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>
