@@ -21,6 +21,21 @@ bool ifNumber (char ** m) {
 	return false;
 }
 
+std::ifstream& inputMatrix (std::ifstream& in, int * m, size_t rows, size_t cols) {
+	in >> rows >> cols;
+	if (!(in >> rows >> cols)) {
+		throw "Wrong matris input";
+	}
+	for (size_t i = 0; i < rows; ++i) {
+		for (size_t j = 0; j < cols; ++j) {
+			in >> m[i*cols+j];
+			if (!(in >> rows >> cols)) {
+				throw "Wrong matris input";
+		  }
+	  }
+  }
+	return in;
+}
 
 int main(int argc, char ** argv)
 {
@@ -32,9 +47,12 @@ int main(int argc, char ** argv)
 		std::cerr << "Not enough arguments" << "\n";
 	}
 	if (argc == 4) {
+	
+
 		char num = argv[1][0];
 		if (num == '1') {
-			// int statmatrix[10000];
+		  // int statmatrix[10000];
+			
 		}
 		else if (num == '2') {
 			//динамичсекий массив
