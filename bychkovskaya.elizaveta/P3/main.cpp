@@ -21,6 +21,30 @@ bool ifNumber (char ** m) {
 	return false;
 }
 
+void clearMatrix (int ** m, size_t rows)
+{
+	for (size_t i=0; i < rows; ++i) {
+		delete[] m[i];
+	}
+	delete[] m;
+}
+
+int ** create (size_t rows, size_t cols)
+{
+	int ** result = new int * [rows];
+	size_t i = 0;
+	try {
+		for (; i < rows; ++i) {
+			result[i] = new int[cols];
+		}
+	}
+	catch (...) {
+		clearMatrix (result, i);
+		throw "Not enough memory";
+	}
+	return result;
+}
+
 std::ifstream& inputDinMatrix (std::ifstream& in, int ** m, size_t rows, size_t cols) {
 	in >> rows >> cols;
 	if (!(in >> rows >> cols)) {
@@ -35,14 +59,6 @@ std::ifstream& inputDinMatrix (std::ifstream& in, int ** m, size_t rows, size_t 
 	  }
   }
 	return in;
-}
-
-void clearMatrix (int ** m, size_t rows)
-{
-	for (size_t i=0; i < rows; ++i) {
-		delete[] m[i];
-	}
-	delete[] m;
 }
 
 int main(int argc, char ** argv)
