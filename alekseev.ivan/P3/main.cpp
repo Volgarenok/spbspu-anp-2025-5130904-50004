@@ -19,22 +19,30 @@ int main(int argc, char ** argv)
   }
 
   std::ifstream input(argv[2]);
-  size_t n = 0ull, m = 0ull;
-  input >> n >> m;
+  size_t rows = 0ull, cols = 0ull;
+  input >> rows >> cols;
   int num = argv[1][0] == '1' ? 1 : 2;
   int * matrix = nullptr;
   if (num == 1) {
     int temp[SIZE];
     matrix = temp;
   } else {
-    matrix = new int[n * m];
+    matrix = new int[rows * cols];
   }
 
-  alekseev::input_matrix(input, matrix, n, m);
+  try {
+    alekseev::input_matrix(input, matrix, rows, cols);
+  } catch (const std::exception & e) {
+    std::cerr << e.what() << "\n";
+    if (num == 2) {
+      delete[] matrix;
+    }
+    return 2;
+  }
   std::ofstream output(argv[3]);
-  output << alekseev::cnt_sdl_pnt(matrix, n, m) << "\n";
-  alekseev::lft_top_clk(matrix, n, m);
-  alekseev::output_matrix(output, matrix, n, m);
+  output << alekseev::cnt_sdl_pnt(matrix, rows, cols) << "\n";
+  alekseev::lft_top_clk(matrix, rows, cols);
+  alekseev::output_matrix(output, matrix, rows, cols);
 }
 
 

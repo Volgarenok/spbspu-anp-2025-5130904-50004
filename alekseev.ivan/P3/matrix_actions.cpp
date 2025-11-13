@@ -4,11 +4,11 @@
 #include <iostream>
 
 namespace alekseev {
-  void input_matrix(std::istream & input, int * matrix, const size_t n, const size_t m)
+  void input_matrix(std::istream & input, int * matrix, const size_t rows, const size_t cols)
   {
-    for (size_t i = 0ull; i < n; ++i) {
-      for (size_t j = 0ull; j < m; ++j) {
-        input >> matrix[i * m + j];
+    for (size_t i = 0ull; i < rows; ++i) {
+      for (size_t j = 0ull; j < cols; ++j) {
+        input >> matrix[i * cols + j];
       }
     }
     if (input.fail()) {
@@ -17,26 +17,26 @@ namespace alekseev {
   }
 
 
-  void output_matrix(std::ostream & output, int * matrix, const size_t n, const size_t m)
+  void output_matrix(std::ostream & output, int * matrix, const size_t rows, const size_t cols)
   {
-    for (size_t i = 0ull; i < n; ++i) {
-      output << matrix[i * m];
-      for (size_t j = 1ull; j < m; ++j) {
-        output << " " << matrix[i * m + j];
+    for (size_t i = 0ull; i < rows; ++i) {
+      output << matrix[i * cols];
+      for (size_t j = 1ull; j < cols; ++j) {
+        output << " " << matrix[i * cols + j];
       }
       output << "\n";
     }
   }
 
 
-  void lft_top_clk(int * matrix, size_t n, size_t m)
+  void lft_top_clk(int * matrix, const size_t rows, const size_t cols)
   {
     int modifiers[4]{0, 1, 0, -1};
     size_t modifier_id = 0;
     size_t i = 1ull, j = 1ull;
-    size_t top = 1ull, bottom = n, left = 1ull, right = m;
-    for (size_t k = 0ull; k < n * m; ++k) {
-      matrix[(i - 1) * m + (j - 1)] -= k + 1;
+    size_t top = 1ull, bottom = rows, left = 1ull, right = cols;
+    for (size_t k = 0ull; k < rows * cols; ++k) {
+      matrix[(i - 1) * cols + (j - 1)] -= k + 1;
 
       i += modifiers[modifier_id % 4];
       j += modifiers[(modifier_id + 1) % 4];
@@ -72,7 +72,7 @@ namespace alekseev {
   }
 
 
-  size_t min(int * start, const int * end)
+  int * min(int * start, const int * end)
   {
     int * m = start;
     for (int * id = start + 1; id < end; ++id) {
@@ -80,22 +80,41 @@ namespace alekseev {
         m = id;
       }
     }
-    return m - start;
+    return m;
+  }
+
+  int * max_of_column(int * matrix, const size_t rows, const size_t cols, size_t j)
+  {
+    int * ma = matrix + j;
+    for (size_t i = 0ull; i < rows; ++i) {
+      if (*ma < matrix[i * cols + j]) {
+        ma = matrix + i * cols + j;
+      }
+    }
+    return ma;
   }
 
 
-  size_t cnt_sdl_pnt(int * matrix, size_t n, size_t m)
+  size_t cnt_sdl_pnt(int * matrix, size_t rows, size_t cols)
   {
-    size_t counter = 0;
-    for (size_t i = 0ull; i < n; ++i) {
-      size_t str_min = min(matrix + i * m, matrix + (i + 1) * m);
-      bool is_col_max = true;
-      for (size_t j = 0ull; j < n; ++j) {
-        if (matrix[i * m + str_min] < matrix[j * m + str_min]) {
-          is_col_max = false;
+    bool str_mins[rows * cols];
+    for (size_t i = 0; i < rows; ++i) {
+      int * start = matrix + i * cols;
+      int * end = start + cols;
+      int minimum = *min(start, end);
+      for (size_t j = 0; j < cols; ++j) {
+        str_mins[i * cols + j] = (*(start + j) == minimum);
+      }
+    }
+
+    size_t counter = 0ull;
+    for (size_t j = 0ull; j < cols; ++j) {
+      int maximum = *max_of_column(matrix, rows, cols, j);
+      for (size_t i = 0ull; i < rows; ++i) {
+        if (matrix[i * cols + j] == maximum && str_mins[i * cols + j]) {
+          ++counter;
         }
       }
-      counter += is_col_max;
     }
     return counter;
   }
