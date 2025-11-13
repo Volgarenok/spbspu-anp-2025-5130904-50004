@@ -37,10 +37,13 @@ std::ifstream& inputMatrix (std::ifstream& in, int ** m, size_t rows, size_t col
 	return in;
 }
 
-// void clearMatrix (int * m, size_t rows, size_t cols) {
-// 	delete[] 
-// }
-
+void clearMatrix (int ** m, size_t rows)
+{
+	for (size_t i=0; i < rows; ++i) {
+		delete[] m[i];
+	}
+	delete[] m;
+}
 
 int main(int argc, char ** argv)
 {
