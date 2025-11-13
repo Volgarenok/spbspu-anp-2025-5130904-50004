@@ -21,7 +21,7 @@ bool ifNumber (char ** m) {
 	return false;
 }
 
-std::ifstream& inputMatrix (std::ifstream& in, int ** m, size_t rows, size_t cols) {
+std::ifstream& inputDinMatrix (std::ifstream& in, int ** m, size_t rows, size_t cols) {
 	in >> rows >> cols;
 	if (!(in >> rows >> cols)) {
 		throw "Wrong matris input";
