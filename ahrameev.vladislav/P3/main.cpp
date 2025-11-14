@@ -32,6 +32,47 @@ namespace ahrameev {
 
         return true;
     }
+
+    int** createMatrix(int rows, int cols, const std::string& num) {
+        int** matrix;
+
+        if (num == "1") {
+            matrix = new int*[100];
+            for (int i = 0; i < 100; i++) {
+                matrix[i] = new int[100];
+            }
+        } else {
+            matrix = new int*[rows];
+            for (int i = 0; i < rows; i++) {
+                matrix[i] = new int[cols];
+            }
+        }
+
+        return matrix;
+    }
+
+    void freeMatrix(int** matrix, const std::string& num, int rows) {
+        if (num == "1") {
+            for (int i = 0; i < 100; i++) {
+                delete[] matrix[i];
+            }
+        } else {
+            for (int i = 0; i < rows; i++) {
+                delete[] matrix[i];
+            }
+        }
+        delete[] matrix;
+    }
+
+    int calculateSum(int** matrix, int rows, int cols) {
+        int sum = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                sum += matrix[i][j];
+            }
+        }
+        return sum;
+    }
 }
 
 int main(int argc, char* argv[]) {
@@ -54,26 +95,27 @@ int main(int argc, char* argv[]) {
         return 2;
     }
 
-    std::cout << "Matrix size: " << rows << "x" << cols << "\n";
 
-    if (rows == 0 || cols == 0) {
-        input.close();
-        std::cout << "Empty matrix\n";
-        return 0;
-    }
+    int** matrix = ahrameev::createMatrix(rows, cols, num);
 
-    int element;
+
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            if (!(input >> element)) {
+            if (!(input >> matrix[i][j])) {
                 std::cerr << "Error: Wrong matrix data\n";
+                ahrameev::freeMatrix(matrix, num, rows);
                 return 2;
             }
-            std::cout << element << " ";
         }
-        std::cout << "\n";
     }
-
     input.close();
+
+
+    int sum = ahrameev::calculateSum(matrix, rows, cols);
+    std::cout << "Sum of elements: " << sum << "\n";
+
+
+    ahrameev::freeMatrix(matrix, num, rows);
     return 0;
 }
+
