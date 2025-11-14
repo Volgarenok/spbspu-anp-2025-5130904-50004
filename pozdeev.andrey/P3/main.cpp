@@ -116,6 +116,44 @@ namespace pozdeev
         
         return 2;
     }
+
+    int processStatic(std::ifstream& fin, std::ofstream& fout, int rows, int cols)
+    {
+        int numElements = rows * cols;
+
+        if (numElements > MAX_SIZE)
+        {
+            std::cerr << "ERROR: Matrix too large for static array\n";
+            return 2;
+        }
+
+        int staticMatrix[MAX_SIZE];
+
+        if (numElements == 0)
+        {
+            fout << "0";
+            return 0;
+        }
+
+        for (int i = 0; i < numElements; ++i)
+        {
+            if (!(fin >> staticMatrix[i]))
+            {
+                if (fin.eof())
+                {
+                    std::cerr << "ERROR: Not enough matrix elements\n";
+                }
+                else
+                {
+                    std::cerr << "ERROR: Invalid matrix element\n";
+                }
+                return 2;
+            }
+        }
+
+        fout << countNonSequentialRows(staticMatrix, rows, cols);
+        return 0;
+    }
 }
 
 int main()
