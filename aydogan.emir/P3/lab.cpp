@@ -122,9 +122,76 @@ void work_dynamic(int r, int c, std::ifstream& in, std::ofstream& out, int varia
     delete[] a;
 }
 
-int main()
+int main(int argc, char** argv)
 {
+    if (argc != 4) {
+        std::cerr << "Wrong number of arguments\n";
+        return 1;
+    }
+
+    int mode = argv[1][0] - '0';
+    if (mode != 1 && mode != 2) {
+        std::cerr << "First parameter is out of range\n";
+        return 1;
+    }
+
+    std::ifstream in(argv[2]);
+    std::ofstream out(argv[3]);
+
+    if (!in) {
+        std::cerr << "Cannot open input file\n";
+        return 2;
+    }
+
+    int r = 0;
+    int c = 0;
+
+    if (!(in >> r >> c)) {
+        std::cerr << "File is empty\n";
+        return 2;
+    }
+
+    int variant = 0;
+    if (!(in >> variant)) {
+        std::cerr << "Cannot read variant\n";
+        return 2;
+    }
+
+    if (variant != 1 && variant != 2) {
+        std::cerr << "Variant must be 1 or 2\n";
+        return 2;
+    }
+
+    if ((r == 0 && c != 0) || (r != 0 && c == 0) || r < 0 || c < 0) {
+        std::cerr << "Invalid rows or columns\n";
+        return 2;
+    }
+
+    if (r == 0 && c == 0) {
+        out << 0 << "\n";
+        return 0;
+    }
+
+    try {
+        if (mode == 1) {
+            work_static(r, c, in, out, variant);
+        } else {
+            work_dynamic(r, c, in, out, variant);
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "ERROR: " << e.what() << "\n";
+        return 2;
+    } catch (...) {
+        std::cerr << "ERROR\n";
+        return 2;
+    }
+
     return 0;
 }
 
 } 
+
+int main(int argc, char** argv)
+{
+    return aydogan::main(argc, argv);
+}
