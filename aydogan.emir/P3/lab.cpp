@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
@@ -43,7 +44,9 @@ int numColLsr(int r, int c, const int* a)
 
             if (now == prev) {
                 ++cur;
-                if (cur > maxHere) maxHere = cur;
+                if (cur > maxHere) {
+                    maxHere = cur;
+                }
             } else {
                 cur = 1;
             }
@@ -89,7 +92,9 @@ long long minSumMDG(int r, int c, const int* a)
 void work_static(int r, int c, std::ifstream& in, std::ofstream& out, int variant)
 {
     const int MAX = 10000;
-    if (r * c > MAX) throw std::runtime_error("Too big for static array");
+    if (r * c > MAX) {
+        throw std::runtime_error("Too big for static array");
+    }
 
     int a[MAX];
 
@@ -122,77 +127,70 @@ void work_dynamic(int r, int c, std::ifstream& in, std::ofstream& out, int varia
     delete[] a;
 }
 
+}
+
 int main(int argc, char** argv)
 {
-    if (argc != 4) {
-        std::cerr << "Wrong number of arguments\n";
-        return 1;
-    }
+    try {
+        if (argc != 4) {
+            std::cerr << "Wrong number of arguments\n";
+            return 1;
+        }
 
-    int mode = argv[1][0] - '0';
-    if (mode != 1 && mode != 2) {
-        std::cerr << "First parameter is out of range\n";
-        return 1;
-    }
+        int variant = argv[1][0] - '0';
+        if (variant != 1 && variant != 2) {
+            std::cerr << "First parameter is out of range\n";
+            return 1;
+        }
 
-    std::ifstream in(argv[2]);
-    std::ofstream out(argv[3]);
+        std::ifstream in(argv[2]);
+        std::ofstream out(argv[3]);
 
-    if (!in) {
-        std::cerr << "Cannot open input file\n";
-        return 2;
-    }
+        if (!in) {
+            std::cerr << "Cannot open input file\n";
+            return 2;
+        }
+        if (!out) {
+            std::cerr << "Cannot open output file\n";
+            return 2;
+        }
 
-    int r = 0;
-    int c = 0;
+        int r = 0;
+        int c = 0;
 
-    if (!(in >> r >> c)) {
-        std::cerr << "File is empty\n";
-        return 2;
-    }
+        if (!(in >> r >> c)) {
+            std::cerr << "File is empty\n";
+            return 2;
+        }
 
-    int variant = 0;
-    if (!(in >> variant)) {
-        std::cerr << "Cannot read variant\n";
-        return 2;
-    }
+        if ((r == 0 && c != 0) || (r != 0 && c == 0) || r < 0 || c < 0) {
+            std::cerr << "Invalid rows or columns\n";
+            return 2;
+        }
 
-    if (variant != 1 && variant != 2) {
-        std::cerr << "Variant must be 1 or 2\n";
-        return 2;
-    }
+        if (r == 0 && c == 0) {
+            out << 0 << "\n";
+            return 0;
+        }
+        const int MAX = 10000;
+        if (r * c <= MAX) {
+            aydogan::work_static(r, c, in, out, variant);
+        } else {
 
-    if ((r == 0 && c != 0) || (r != 0 && c == 0) || r < 0 || c < 0) {
-        std::cerr << "Invalid rows or columns\n";
-        return 2;
-    }
+            aydogan::work_dynamic(r, c, in, out, variant);
 
-    if (r == 0 && c == 0) {
-        out << 0 << "\n";
+        }
+
         return 0;
     }
-
-    try {
-        if (mode == 1) {
-            work_static(r, c, in, out, variant);
-        } else {
-            work_dynamic(r, c, in, out, variant);
-        }
-    } catch (const std::exception& e) {
+    catch (const std::exception& e) {
         std::cerr << "ERROR: " << e.what() << "\n";
         return 2;
-    } catch (...) {
+    }
+    catch (...) {
         std::cerr << "ERROR\n";
         return 2;
     }
-
-    return 0;
 }
 
-}
-
-int main(int argc, char** argv)
-{
-    return aydogan::main(argc, argv);
-}
 
