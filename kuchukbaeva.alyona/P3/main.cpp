@@ -1,7 +1,6 @@
 #include "functions2.hpp"
 #include <iostream>
 #include <fstream>
-#include <string>
 
 int main(int argc, char* argv[])
 {
@@ -16,22 +15,22 @@ int main(int argc, char* argv[])
     return 1;
   }
   int num;
-  try
-  {
-    num = std::stoi(argv[1]);
-  }
-  catch (...)
+  char* endp = nullptr;
+  long res = 0;
+  res = std::strtol(argv[1], &endp, 10);
+  if (endp == argv[1] || *endp != '\0')
   {
     std::cerr << "First parameter is not a number" << "\n";
     return 1;
   }
+  num = static_cast<int>(res);
   if (num != 1 && num != 2)
   {
     std::cerr << "First parameter is out of range" << "\n";
     return 1;
   }
-  std::string inputFile = argv[2];
-  std::string outputFile = argv[3];
+  const char* inputFile = argv[2];
+  const char* outputFile = argv[3];
   size_t rows = 0;
   size_t cols = 0;
 

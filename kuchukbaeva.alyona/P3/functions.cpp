@@ -1,7 +1,6 @@
 #include "functions2.hpp"
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <cstdlib>
 
 bool kuchukbaeva::CntLocMax(int** matrix, size_t rows, size_t cols, size_t i, size_t j)
@@ -92,7 +91,7 @@ void kuchukbaeva::LftBotClk(int** matrix, size_t rows, size_t cols)
   }
 }
 
-bool kuchukbaeva::readMatrix(const std::string& filename, int*** matrix, size_t& rows, size_t& cols)
+bool kuchukbaeva::readMatrix(const char* filename, int*** matrix, size_t& rows, size_t& cols)
 {
   std::ifstream file(filename);
   if (!file.is_open())
@@ -146,7 +145,7 @@ bool kuchukbaeva::readMatrix(const std::string& filename, int*** matrix, size_t&
   return true;
 }
 
-bool kuchukbaeva::readMatrixStatic(const std::string& filename, int** matrix, size_t& rows, size_t& cols, size_t max_rows, size_t max_cols)
+bool kuchukbaeva::readMatrixStatic(const char* filename, int** matrix, size_t& rows, size_t& cols, size_t max_rows, size_t max_cols)
 {
   std::ifstream file(filename);
   if (!file.is_open())
@@ -190,7 +189,7 @@ void kuchukbaeva::freMatrix(int** matrix, size_t rows)
   }
 }
 
-bool kuchukbaeva::Res(const std::string& filename, int res)
+bool kuchukbaeva::Res(const char* filename, int res)
 {
   std::ofstream file(filename);
   if (!file.is_open())
@@ -201,7 +200,7 @@ bool kuchukbaeva::Res(const std::string& filename, int res)
   return true;
 }
 
-bool kuchukbaeva::writeMatrix(const std::string& filename, int** matrix, size_t rows, size_t cols, int locMaxCount)
+bool kuchukbaeva::writeMatrix(const char* filename, int** matrix, size_t rows, size_t cols, int locMaxCount)
 {
   std::ofstream file(filename);
   if (!file.is_open())
