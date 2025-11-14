@@ -86,10 +86,30 @@ void cut_to_square(int*& m, size_t& rows, size_t& cols) {
     }
 }
 
-//  size_t CNT_NZR_DIG (int * m, size_t rows, size_t cols) {
-//   size_t kpos = 1;
-//   for (size_t i=0; )
-// }
+size_t CNT_NZR_DIG(int*& m, size_t& rows, size_t& cols) {
+    cut_to_square(m, rows, cols);
+    size_t count = 0;
+    int k = -int(rows) + 1;
+    while (k < int(rows)) {
+        size_t countdiag = 0;
+        for (size_t i = 0; i < rows; ++i) {
+            for (size_t j = 0; j < cols; j++) {
+                if (i == j) {
+                    if ((int(i * cols + j) + k >= 0) && (int(i * cols + j)+ k < int(rows * cols))) {
+                        if (m[i * cols + j + k] == 0) {
+                            ++countdiag;
+                        }
+                    }
+                }
+            }
+        }
+        if (countdiag == 0 && k!=0) {
+            ++count;
+        }
+        ++k;
+    }
+    return count;
+}
 
 int main(int argc, char ** argv)
 {
