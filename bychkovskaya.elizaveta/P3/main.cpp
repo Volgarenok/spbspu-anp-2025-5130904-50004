@@ -180,8 +180,15 @@ int main(int argc, char ** argv)
       output.close();
 		}
 		else if (num == '2') {
+      int * dynamicmatrix = nullptr;
       try {
-			  int * dynamicmatrix = create (rows, cols);
+			  dynamicmatrix = create (rows, cols);
+      }
+      catch (const char* e) {
+        std::cerr << e << "\n";
+        return 2;
+      }
+      try {
         inputMatrix (input, dynamicmatrix, rows, cols);
 			  input.close();
         std::ofstream output(argv[3]);
@@ -191,6 +198,7 @@ int main(int argc, char ** argv)
       }
       catch (const char* e) {
         std::cerr << e << "\n";
+        delete[] dynamicmatrix;
         return 2;
       }
     }
