@@ -222,4 +222,18 @@ int main(int argc, char* argv[])
         std::cerr << errorMessage << std::endl;
         return 1;
     }
+
+    int num = 0;
+    int parseResult = pozdeev::numAnalysis(argv[1], num);
+    
+    if (parseResult == 1)
+    {
+        std::cerr << "First parameter is not a number" << std::endl; 
+        return 1;
+    }
+    if (parseResult == 2)
+    {
+        std::cerr << "First parameter is out of range (must be 1 or 2)" << std::endl; 
+        return 1;
+    }
 }
