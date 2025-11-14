@@ -61,6 +61,36 @@ size_t CNT_COL_NSM (int * m, size_t rows, size_t cols) {
   return count;
  }
 
+void cut_to_square(int*& m, size_t& rows, size_t& cols) {
+    if (rows > cols) {
+        int* tmp = create(cols, cols);
+        for (size_t i = 0; i < cols; ++i) {
+            for (size_t j = 0; j < cols; ++j) {
+                tmp[i * cols + j] = m[i * cols + j];
+            }
+        }
+        delete[] m;
+        m = tmp;
+        rows = cols;
+    }
+    if (rows < cols) {
+        int* tmp = create(rows, rows);
+        for (size_t i = 0; i < rows; ++i) {
+            for (size_t j = 0; j < rows; ++j) {
+                tmp[i * rows + j] = m[i * cols + j];
+            }
+        }
+        delete[] m;
+        m = tmp;
+        cols = rows;
+    }
+}
+
+//  size_t CNT_NZR_DIG (int * m, size_t rows, size_t cols) {
+//   size_t kpos = 1;
+//   for (size_t i=0; )
+// }
+
 int main(int argc, char ** argv)
 {
 	if (argc > 4) {
@@ -75,7 +105,7 @@ int main(int argc, char ** argv)
 		size_t cols = 0;
 		std::ifstream input(argv[2]);
 		input >> rows >> cols;
-		if (!in) {
+		if (!input) {
 			throw "Wrong matrix input";
 		}
 		char num = argv[1][0];
