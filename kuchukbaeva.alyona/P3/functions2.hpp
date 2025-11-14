@@ -13,3 +13,4 @@ namespace kuchukbaeva
   bool writeMatrix(const char* filename, int** matrix, size_t rows, size_t cols, int locMaxCount);
 }
 #endif
+
