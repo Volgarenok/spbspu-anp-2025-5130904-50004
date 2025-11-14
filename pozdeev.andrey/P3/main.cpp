@@ -251,4 +251,21 @@ int main(int argc, char* argv[])
         fin.close();
         return 2;
     }
+
+    int rows, cols;
+    if (!(fin >> rows) || !(fin >> cols))
+    {
+        std::cerr << "ERROR: Invalid matrix dimensions format or file is empty" << std::endl;
+        fin.close();
+        fout.close();
+        return 2;
+    }
+
+    if (rows < 0 || cols < 0)
+    {
+        std::cerr << "ERROR: Matrix dimensions cannot be negative" << std::endl;
+        fin.close();
+        fout.close();
+        return 2;
+    }
 }
