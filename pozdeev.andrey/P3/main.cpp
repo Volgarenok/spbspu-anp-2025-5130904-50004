@@ -25,7 +25,7 @@ namespace pozdeev
                 if (matrix[idx1] == matrix[idx2])
                 {
                     hasConsecutive = true;
-                    break; 
+                    break;
                 }
             }
             if (!hasConsecutive)
@@ -45,7 +45,7 @@ namespace pozdeev
 
         int top = 0, bottom = rows - 1;
         int left = 0, right = cols - 1;
-        int decrement = 1; 
+        int decrement = 1;
 
         while (top <= bottom && left <= right)
         {
@@ -84,7 +84,7 @@ namespace pozdeev
                 matrix[bottom * cols + c] -= decrement;
                 decrement++;
             }
-            --bottom; 
+            --bottom;
         }
     }
 
@@ -98,12 +98,12 @@ namespace pozdeev
         if (s[0] == '1' && s[1] == '\0')
         {
             outVal = 1;
-            return 0; 
+            return 0;
         }
         if (s[0] == '2' && s[1] == '\0')
         {
             outVal = 2;
-            return 0; 
+            return 0;
         }
         
         for (int i = 0; s[i] != '\0'; ++i)
@@ -228,12 +228,12 @@ int main(int argc, char* argv[])
     
     if (parseResult == 1)
     {
-        std::cerr << "First parameter is not a number" << std::endl; 
+        std::cerr << "First parameter is not a number" << std::endl;
         return 1;
     }
     if (parseResult == 2)
     {
-        std::cerr << "First parameter is out of range (must be 1 or 2)" << std::endl; 
+        std::cerr << "First parameter is out of range (must be 1 or 2)" << std::endl;
         return 1;
     }
 
@@ -276,11 +276,6 @@ int main(int argc, char* argv[])
     else
     {
         exit = pozdeev::processDynamic(fin, fout, rows, cols);
-    }
-
-    if (exit == 0)
-    {
-        fout << "\n";
     }
 
     fin.close();
