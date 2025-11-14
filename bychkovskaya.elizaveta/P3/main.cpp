@@ -21,36 +21,24 @@ bool ifNumber (char ** m) {
 	return false;
 }
 
-void clearMatrix (int ** m, size_t rows)
+int * create (size_t rows, size_t cols)
 {
-	for (size_t i=0; i < rows; ++i) {
-		delete[] m[i];
-	}
-	delete[] m;
-}
-
-int ** create (size_t rows, size_t cols)
-{
-	int ** result = new int * [rows];
-	size_t i = 0;
-	try {
-		for (; i < rows; ++i) {
-			result[i] = new int[cols];
-		}
-	}
+  int * result = nullptr;
+  try {
+    result = new int [rows*cols];
+  }
 	catch (...) {
-		clearMatrix (result, i);
 		throw "Not enough memory";
 	}
 	return result;
 }
 
-std::ifstream& inputDinMatrix (std::ifstream& in, int ** m, size_t rows, size_t cols) {
+std::ifstream& inputMatrix (std::ifstream& in, int * m, size_t rows, size_t cols) {
 	for (size_t i = 0; i < rows; ++i) {
 		for (size_t j = 0; j < cols; ++j) {
-			in >> m[i][j];
-			if (!(in >> m[i][j])) {
-				throw "Wrong matris input";
+			in >> m[i*cols+j];
+			if (!(in >> m[i*cols+j])) {
+				throw "Wrong matrix input";
 		  }
 	  }
   }
@@ -72,18 +60,19 @@ int main(int argc, char ** argv)
 		std::ifstream input(argv[2]);
 		input >> rows >> cols;
 		if (!(input >> rows >> cols)) {
-			throw "Wrong input";
+			throw "Wrong matrix input";
 		}
-		input.close();
 		char num = argv[1][0];
 		if (num == '1') {
-		  // int statmatrix[10000];
-			
+		  int statmatrix[10000];
+      inputMatrix (input, statmatrix, rows, cols);
+	
 		}
 		else if (num == '2') {
-			int ** dinmatrix = create (rows, cols);
+			int * dinmatrix = create (rows, cols);
+      inputMatrix (input, dinmatrix, rows, cols);
 			//работа с матрицей
-			clearMatrix (dinmatrix, rows);
+			delete[] dinmatrix;
 		}
 		else {
 			if (ifNumber (argv) == 1) {
