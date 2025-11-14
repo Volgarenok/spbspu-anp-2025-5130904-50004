@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 
-//проверить, является ли первый параметр кмд числом
 bool ifNumber (char ** m) {
 	size_t k = 0;
 	size_t k1 = 0;
@@ -61,7 +60,7 @@ size_t CNT_COL_NSM (int * m, size_t rows, size_t cols) {
   return count;
  }
 
-void cut_to_square(int*& m, size_t& rows, size_t& cols) {
+void cut_to_square_DYNAMIC(int*& m, size_t& rows, size_t& cols) {
     if (rows > cols) {
         int* tmp = create(cols, cols);
         for (size_t i = 0; i < cols; ++i) {
@@ -86,8 +85,42 @@ void cut_to_square(int*& m, size_t& rows, size_t& cols) {
     }
 }
 
-size_t CNT_NZR_DIG(int*& m, size_t& rows, size_t& cols) {
-    cut_to_square(m, rows, cols);
+void cut_to_square_FIXED(size_t& rows, size_t& cols) {
+    if (rows > cols) {
+        rows = cols;
+    }
+    if (rows < cols) {
+        cols = rows;
+    }
+}
+
+size_t CNT_NZR_DIG_DYNAMIC(int*& m, size_t& rows, size_t& cols) {
+    cut_to_square_DYNAMIC(m, rows, cols);
+    size_t count = 0;
+    int k = -int(rows) + 1;
+    while (k < int(rows)) {
+        size_t countdiag = 0;
+        for (size_t i = 0; i < rows; ++i) {
+            for (size_t j = 0; j < cols; j++) {
+                if (i == j) {
+                    if ((int(i * cols + j) + k >= 0) && (int(i * cols + j)+ k < int(rows * cols))) {
+                        if (m[i * cols + j + k] == 0) {
+                            ++countdiag;
+                        }
+                    }
+                }
+            }
+        }
+        if (countdiag == 0 && k!=0) {
+            ++count;
+        }
+        ++k;
+    }
+    return count;
+}
+
+size_t CNT_NZR_DIG_FIXED(int* m, size_t& rows, size_t& cols) {
+    cut_to_square_FIXED(rows, cols);
     size_t count = 0;
     int k = -int(rows) + 1;
     while (k < int(rows)) {
@@ -130,15 +163,15 @@ int main(int argc, char ** argv)
 		}
 		char num = argv[1][0];
 		if (num == '1') {
-		  int statmatrix[10000];
-      inputMatrix (input, statmatrix, rows, cols);
-	
+		  int fixedmatrix[10000];
+      inputMatrix (input, fixedmatrix, rows, cols);
+      input.close();
 		}
 		else if (num == '2') {
-			int * dinmatrix = create (rows, cols);
-      inputMatrix (input, dinmatrix, rows, cols);
-			//работа с матрицей
-			delete[] dinmatrix;
+			int * dynamicmatrix = create (rows, cols);
+      inputMatrix (input, dynamicmatrix, rows, cols);
+			input.close();
+			delete[] dynamicmatrix;
 		}
 		else {
 			if (ifNumber (argv) == 1) {
