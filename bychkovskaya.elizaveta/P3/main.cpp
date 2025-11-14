@@ -106,7 +106,7 @@ size_t cntNzrDigDynamic(int*& m, size_t& rows, size_t& cols)
     for (size_t i = 0; i < rows; ++i) {
       for (size_t j = 0; j < cols; j++) {
         if (i == j) {
-          if ((int(i * cols + j) + k >= 0) && (int(i * cols + j)+ k < int(rows * cols))) {
+          if ((int(i * cols + j) + k >= 0) && (int(i * cols + j) + k < int(rows * cols))) {
             if (m[i * cols + j + k] == 0) {
               ++countDiag;
             }
@@ -169,7 +169,7 @@ int main(int argc, char** argv)
     if (num == '1') {
       int fixedMatrix[10000];
       try {
-        inputMatrix (input, fixedMatrix, rows, cols);
+        inputMatrix(input, fixedMatrix, rows, cols);
       } catch (const char* e) {
         std::cerr << e << "\n";
         return 2;
@@ -182,7 +182,7 @@ int main(int argc, char** argv)
     } else if (num == '2') {
       int* dynamicMatrix = nullptr;
       try {
-        dynamicMatrix = create (rows, cols);
+        dynamicMatrix = create(rows, cols);
       } catch (const char* e) {
         std::cerr << e << "\n";
         return 2;
@@ -191,7 +191,7 @@ int main(int argc, char** argv)
         inputMatrix(input, dynamicMatrix, rows, cols);
         input.close();
         std::ofstream output(argv[3]);
-        output << cntColNsm (dynamicMatrix, rows, cols) << "\n";
+        output << cntColNsm(dynamicMatrix, rows, cols) << "\n";
         output << cntNzrDigDynamic(dynamicMatrix, rows, cols) << "\n";
         delete[] dynamicMatrix;
       } catch (const char* e) {
@@ -200,11 +200,11 @@ int main(int argc, char** argv)
         return 2;
       }
     } else {
-      if (ifNumber (argv) == 1) {
+      if (ifNumber(argv) == 1) {
         std::cerr << "First parameter is out of range" << "\n";
         return 1;
       }
-      if (ifNumber (argv) == 0) {
+      if (ifNumber(argv) == 0) {
         std::cerr << "First parameter is not a number" << "\n";
         return 1;
       }
