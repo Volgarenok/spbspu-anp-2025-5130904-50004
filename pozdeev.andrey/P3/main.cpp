@@ -202,6 +202,24 @@ namespace pozdeev
     }
 }
 
-int main()
+int main(int argc, char* argv[])
 {
+    int exit = 0;
+
+    if (argc != 4)
+    {
+        const char* errorMessage;
+
+        if (argc < 4)
+        {
+            errorMessage = "Not enough arguments";
+        }
+        else
+        {
+            errorMessage = "Too many arguments";
+        }
+        
+        std::cerr << errorMessage << std::endl;
+        return 1;
+    }
 }
