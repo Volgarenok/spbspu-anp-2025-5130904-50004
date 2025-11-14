@@ -154,6 +154,52 @@ namespace pozdeev
         fout << countNonSequentialRows(staticMatrix, rows, cols);
         return 0;
     }
+
+    int processDynamic(std::ifstream& fin, std::ofstream& fout, int rows, int cols)
+    {
+        int numElements = rows * cols;
+
+        if (rows == 0 || cols == 0)
+        {
+            fout << "0 0";
+            return 0;
+        }
+
+        int* dynamicMatrix = new (std::nothrow) int[numElements];
+        if (dynamicMatrix == nullptr)
+        {
+            std::cerr << "ERROR: Memory not allocated for array\n";
+            return 2;
+        }
+
+        for (int i = 0; i < numElements; ++i)
+        {
+            if (!(fin >> dynamicMatrix[i]))
+            {
+                if (fin.eof())
+                {
+                    std::cerr << "ERROR: Not enough matrix elements\n";
+                }
+                else
+                {
+                    std::cerr << "ERROR: Invalid matrix element\n";
+                }
+                delete[] dynamicMatrix;
+                return 2;
+            }
+        }
+        
+        spiral(dynamicMatrix, rows, cols);
+
+        fout << rows << " " << cols;
+        for (int i = 0; i < numElements; ++i)
+        {
+            fout << " " << dynamicMatrix[i];
+        }
+
+        delete[] dynamicMatrix;
+        return 0;
+    }
 }
 
 int main()
