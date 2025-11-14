@@ -236,4 +236,19 @@ int main(int argc, char* argv[])
         std::cerr << "First parameter is out of range (must be 1 or 2)" << std::endl; 
         return 1;
     }
+
+    std::ifstream fin(argv[2]);
+    if (!fin.is_open())
+    {
+        std::cerr << "ERROR: Could not open input file" << std::endl;
+        return 2;
+    }
+
+    std::ofstream fout(argv[3]);
+    if (!fout.is_open())
+    {
+        std::cerr << "ERROR: Could not open output file" << std::endl;
+        fin.close();
+        return 2;
+    }
 }
