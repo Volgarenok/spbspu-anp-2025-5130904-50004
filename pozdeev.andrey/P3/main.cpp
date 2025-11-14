@@ -268,4 +268,23 @@ int main(int argc, char* argv[])
         fout.close();
         return 2;
     }
+
+    if (num == 1)
+    {
+        exit = pozdeev::processStatic(fin, fout, rows, cols);
+    }
+    else
+    {
+        exit = pozdeev::processDynamic(fin, fout, rows, cols);
+    }
+
+    if (exit == 0)
+    {
+        fout << "\n";
+    }
+
+    fin.close();
+    fout.close();
+    
+    return exit;
 }
