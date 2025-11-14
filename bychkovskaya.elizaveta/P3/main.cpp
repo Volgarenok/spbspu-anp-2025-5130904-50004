@@ -189,11 +189,11 @@ int main(int argc, char ** argv)
       }
       try {
         inputMatrix (input, dynamicmatrix, rows, cols);
-	input.close();
+        input.close();
         std::ofstream output(argv[3]);
         output << CNT_COL_NSM (dynamicmatrix, rows, cols) << "\n";
         output << CNT_NZR_DIG_DYNAMIC(dynamicmatrix, rows, cols) << "\n";
-	delete[] dynamicmatrix;
+        delete[] dynamicmatrix;
       } catch (const char* e) {
         std::cerr << e << "\n";
         delete[] dynamicmatrix;
@@ -202,12 +202,14 @@ int main(int argc, char ** argv)
     } else {
       if (ifNumber (argv) == 1) {
         std::cerr << "First parameter is out of range" << "\n";
-	return 1;
+        return 1;
       }
       if (ifNumber (argv) == 0) {
         std::cerr << "First parameter is not a number" << "\n";
-	return 1;
+        return 1;
       }
     }
   }
 }
+
+
