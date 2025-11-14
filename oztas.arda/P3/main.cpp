@@ -31,23 +31,32 @@ int main(int argc, char* argv[])
     int cols = 0;
 
     if (mode == 1) {
-        // static array
-        int matrix[10][10] = {};
+        // STATIC ARRAY
+        int matrix_buf[10][10] = {};
+        int* matrix[10];
+
+        for (int i = 0; i < 10; ++i) {
+            matrix[i] = matrix_buf[i];
+        }
+
         if (!oztas::readMatrix(input, matrix, rows, cols)) {
             return 0;
         }
-        oztas::applyFullIncreasingWave(matrix, rows, cols);
+
+        oztas::applyFillIncreasingWave(matrix, rows, cols);
         oztas::writeMatrix(output, matrix, rows, cols);
         return 0;
     }
 
     if (mode == 2) {
-        // dynamic array
+        // DYNAMIC ARRAY
         int** matrix = nullptr;
+
         if (!oztas::readMatrix(input, matrix, rows, cols)) {
             return 0;
         }
-        oztas::applyFullIncreasingWave(matrix, rows, cols);
+
+        oztas::applyFillIncreasingWave(matrix, rows, cols);
         oztas::writeMatrix(output, matrix, rows, cols);
         oztas::freeMatrix(matrix, rows);
         return 0;

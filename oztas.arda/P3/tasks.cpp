@@ -38,37 +38,19 @@ namespace oztas
 
     void applyFillIncreasingWave(int** matrix, int rows, int cols)
     {
-        const int layers = (std::min(rows, cols) + 1) / 2;
+        int value = 1;
 
-        for (int layer = 0; layer < layers; ++layer) {
-            const int add = layer + 1;
-
-            const int top = layer;
-            const int bottom = rows - 1 - layer;
-            const int left = layer;
-            const int right = cols - 1 - layer;
-
-            // top row
-            for (int j = left; j <= right; ++j) {
-                matrix[top][j] += add;
-            }
-
-            // bottom row
-            if (bottom != top) {
-                for (int j = left; j <= right; ++j) {
-                    matrix[bottom][j] += add;
+        for (int i = 0; i < rows; ++i) {
+            if (i % 2 == 0) {
+                // Left to Right
+                for (int j = 0; j < cols; ++j) {
+                    matrix[i][j] += value++;
                 }
             }
-
-            // left column (without corners)
-            for (int i = top + 1; i <= bottom - 1; ++i) {
-                matrix[i][left] += add;
-            }
-
-            // right column (without corners and without duplicate with left)
-            if (right != left) {
-                for (int i = top + 1; i <= bottom - 1; ++i) {
-                    matrix[i][right] += add;
+            else {
+                // Right to Left
+                for (int j = cols - 1; j >= 0; --j) {
+                    matrix[i][j] += value++;
                 }
             }
         }
