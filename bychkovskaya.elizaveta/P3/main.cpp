@@ -37,13 +37,29 @@ std::ifstream& inputMatrix (std::ifstream& in, int * m, size_t rows, size_t cols
 	for (size_t i = 0; i < rows; ++i) {
 		for (size_t j = 0; j < cols; ++j) {
 			in >> m[i*cols+j];
-			if (!(in >> m[i*cols+j])) {
+			if (!in) {
 				throw "Wrong matrix input";
 		  }
 	  }
   }
 	return in;
 }
+
+size_t CNT_COL_NSM (int * m, size_t rows, size_t cols) {
+  size_t count = 0;
+  for (size_t j = 0; j < cols; ++j) {
+    size_t countcol = 0;
+    for (size_t i = 0; i < rows-1; ++i) {
+      if (m[i*cols+j]==m[i*cols+j+cols]) {
+        ++countcol;
+      }
+    }
+    if (countcol==0) {
+      ++count;
+    }
+  }
+  return count;
+ }
 
 int main(int argc, char ** argv)
 {
@@ -59,7 +75,7 @@ int main(int argc, char ** argv)
 		size_t cols = 0;
 		std::ifstream input(argv[2]);
 		input >> rows >> cols;
-		if (!(input >> rows >> cols)) {
+		if (!in) {
 			throw "Wrong matrix input";
 		}
 		char num = argv[1][0];
