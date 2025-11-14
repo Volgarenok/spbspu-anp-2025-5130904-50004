@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <new>
 
 namespace pozdeev
 {
