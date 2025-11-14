@@ -28,6 +28,16 @@ int main(int argc, char* argv[]) {
            for (int i = b; i >= t && l <= r; i--) a[i][l] -= k++;
            l++;
        }
-   } 
-
-
+   }
+   else if (variant == 6) {
+        while (t <= b && l <= r) {
+            for (int i = t; i <= b; i++) a[i][l] += k++;
+            l++;
+            for (int j = l; j <= r; j++) a[b][j] += k++;
+            b--;
+            for (int i = b; i >= t && l <= r; i--) a[i][r] += k++;
+            r--;
+            for (int j = r; j >= l && t <= b; j--) a[t][j] += k++;
+            t++;
+        }
+    }
