@@ -72,7 +72,7 @@ void cut_to_square_DYNAMIC(int*& m, size_t& rows, size_t& cols) {
         m = tmp;
         rows = cols;
     }
-    if (rows < cols) {
+    else if (rows < cols) {
         int* tmp = create(rows, rows);
         for (size_t i = 0; i < rows; ++i) {
             for (size_t j = 0; j < rows; ++j) {
