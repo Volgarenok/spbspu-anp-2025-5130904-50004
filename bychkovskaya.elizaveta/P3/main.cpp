@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 
-bool ifNumber(char ** m)
+bool ifNumber(char** m)
 {
   size_t k = 0;
   size_t k1 = 0;
@@ -23,20 +23,20 @@ bool ifNumber(char ** m)
 
 int* create(size_t rows, size_t cols)
 {
-  int * result = nullptr;
+  int* result = nullptr;
   try {
-    result = new int [rows*cols];
+    result = new int [rows * cols];
   } catch (...) {
     throw "Not enough memory";
   }
   return result;
 }
 
-std::ifstream & inputMatrix(std::ifstream & in, int * m, size_t rows, size_t cols)
+std::ifstream& inputMatrix(std::ifstream& in, int* m, size_t rows, size_t cols)
 {
   for (size_t i = 0; i < rows; ++i) {
     for (size_t j = 0; j < cols; ++j) {
-      in >> m[i*cols+j];
+      in >> m[i * cols + j];
       if (!in) {
         throw "Wrong matrix input";
       }
@@ -45,24 +45,24 @@ std::ifstream & inputMatrix(std::ifstream & in, int * m, size_t rows, size_t col
   return in;
 }
 
-size_t CNT_COL_NSM(int * m, size_t rows, size_t cols)
+size_t cntColNsm(const int* m, size_t rows, size_t cols)
 {
   size_t count = 0;
   for (size_t j = 0; j < cols; ++j) {
-    size_t countcol = 0;
+    size_t countCol = 0;
     for (size_t i = 0; i < rows-1; ++i) {
-      if (m[i*cols+j]==m[i*cols+j+cols]) {
-        ++countcol;
+      if (m[i * cols + j] == m[i * cols + j + cols]) {
+        ++countCol;
       }
     }
-    if (countcol == 0) {
+    if (countCol == 0) {
       ++count;
     }
   }
   return count;
 }
 
-void cut_to_square_DYNAMIC(int*& m, size_t& rows, size_t& cols)
+void cutToSquareDynamic(int*& m, size_t& rows, size_t& cols)
 {
   if (rows > cols) {
     int* tmp = create(cols, cols);
@@ -87,7 +87,7 @@ void cut_to_square_DYNAMIC(int*& m, size_t& rows, size_t& cols)
   }
 }
 
-void cut_to_square_FIXED(size_t& rows, size_t& cols)
+void cutToSquareFixed(size_t& rows, size_t& cols)
 {
   if (rows > cols) {
     rows = cols;
@@ -96,25 +96,25 @@ void cut_to_square_FIXED(size_t& rows, size_t& cols)
   }
 }
 
-size_t CNT_NZR_DIG_DYNAMIC(int*& m, size_t& rows, size_t& cols)
+size_t cntNzrDigDynamic(int*& m, size_t& rows, size_t& cols)
 {
-  cut_to_square_DYNAMIC(m, rows, cols);
+  cutToSquareDynamic(m, rows, cols);
   size_t count = 0;
   int k = -int(rows) + 1;
   while (k < int(rows)) {
-    size_t countdiag = 0;
+    size_t countDiag = 0;
     for (size_t i = 0; i < rows; ++i) {
       for (size_t j = 0; j < cols; j++) {
         if (i == j) {
           if ((int(i * cols + j) + k >= 0) && (int(i * cols + j)+ k < int(rows * cols))) {
             if (m[i * cols + j + k] == 0) {
-              ++countdiag;
+              ++countDiag;
             }
           }
         }
       }
     }
-    if (countdiag == 0 && k!=0) {
+    if (countDiag == 0 && k!=0) {
       ++count;
     }
     ++k;
@@ -122,24 +122,24 @@ size_t CNT_NZR_DIG_DYNAMIC(int*& m, size_t& rows, size_t& cols)
   return count;
 }
 
-size_t CNT_NZR_DIG_FIXED(int* m, size_t& rows, size_t& cols) {
-  cut_to_square_FIXED(rows, cols);
+size_t cntNzrDigFixed(const int* m, size_t& rows, size_t& cols) {
+  cutToSquareFixed(rows, cols);
   size_t count = 0;
   int k = -int(rows) + 1;
   while (k < int(rows)) {
-    size_t countdiag = 0;
+    size_t countDiag = 0;
     for (size_t i = 0; i < rows; ++i) {
       for (size_t j = 0; j < cols; j++) {
         if (i == j) {
-          if ((int(i * cols + j) + k >= 0) && (int(i * cols + j)+ k < int(rows * cols))) {
+          if ((int(i * cols + j) + k >= 0) && (int(i * cols + j) + k < int(rows * cols))) {
             if (m[i * cols + j + k] == 0) {
-              ++countdiag;
+              ++countDiag;
             }
           }
         }
       }
     }
-    if (countdiag == 0 && k != 0) {
+    if (countDiag == 0 && k != 0) {
       ++count;
     }
     ++k;
@@ -147,7 +147,7 @@ size_t CNT_NZR_DIG_FIXED(int* m, size_t& rows, size_t& cols) {
   return count;
 }
 
-int main(int argc, char ** argv)
+int main(int argc, char** argv)
 {
   if (argc > 4) {
     std::cerr << "Too many arguments" << "\n";
@@ -167,36 +167,36 @@ int main(int argc, char ** argv)
     }
     char num = argv[1][0];
     if (num == '1') {
-      int fixedmatrix[10000];
+      int fixedMatrix[10000];
       try {
-        inputMatrix (input, fixedmatrix, rows, cols);
+        inputMatrix (input, fixedMatrix, rows, cols);
       } catch (const char* e) {
         std::cerr << e << "\n";
         return 2;
       }
       input.close();
       std::ofstream output(argv[3]);
-      output << CNT_COL_NSM (fixedmatrix, rows, cols) << "\n";
-      output << CNT_NZR_DIG_FIXED(fixedmatrix, rows, cols) << "\n";
+      output << cntColNsm(fixedMatrix, rows, cols) << "\n";
+      output << cntNzrDigFixed(fixedMatrix, rows, cols) << "\n";
       output.close();
     } else if (num == '2') {
-      int * dynamicmatrix = nullptr;
+      int* dynamicMatrix = nullptr;
       try {
-        dynamicmatrix = create (rows, cols);
+        dynamicMatrix = create (rows, cols);
       } catch (const char* e) {
         std::cerr << e << "\n";
         return 2;
       }
       try {
-        inputMatrix (input, dynamicmatrix, rows, cols);
+        inputMatrix(input, dynamicMatrix, rows, cols);
         input.close();
         std::ofstream output(argv[3]);
-        output << CNT_COL_NSM (dynamicmatrix, rows, cols) << "\n";
-        output << CNT_NZR_DIG_DYNAMIC(dynamicmatrix, rows, cols) << "\n";
-        delete[] dynamicmatrix;
+        output << cntColNsm (dynamicMatrix, rows, cols) << "\n";
+        output << cntNzrDigDynamic(dynamicMatrix, rows, cols) << "\n";
+        delete[] dynamicMatrix;
       } catch (const char* e) {
         std::cerr << e << "\n";
-        delete[] dynamicmatrix;
+        delete[] dynamicMatrix;
         return 2;
       }
     } else {
