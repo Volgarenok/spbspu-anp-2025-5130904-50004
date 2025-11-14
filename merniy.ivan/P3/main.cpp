@@ -41,3 +41,13 @@ int main(int argc, char* argv[]) {
             t++;
         }
     }
+    fout << n << " " << m;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            fout << " " << a[i][j];
+        }
+    }
+    for (int i = 0; i < n; i++) free(a[i]);
+    free(a);
+    return 0;
+}
