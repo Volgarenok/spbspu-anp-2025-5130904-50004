@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <new>
 
 namespace pozdeev
 {
@@ -188,7 +189,7 @@ namespace pozdeev
                 return 2;
             }
         }
-        
+
         spiral(dynamicMatrix, rows, cols);
 
         fout << rows << " " << cols;
