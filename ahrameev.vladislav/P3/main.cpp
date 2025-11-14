@@ -16,6 +16,22 @@ namespace ahrameev {
 
         return true;
     }
+
+    bool readMatrixSize(std::ifstream& input, int& rows, int& cols, const std::string& num) {
+        input >> rows >> cols;
+
+        if (rows < 0 || cols < 0) {
+            std::cerr << "Error: Wrong matrix size\n";
+            return false;
+        }
+
+        if (num == "1" && rows * cols > 10000) {
+            std::cerr << "Error: Matrix too big for fixed array\n";
+            return false;
+        }
+
+        return true;
+    }
 }
 
 int main(int argc, char* argv[]) {
@@ -23,6 +39,41 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    std::cout << "Arguments are OK\n";
+    std::string num = argv[1];
+    std::string inputFile = argv[2];
+    std::string outputFile = argv[3];
+
+    std::ifstream input(inputFile);
+    if (!input.is_open()) {
+        std::cerr << "Error: Cannot open input file\n";
+        return 2;
+    }
+
+    int rows, cols;
+    if (!ahrameev::readMatrixSize(input, rows, cols, num)) {
+        return 2;
+    }
+
+    std::cout << "Matrix size: " << rows << "x" << cols << "\n";
+
+    if (rows == 0 || cols == 0) {
+        input.close();
+        std::cout << "Empty matrix\n";
+        return 0;
+    }
+
+    int element;
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (!(input >> element)) {
+                std::cerr << "Error: Wrong matrix data\n";
+                return 2;
+            }
+            std::cout << element << " ";
+        }
+        std::cout << "\n";
+    }
+
+    input.close();
     return 0;
 }
