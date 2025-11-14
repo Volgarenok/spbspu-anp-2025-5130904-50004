@@ -2,37 +2,31 @@
 
 #include <cstdlib>
 #include <istream>
-#include <ostream>
 
 namespace oztas
 {
     namespace
     {
-        const std::size_t MAX_ELEMENTS = 10000;
-
         int** allocateMatrix(int rows, int cols)
         {
-            if (rows <= 0 || cols <= 0) {
+            if (rows < 0 || cols < 0) {
                 return nullptr;
             }
 
-            const std::size_t r = static_cast<std::size_t>(rows);
-            const std::size_t c = static_cast<std::size_t>(cols);
-            const std::size_t total = r * c;
-
-            if (total > MAX_ELEMENTS) {
+            // Handle empty matrix
+            if (rows == 0 || cols == 0) {
                 return nullptr;
             }
 
-            int** matrix = static_cast<int**>(std::malloc(r * sizeof(int*)));
+            int** matrix = static_cast<int**>(std::malloc(rows * sizeof(int*)));
             if (!matrix) {
                 return nullptr;
             }
 
-            for (std::size_t i = 0; i < r; ++i) {
-                matrix[i] = static_cast<int*>(std::malloc(c * sizeof(int)));
+            for (int i = 0; i < rows; ++i) {
+                matrix[i] = static_cast<int*>(std::malloc(cols * sizeof(int)));
                 if (!matrix[i]) {
-                    for (std::size_t j = 0; j < i; ++j) {
+                    for (int j = 0; j < i; ++j) {
                         std::free(matrix[j]);
                     }
                     std::free(matrix);
@@ -52,6 +46,16 @@ namespace oztas
 
         if (!(input >> rows >> cols)) {
             return false;
+        }
+
+        // Check for valid dimensions
+        if (rows < 0 || cols < 0) {
+            return false;
+        }
+
+        // Empty matrix is valid
+        if (rows == 0 || cols == 0) {
+            return true;
         }
 
         int** tmp = allocateMatrix(rows, cols);
@@ -74,15 +78,11 @@ namespace oztas
 
     void writeMatrix(std::ostream& output, int* const* matrix, int rows, int cols)
     {
-        output << rows << ' ' << cols << '\n';
+        output << rows << " " << cols;
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
-                output << matrix[i][j];
-                if (j + 1 < cols) {
-                    output << ' ';
-                }
+                output << " " << matrix[i][j];
             }
-            output << '\n';
         }
     }
 

@@ -1,7 +1,5 @@
 #include "tasks.hpp"
 
-#include <algorithm>
-
 namespace oztas
 {
     int countNonZeroDiagonals(int* const* matrix, int rows, int cols)
@@ -39,19 +37,36 @@ namespace oztas
     void applyFillIncreasingWave(int** matrix, int rows, int cols)
     {
         int value = 1;
+        int top = 0, bottom = rows - 1;
+        int left = 0, right = cols - 1;
 
-        for (int i = 0; i < rows; ++i) {
-            if (i % 2 == 0) {
-                // Left to Right
-                for (int j = 0; j < cols; ++j) {
-                    matrix[i][j] += value++;
-                }
+        while (top <= bottom && left <= right) {
+            // Top row (left to right)
+            for (int j = left; j <= right; ++j) {
+                matrix[top][j] = value++;
             }
-            else {
-                // Right to Left
-                for (int j = cols - 1; j >= 0; --j) {
-                    matrix[i][j] += value++;
+            top++;
+
+            // Right column (top to bottom)
+            for (int i = top; i <= bottom; ++i) {
+                matrix[i][right] = value++;
+            }
+            right--;
+
+            // Bottom row (right to left) - if rows remain
+            if (top <= bottom) {
+                for (int j = right; j >= left; --j) {
+                    matrix[bottom][j] = value++;
                 }
+                bottom--;
+            }
+
+            // Left column (bottom to top) - if columns remain
+            if (left <= right) {
+                for (int i = bottom; i >= top; --i) {
+                    matrix[i][left] = value++;
+                }
+                left++;
             }
         }
     }
