@@ -1,4 +1,4 @@
-#include <tream>
+#include <iostream>
 #include <fsream>
 
 int main(int argc, char* argv[]) {
