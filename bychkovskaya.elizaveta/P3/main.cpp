@@ -46,10 +46,6 @@ int ** create (size_t rows, size_t cols)
 }
 
 std::ifstream& inputDinMatrix (std::ifstream& in, int ** m, size_t rows, size_t cols) {
-	in >> rows >> cols;
-	if (!(in >> rows >> cols)) {
-		throw "Wrong matris input";
-	}
 	for (size_t i = 0; i < rows; ++i) {
 		for (size_t j = 0; j < cols; ++j) {
 			in >> m[i][j];
@@ -71,15 +67,23 @@ int main(int argc, char ** argv)
 		std::cerr << "Not enough arguments" << "\n";
 	}
 	if (argc == 4) {
-	
-
+		size_t rows = 0;
+		size_t cols = 0;
+		std::ifstream input(argv[2]);
+		input >> rows >> cols;
+		if (!(input >> rows >> cols)) {
+			throw "Wrong input";
+		}
+		input.close();
 		char num = argv[1][0];
 		if (num == '1') {
 		  // int statmatrix[10000];
 			
 		}
 		else if (num == '2') {
-			//динамичсекий массив
+			int ** dinmatrix = create (rows, cols);
+			//работа с матрицей
+			clearMatrix (dinmatrix, rows);
 		}
 		else {
 			if (ifNumber (argv) == 1) {
