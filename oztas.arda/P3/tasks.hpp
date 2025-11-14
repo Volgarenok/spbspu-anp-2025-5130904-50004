@@ -3,11 +3,11 @@
 
 namespace oztas
 {
-	// 18: CNT-NZR-DIG
-	int countNonZeroDiagonals(int* const* matrix, int rows, int cols);
+    // 18: CNT-NZR-DIG
+    int countNonZeroDiagonals(int* const* matrix, int rows, int cols);
 
-	// 8: FLL-INC-WAV
-	void applyFillIncreasingWave(int** matrix, int rows, int cols);
+    // 8: FLL-INC-WAV
+    void applyFillIncreasingWave(int** matrix, int rows, int cols);
 }
 
 #endif
