@@ -87,6 +87,35 @@ namespace pozdeev
             --bottom; 
         }
     }
+
+    int numAnalysis(const char* s, int& outVal)
+    {
+        if (s == nullptr || s[0] == '\0')
+        {
+            return 1;
+        }
+        
+        if (s[0] == '1' && s[1] == '\0')
+        {
+            outVal = 1;
+            return 0; 
+        }
+        if (s[0] == '2' && s[1] == '\0')
+        {
+            outVal = 2;
+            return 0; 
+        }
+        
+        for (int i = 0; s[i] != '\0'; ++i)
+        {
+            if (s[i] < '0' || s[i] > '9')
+            {
+                return 1;
+            }
+        }
+        
+        return 2;
+    }
 }
 
 int main()
