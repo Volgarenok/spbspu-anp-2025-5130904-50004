@@ -152,6 +152,7 @@ int main(int argc, char ** argv)
 	}
 	else if (argc < 4) {
 		std::cerr << "Not enough arguments" << "\n";
+    return 1;
 	}
 	if (argc == 4) {
 		size_t rows = 0;
@@ -159,29 +160,49 @@ int main(int argc, char ** argv)
 		std::ifstream input(argv[2]);
 		input >> rows >> cols;
 		if (!input) {
-			throw "Wrong matrix input";
+			std::cerr << "Wrong matrix input" << "\n";
+      return 2;
 		}
 		char num = argv[1][0];
 		if (num == '1') {
 		  int fixedmatrix[10000];
-      inputMatrix (input, fixedmatrix, rows, cols);
+      try {
+        inputMatrix (input, fixedmatrix, rows, cols);
+      }
+      catch (const char* e) {
+        std::cerr << e << "\n";
+        return 2;
+      }
       input.close();
+      std::ofstream output(argv[3]);
+      output << CNT_COL_NSM (fixedmatrix, rows, cols) << "\n";
+      output << CNT_NZR_DIG_FIXED(fixedmatrix, rows, cols) << "\n";
+      output.close();
 		}
 		else if (num == '2') {
-			int * dynamicmatrix = create (rows, cols);
-      inputMatrix (input, dynamicmatrix, rows, cols);
-			input.close();
-			delete[] dynamicmatrix;
-		}
-		else {
-			if (ifNumber (argv) == 1) {
+      try {
+			  int * dynamicmatrix = create (rows, cols);
+        inputMatrix (input, dynamicmatrix, rows, cols);
+			  input.close();
+        std::ofstream output(argv[3]);
+        output << CNT_COL_NSM (dynamicmatrix, rows, cols) << "\n"; 
+        output << CNT_NZR_DIG_DYNAMIC(dynamicmatrix, rows, cols) << "\n";
+			  delete[] dynamicmatrix;
+      }
+      catch (const char* e) {
+        std::cerr << e << "\n";
+        return 2;
+      }
+    }
+	}
+	else {
+		if (ifNumber (argv) == 1) {
 				std::cerr << "First parameter is out of range" << "\n";
 				return 1;
-			}
-			if (ifNumber (argv) == 0) {
+		}
+		if (ifNumber (argv) == 0) {
 				std::cerr << "First parameter is not a number" << "\n";
 				return 1;
-			}
 		}
 	}
-} 
+}
