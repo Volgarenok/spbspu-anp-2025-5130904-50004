@@ -39,12 +39,16 @@ int main(int argc, char* argv[])
             matrix[i] = matrix_buf[i];
         }
 
-        if (!oztas::readMatrix(input, matrix, rows, cols)) {
+        // cast to int**
+        int** matrixPtr = matrix;
+
+        if (!oztas::readMatrix(input, matrixPtr, rows, cols)) {
             return 0;
         }
 
-        oztas::applyFillIncreasingWave(matrix, rows, cols);
-        oztas::writeMatrix(output, matrix, rows, cols);
+        oztas::applyFillIncreasingWave(matrixPtr, rows, cols);
+        oztas::writeMatrix(output, matrixPtr, rows, cols);
+
         return 0;
     }
 
