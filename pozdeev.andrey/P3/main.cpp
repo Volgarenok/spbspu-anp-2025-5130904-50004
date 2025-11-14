@@ -13,7 +13,7 @@ namespace pozdeev
         }
 
         int rowsWithoutConsecutive = 0;
-        
+
         for (int r = 0; r < rows; ++r)
         {
             bool hasConsecutive = false;
@@ -21,7 +21,7 @@ namespace pozdeev
             {
                 int idx1 = r * cols + c;
                 int idx2 = r * cols + c + 1;
-                
+
                 if (matrix[idx1] == matrix[idx2])
                 {
                     hasConsecutive = true;
@@ -94,7 +94,7 @@ namespace pozdeev
         {
             return 1;
         }
-        
+
         if (s[0] == '1' && s[1] == '\0')
         {
             outVal = 1;
@@ -105,7 +105,7 @@ namespace pozdeev
             outVal = 2;
             return 0;
         }
-        
+
         for (int i = 0; s[i] != '\0'; ++i)
         {
             if (s[i] < '0' || s[i] > '9')
@@ -113,7 +113,7 @@ namespace pozdeev
                 return 1;
             }
         }
-        
+
         return 2;
     }
 
@@ -218,14 +218,14 @@ int main(int argc, char* argv[])
         {
             errorMessage = "Too many arguments";
         }
-        
+
         std::cerr << errorMessage << std::endl;
         return 1;
     }
 
     int num = 0;
     int parseResult = pozdeev::numAnalysis(argv[1], num);
-    
+
     if (parseResult == 1)
     {
         std::cerr << "First parameter is not a number" << std::endl;
@@ -280,6 +280,6 @@ int main(int argc, char* argv[])
 
     fin.close();
     fout.close();
-    
+
     return exit;
 }
