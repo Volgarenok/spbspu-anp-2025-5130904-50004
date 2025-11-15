@@ -6,16 +6,23 @@ namespace dolenko {
 
 const int MAX_FIXED_SIZE = 10000;
 
-
 struct Matrix {
     int** data;
     int rows;
     int cols;
     bool is_dynamic;
-}
+};
 
-bool parse_num_arg(const char * str, int & num) {
-    if (str[1] != "0") {
+bool parseNumArg(const char* str, int& num);
+Matrix* allocateDynamicMatrix(int rows, int cols);
+void freeDynamicMatrix(Matrix* m);
+bool readMatrix(std::istream& input, Matrix*& matrix, int num);
+int findLongestColumn(const Matrix* matrix);
+int countLocalMins(const Matrix* matrix);
+
+bool parseNumArg(const char* str, int& num)
+{
+    if (str[0] == '\0' || str[1] != '\0') {
         return false;
     }
     if (str[0] == '1') {
@@ -29,21 +36,26 @@ bool parse_num_arg(const char * str, int & num) {
     return false;
 }
 
-Matrix * allocate_dynamic_matrix(int rows, int cols){
-    if (rows <=0 || cols <=0){
+Matrix* allocateDynamicMatrix(int rows, int cols)
+{
+    if (rows <= 0 || cols <= 0) {
         return nullptr;
     }
-    Matrix * m = (Matrix*)malloc(sizeof(Matrix));
-    if (!m) return nullptr;
-    m->data = (int**)malloc(rows * sizeof(int*));
-    if (!m->data) {
+    
+    Matrix* m = static_cast<Matrix*>(malloc(sizeof(Matrix)));
+    if (m == nullptr) {
+        return nullptr;
+    }
+    
+    m->data = static_cast<int**>(malloc(rows * sizeof(int*)));
+    if (m->data == nullptr) {
         free(m);
         return nullptr;
     }
     
     for (int i = 0; i < rows; ++i) {
-        m->data[i] = (int*)malloc(cols * sizeof(int));
-        if (!m->data[i]) {
+        m->data[i] = static_cast<int*>(malloc(cols * sizeof(int)));
+        if (m->data[i] == nullptr) {
             for (int j = 0; j < i; ++j) {
                 free(m->data[j]);
             }
@@ -59,11 +71,12 @@ Matrix * allocate_dynamic_matrix(int rows, int cols){
     return m;
 }
 
-void free_dynamic_matrix(Matrix* m) {
-    if (m && m->is_dynamic) {
-        if (m->data) {
+void freeDynamicMatrix(Matrix* m)
+{
+    if (m != nullptr && m->is_dynamic) {
+        if (m->data != nullptr) {
             for (int i = 0; i < m->rows; ++i) {
-                if (m->data[i]) {
+                if (m->data[i] != nullptr) {
                     free(m->data[i]);
                 }
             }
@@ -73,87 +86,89 @@ void free_dynamic_matrix(Matrix* m) {
     }
 }
 
-Matrix * read_matrix(const char * input , int num) {
-    std::ifstream file(argv[2]);
-    if (!input.is_open()) {
-        std::cerr << "Cannot open input file " << std::endl;
-        return nullptr
-    }
-    int rows, cols;
-    if (!(input>> rows >> cols)) {
-        std::cerr << "Cannot read matrix dimensions from input file " << std::endl;
-        return nullptr;
+bool readMatrix(std::istream& input, Matrix*& matrix, int num)
+{
+    int rows = 0;
+    int cols = 0;
+    if (!(input >> rows >> cols)) {
+        std::cerr << "Cannot read matrix dimensions from input" << std::endl;
+        return false;
     }
     
     if (rows <= 0 || cols <= 0) {
-        std::cerr << "Invalid matrix dimensions: " << std::endl;
-        return nullptr;
+        std::cerr << "Invalid matrix dimensions" << std::endl;
+        return false;
     }
     
     if (num == 1) {
-        if (rows * cols > MAX_FIXED_SIZE) {
+        if (static_cast<long long>(rows) * cols > MAX_FIXED_SIZE) {
             std::cerr << "Matrix size has maximum allowed for fixed array" << std::endl;
-            return nullptr;
+            return false;
         }
     }
     
-    Matrix * matrix = allocate_dynamic_matrix(rows, cols);
-    if (!matrix) {
-        std::cerr << "Memory allocation failed for matrix." << std::endl;
-        return nullptr;
+    matrix = allocateDynamicMatrix(rows, cols);
+    if (matrix == nullptr) {
+        std::cerr << "Memory allocation failed for matrix" << std::endl;
+        return false;
     }
+    
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
             if (!(input >> matrix->data[i][j])) {
                 std::cerr << "Cannot read element" << std::endl;
-                free_dynamic_matrix(matrix);
-                return nullptr;
+                freeDynamicMatrix(matrix);
+                matrix = nullptr;
+                return false;
             }
         }
     }
-    return matrix;
+    
+    return true;
 }
 
-int find_longest_column(const Matrix * matrix) {
-    if (!matrix || matrix->rows == 0 || matrix->cols == 0) {
+int findLongestColumn(const Matrix* matrix)
+{
+    if (matrix == nullptr || matrix->rows == 0 || matrix->cols == 0) {
         return 0;
     }
     if (matrix->rows == 1) {
         return 1;
     }
     
-    int max_length = 0;
-    int column_max = 0;
+    int maxLength = 0;
+    int columnWithMax = 0;
     
     for (int j = 0; j < matrix->cols; ++j) {
-        int current_length = 1;
-        int max_current_col = 1;
+        int currentLength = 1;
+        int maxCurrentCol = 1;
         
         for (int i = 1; i < matrix->rows; ++i) {
             if (matrix->data[i][j] == matrix->data[i - 1][j]) {
-                current_length++;
+                currentLength++;
             } else {
-                if (current_length > max_current) {
-                    max_current_col_ = current_length;
+                if (currentLength > maxCurrentCol) {
+                    maxCurrentCol = currentLength;
                 }
-                current_length = 1;
+                currentLength = 1;
             }
         }
         
-        if (current_length > max_current_col) {
-            max_current_col = current_length;
+        if (currentLength > maxCurrentCol) {
+            maxCurrentCol = currentLength;
         }
-        if (max_current_col > max_length) {
-            max_length = max_current_col;
-            column_with_max = j + 1;
+        if (maxCurrentCol > maxLength) {
+            maxLength = maxCurrentCol;
+            columnWithMax = j + 1;
         }
     }
     
-    return column_with_max;
-    
+    return columnWithMax;
 }
-int count_local_mins(const Matrix * matrix) {
-    if (!matrix || matrix->rows < 3 || matrix->cols < 3) {
+
+int countLocalMins(const Matrix* matrix)
+{
+    if (matrix == nullptr || matrix->rows < 3 || matrix->cols < 3) {
         return 0;
     }
     
@@ -162,21 +177,25 @@ int count_local_mins(const Matrix * matrix) {
     for (int i = 1; i < matrix->rows - 1; ++i) {
         for (int j = 1; j < matrix->cols - 1; ++j) {
             int current = matrix->data[i][j];
-            bool is_local_min = true;
+            bool isLocalMin = true;
             
             for (int di = -1; di <= 1; ++di) {
                 for (int dj = -1; dj <= 1; ++dj) {
-                    if (di == 0 && dj == 0) continue;
+                    if (di == 0 && dj == 0) {
+                        continue;
+                    }
                     int neighbor = matrix->data[i + di][j + dj];
                     if (current >= neighbor) {
-                        is_local_min = false;
+                        isLocalMin = false;
                         break;
                     }
                 }
-                if (!is_local_min) break;
+                if (!isLocalMin) {
+                    break;
+                }
             }
             
-            if (is_local_min) {
+            if (isLocalMin) {
                 count++;
             }
         }
@@ -186,49 +205,59 @@ int count_local_mins(const Matrix * matrix) {
 }
 
 }
-bool validate_arguments(int argc, char ** argv, int & num, const char *& input, const char *& output) {
+
+bool validateArguments(int argc, char** argv, int& num)
+{
     if (argc != 4) {
-        std::cerr << "Not enough arguments or too many arguments"<< std::endl;
+        std::cerr << "Not enough arguments or too many arguments" << std::endl;
         return false;
     }
-    if (!dolenko::parse_num_arg(argv[1], num)) {
+    if (!dolenko::parseNumArg(argv[1], num)) {
         std::cerr << "First parameter is not a number or first parameter is out of range" << std::endl;
         return false;
     }
-    input = argv[2];
-    output = argv[3];
-
     return true;
 }
 
-int main(int argc, char ** argv) {
+int main(int argc, char** argv)
+{
     int num = 0;
-    const char * input = nullptr;
-    const char * output = nullptr;
-
-    if (!validate_arguments(argc, argv, num, input, output)) {
+    
+    if (!validateArguments(argc, argv, num)) {
         return 1;
     }
-
-    dolenko::Matrix * matrix = petrov::read_matrix(input, num);
-
-    if (!matrix) {
-        std::cerr << "Failed to read matrix" << std::endl;
+    
+    const char* input_filename = argv[2];
+    const char* output_filename = argv[3];
+    
+    std::ifstream input(input_filename);
+    if (!input.is_open()) {
+        std::cerr << "Cannot open input" << std::endl;
         return 2;
     }
-
-    int result = petrov::count_local_mins(matrix);
-
-    std::ofstream output(output);
-        if (!output.is_open()) {
-            std::cerr << "Cannot open output file " << std::endl;
-            dolenko::free_dynamic_matrix(matrix);
-            return 1;
-        }
-        output<< result << std::endl;
-        output.close();
-
-        dolenko::free_dynamic_matrix(matrix);
-        return 0;
+    
+    dolenko::Matrix* matrix = nullptr;
+    if (!dolenko::readMatrix(input, matrix, num)) {
+        std::cerr << "Failed to read matrix" << input_filename << std::endl;
+        input.close();
+        return 2;
     }
-
+    input.close();
+    
+    int result1 = dolenko::countLocalMins(matrix);
+    int result2 = dolenko::findLongestColumn(matrix);
+    
+    std::ofstream output(output_filename);
+    if (!output.is_open()) {
+        std::cerr << "Cannot open output" << std::endl;
+        dolenko::freeDynamicMatrix(matrix);
+        return 1;
+    }
+    
+    output << result1 << std::endl;
+    output << result2 << std::endl;
+    output.close();
+    
+    dolenko::freeDynamicMatrix(matrix);
+    return 0;
+}
