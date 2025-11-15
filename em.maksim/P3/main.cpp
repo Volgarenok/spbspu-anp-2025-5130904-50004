@@ -6,228 +6,222 @@
 namespace em
 {
 
-enum AlgorithmType { LFT_BOT_CLK, BLD_SMT_MTR };
+    enum AlgorithmType {LFT_BOT_CLK, BLD_SMT_MTR};
 
-bool validateArguments(int argc, char* argv[], int& taskNumber)
-{
-    if (argc != 4)
+    bool validateArguments(int argc, char* argv[], int& taskNumber)
     {
-        std::cerr << "Invalid number of arguments" << std::endl;
-        return false;
-    }
-    
-    if (std::strlen(argv[1]) != 1 || (argv[1][0] != '1' && argv[1][0] != '2'))
-    {
-        std::cerr << "First parameter is out of range or not a number" << std::endl;
-        return false;
-    }
-    
-    taskNumber = argv[1][0] - '0';
-    return true;
-}
-
-AlgorithmType detectAlgorithmType(const char* programName)
-{
-    std::string name(programName);
-    if (name.find("LFT-BOT-CLK") != std::string::npos)
-    {
-        return LFT_BOT_CLK;
-    }
-    else
-    {
-        return BLD_SMT_MTR;
-    }
-}
-
-int** createMatrix(int rows, int cols)
-{
-    if (rows <= 0 || cols <= 0) return nullptr;
-    
-    int** matrix = new int*[rows];
-    for (int i = 0; i < rows; ++i)
-    {
-        matrix[i] = new int[cols]();
-    }
-    return matrix;
-}
-
-void freeMatrix(int** matrix, int rows)
-{
-    if (matrix)
-    {
-        for (int i = 0; i < rows; ++i)
+        if (argc != 4)
         {
-            delete[] matrix[i];
+            std::cerr << "Invalid number of arguments" << std::endl;
+            return false;
         }
-        delete[] matrix;
-    }
-}
 
-void copyMatrix(int** source, int** destination, int rows, int cols)
-{
-    for (int i = 0; i < rows; ++i)
-    {
-        for (int j = 0; j < cols; ++j)
+        if (std::strlen(argv[1]) != 1 || (argv[1][0] != '1' && argv[1][0] != '2'))
         {
-            destination[i][j] = source[i][j];
+            std::cerr << "First parameter is out of range or not a number" << std::endl;
+            return false;
         }
-    }
-}
 
-bool readMatrix(const char* filename, int*** matrix, int& rows, int& cols)
-{
-    std::ifstream file(filename);
-    if (!file.is_open())
-    {
-        std::cerr << "Cannot open input file: " << filename << std::endl;
-        return false;
-    }
-    
-    file >> rows >> cols;
-    if (rows < 0 || cols < 0)
-    {
-        std::cerr << "Invalid matrix dimensions" << std::endl;
-        return false;
-    }
-    
-    if (rows == 0 && cols == 0)
-    {
-        *matrix = nullptr;
+        taskNumber = argv[1][0] - '0';
         return true;
     }
-    
-    *matrix = createMatrix(rows, cols);
-    if (!*matrix)
+
+    AlgorithmType detectAlgorithmType(const char* programName)
     {
-        return false;
-    }
-    
-    for (int i = 0; i < rows; ++i)
-    {
-        for (int j = 0; j < cols; ++j)
+        std::string name(programName);
+        if (name.find("LFT-BOT-CLK") != std::string::npos)
         {
-            if (!(file >> (*matrix)[i][j]))
-            {
-                std::cerr << "Error reading matrix element at (" << i << "," << j << ")" << std::endl;
-                freeMatrix(*matrix, rows);
-                return false;
-            }
+            return LFT_BOT_CLK;
+        }
+        else
+        {
+            return BLD_SMT_MTR;
         }
     }
-    
-    return true;
-}
 
-bool writeMatrix(const char* filename, int** matrix, int rows, int cols, bool smoothMatrix = false)
-{
-    std::ofstream file(filename);
-    if (!file.is_open())
+    int** createMatrix(int rows, int cols)
     {
-        std::cerr << "Cannot open output file: " << filename << std::endl;
-        return false;
+        if (rows <= 0 || cols <= 0) return nullptr;
+
+        int** matrix = new int* [rows];
+        for (int i = 0; i < rows; ++i)
+        {
+            matrix[i] = new int[cols]();
+        }
+        return matrix;
     }
-    
-    file << rows << " " << cols;
-    
-    if (rows > 0 && cols > 0 && matrix)
+
+    void freeMatrix(int** matrix, int rows)
+    {
+        if (matrix)
+        {
+            for (int i = 0; i < rows; ++i)
+            {
+                delete[] matrix[i];
+            }
+            delete[] matrix;
+        }
+    }
+
+    void copyMatrix(int** source, int** destination, int rows, int cols)
     {
         for (int i = 0; i < rows; ++i)
         {
             for (int j = 0; j < cols; ++j)
             {
-                file << " ";
-                if (smoothMatrix)
-                {
-                    int value = matrix[i][j];
-                    file << value / 10 << "." << abs(value % 10);
-                }
-                else
-                {
-                    file << matrix[i][j];
-                }
+                destination[i][j] = source[i][j];
             }
         }
     }
-    
-    return true;
-}
 
-void processLeftBottomClockwise(int** matrix, int rows, int cols)
-{
-    if (!matrix || rows <= 0 || cols <= 0) return;
-    
-    int top = 0, bottom = rows - 1;
-    int left = 0, right = cols - 1;
-    int counter = 1;
-    
-    while (top <= bottom && left <= right)
+    bool readMatrix(const char* filename, int*** matrix, int& rows, int& cols)
     {
-        for (int i = bottom; i >= top; --i)
+        std::ifstream file(filename);
+        if (!file.is_open())
         {
-            matrix[i][left] -= counter++;
+            std::cerr << "Cannot open input file: " << filename << std::endl;
+            return false;
         }
-        left++;
-        if (left > right) break;
-        
-        for (int j = left; j <= right; ++j)
-        {
-            matrix[top][j] -= counter++;
-        }
-        top++;
-        if (top > bottom) break;
-        
-        for (int i = top; i <= bottom; ++i)
-        {
-            matrix[i][right] -= counter++;
-        }
-        right--;
-        if (left > right) break;
-        
-        for (int j = right; j >= left; --j)
-        {
-            matrix[bottom][j] -= counter++;
-        }
-        bottom--;
-    }
-}
 
-void buildSmoothMatrix(int** matrix, int rows, int cols)
-{
-    if (!matrix || rows <= 0 || cols <= 0) return;
-    
-    int** temp = createMatrix(rows, cols);
-    if (!temp) return;
-    
-    for (int i = 0; i < rows; ++i)
-    {
-        for (int j = 0; j < cols; ++j)
+        file >> rows >> cols;
+        if (rows < 0 || cols < 0)
         {
-            int sum = 0, count = 0;
-            
-            for (int di = -1; di <= 1; ++di)
+            std::cerr << "Invalid matrix dimensions" << std::endl;
+            return false;
+        }
+
+        if (rows == 0 && cols == 0)
+        {
+            *matrix = nullptr;
+            return true;
+        }
+
+        *matrix = createMatrix(rows, cols);
+        if (!*matrix)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < rows; ++i)
+        {
+            for (int j = 0; j < cols; ++j)
             {
-                for (int dj = -1; dj <= 1; ++dj)
+                if (!(file >> (*matrix)[i][j]))
                 {
-                    if (di == 0 && dj == 0) continue;
-                    
-                    int ni = i + di, nj = j + dj;
-                    if (ni >= 0 && ni < rows && nj >= 0 && nj < cols)
+                    std::cerr << "Error reading matrix element at (" << i << "," << j << ")" << std::endl;
+                    freeMatrix(*matrix, rows);
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    bool writeMatrix(const char* filename, int** matrix, int rows, int cols, bool smoothMatrix = false)
+    {
+        std::ofstream file(filename);
+        if (!file.is_open())
+        {
+            std::cerr << "Cannot open output file: " << filename << std::endl;
+            return false;
+        }
+
+        file << rows << " " << cols;
+
+        if (rows > 0 && cols > 0 && matrix)
+        {
+            for (int i = 0; i < rows; ++i)
+            {
+                for (int j = 0; j < cols; ++j)
+                {
+                    file << " ";
+                    if (smoothMatrix)
                     {
-                        sum += matrix[ni][nj];
-                        count++;
+                        int value = matrix[i][j];
+                        file << value / 10 << "." << abs(value % 10);
+                    }
+                    else
+                    {
+                        file << matrix[i][j];
                     }
                 }
             }
-            
-            temp[i][j] = (count > 0) ? (sum * 10 / count) : (matrix[i][j] * 10);
+        }
+
+        return true;
+    }
+
+    void processLeftBottomClockwise(int** matrix, int rows, int cols)
+    {
+        if (!matrix || rows <= 0 || cols <= 0) return;
+
+        int top = 0, bottom = rows - 1;
+        int left = 0, right = cols - 1;
+        int counter = 1;
+
+        while (top <= bottom && left <= right)
+        {
+            for (int i = bottom; i >= top; --i)
+            {
+                matrix[i][left] -= counter++;
+            }
+            left++;
+            if (left > right) break;
+
+            for (int j = left; j <= right; ++j)
+            {
+                matrix[top][j] -= counter++;
+            }
+            top++;
+            if (top > bottom) break;
+
+            for (int i = top; i <= bottom; ++i)
+            {
+                matrix[i][right] -= counter++;
+            }
+            right--;
+            if (left > right) break;
+
+            for (int j = right; j >= left; --j)
+            {
+                matrix[bottom][j] -= counter++;
+            }
+            bottom--;
         }
     }
-    
-    copyMatrix(temp, matrix, rows, cols);
-    freeMatrix(temp, rows);
-}
 
-} // namespace em
+    void buildSmoothMatrix(int** matrix, int rows, int cols)
+    {
+        if (!matrix || rows <= 0 || cols <= 0) return;
+        int** temp = createMatrix(rows, cols);
+        if (!temp) return;
+        for (int i = 0; i < rows; ++i)
+        {
+            for (int j = 0; j < cols; ++j)
+            {
+                int sum = 0, count = 0;
+                for (int di = -1; di <= 1; ++di)
+                {
+                    for (int dj = -1; dj <= 1; ++dj)
+                    {
+                        if (di == 0 && dj == 0) continue;
+                        int ni = i + di, nj = j + dj;
+                        if (ni >= 0 && ni < rows && nj >= 0 && nj < cols)
+                        {
+                            sum += matrix[ni][nj];
+                            count++;
+                        }
+                    }
+                }
+
+                temp[i][j] = (count > 0) ? (sum * 10 / count) : (matrix[i][j] * 10);
+            }
+        }
+        copyMatrix(temp, matrix, rows, cols);
+        freeMatrix(temp, rows);
+    }
+}
 
 int main(int argc, char* argv[])
 {
@@ -236,32 +230,30 @@ int main(int argc, char* argv[])
     {
         return 1;
     }
-    
+
     const char* inputFile = argv[2];
     const char* outputFile = argv[3];
-    
+
     int rows, cols;
     int** matrix = nullptr;
-    
+
     if (!em::readMatrix(inputFile, &matrix, rows, cols))
     {
         std::cerr << "Failed to read matrix from file" << std::endl;
         return 2;
     }
-    
-    // Проверка ограничения для задания 1 (фиксированный массив)
+
     if (taskNumber == 1 && rows * cols > 10000)
     {
         std::cerr << "Matrix too large for fixed array (max 10000 elements)" << std::endl;
         em::freeMatrix(matrix, rows);
         return 2;
     }
-    
-    // Обработка матрицы
+
     if (rows > 0 && cols > 0)
     {
         em::AlgorithmType algo = em::detectAlgorithmType(argv[0]);
-        
+
         if (algo == em::LFT_BOT_CLK)
         {
             em::processLeftBottomClockwise(matrix, rows, cols);
@@ -275,13 +267,10 @@ int main(int argc, char* argv[])
     }
     else
     {
-        // Пустая матрица
         em::writeMatrix(outputFile, matrix, rows, cols, false);
     }
-    
-    // Освобождение памяти
+
     em::freeMatrix(matrix, rows);
-    
     std::cout << "Processing completed successfully" << std::endl;
     return 0;
 }
