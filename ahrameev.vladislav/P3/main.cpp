@@ -83,31 +83,133 @@ namespace ahrameev
         delete[] matrix;
     }
 
-    int calculateSum(int** matrix, int rows, int cols)
+
+    void processSpiralDecrease(int** matrix, int rows, int cols, std::ofstream& output)
     {
-        int sum = 0;
+        if (rows == 0 || cols == 0)
+        {
+            output << "Empty matrix\n";
+            return;
+        }
+        int** result = new int* [rows];
         for (int i = 0; i < rows; i++)
         {
+            result[i] = new int[cols];
             for (int j = 0; j < cols; j++)
             {
-                sum += matrix[i][j];
+                result[i][j] = matrix[i][j];
             }
         }
-        return sum;
+
+        int decreaseValue = 1;
+        int totalElements = rows * cols;
+        int count = 0;
+
+        int top = 0, bottom = rows - 1;
+        int left = 0, right = cols - 1;
+
+        while (count < totalElements)
+        {
+            for (int i = bottom; i >= top && count < totalElements; i--)
+            {
+                result[i][left] -= decreaseValue;
+                decreaseValue++;
+                count++;
+            }
+            left++;
+
+            for (int j = left; j <= right && count < totalElements; j++)
+            {
+                result[top][j] -= decreaseValue;
+                decreaseValue++;
+                count++;
+            }
+            top++;
+
+            for (int i = top; i <= bottom && count < totalElements; i++)
+            {
+                result[i][right] -= decreaseValue;
+                decreaseValue++;
+                count++;
+            }
+            right--;
+
+            for (int j = right; j >= left && count < totalElements; j--)
+            {
+                result[bottom][j] -= decreaseValue;
+                decreaseValue++;
+                count++;
+            }
+            bottom--;
+        }
+
+        output << "Spiral decrease result:\n";
+        output << rows << " " << cols << " ";
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                output << result[i][j] << " ";
+            }
+        }
+        output << "\n";
+
+        for (int i = 0; i < rows; i++)
+        {
+            delete[] result[i];
+        }
+        delete[] result;
     }
 
-    void writeResult(std::ofstream& output, int** matrix, int rows, int cols, int sum)
+
+    bool isLowerTriangular(int** matrix, int rows, int cols)
     {
-        output << "Sum: " << sum << "\n";
-        output << "Matrix:\n";
+        if (rows != cols) return false;
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = i + 1; j < cols; j++)
+            {
+                if (matrix[i][j] != 0)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    void processLowerTriangle(int** matrix, int rows, int cols, std::ofstream& output)
+    {
+        if (rows == 0 || cols == 0)
+        {
+            output << "Empty matrix\n";
+            return;
+        }
+
+        bool isTriangular = isLowerTriangular(matrix, rows, cols);
+
+        output << "Lower triangular check: ";
+        if (isTriangular)
+        {
+            output << "YES - matrix is lower triangular\n";
+        }
+        else
+        {
+            output << "NO - matrix is not lower triangular\n";
+        }
+    }
+
+    void writeOriginalMatrix(std::ofstream& output, int** matrix, int rows, int cols)
+    {
+        output << "Original matrix:\n";
+        output << rows << " " << cols << " ";
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < cols; j++)
             {
                 output << matrix[i][j] << " ";
             }
-            output << "\n";
         }
+        output << "\n";
     }
 }
 
@@ -151,8 +253,6 @@ int main(int argc, char* argv[])
     }
     input.close();
 
-    int sum = ahrameev::calculateSum(matrix, rows, cols);
-
     std::ofstream output(outputFile);
     if (!output.is_open())
     {
@@ -161,11 +261,16 @@ int main(int argc, char* argv[])
         return 2;
     }
 
-    ahrameev::writeResult(output, matrix, rows, cols, sum);
-    output.close();
+    output << "=== TASK 1: Spiral Decrease ===\n";
+    ahrameev::processSpiralDecrease(matrix, rows, cols, output);
 
+    output << "\n=== TASK 2: Lower Triangle Check ===\n";
+    ahrameev::processLowerTriangle(matrix, rows, cols, output);
+
+    output << "\n=== ORIGINAL MATRIX ===\n";
+    ahrameev::writeOriginalMatrix(output, matrix, rows, cols);
+
+    output.close();
     ahrameev::freeMatrix(matrix, num, rows);
 
-    std::cout << "Program finished successfully!\n";
-    return 0;
 }
