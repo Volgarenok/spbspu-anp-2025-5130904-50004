@@ -123,7 +123,9 @@ size_t cntNzrDigDynamic(int*& m, size_t& rows, size_t& cols)
   return count;
 }
 
-size_t cntNzrDigFixed(const int* m, size_t& rows, size_t& cols) {
+size_t cntNzrDigFixed(const int* m, size_t& rows, size_t& cols)
+{
+  size_t originalCols = cols;
   bychkovskaya::cutToSquareFixed(rows, cols);
   size_t count = 0;
   int k = -int(rows) + 1;
@@ -132,8 +134,8 @@ size_t cntNzrDigFixed(const int* m, size_t& rows, size_t& cols) {
     for (size_t i = 0; i < rows; ++i) {
       for (size_t j = 0; j < cols; j++) {
         if (i == j) {
-          if ((int(i * cols + j) + k >= 0) && (int(i * cols + j) + k < int(rows * cols))) {
-            if (m[i * cols + j + k] == 0) {
+          if ((int(j) + k >= 0) && (int(j) + k < int(cols))) {
+            if (m[i * originalCols + j + k] == 0) {
               ++countDiag;
             }
           }
