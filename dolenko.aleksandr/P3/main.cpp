@@ -95,9 +95,14 @@ bool readMatrix(std::istream& input, Matrix*& matrix, int num)
         return false;
     }
 
-    if (rows <= 0 || cols <= 0) {
-        std::cerr << "Invalid matrix dimensions" << std::endl;
-        return false;
+    if (rows == 0 || cols == 0) {
+            matrix = allocateDynamicMatrix(0, 0);
+            return true;
+    }
+
+    if (rows < 0 || cols < 0) {
+            std::cerr << "Invalid matrix dimensions" << std::endl;
+            return false;
     }
 
     if (num == 1) {
