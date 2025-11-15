@@ -124,4 +124,59 @@ void process_fixed_array(std::ifstream& input, std::ofstream& output) {
     output << result << "\n";
 }
 
+void process_dynamic_array(std::ifstream& input, std::ofstream& output) {
+    int rows, cols;
+    if (!(input >> rows >> cols)) {
+        throw "Invalid matrix dimensions";
+    }
+
+    if (rows < 0 || cols < 0) {
+        throw "Invalid matrix dimensions";
+    }
+    if ((rows == 0 && cols > 0) || (rows > 0 && cols == 0)) {
+        throw "Invalid matrix dimensions";
+    }
+    if (rows == 0 && cols == 0) {
+        output << "0\n";
+        return;
+    }
+
+    int** matrix = static_cast<int**>(malloc(rows * sizeof(int*)));
+    if (!matrix) {
+        throw "Memory allocation failed";
+    }
+
+    for (int i = 0; i < rows; i++) {
+        matrix[i] = static_cast<int*>(malloc(cols * sizeof(int)));
+        if (!matrix[i]) {
+            for (int k = 0; k < i; k++) {
+                free(matrix[k]);
+            }
+            free(matrix);
+            throw "Memory allocation failed";
+        }
+    }
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (!(input >> matrix[i][j])) {
+                for (int k = 0; k < rows; k++) {
+                    free(matrix[k]);
+                }
+                free(matrix);
+                throw "Invalid matrix element";
+            }
+        }
+    }
+
+    int result = find_min_sum_anti_diagonals(matrix, rows, cols);
+
+    for (int i = 0; i < rows; i++) {
+        free(matrix[i]);
+    }
+    free(matrix);
+
+    output << result << "\n";
+}
+
 }
