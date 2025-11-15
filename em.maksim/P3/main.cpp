@@ -140,6 +140,37 @@ void processLeftBottomClockwise(int** matrix, int rows, int cols) {
     }
 }
 
+void buildSmoothMatrix(int** matrix, int rows, int cols) {
+    if (!matrix || rows <= 0 || cols <= 0) return;
+    
+    int** temp = createMatrix(rows, cols);
+    if (!temp) return;
+    
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            int sum = 0, count = 0;
+            
+            // Обход соседей 3x3
+            for (int di = -1; di <= 1; ++di) {
+                for (int dj = -1; dj <= 1; ++dj) {
+                    if (di == 0 && dj == 0) continue;
+                    
+                    int ni = i + di, nj = j + dj;
+                    if (ni >= 0 && ni < rows && nj >= 0 && nj < cols) {
+                        sum += matrix[ni][nj];
+                        count++;
+                    }
+                }
+            }
+            
+            temp[i][j] = (count > 0) ? (sum * 10 / count) : (matrix[i][j] * 10);
+        }
+    }
+    
+    copyMatrix(temp, matrix, rows, cols);
+    freeMatrix(temp, rows);
+}
+
 } // namespace em
 
 int main(int argc, char* argv[]) {
