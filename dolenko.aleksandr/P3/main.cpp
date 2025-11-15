@@ -73,6 +73,46 @@ void free_dynamic_matrix(Matrix* m) {
     }
 }
 
+Matrix * read_matrix(const char * input , int num) {
+    std::ifstream file(argv[2]);
+    if (!input.is_open()) {
+        std::cerr << "Cannot open input file " << std::endl;
+        return nullptr
+    }
+    int rows, cols;
+    if (!(input>> rows >> cols)) {
+        std::cerr << "Cannot read matrix dimensions from input file " << std::endl;
+            return nullptr;
+       }
+
+    if (rows <= 0 || cols <= 0) {
+        std::cerr << "Invalid matrix dimensions: " << std::endl;
+        return nullptr;
+       }
+
+    if (num == 1) {
+        if (rows * cols > MAX_FIXED_SIZE) {
+            std::cerr << "Matrix size has maximum allowed for fixed array" << std::endl;
+            return nullptr;
+           }
+       }
+    
+    Matrix * matrix = allocate_dynamic_matrix(rows, cols);
+    if (!matrix) {
+        std::cerr << "Memory allocation failed for matrix." << std::endl;
+        return nullptr;
+        }
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            if (!(input >> matrix->data[i][j])) {
+                std::cerr << "Cannot read element" << std::endl;
+                free_dynamic_matrix(matrix);
+                return nullptr;
+                }
+            }
+        }
+        return matrix;
+    }
 }
 
 bool validate_arguments(int argc, char ** argv, int & num, const char *& input, const char *& output) {
