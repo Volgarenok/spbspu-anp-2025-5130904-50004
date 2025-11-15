@@ -73,4 +73,4 @@ int main(int argc, char* argv[])
     // Cleanup
     oztas::freeMatrix(matrix, rows);
     return 0;
-}
+} 
