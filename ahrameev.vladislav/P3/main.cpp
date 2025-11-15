@@ -23,7 +23,14 @@ namespace ahrameev
 
     bool readMatrixSize(std::ifstream& input, int& rows, int& cols, const std::string& num)
     {
-        input >> rows >> cols;
+        rows = 0;
+        cols = 0;
+
+        if (!(input >> rows >> cols)) 
+        {
+            std::cerr << "Error: Cannot read matrix dimensions\n";
+            return false;
+        }
 
         if (rows < 0 || cols < 0)
         {
@@ -49,7 +56,7 @@ namespace ahrameev
             matrix = new int* [100];
             for (int i = 0; i < 100; i++)
             {
-                matrix[i] = new int[100];
+                matrix[i] = new int[100](); 
             }
         }
         else
@@ -57,7 +64,7 @@ namespace ahrameev
             matrix = new int* [rows];
             for (int i = 0; i < rows; i++)
             {
-                matrix[i] = new int[cols];
+                matrix[i] = new int[cols]();
             }
         }
 
@@ -66,6 +73,8 @@ namespace ahrameev
 
     void freeMatrix(int** matrix, const std::string& num, int rows)
     {
+        if (matrix == nullptr) return;
+
         if (num == "1")
         {
             for (int i = 0; i < 100; i++)
@@ -82,7 +91,6 @@ namespace ahrameev
         }
         delete[] matrix;
     }
-
 
     void processSpiralDecrease(int** matrix, int rows, int cols, std::ofstream& output)
     {
@@ -159,7 +167,6 @@ namespace ahrameev
         delete[] result;
     }
 
-
     bool isLowerTriangular(int** matrix, int rows, int cols)
     {
         if (rows != cols) return false;
@@ -231,9 +238,23 @@ int main(int argc, char* argv[])
         return 2;
     }
 
-    int rows, cols;
+    input.peek();
+    if (input.eof()) {
+        std::cerr << "Error: Empty file\n";
+        input.close();
+        return 2;
+    }
+
+    int rows = 0, cols = 0;
     if (!ahrameev::readMatrixSize(input, rows, cols, num))
     {
+        input.close();
+        return 2;
+    }
+
+    if (rows == 0 || cols == 0) {
+        std::cerr << "Error: Matrix zero\n";
+        input.close();
         return 2;
     }
 
@@ -247,6 +268,7 @@ int main(int argc, char* argv[])
             {
                 std::cerr << "Error: Wrong matrix data\n";
                 ahrameev::freeMatrix(matrix, num, rows);
+                input.close();
                 return 2;
             }
         }
