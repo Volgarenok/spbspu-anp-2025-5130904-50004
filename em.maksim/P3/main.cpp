@@ -103,6 +103,43 @@ bool writeMatrix(const char* filename, int** matrix, int rows, int cols) {
     return true;
 }
 
+void processLeftBottomClockwise(int** matrix, int rows, int cols) {
+    if (!matrix || rows <= 0 || cols <= 0) return;
+    
+    int top = 0, bottom = rows - 1;
+    int left = 0, right = cols - 1;
+    int counter = 1;
+    
+    while (top <= bottom && left <= right) {
+        // Левая граница - снизу вверх
+        for (int i = bottom; i >= top; --i) {
+            matrix[i][left] -= counter++;
+        }
+        left++;
+        if (left > right) break;
+        
+        // Верхняя граница - слева направо
+        for (int j = left; j <= right; ++j) {
+            matrix[top][j] -= counter++;
+        }
+        top++;
+        if (top > bottom) break;
+        
+        // Правая граница - сверху вниз
+        for (int i = top; i <= bottom; ++i) {
+            matrix[i][right] -= counter++;
+        }
+        right--;
+        if (left > right) break;
+        
+        // Нижняя граница - справа налево
+        for (int j = right; j >= left; --j) {
+            matrix[bottom][j] -= counter++;
+        }
+        bottom--;
+    }
+}
+
 } // namespace em
 
 int main(int argc, char* argv[]) {
