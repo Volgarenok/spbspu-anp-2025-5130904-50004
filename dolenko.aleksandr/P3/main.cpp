@@ -2,6 +2,16 @@
 #include <fstream>
 #include <cstdlib>
 
+namespace dolenko {
+
+const int MAX_FIXED_SIZE = 10000;
+
+struct Matrix {
+    int** data;
+    int rows;
+    int cols;
+    bool is_dynamic;
+
 bool parse_num_arg(const char * str, int & num) {
     if (str[1] != "0") {
         return false;
@@ -17,12 +27,14 @@ bool parse_num_arg(const char * str, int & num) {
     return false;
 }
 
+}
+
 bool validate_arguments(int argc, char ** argv, int & num, const char *& input, const char *& output) {
     if (argc != 4) {
         std::cerr << "Not enough arguments or too many arguments"<< std::endl;
         return false;
     }
-    if (!parse_num_arg(argv[1], num)) {
+    if (!dolenko::parse_num_arg(argv[1], num)) {
         std::cerr << "First parameter is not a number or first parameter is out of range" << std::endl;
         return false;
     }
