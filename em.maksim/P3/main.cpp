@@ -7,6 +7,7 @@ namespace em
 {
 
     enum AlgorithmType {LFT_BOT_CLK, BLD_SMT_MTR};
+
     bool validateArguments(int argc, char* argv[], int& taskNumber)
     {
         if (argc != 4)
