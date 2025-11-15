@@ -113,6 +113,43 @@ Matrix * read_matrix(const char * input , int num) {
         }
         return matrix;
     }
+
+int find_longest_column(const Matrix * matrix) {
+    if (!matrix || matrix->rows == 0 || matrix->cols == 0) {
+        return 0;
+    }
+    if (matrix->rows == 1) {
+        return 1;
+    }
+
+    int max_length = 0;
+    int column_max = 0;
+
+    for (int j = 0; j < matrix->cols; ++j) {
+        int current_length = 1;
+        int max_current_col = 1;
+
+        for (int i = 1; i < matrix->rows; ++i) {
+            if (matrix->data[i][j] == matrix->data[i - 1][j]) {
+                current_length++;
+            } else {
+                if (current_length > max_current) {
+                    max_current_col_ = current_length;
+                }
+                current_length = 1;
+            }
+        }
+        
+        if (current_length > max_current_col) {
+            max_current_col = current_length;
+            }
+        if (max_current_col > max_length) {
+            max_length = max_current_col;
+            column_with_max = j + 1;
+        }
+    }
+    
+    return column_with_max;
 }
 
 bool validate_arguments(int argc, char ** argv, int & num, const char *& input, const char *& output) {
@@ -132,12 +169,19 @@ bool validate_arguments(int argc, char ** argv, int & num, const char *& input, 
 
 int main(int argc, char ** argv) {
     int num = 0;
-    const char * input = nullptr;
-    const char * output = nullptr;
-
+    const char * input_filename = nullptr;
+    const char * output_filename = nullptr;
+    
     if (!validate_arguments(argc, argv, num, input, output)) {
         return 1;
     }
-
-        return 0;
+    petrov::Matrix * matrix = petrov::read_matrix(input, num);
+    
+    if (!matrix) {
+        std::cerr << "Failed to read matrix from input" << std::endl;
+        return 2;
     }
+    
+    petrov::free_dynamic_matrix(matrix);
+    return 0;
+}
