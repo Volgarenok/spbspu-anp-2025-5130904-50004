@@ -83,7 +83,7 @@ bool readMatrix(const char* filename, int*** matrix, int& rows, int& cols) {
     return true;
 }
 
-bool writeMatrix(const char* filename, int** matrix, int rows, int cols) {
+bool writeMatrix(const char* filename, int** matrix, int rows, int cols, bool smoothMatrix = false) {
     std::ofstream file(filename);
     if (!file.is_open()) {
         std::cerr << "Cannot open output file: " << filename << std::endl;
@@ -95,7 +95,14 @@ bool writeMatrix(const char* filename, int** matrix, int rows, int cols) {
     if (rows > 0 && cols > 0 && matrix) {
         for (int i = 0; i < rows; ++i) {
             for (int j = 0; j < cols; ++j) {
-                file << " " << matrix[i][j];
+                file << " ";
+                if (smoothMatrix) {
+                    // Форматированный вывод для сглаженной матрицы
+                    int value = matrix[i][j];
+                    file << value / 10 << "." << abs(value % 10);
+                } else {
+                    file << matrix[i][j];
+                }
             }
         }
     }
