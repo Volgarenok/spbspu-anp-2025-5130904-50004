@@ -69,4 +69,59 @@ int find_min_sum_anti_diagonals(int** matrix, int rows, int cols) {
     return min_sum;
 }
 
+void process_fixed_array(std::ifstream& input, std::ofstream& output) {
+    int rows, cols;
+    if (!(input >> rows >> cols)) {
+        throw "Invalid matrix dimensions";
+    }
+
+    if (rows < 0 || cols < 0) {
+        throw "Invalid matrix dimensions";
+    }
+    if ((rows == 0 && cols > 0) || (rows > 0 && cols == 0)) {
+        throw "Invalid matrix dimensions";
+    }
+    if (rows == 0 && cols == 0) {
+        output << "0\n";
+        return;
+    }
+
+    const int MAX_SIZE = 10000;
+    if (static_cast<long long>(rows) * cols > MAX_SIZE) {
+        throw "Matrix size exceeds maximum allowed";
+    }
+
+    const int MAX_DIM = 100;
+    if (rows > MAX_DIM || cols > MAX_DIM) {
+        throw "Matrix dimensions exceed fixed array limits";
+    }
+
+    int fixed_matrix[MAX_DIM][MAX_DIM];
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (!(input >> fixed_matrix[i][j])) {
+                throw "Invalid matrix element";
+            }
+        }
+    }
+
+    int** matrix = new int*[rows];
+    for (int i = 0; i < rows; i++) {
+        matrix[i] = new int[cols];
+        for (int j = 0; j < cols; j++) {
+            matrix[i][j] = fixed_matrix[i][j];
+        }
+    }
+
+    int result = find_longest_series_column(matrix, rows, cols);
+
+    for (int i = 0; i < rows; i++) {
+        delete[] matrix[i];
+    }
+    delete[] matrix;
+
+    output << result << "\n";
+}
+
 }
