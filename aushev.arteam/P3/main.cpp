@@ -179,4 +179,57 @@ void process_dynamic_array(std::ifstream& input, std::ofstream& output) {
     output << result << "\n";
 }
 
+} // namespace aushev
+
+int main(int argc, char* argv[]) {
+    if (argc != 4) {
+        std::cerr << "Usage: " << argv[0] << " <num> <input> <output>\n";
+        return 1;
+    }
+
+    std::string num_str = argv[1];
+    std::string input_filename = argv[2];
+    std::string output_filename = argv[3];
+
+    int num;
+    try {
+        size_t pos;
+        num = std::stoi(num_str, &pos);
+        if (pos != num_str.length()) {
+            throw "First parameter is not a number";
+        }
+    } catch (...) {
+        std::cerr << "First parameter is not a number\n";
+        return 1;
+    }
+
+    if (num != 1 && num != 2) {
+        std::cerr << "First parameter is out of range\n";
+        return 1;
+    }
+
+    std::ifstream input(input_filename);
+    if (!input.is_open()) {
+        std::cerr << "Cannot open input file\n";
+        return 2;
+    }
+
+    std::ofstream output(output_filename);
+    if (!output.is_open()) {
+        std::cerr << "Cannot open output file\n";
+        return 2;
+    }
+
+    try {
+        if (num == 1) {
+            aushev::process_fixed_array(input, output);
+        } else { // num == 2
+            aushev::process_dynamic_array(input, output);
+        }
+    } catch (const char* e) {
+        std::cerr << "Error processing file: " << e << "\n";
+        return 2;
+    }
+
+    return 0;
 }
