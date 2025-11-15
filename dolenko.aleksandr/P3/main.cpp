@@ -59,6 +59,20 @@ Matrix * allocate_dynamic_matrix(int rows, int cols){
     return m;
 }
 
+void free_dynamic_matrix(Matrix* m) {
+    if (m && m->is_dynamic) {
+        if (m->data) {
+            for (int i = 0; i < m->rows; ++i) {
+                if (m->data[i]) {
+                    free(m->data[i]);
+                }
+            }
+            free(m->data);
+        }
+        free(m);
+    }
+}
+
 }
 
 bool validate_arguments(int argc, char ** argv, int & num, const char *& input, const char *& output) {
