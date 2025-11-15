@@ -26,7 +26,8 @@ namespace ahrameev
         rows = 0;
         cols = 0;
 
-        if (!(input >> rows >> cols)) {
+        if (!(input >> rows >> cols))
+        {
             std::cerr << "Error: Cannot read matrix dimensions\n";
             return false;
         }
