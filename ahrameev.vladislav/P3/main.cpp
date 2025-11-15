@@ -26,7 +26,7 @@ namespace ahrameev
         rows = 0;
         cols = 0;
 
-        if (!(input >> rows >> cols)) 
+        if (!(input >> rows >> cols))
         {
             std::cerr << "Error: Cannot read matrix dimensions\n";
             return false;
@@ -56,7 +56,7 @@ namespace ahrameev
             matrix = new int* [100];
             for (int i = 0; i < 100; i++)
             {
-                matrix[i] = new int[100](); 
+                matrix[i] = new int[100]();
             }
         }
         else
