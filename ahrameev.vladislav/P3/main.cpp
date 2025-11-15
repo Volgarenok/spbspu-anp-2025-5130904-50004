@@ -26,8 +26,7 @@ namespace ahrameev
         rows = 0;
         cols = 0;
 
-        if (!(input >> rows >> cols))
-        {
+        if (!(input >> rows >> cols)) {
             std::cerr << "Error: Cannot read matrix dimensions\n";
             return false;
         }
@@ -239,7 +238,8 @@ int main(int argc, char* argv[])
     }
 
     input.peek();
-    if (input.eof()) {
+    if (input.eof())
+    {
         std::cerr << "Error: Empty file\n";
         input.close();
         return 2;
@@ -252,24 +252,21 @@ int main(int argc, char* argv[])
         return 2;
     }
 
-    if (rows == 0 || cols == 0) {
-        std::cerr << "Error: Matrix zero\n";
-        input.close();
-        return 2;
-    }
-
     int** matrix = ahrameev::createMatrix(rows, cols, num);
 
-    for (int i = 0; i < rows; i++)
+    if (rows > 0 && cols > 0)
     {
-        for (int j = 0; j < cols; j++)
+        for (int i = 0; i < rows; i++)
         {
-            if (!(input >> matrix[i][j]))
+            for (int j = 0; j < cols; j++)
             {
-                std::cerr << "Error: Wrong matrix data\n";
-                ahrameev::freeMatrix(matrix, num, rows);
-                input.close();
-                return 2;
+                if (!(input >> matrix[i][j]))
+                {
+                    std::cerr << "Error: Wrong matrix data\n";
+                    ahrameev::freeMatrix(matrix, num, rows);
+                    input.close();
+                    return 2;
+                }
             }
         }
     }
@@ -295,4 +292,5 @@ int main(int argc, char* argv[])
     output.close();
     ahrameev::freeMatrix(matrix, num, rows);
 
+    return 0;
 }
