@@ -41,18 +41,18 @@ Matrix* allocateDynamicMatrix(int rows, int cols)
     if (rows <= 0 || cols <= 0) {
         return nullptr;
     }
-    
+
     Matrix* m = static_cast<Matrix*>(malloc(sizeof(Matrix)));
     if (m == nullptr) {
         return nullptr;
     }
-    
+
     m->data = static_cast<int**>(malloc(rows * sizeof(int*)));
     if (m->data == nullptr) {
         free(m);
         return nullptr;
     }
-    
+
     for (int i = 0; i < rows; ++i) {
         m->data[i] = static_cast<int*>(malloc(cols * sizeof(int)));
         if (m->data[i] == nullptr) {
@@ -64,7 +64,7 @@ Matrix* allocateDynamicMatrix(int rows, int cols)
             return nullptr;
         }
     }
-    
+
     m->rows = rows;
     m->cols = cols;
     m->is_dynamic = true;
@@ -94,25 +94,25 @@ bool readMatrix(std::istream& input, Matrix*& matrix, int num)
         std::cerr << "Cannot read matrix dimensions from input" << std::endl;
         return false;
     }
-    
+
     if (rows <= 0 || cols <= 0) {
         std::cerr << "Invalid matrix dimensions" << std::endl;
         return false;
     }
-    
+
     if (num == 1) {
         if (static_cast<long long>(rows) * cols > MAX_FIXED_SIZE) {
             std::cerr << "Matrix size has maximum allowed for fixed array" << std::endl;
             return false;
         }
     }
-    
+
     matrix = allocateDynamicMatrix(rows, cols);
     if (matrix == nullptr) {
         std::cerr << "Memory allocation failed for matrix" << std::endl;
         return false;
     }
-    
+
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
             if (!(input >> matrix->data[i][j])) {
@@ -123,7 +123,7 @@ bool readMatrix(std::istream& input, Matrix*& matrix, int num)
             }
         }
     }
-    
+
     return true;
 }
 
@@ -135,14 +135,14 @@ int findLongestColumn(const Matrix* matrix)
     if (matrix->rows == 1) {
         return 1;
     }
-    
+
     int maxLength = 0;
     int columnWithMax = 0;
-    
+
     for (int j = 0; j < matrix->cols; ++j) {
         int currentLength = 1;
         int maxCurrentCol = 1;
-        
+
         for (int i = 1; i < matrix->rows; ++i) {
             if (matrix->data[i][j] == matrix->data[i - 1][j]) {
                 currentLength++;
@@ -153,7 +153,7 @@ int findLongestColumn(const Matrix* matrix)
                 currentLength = 1;
             }
         }
-        
+
         if (currentLength > maxCurrentCol) {
             maxCurrentCol = currentLength;
         }
@@ -162,7 +162,7 @@ int findLongestColumn(const Matrix* matrix)
             columnWithMax = j + 1;
         }
     }
-    
+
     return columnWithMax;
 }
 
@@ -171,14 +171,14 @@ int countLocalMins(const Matrix* matrix)
     if (matrix == nullptr || matrix->rows < 3 || matrix->cols < 3) {
         return 0;
     }
-    
+
     int count = 0;
-    
+
     for (int i = 1; i < matrix->rows - 1; ++i) {
         for (int j = 1; j < matrix->cols - 1; ++j) {
             int current = matrix->data[i][j];
             bool isLocalMin = true;
-            
+
             for (int di = -1; di <= 1; ++di) {
                 for (int dj = -1; dj <= 1; ++dj) {
                     if (di == 0 && dj == 0) {
@@ -194,13 +194,13 @@ int countLocalMins(const Matrix* matrix)
                     break;
                 }
             }
-            
+
             if (isLocalMin) {
                 count++;
             }
         }
     }
-    
+
     return count;
 }
 
@@ -222,20 +222,20 @@ bool validateArguments(int argc, char** argv, int& num)
 int main(int argc, char** argv)
 {
     int num = 0;
-    
+
     if (!validateArguments(argc, argv, num)) {
         return 1;
     }
-    
+
     const char* input_filename = argv[2];
     const char* output_filename = argv[3];
-    
+
     std::ifstream input(input_filename);
     if (!input.is_open()) {
         std::cerr << "Cannot open input" << std::endl;
         return 2;
     }
-    
+
     dolenko::Matrix* matrix = nullptr;
     if (!dolenko::readMatrix(input, matrix, num)) {
         std::cerr << "Failed to read matrix" << input_filename << std::endl;
@@ -243,21 +243,21 @@ int main(int argc, char** argv)
         return 2;
     }
     input.close();
-    
+
     int result1 = dolenko::countLocalMins(matrix);
     int result2 = dolenko::findLongestColumn(matrix);
-    
+
     std::ofstream output(output_filename);
     if (!output.is_open()) {
         std::cerr << "Cannot open output" << std::endl;
         dolenko::freeDynamicMatrix(matrix);
         return 1;
     }
-    
+
     output << result1 << std::endl;
     output << result2 << std::endl;
     output.close();
-    
+
     dolenko::freeDynamicMatrix(matrix);
     return 0;
 }
