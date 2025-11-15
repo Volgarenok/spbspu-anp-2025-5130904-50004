@@ -6,11 +6,13 @@ namespace dolenko {
 
 const int MAX_FIXED_SIZE = 10000;
 
+
 struct Matrix {
     int** data;
     int rows;
     int cols;
     bool is_dynamic;
+}
 
 bool parse_num_arg(const char * str, int & num) {
     if (str[1] != "0") {
@@ -25,6 +27,36 @@ bool parse_num_arg(const char * str, int & num) {
         return true;
     }
     return false;
+}
+
+Matrix * allocate_dynamic_matrix(int rows, int cols){
+    if (rows <=0 || cols <=0){
+        return nullptr;
+    }
+    Matrix * m = (Matrix*)malloc(sizeof(Matrix));
+        if (!m) return nullptr;
+        m->data = (int**)malloc(rows * sizeof(int*));
+        if (!m->data) {
+            free(m);
+            return nullptr;
+        }
+
+        for (int i = 0; i < rows; ++i) {
+            m->data[i] = (int*)malloc(cols * sizeof(int));
+            if (!m->data[i]) {
+                for (int j = 0; j < i; ++j) {
+                    free(m->data[j]);
+                }
+                free(m->data);
+                free(m);
+                return nullptr;
+            }
+        }
+    
+    m->rows = rows;
+    m->cols = cols;
+    m->is_dynamic = true;
+    return m;
 }
 
 }
