@@ -93,10 +93,11 @@ int main(int argc, char **argv)
   haliullin::FllIncrementWave(arr, rows, cols);
   res = haliullin::NumColLsr(arr, rows, cols);
   haliullin::writeMatrix(out, arr, rows, cols, res);
-  
+
   if (is_dynamic)
   {
     delete[] arr;
   }
+
   return 0;
 }
