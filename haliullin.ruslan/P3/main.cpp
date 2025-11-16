@@ -2,7 +2,6 @@
 #include <fstream>
 #include <cstddef>
 #include "matrix_functions.hpp"
-
 int main(int argc, char **argv)
 {
   if (argc < 4)
@@ -26,11 +25,10 @@ int main(int argc, char **argv)
     }
     ++temp;
   }
-
   if (temp > 1)
   {
-      std::cerr << "First parameter is out of range" << "\n";
-      return 1;
+    std::cerr << "First parameter is out of range" << "\n";
+    return 1;
   }
 
   std::ifstream in(argv[2]);
@@ -72,12 +70,9 @@ int main(int argc, char **argv)
     res = haliullin::NumColLsr(arr, rows, cols);
     haliullin::writeMatrix(out, arr, rows, cols, res);
   }
-
-
   else if (argv[1][0] == '2')
   {
     int *arr = nullptr;
-
     try
     {
       arr = new int[rows*cols];
@@ -87,7 +82,6 @@ int main(int argc, char **argv)
       std::cerr << e.what() << "\n";
       return 2;
     }
-
     haliullin::readMatrix(in, arr, rows, cols);
     if (!in)
     {
@@ -101,7 +95,6 @@ int main(int argc, char **argv)
     haliullin::FllIncrementWave(arr, rows, cols);
     res = haliullin::NumColLsr(arr, rows, cols);
     haliullin::writeMatrix(out, arr, rows, cols, res);
-
     delete[] arr;
   }
   return 0;
