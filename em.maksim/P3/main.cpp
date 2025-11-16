@@ -11,7 +11,6 @@ bool validateArguments(int argc, char* argv[], int& taskNumber) {
     if (argc != 4) {
         std::cerr << "Invalid number of arguments" << std::endl;
         return false;
-    }
 
     if (std::strlen(argv[1]) != 1 || (argv[1][0] != '1' && argv[1][0] != '2')) {
         std::cerr << "First parameter is out of range or not a number" << std::endl;
@@ -81,14 +80,14 @@ bool readMatrix(const char* filename, int*** matrix, int& rows, int& cols) {
         return false;
     }
 
-    if (rows == 0 && cols == 0) {
-        std::cerr << "Empty matrix (0x0) is not allowed: " << filename << std::endl;
-        return false;
-    }
-
     if (rows < 0 || cols < 0) {
         std::cerr << "Invalid matrix dimensions: " << rows << " " << cols << std::endl;
         return false;
+    }
+
+    if (rows == 0 && cols == 0) {
+        *matrix = nullptr;
+        return true;
     }
 
     *matrix = createMatrix(rows, cols);
@@ -183,6 +182,7 @@ void buildSmoothMatrix(int** matrix, int rows, int cols) {
             for (int di = -1; di <= 1; ++di) {
                 for (int dj = -1; dj <= 1; ++dj) {
                     if (di == 0 && dj == 0) continue;
+
                     int ni = i + di, nj = j + dj;
                     if (ni >= 0 && ni < rows && nj >= 0 && nj < cols) {
                         sum += matrix[ni][nj];
