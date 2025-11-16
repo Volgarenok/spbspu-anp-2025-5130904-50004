@@ -63,8 +63,7 @@ int main(int argc, char** argv)
 
   if (rows == 0 || cols == 0)
   {
-    std::cerr << "ERROR: Rows and columns must be positive" << "\n";
-    return 2;
+    return 0;
   }
 
   if (argv[1][0] == '1')
