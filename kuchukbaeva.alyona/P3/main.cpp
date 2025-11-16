@@ -53,10 +53,18 @@ int main(int argc, char* argv[])
     return 2;
   }
 
-  if (rows == 0 || cols == 0)
+  if (rows == 0 && cols == 0)
   {
-    kuchukbaeva::writeMatrix(out, nullptr, 0, 0, 0);
+    out << 0 << "\n";
+    out << rows << " " << 0 << "\n";
+    in.close();
+    out.close();
     return 0;
+  }
+  else if (rows == 0 || cols == 0)
+  {
+    std::cerr << "Cannot read matrix" << "\n";
+    return 2;
   }
 
   const size_t matrixSize = rows * cols;
