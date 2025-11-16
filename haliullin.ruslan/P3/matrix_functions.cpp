@@ -4,7 +4,7 @@
 std::istream &haliullin::readMatrix(std::istream &in, int *arr, size_t rows, size_t cols)
 {
   size_t count = 0;
-  for (size_t i = 0; i < rows*cols && in >> arr[i]; ++i)
+  for (size_t i = 0; i < rows * cols && in >> arr[i]; ++i)
   {
     ++count;
   }

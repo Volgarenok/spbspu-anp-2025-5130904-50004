@@ -75,7 +75,7 @@ int main(int argc, char **argv)
     int *arr = nullptr;
     try
     {
-      arr = new int[rows*cols];
+      arr = new int[rows * cols];
     }
     catch(const std::bad_alloc &e)
     {
