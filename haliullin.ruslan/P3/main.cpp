@@ -52,33 +52,17 @@ int main(int argc, char **argv)
     std::cerr << "Incorrect value for columns" << "\n";
     return 2;
   }
-  if ((rows == 0) || (cols == 0))
+  if ((rows == 0) && (cols == 0))
   {
     haliullin::writeMatrix(out, nullptr, 0, 0, 0);
-    in.close();
     return 0;
   }
 
-  if (argv[1][0] == '1')
+  int stArr[10000] = {};
+  int *arr = nullptr;
+  bool is_dynamic = (argv[1][0] == '2');
+  if (is_dynamic)
   {
-    int arr[10000] = {};
-    haliullin::readMatrix(in, arr, rows, cols);
-
-    if (!in)
-    {
-      std::cerr << "Error of reading array" << "\n";
-      return 1;
-    }
-
-    in.close();
-
-    haliullin::FllIncrementWave(arr, rows, cols);
-    res = haliullin::NumColLsr(arr, rows, cols);
-    haliullin::writeMatrix(out, arr, rows, cols, res);
-  }
-  else if (argv[1][0] == '2')
-  {
-    int *arr = nullptr;
     try
     {
       arr = new int[rows * cols];
@@ -88,20 +72,27 @@ int main(int argc, char **argv)
       std::cerr << e.what() << "\n";
       return 2;
     }
-    haliullin::readMatrix(in, arr, rows, cols);
-    if (!in)
-    {
-      std::cerr  << "Error of reading array" << "\n";
-      delete[] arr;
-      return 1;
-    }
-
-    in.close();
-
-    haliullin::FllIncrementWave(arr, rows, cols);
-    res = haliullin::NumColLsr(arr, rows, cols);
-    haliullin::writeMatrix(out, arr, rows, cols, res);
-    delete[] arr;
   }
+  else
+  {
+    arr = stArr;
+  }
+
+  haliullin::readMatrix(in, arr, rows, cols);
+  if (!in)
+  {
+    std::cerr << "Error of reading array" << "\n";
+    if (is_dynamic)
+    {
+      delete[] arr;
+    }
+    return 1;
+  }
+  in.close();
+
+  haliullin::FllIncrementWave(arr, rows, cols);
+  res = haliullin::NumColLsr(arr, rows, cols);
+  haliullin::writeMatrix(out, arr, rows, cols, res);
+
   return 0;
 }
