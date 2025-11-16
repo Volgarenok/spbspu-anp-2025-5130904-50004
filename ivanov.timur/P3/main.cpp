@@ -31,7 +31,11 @@ int main(int argc, char ** argv) {
   }
   int rows, cols;
   input >> rows >> cols;
-  if (!std::cin || rows < 0 || cols < 0) {
+  if (!std::cin) {
+    std::cerr << "Error: Input fail" << std::endl;
+    return 1;
+  }
+  if (rows < 0 || cols < 0) {
     std::cerr << "Error: Invalid matrix dimensions" << std::endl;
     return 1;
   }
@@ -62,6 +66,9 @@ int main(int argc, char ** argv) {
       matrix[i] = reinterpret_cast< int * >(malloc(sizeof(int) * rows));
       if (matrix[i] == nullptr) {
         std::cerr << "Error: Memory segmentaion" << std::endl;
+        for (int j = 0; j < i; j++) {
+          free(matrix[i]);
+        }
         free(matrix);
         return 2;
       }
