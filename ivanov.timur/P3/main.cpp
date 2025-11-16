@@ -31,11 +31,11 @@ int main(int argc, char ** argv) {
   }
   int rows, cols;
   input >> rows >> cols;
-  if (!std::cin) {
+  if (input.fail()) {
     std::cerr << "Error: Input fail" << std::endl;
     return 1;
   }
-  if (rows < 0 || cols < 0) {
+  if (rows <= 0 || cols <= 0) {
     std::cerr << "Error: Invalid matrix dimensions" << std::endl;
     return 1;
   }
