@@ -30,11 +30,13 @@ namespace vasilenko {
     for (int j = 0; j < cols; ++j) {
       bool has_consecutive = false;
       for (int i = 0; i < rows - 1; ++i) {
+
         if (matrix[i * cols + j] == matrix[(i + 1) * cols + j]) {
           has_consecutive = true;
           break;
         }
       }
+
       if (!has_consecutive) {
         count++;
       }
