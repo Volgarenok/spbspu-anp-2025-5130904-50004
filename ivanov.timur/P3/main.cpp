@@ -35,6 +35,10 @@ int main(int argc, char ** argv) {
     std::cerr << "Error: Input fail" << std::endl;
     return 1;
   }
+  if (rows == 0 || cols == 0) {
+    output << 0;
+    return 0;
+  }
   if (rows <= 0 || cols <= 0) {
     std::cerr << "Error: Invalid matrix dimensions" << std::endl;
     return 1;
@@ -57,13 +61,13 @@ int main(int argc, char ** argv) {
     output << result << std::endl;
   }
   else {
-    int** matrix = reinterpret_cast< int ** >(malloc(sizeof(int*) * cols));
+    int** matrix = static_cast< int ** >(malloc(sizeof(int*) * cols));
     if (matrix == nullptr) {
       std::cerr << "Error: Memory segmentaion" << std::endl;
       return 2;
     }
     for (int i = 0; i < rows; i++) {
-      matrix[i] = reinterpret_cast< int * >(malloc(sizeof(int) * rows));
+      matrix[i] = static_cast<int *>(malloc(sizeof(int) * rows));
       if (matrix[i] == nullptr) {
         std::cerr << "Error: Memory segmentaion" << std::endl;
         for (int j = 0; j < i; j++) {
