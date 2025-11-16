@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
     std::cerr << "Not enough arguments" << "\n";
     return 1;
   }
-  int num;
+  int num = 0;
   char* endp = nullptr;
   long res = 0;
   res = std::strtol(argv[1], &endp, 10);
