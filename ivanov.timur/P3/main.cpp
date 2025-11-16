@@ -53,13 +53,13 @@ int main(int argc, char ** argv) {
     output << result << std::endl;
   }
   else {
-    int** matrix = reinterpret_cast< int ** >(malloc(sizeof(int*)));
+    int** matrix = reinterpret_cast< int ** >(malloc(sizeof(int*) * 8));
     if (matrix == nullptr) {
       std::cerr << "Error: Memory segmentaion" << std::endl;
       return 2;
     }
     for (int i = 0; i < rows; i++) {
-      matrix[i] = reinterpret_cast< int * >(malloc(sizeof(int)));
+      matrix[i] = reinterpret_cast< int * >(malloc(sizeof(int) * 8));
       if (matrix[i] == nullptr) {
         std::cerr << "Error: Memory segmentaion" << std::endl;
         free(matrix);
