@@ -60,7 +60,7 @@ int main(int argc, char ** argv) {
       return 2;
     }
     for (int i = 0; i < rows; i++) {
-      matrix[i] = reinterpret_cast< int * >(malloc(sizeof(int)));
+      matrix[i] = reinterpret_cast< int * >(malloc(sizeof(int*)));
       if (matrix[i] == nullptr) {
         std::cerr << "Error: Memory segmentaion" << std::endl;
         free(matrix);
@@ -85,8 +85,6 @@ int main(int argc, char ** argv) {
     }
     free(matrix);
   }
-
-  std::ofstream output(argv[3]);
   return 0;
 }
 
