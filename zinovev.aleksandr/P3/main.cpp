@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <exception>
+#include <cctype>
 #include "zinovev.h"
 
 int main(int argc, char** argv)
@@ -22,7 +23,7 @@ int main(int argc, char** argv)
     ++size;
   }
 
-  if (size != 1)
+  if (size != 1 || !std::isdigit(argv[1][0]))
   {
     std::cerr << "First parameter is out of range" << "\n";
     return 1;
@@ -50,18 +51,23 @@ int main(int argc, char** argv)
 
   size_t rows = 0;
   size_t cols = 0;
-  int result = 0;
 
-  if (!(input >> rows))
+  input >> rows;
+  input >> cols;
+
+  if (!input)
   {
-    std::cerr << "ERROR: Incorrect number of rows entered" << "\n";
+    std::cerr << "ERROR: Incorrect input data" << "\n";
     return 2;
   }
-  else if (!(input >> cols))
+
+  if (rows == 0 || cols == 0)
   {
-    std::cerr << "ERROR: Incorrect number of columns entered" << "\n";
+    std::cerr << "ERROR: Rows and columns must be positive" << "\n";
     return 2;
   }
+
+  input.close();
 
   if (argv[1][0] == '1')
   {
@@ -72,19 +78,7 @@ int main(int argc, char** argv)
     }
 
     int array[10000] = {};
-
-    zinovev::readInput(input, array, rows, cols);
-
-    if (!input)
-    {
-      return 2;
-    }
-
-    input.close();
-
-    result = zinovev::findLongestColumn(array, rows, cols);
-    zinovev::fillSpiral(array, rows, cols);
-    zinovev::writeOutput(output, array, rows, cols, result);
+    zinovev::processArray(input, output, array, rows, cols);
   }
   else if (argv[1][0] == '2')
   {
@@ -100,20 +94,7 @@ int main(int argc, char** argv)
       return 1;
     }
 
-    zinovev::readInput(input, array, rows, cols);
-
-    if (!input)
-    {
-      delete[] array;
-      return 2;
-    }
-
-    input.close();
-
-    result = zinovev::findLongestColumn(array, rows, cols);
-    zinovev::fillSpiral(array, rows, cols);
-    zinovev::writeOutput(output, array, rows, cols, result);
-
+    zinovev::processArray(input, output, array, rows, cols);
     delete[] array;
   }
 

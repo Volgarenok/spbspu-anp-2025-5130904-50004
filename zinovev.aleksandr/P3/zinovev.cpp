@@ -144,3 +144,17 @@ std::ostream& zinovev::writeOutput(std::ostream& output, const int* array, size_
 
   return output;
 }
+
+void zinovev::processArray(std::istream& input, std::ostream& output, int* array, size_t rows, size_t cols)
+{
+  readInput(input, array, rows, cols);
+
+  if (!input)
+  {
+    return;
+  }
+
+  int result = findLongestColumn(array, rows, cols);
+  fillSpiral(array, rows, cols);
+  writeOutput(output, array, rows, cols, result);
+}
