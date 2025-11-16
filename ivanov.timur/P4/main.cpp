@@ -23,6 +23,7 @@ namespace ivanov {
     char * content;
     size_t size;
     Line();
+    Line(char * dt, size_t s);
     ~Line();
     Line & operator=(const Line l);
     Line & operator+(const Line l);
@@ -42,9 +43,16 @@ namespace ivanov {
 }
 
 int main() {
+
   return 0;
 }
 
+ivanov::Line::Line(char * dt, size_t s): content(new char[s]), size(s)
+{
+  for (size_t i = 0; i < s; ++i) {
+    content[i] = dt[i];
+  }
+}
 ivanov::Line::Line(): content(new char[1]), size(1)
 {
   content[0] = 0;
