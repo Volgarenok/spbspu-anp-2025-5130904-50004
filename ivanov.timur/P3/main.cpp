@@ -67,7 +67,7 @@ int main(int argc, char ** argv) {
       if (matrix[i] == nullptr) {
         std::cerr << "Error: Memory segmentaion" << std::endl;
         for (int j = 0; j < i; j++) {
-          free(matrix[i]);
+          free(matrix[j]);
         }
         free(matrix);
         return 2;
