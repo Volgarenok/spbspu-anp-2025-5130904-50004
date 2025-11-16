@@ -25,6 +25,7 @@ namespace ivanov {
     Line();
     ~Line();
     Line & operator=(const Line l);
+    Line & operator+(const Line l);
     void next(char s);
     void space_cleaner();
     void rmv(size_t id) noexcept;
@@ -32,12 +33,12 @@ namespace ivanov {
     size_t get_size() const noexcept;
     void get_line() const noexcept;
     char get(size_t id) const noexcept;
+    bool find(char x) const noexcept;
 
     void del_latinus();
 
-    char * get_letters();
+    Line get_letters() const;
   };
-  char * unite_letters(char * letters1, char * letters2);
 }
 
 int main() {
@@ -61,6 +62,19 @@ ivanov::Line &ivanov::Line::operator=(const Line l) {
   size = l.get_size();
   return *this;
 }
+ivanov::Line &ivanov::Line::operator+(const Line l) {
+  char * tmp = new char[get_size() + l.get_size() - 1];
+  for (size_t i = 0; i < get_size() - 1; ++i) {
+    tmp[i] = get(i);
+  }
+  for (size_t i = get_size() - 1; i < get_size() + l.get_size() - 1; ++i) {
+    tmp[i] = l.get(i - get_size() + 1);
+  }
+  delete[] content;
+  content = tmp;
+  size += l.get_size();
+  return *this;
+}
 
 size_t ivanov::Line::get_size() const noexcept {
   return size;
@@ -68,6 +82,15 @@ size_t ivanov::Line::get_size() const noexcept {
 char ivanov::Line::get(size_t id) const noexcept {
   return content[id];
 }
+bool ivanov::Line::find(char x) const noexcept {
+  for (size_t i = 0; i < get_size(); ++i) {
+    if (get(i) == x) {
+      return true;
+    }
+  }
+  return false;
+}
+
 void ivanov::Line::next(char s) {
   char * tmp = new char[get_size() + 1];
   for (size_t i = 0; i < get_size() - 1; ++i) {
@@ -98,7 +121,7 @@ void ivanov::Line::get_line() const noexcept {
   std::cout << "\n";
 }
 
-void ivanov::Line::space_cleaner() {
+void ivanov::Line::space_cleaner() noexcept{
   bool flag = false;
   for (size_t i = 0; i < get_size(); ++i) {
     if (!flag && get(i) != ' ') {
@@ -120,4 +143,20 @@ void ivanov::Line::del_latinus() {
   }
 }
 
+ivanov::Line ivanov::Line::get_letters() const {
+  Line tmp = Line();
+  char x = 'A';
+  for (size_t c = 0; c < 26; ++c) {
+    if (find(x)) {
+      tmp.next(x);
+    }
+  }
+  x+=6;
+  for (size_t c = 0; c < 26; ++c) {
+    if (find(x)) {
+      tmp.next(x);
+    }
+  }
+  return tmp;
+}
 
