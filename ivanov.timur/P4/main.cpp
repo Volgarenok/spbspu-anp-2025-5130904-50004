@@ -7,12 +7,12 @@ namespace ivanov {
     char * content;
     size_t size;
     Line();
-    Line(char * dt, size_t s);
+    Line(const Line &l);
     ~Line();
     Line & operator=(const Line l);
     Line & operator+(const Line l);
     void next(char s);
-    void space_cleaner();
+    void space_cleaner() noexcept;
     void rmv(size_t id) noexcept;
 
     size_t get_size() const noexcept;
@@ -20,13 +20,13 @@ namespace ivanov {
     char get(size_t id) const noexcept;
     bool find(char x) const noexcept;
 
-    void del_latinus();
+    void del_latinus() noexcept;
 
     Line get_letters() const;
   };
 }
 
-void get_line(std::istream & in, ivanov::Line data) {
+void get_line(std::istream & in, ivanov::Line & data) {
   bool is_skipws = in.flags() & std::ios_base::skipws;
   if (is_skipws) {
     in >> std::noskipws;
@@ -46,21 +46,15 @@ int main() {
   using ivanov::Line;
   Line l = Line();
   get_line(std::cin, l);
-  l.del_latinus();
   l.space_cleaner();
   l.get_line();
-  Line l2 = Line();
-  get_line(std::cin, l2);
-  l2.space_cleaner();
-  l+l2;
-  l.get_letters().get_line();
   return 0;
 }
 
-ivanov::Line::Line(char * dt, size_t s): content(new char[s]), size(s)
+ivanov::Line::Line(const Line &l): content(new char[l.get_size()]), size(l.get_size())
 {
-  for (size_t i = 0; i < s; ++i) {
-    content[i] = dt[i];
+  for (size_t i = 0; i < l.get_size(); ++i) {
+    content[i] = l.get(i);
   }
 }
 ivanov::Line::Line(): content(new char[1]), size(1)
@@ -124,9 +118,11 @@ void ivanov::Line::rmv(size_t id) noexcept {
   char * tmp = new char[get_size() - 1];
   for (size_t i = 0; i < id; ++i) {
     tmp[i] = get(i);
+    std::cout << tmp[i];
   }
   for (size_t i = id + 1; i < get_size(); ++i) {
     tmp[i - 1] = get(i);
+    std::cout << tmp[i - 1];
   }
   delete[] content;
   content = tmp;
@@ -134,28 +130,33 @@ void ivanov::Line::rmv(size_t id) noexcept {
 }
 void ivanov::Line::get_line() const noexcept {
   for (size_t i = 0; i < get_size(); ++i) {
-    std::cout << get(i) << " ";
+    std::cout << get(i);
   }
   std::cout << "\n";
 }
 
 void ivanov::Line::space_cleaner() noexcept{
   bool flag = false;
+  Line tmp = Line();
   for (size_t i = 0; i < get_size(); ++i) {
-    if (!flag && get(i) != ' ') {
-      flag = true;
-    }
-    if (!flag) {
-      rmv(i);
-    }
     if (get(i) == ' ' && flag) {
       flag = false;
+      tmp.next(get(i));
+    }
+    if (flag) {
+      tmp.next(get(i));
+    }
+    if (!flag && get(i) != ' ') {
+      flag = true;
+      tmp.next(get(i));
     }
   }
+  *this = tmp;
 }
-void ivanov::Line::del_latinus() {
+void ivanov::Line::del_latinus() noexcept {
   for (size_t i = 0; i < get_size(); ++i) {
     if (isalpha(get(i))) {
+      std::cout << i << std::endl;
       rmv(i);
     }
   }
