@@ -33,7 +33,7 @@ AlgorithmType detectAlgorithmType(const char* programName) {
 
 int** createMatrix(int rows, int cols) {
     if (rows <= 0 || cols <= 0) return nullptr;
-    
+
     int** matrix = new int*[rows];
     for (int i = 0; i < rows; ++i) {
         matrix[i] = new int[cols]();
