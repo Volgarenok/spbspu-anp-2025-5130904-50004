@@ -67,10 +67,10 @@ int main(int argc, char ** argv) {
       return 2;
     }
     for (int i = 0; i < rows; i++) {
-      matrix[i] = static_cast<int *>(malloc(sizeof(int) * rows));
+      matrix[i] = static_cast<int *>(malloc(sizeof(int) * cols));
       if (matrix[i] == nullptr) {
         std::cerr << "Error: Memory segmentaion" << std::endl;
-        for (int j = 0; j < i; j++) {
+        for (int j = 0; j <= i; j++) {
           free(matrix[j]);
         }
         free(matrix);
