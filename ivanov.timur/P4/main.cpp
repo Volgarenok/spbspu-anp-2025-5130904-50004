@@ -9,8 +9,8 @@ namespace ivanov {
     Line();
     Line(const Line &l);
     ~Line();
-    Line & operator=(const Line l);
-    Line & operator+(const Line l);
+    Line & operator=(const Line &l);
+    Line & operator+(const Line &l);
     void next(char s);
     void space_cleaner() noexcept;
     void rmv(size_t id) noexcept;
@@ -48,6 +48,13 @@ int main() {
   get_line(std::cin, l);
   l.del_latinus();
   l.get_line();
+
+  Line l2 = Line();
+  get_line(std::cin, l2);
+  l+l2;
+  Line ans = Line();
+  ans = l.get_letters();
+  ans.get_line();
   return 0;
 }
 
@@ -64,7 +71,8 @@ ivanov::Line::Line(): content(new char[1]), size(1)
 ivanov::Line::~Line() {
   delete[] content;
 }
-ivanov::Line &ivanov::Line::operator=(const Line l) {
+ivanov::Line &ivanov::Line::operator=(const Line &l) {
+  if (this == &l) return *this;
   char * tmp = new char[l.get_size()];
   for (size_t i = 0; i < l.get_size(); ++i) {
     tmp[i] = l.get(i);
@@ -74,7 +82,7 @@ ivanov::Line &ivanov::Line::operator=(const Line l) {
   size = l.get_size();
   return *this;
 }
-ivanov::Line &ivanov::Line::operator+(const Line l) {
+ivanov::Line &ivanov::Line::operator+(const Line &l) {
   char * tmp = new char[get_size() + l.get_size() - 1];
   for (size_t i = 0; i < get_size() - 1; ++i) {
     tmp[i] = get(i);
@@ -118,11 +126,9 @@ void ivanov::Line::rmv(size_t id) noexcept {
   char * tmp = new char[get_size() - 1];
   for (size_t i = 0; i < id; ++i) {
     tmp[i] = get(i);
-    std::cout << tmp[i];
   }
   for (size_t i = id + 1; i < get_size(); ++i) {
     tmp[i - 1] = get(i);
-    std::cout << tmp[i - 1];
   }
   delete[] content;
   content = tmp;
@@ -171,12 +177,14 @@ ivanov::Line ivanov::Line::get_letters() const {
     if (find(x)) {
       tmp.next(x);
     }
+    x++;
   }
   x+=6;
   for (size_t c = 0; c < 26; ++c) {
     if (find(x)) {
       tmp.next(x);
     }
+    x++;
   }
   return tmp;
 }
