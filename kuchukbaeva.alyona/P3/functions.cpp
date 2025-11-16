@@ -3,7 +3,7 @@
 #include <istream>
 #include <ostream>
 
-bool kuchukbaeva::CntLocMax(int** matrix, size_t rows, size_t cols, size_t i, size_t j)
+bool kuchukbaeva::CntLocMax(const int* matrix, size_t rows, size_t cols, size_t i, size_t j)
 {
   if (i == 0 || i == rows - 1 || j == 0 || j == cols - 1)
   {
@@ -27,7 +27,7 @@ bool kuchukbaeva::CntLocMax(int** matrix, size_t rows, size_t cols, size_t i, si
   return true;
 }
 
-int kuchukbaeva::countLocMax(int** matrix, size_t rows, size_t cols)
+int kuchukbaeva::countLocMax(const int* matrix, size_t rows, size_t cols)
 {
   int count = 0;
   for (size_t i = 1; i < rows - 1; i++)
@@ -43,7 +43,7 @@ int kuchukbaeva::countLocMax(int** matrix, size_t rows, size_t cols)
   return count;
 }
 
-void kuchukbaeva::LftBotClk(int** matrix, size_t rows, size_t cols)
+void kuchukbaeva::LftBotClk(int* matrix, size_t rows, size_t cols)
 {
   int top = 0;
   int bottom = static_cast<int>(rows) - 1;
