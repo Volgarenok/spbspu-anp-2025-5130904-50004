@@ -38,6 +38,49 @@ void fll_inc_wav(int** mtr, int rows, int cols) {
   }
 }
 
+int max_sum_mdg(int matrix[], int rows, int cols) {
+  if (rows == 0 || cols == 0) return 0;
+  int size_sums = rows + cols - 1;
+  int* sums = new int[size_sums]();
+  for (int i = 0; i < rows; i++) {
+    for (int j = 0; j < cols; j++) {
+      int s = i + j;
+      sums[s] += matrix[i * cols + j];
+    }
+  }
+  int main_anti = rows - 1;
+  int max_sum = 0;
+  for (int s = 0; s < size_sums; s++) {
+    if (s == main_anti) continue;
+    if (sums[s] > max_sum) {
+      max_sum = sums[s];
+    }
+  }
+  delete[] sums;
+  return max_sum;
+}
+int max_sum_mdg(int** matrix, int rows, int cols) {
+  if (rows == 0 || cols == 0) return 0;
+  int size_sums = rows + cols - 1;
+  int* sums = new int[size_sums]();
+  for (int i = 0; i < rows; i++) {
+    for (int j = 0; j < cols; j++) {
+      int s = i + j;
+      sums[s] += matrix[i][j];
+    }
+  }
+  int main_anti = rows - 1;
+  int max_sum = 0;
+  for (int s = 0; s < size_sums; s++) {
+    if (s == main_anti) continue;
+    if (sums[s] > max_sum) {
+      max_sum = sums[s];
+    }
+  }
+  delete[] sums;
+  return max_sum;
+}
+
 int main(int argc, char ** argv) {
   if (argc != 4) {
     std::cerr << "Error: Incorrect number of arguments" << std::endl;
