@@ -1,5 +1,6 @@
 #include<iostream>
 #include<iomanip>
+#include<cctype>
 
 size_t get_line(std::istream & in, char * data, size_t size) {
   bool is_skipws = in.flags() & std::ios_base::skipws;
@@ -108,6 +109,13 @@ void ivanov::Line::space_cleaner() {
     }
     if (get(i) == ' ' && flag) {
       flag = false;
+    }
+  }
+}
+void ivanov::Line::del_latinus() {
+  for (size_t i = 0; i < get_size(); ++i) {
+    if (isalpha(get(i))) {
+      rmv(i);
     }
   }
 }
