@@ -2,22 +2,6 @@
 #include<iomanip>
 #include<cctype>
 
-size_t get_line(std::istream & in, char * data, size_t size) {
-  bool is_skipws = in.flags() & std::ios_base::skipws;
-  if (is_skipws) {
-    in >> std::noskipws;
-  }
-  size_t i = 0;
-  for (; i < size; ++i) {
-    in >> data[i];
-  }
-  data[i] = 0;
-  if (is_skipws) {
-    in >> std::skipws;
-  }
-  return i;
-}
-
 namespace ivanov {
   struct Line {
     char * content;
@@ -42,8 +26,34 @@ namespace ivanov {
   };
 }
 
-int main() {
+void get_line(std::istream & in, ivanov::Line data) {
+  bool is_skipws = in.flags() & std::ios_base::skipws;
+  if (is_skipws) {
+    in >> std::noskipws;
+  }
+  char tmp;
+  in >> tmp;
+  while (tmp != '\n') {
+    data.next(tmp);
+    in >> tmp;
+  }
+  if (is_skipws) {
+    in >> std::skipws;
+  }
+}
 
+int main() {
+  using ivanov::Line;
+  Line l = Line();
+  get_line(std::cin, l);
+  l.del_latinus();
+  l.space_cleaner();
+  l.get_line();
+  Line l2 = Line();
+  get_line(std::cin, l2);
+  l2.space_cleaner();
+  l+l2;
+  l.get_letters().get_line();
   return 0;
 }
 
