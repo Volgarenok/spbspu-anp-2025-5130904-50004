@@ -20,9 +20,8 @@ int main(int argc, char ** argv) {
     std::cerr << "Error: Cannot open output file." << std::endl;
     return 2;
   }
-  int num;
-  input >> num;
-  if ((num != 1 && num != 2) || std::cin.fail()) {
+  char num = argv[1][0];
+  if ((num != '1' && num != '2') || std::cin.fail()) {
     std::cerr << "Error: Wrong question" << std::endl;
     return 1;
   }
@@ -36,11 +35,11 @@ int main(int argc, char ** argv) {
     std::cerr << "Error: Invalid matrix dimensions" << std::endl;
     return 1;
   }
-  if (num == 1 && rows * cols > 10000) {
+  if (num == '1' && rows * cols > 10000) {
     std::cerr << "Error: Matrix too large for static array" << std::endl;
     return 1;
   }
-  if (num == 1) {
+  if (num == '1') {
     int matrix[10000];
     for (int i = 0; i < rows * cols; i++) {
       input >> matrix[i];
