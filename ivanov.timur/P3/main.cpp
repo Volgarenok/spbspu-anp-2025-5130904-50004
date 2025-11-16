@@ -58,7 +58,7 @@ int main(int argc, char ** argv) {
       std::cerr << "Error: Memory segmentaion" << std::endl;
       return 2;
     }
-    for (size_t i = 0; i < rows; i++) {
+    for (int i = 0; i < rows; i++) {
       matrix[i] = reinterpret_cast< int * >(malloc(sizeof(int) * rows));
       if (matrix[i] == nullptr) {
         std::cerr << "Error: Memory segmentaion" << std::endl;
@@ -66,8 +66,8 @@ int main(int argc, char ** argv) {
         return 2;
       }
     }
-    for (size_t i = 0; i < rows; i++) {
-      for (size_t j = 0; j < cols; j++) {
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
         input >> matrix[i][j];
         if (input.fail()) {
           std::cerr << "Error: Invalid matrix data" << std::endl;
@@ -79,7 +79,7 @@ int main(int argc, char ** argv) {
     ivanov::fll_inc_wav(matrix, rows, cols);
     int result = ivanov::max_sum_mdg(matrix, rows, cols);
     output << result << std::endl;
-    for (size_t i = 0; i < rows; i++) {
+    for (int i = 0; i < rows; i++) {
       free(matrix[i]);
     }
     free(matrix);
@@ -89,7 +89,7 @@ int main(int argc, char ** argv) {
 
 void ivanov::fll_inc_wav(int mtr[], int rows, int cols) {
   int lvs = (std::min(rows, cols) + 1) / 2;
-  for (size_t lv = 0; lv < lvs; lv++) {
+  for (int lv = 0; lv < lvs; lv++) {
     int inc = lv + 1;
     for (int j = lv; j < cols - lv; j++) {
       mtr[lv * cols + j] += inc;
@@ -107,7 +107,7 @@ void ivanov::fll_inc_wav(int mtr[], int rows, int cols) {
 }
 void ivanov::fll_inc_wav(int** mtr, int rows, int cols) {
   int lvs = (std::min(rows, cols) + 1) / 2;
-  for (size_t lv = 0; lv < lvs; lv++) {
+  for (int lv = 0; lv < lvs; lv++) {
     int inc = lv + 1;
     for (int j = lv; j < cols - lv; j++) {
       mtr[lv][j] += inc;
@@ -128,15 +128,15 @@ int ivanov::max_sum_mdg(int matrix[], int rows, int cols) {
   if (rows == 0 || cols == 0) return 0;
   int size_sums = rows + cols - 1;
   int* sums = new int[size_sums]();
-  for (size_t i = 0; i < rows; i++) {
-    for (size_t j = 0; j < cols; j++) {
+  for (int i = 0; i < rows; i++) {
+    for (int j = 0; j < cols; j++) {
       int s = i + j;
       sums[s] += matrix[i * cols + j];
     }
   }
   int main_anti = rows - 1;
   int max_sum = 0;
-  for (size_t s = 0; s < size_sums; s++) {
+  for (int s = 0; s < size_sums; s++) {
     if (s == main_anti) continue;
     if (sums[s] > max_sum) {
       max_sum = sums[s];
@@ -149,15 +149,15 @@ int ivanov::max_sum_mdg(int** matrix, int rows, int cols) {
   if (rows == 0 || cols == 0) return 0;
   int size_sums = rows + cols - 1;
   int* sums = new int[size_sums]();
-  for (size_t i = 0; i < rows; i++) {
-    for (size_t j = 0; j < cols; j++) {
+  for (int i = 0; i < rows; i++) {
+    for (int j = 0; j < cols; j++) {
       int s = i + j;
       sums[s] += matrix[i][j];
     }
   }
   int main_anti = rows - 1;
   int max_sum = 0;
-  for (size_t s = 0; s < size_sums; s++) {
+  for (int s = 0; s < size_sums; s++) {
     if (s == main_anti) continue;
     if (sums[s] > max_sum) {
       max_sum = sums[s];
