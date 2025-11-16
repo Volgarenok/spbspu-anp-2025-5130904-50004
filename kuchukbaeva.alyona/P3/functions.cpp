@@ -91,131 +91,35 @@ void kuchukbaeva::LftBotClk(int** matrix, size_t rows, size_t cols)
   }
 }
 
-bool kuchukbaeva::readMatrix(const char* filename, int*** matrix, size_t& rows, size_t& cols)
+std::istream& kuchukbaeva::readMatrix(std::istream &in, int *arr, size_t rows, size_t cols)
 {
-  std::ifstream file(filename);
-  if (!file.is_open())
+  size_t count = 0;
+  for (size_t i = 0; i < rows * cols && in >> arr[i]; ++i)
   {
-    return false;
+    ++count;
   }
-  if (!(file >> rows >> cols))
+  if (!in)
   {
-    return false;
+    std::cerr << "Unexpected input" << "\n";
   }
-  if (rows == 0 || cols == 0)
+  else if (count < rows * cols)
   {
-    *matrix = nullptr;
-    return true;
+    std::cerr << "Not enough elements" << "\n";
   }
-  *matrix = static_cast<int**>(malloc(rows * sizeof(int*)));
-  if (*matrix == nullptr)
-  {
-    return false;
-  }
-  for (size_t i = 0; i < rows; i++)
-  {
-    (*matrix)[i] = static_cast<int*>(malloc(cols * sizeof(int)));
-    if ((*matrix)[i] == nullptr)
-    {
-      for (size_t j = 0; j < i; j++)
-      {
-        free((*matrix)[j]);
-      }
-      free(*matrix);
-      *matrix = nullptr;
-      return false;
-    }
-  }
-  for (size_t i = 0; i < rows; i++)
-  {
-    for (size_t j = 0; j < cols; j++)
-    {
-      if (!(file >> (*matrix)[i][j]))
-      {
-        for (size_t k = 0; k < rows; k++)
-        {
-          free((*matrix)[k]);
-        }
-        free(*matrix);
-        *matrix = nullptr;
-        return false;
-      }
-    }
-  }
-  return true;
+  return in;
 }
 
-bool kuchukbaeva::readMatrixStatic(const char* filename, int** matrix, size_t& rows, size_t& cols, size_t max_rows, size_t max_cols)
+std::ostream& kuchukbaeva::writeMatrix(std::ostream& out, const int* matrix, size_t rows, size_t cols, int locMaxCount)
 {
-  std::ifstream file(filename);
-  if (!file.is_open())
+  out << locMaxCount << "\n";
+  for (size_t i = 0; i < rows * cols; ++i)
   {
-    return false;
-  }
-  if (!(file >> rows >> cols))
-  {
-    return false;
-  }
-  if (rows == 0 || cols == 0)
-  {
-    return true;
-  }
-  if (rows > max_rows || cols > max_cols)
-  {
-    return false;
-  }
-  for (size_t i = 0; i < rows; i++)
-  {
-    for (size_t j = 0; j < cols; j++)
+    out << matrix[i];
+    if (i < rows * cols -1)
     {
-      if (!(file >> matrix[i][j]))
-      {
-        return false;
-      }
+      out << " ";
     }
   }
-  return true;
+  out << "\n";
+  return out;
 }
-
-void kuchukbaeva::freMatrix(int** matrix, size_t rows)
-{
-  if (matrix != nullptr)
-  {
-    for (size_t i = 0; i < rows; i++)
-    {
-      free(matrix[i]);
-    }
-    free(matrix);
-  }
-}
-
-bool kuchukbaeva::Res(const char* filename, int res)
-{
-  std::ofstream file(filename);
-  if (!file.is_open())
-  {
-    return false;
-  }
-  file << res;
-  return true;
-}
-
-bool kuchukbaeva::writeMatrix(const char* filename, int** matrix, size_t rows, size_t cols, int locMaxCount)
-{
-  std::ofstream file(filename);
-  if (!file.is_open())
-  {
-    return false;
-  }
-  file << locMaxCount << "\n";
-  file << rows << " " << cols;
-  for (size_t i = 0; i < rows; i++)
-  {
-    for (size_t j = 0; j < cols; j++)
-    {
-      file << " " << matrix[i][j];
-    }
-  }
-  return true;
-}
-
