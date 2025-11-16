@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <cstddef>
 #include <cctype>
 #include "matrix_functions.hpp"
 int main(int argc, char **argv)
@@ -53,6 +52,12 @@ int main(int argc, char **argv)
     std::cerr << "Incorrect value for columns" << "\n";
     return 2;
   }
+  if ((rows == 0) || (cols == 0))
+  {
+    haliullin::writeMatrix(out, nullptr, 0, 0, 0);
+    in.close();
+    return 0;
+  } 
 
   if (argv[1][0] == '1')
   {

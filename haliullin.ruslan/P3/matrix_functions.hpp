@@ -1,6 +1,6 @@
 #ifndef MATRIX_FUNCTIONS_HPP
 #define MATRIX_FUNCTIONS_HPP
-#include <fstream>
+#include <iostream>
 namespace haliullin
 {
   std::istream &readMatrix(std::istream &in, int *arr, size_t rows, size_t cols);

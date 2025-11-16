@@ -1,6 +1,5 @@
 #include "matrix_functions.hpp"
 #include <iostream>
-#include <cstddef>
 std::istream &haliullin::readMatrix(std::istream &in, int *arr, size_t rows, size_t cols)
 {
   size_t count = 0;
