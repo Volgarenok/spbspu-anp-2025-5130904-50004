@@ -1,6 +1,43 @@
 #include<fstream>
 #include<iostream>
 
+void fll_inc_wav(int mtr[], int rows, int cols) {
+  int lvs = (std::min(rows, cols) + 1) / 2;
+  for (int lv = 0; lv < lvs; lv++) {
+    int inc = lv + 1;
+    for (int j = lv; j < cols - lv; j++) {
+      mtr[lv * cols + j] += inc;
+    }
+    for (int j = lv; j < cols - lv; j++) {
+      mtr[(rows - lv - 1) * cols + j] += inc;
+    }
+    for (int i = lv + 1; i < rows - lv - 1; i++) {
+      mtr[i * cols + lv] += inc;
+    }
+    for (int i = lv + 1; i < rows - lv - 1; i++) {
+      mtr[i * cols + (cols - lv - 1)] += inc;
+    }
+  }
+}
+void fll_inc_wav(int** mtr, int rows, int cols) {
+  int lvs = (std::min(rows, cols) + 1) / 2;
+  for (int lv = 0; lv < lvs; lv++) {
+    int inc = lv + 1;
+    for (int j = lv; j < cols - lv; j++) {
+      mtr[lv][j] += inc;
+    }
+    for (int j = lv; j < cols - lv; j++) {
+      mtr[rows - lv - 1][j] += inc;
+    }
+    for (int i = lv + 1; i < rows - lv - 1; i++) {
+      mtr[i][lv] += inc;
+    }
+    for (int i = lv + 1; i < rows - lv - 1; i++) {
+      mtr[i][cols - lv - 1] += inc;
+    }
+  }
+}
+
 int main(int argc, char ** argv) {
   if (argc != 4) {
     std::cerr << "Error: Incorrect number of arguments" << std::endl;
@@ -29,7 +66,6 @@ int main(int argc, char ** argv) {
     std::cerr << "Error: Matrix too large for static array" << std::endl;
     return 1;
   }
-
   if (num == 1) {
     int matrix[10000];
     for (int i = 0; i < rows * cols; i++) {
