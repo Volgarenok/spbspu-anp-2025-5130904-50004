@@ -11,6 +11,7 @@ bool validateArguments(int argc, char* argv[], int& taskNumber) {
     if (argc != 4) {
         std::cerr << "Invalid number of arguments" << std::endl;
         return false;
+    }
 
     if (std::strlen(argv[1]) != 1 || (argv[1][0] != '1' && argv[1][0] != '2')) {
         std::cerr << "First parameter is out of range or not a number" << std::endl;
@@ -69,19 +70,16 @@ bool readMatrix(const char* filename, int*** matrix, int& rows, int& cols) {
     }
 
     if (file.peek() == std::ifstream::traits_type::eof()) {
-        std::cerr << "File is empty: " << filename << std::endl;
         return false;
     }
 
     file >> rows >> cols;
 
     if (file.fail()) {
-        std::cerr << "Cannot read matrix dimensions from: " << filename << std::endl;
         return false;
     }
 
     if (rows < 0 || cols < 0) {
-        std::cerr << "Invalid matrix dimensions: " << rows << " " << cols << std::endl;
         return false;
     }
 
@@ -92,14 +90,12 @@ bool readMatrix(const char* filename, int*** matrix, int& rows, int& cols) {
 
     *matrix = createMatrix(rows, cols);
     if (!*matrix) {
-        std::cerr << "Memory allocation failed for matrix " << rows << "x" << cols << std::endl;
         return false;
     }
 
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
             if (!(file >> (*matrix)[i][j])) {
-                std::cerr << "Error reading matrix element at (" << i << "," << j << ")" << std::endl;
                 freeMatrix(*matrix, rows);
                 *matrix = nullptr;
                 return false;
@@ -113,7 +109,6 @@ bool readMatrix(const char* filename, int*** matrix, int& rows, int& cols) {
 bool writeMatrix(const char* filename, int** matrix, int rows, int cols, bool smoothMatrix = false) {
     std::ofstream file(filename);
     if (!file.is_open()) {
-        std::cerr << "Cannot open output file: " << filename << std::endl;
         return false;
     }
 
@@ -243,10 +238,8 @@ int main(int argc, char* argv[]) {
     em::freeMatrix(matrix, rows);
 
     if (success) {
-        std::cout << "Processing completed successfully" << std::endl;
         return 0;
     } else {
-        std::cerr << "Error writing output file" << std::endl;
         return 2;
     }
 }
