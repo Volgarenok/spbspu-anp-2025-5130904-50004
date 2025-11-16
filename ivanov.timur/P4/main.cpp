@@ -97,5 +97,19 @@ void ivanov::Line::get_line() const noexcept {
   std::cout << "\n";
 }
 
+void ivanov::Line::space_cleaner() {
+  bool flag = false;
+  for (size_t i = 0; i < get_size(); ++i) {
+    if (!flag && get(i) != ' ') {
+      flag = true;
+    }
+    if (!flag) {
+      rmv(i);
+    }
+    if (get(i) == ' ' && flag) {
+      flag = false;
+    }
+  }
+}
 
 
