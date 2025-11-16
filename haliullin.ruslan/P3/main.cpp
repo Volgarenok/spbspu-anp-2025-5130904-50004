@@ -57,7 +57,7 @@ int main(int argc, char **argv)
     haliullin::writeMatrix(out, nullptr, 0, 0, 0);
     in.close();
     return 0;
-  } 
+  }
 
   if (argv[1][0] == '1')
   {
@@ -67,7 +67,7 @@ int main(int argc, char **argv)
     if (!in)
     {
       std::cerr << "Error of reading array" << "\n";
-      return 2;
+      return 1;
     }
 
     in.close();
