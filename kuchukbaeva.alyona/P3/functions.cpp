@@ -9,7 +9,7 @@ bool kuchukbaeva::CntLocMax(const int* matrix, size_t rows, size_t cols, size_t 
   {
     return false;
   }
-  int m = matrix[i][j];
+  int m = matrix[i * cols + j];
   for (int k = -1; k <= 1; ++k)
   {
     for (int f = -1; f <= 1; ++f)
@@ -18,7 +18,7 @@ bool kuchukbaeva::CntLocMax(const int* matrix, size_t rows, size_t cols, size_t 
       {
         continue;
       }
-      if (matrix[i + k][j + f] >= m)
+      if (matrix[(i + k) * cols + (j + f)] >= m)
       {
         return false;
       }
@@ -50,42 +50,33 @@ void kuchukbaeva::LftBotClk(int* matrix, size_t rows, size_t cols)
   int left = 0;
   int right = static_cast<int>(cols) - 1;
   int schet = 1;
+
   while (top <= bottom && left <= right)
   {
     for (int i = bottom; i >= top; i--)
     {
-      matrix[i][left] -= schet;
-      schet++;
+      matrix[i * cols + left] -= schet++;
     }
     left++;
-    if (left > right)
-    {
-      break;
-    }
+    if (left > right) break;
+
     for (int j = left; j <= right; j++)
     {
-      matrix[top][j] -= schet;
-      schet++;
+      matrix[top * cols + j] -= schet++;
     }
     top++;
-    if (top > bottom)
-    {
-      break;
-    }
+    if (top > bottom) break;
+
     for (int i = top; i <= bottom; i++)
     {
-      matrix[i][right] -= schet;
-      schet++;
+      matrix[i * cols + right] -= schet++;
     }
     right--;
-    if (left > right)
-    {
-      break;
-    }
+    if (left > right) break;
+
     for (int j = right; j >= left; j--)
     {
-      matrix[bottom][j] -= schet;
-      schet++;
+      matrix[bottom * cols + j] -= schet++;
     }
     bottom--;
   }
