@@ -26,14 +26,15 @@ std::istream& zinovev::readInput(std::istream& input, int* array, size_t rows, s
 
 void zinovev::fillSpiral(int* array, size_t rows, size_t cols)
 {
-  int number = 1;
-  int position = (rows - 1) * cols;
+  size_t number = 1;
+  size_t position = (rows - 1) * cols;
+  size_t total = rows * cols;
 
-  for (size_t layer = 0; number <= rows * cols; layer++)
+  for (size_t layer = 0; number <= total; layer++)
   {
-    for (size_t i = 0; i < (cols - 2 * layer) && number <= rows * cols; i++)
+    for (size_t i = 0; i < (cols - 2 * layer) && number <= total; i++)
     {
-      if (position >= 0 && position < rows * cols)
+      if (position < total)
       {
         array[position] += number;
       }
@@ -41,16 +42,16 @@ void zinovev::fillSpiral(int* array, size_t rows, size_t cols)
       number++;
     }
 
-    if (number > rows * cols)
+    if (number > total)
     {
       break;
     }
 
     position -= (cols + 1);
 
-    for (size_t i = 0; i < (rows - 2 * layer - 1) && number <= rows * cols; i++)
+    for (size_t i = 0; i < (rows - 2 * layer - 1) && number <= total; i++)
     {
-      if (position >= 0 && position < rows * cols)
+      if (position < total)
       {
         array[position] += number;
       }
@@ -58,16 +59,16 @@ void zinovev::fillSpiral(int* array, size_t rows, size_t cols)
       number++;
     }
 
-    if (number > rows * cols)
+    if (number > total)
     {
       break;
     }
 
     position += (cols - 1);
 
-    for (size_t i = 0; i < (cols - 2 * layer - 1) && number <= rows * cols; i++)
+    for (size_t i = 0; i < (cols - 2 * layer - 1) && number <= total; i++)
     {
-      if (position >= 0 && position < rows * cols)
+      if (position < total)
       {
         array[position] += number;
       }
@@ -75,16 +76,16 @@ void zinovev::fillSpiral(int* array, size_t rows, size_t cols)
       number++;
     }
 
-    if (number > rows * cols)
+    if (number > total)
     {
       break;
     }
 
     position += (cols + 1);
 
-    for (size_t i = 0; i < (rows - 2 * layer - 2) && number <= rows * cols; i++)
+    for (size_t i = 0; i < (rows - 2 * layer - 2) && number <= total; i++)
     {
-      if (position >= 0 && position < rows * cols)
+      if (position < total)
       {
         array[position] += number;
       }

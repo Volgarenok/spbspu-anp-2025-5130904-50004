@@ -1,6 +1,8 @@
 #ifndef ZINOVEV_H
 #define ZINOVEV_H
 
+#include <iostream>
+
 namespace zinovev
 {
   std::istream& readInput(std::istream& input, int* array, size_t rows, size_t cols);
