@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstddef>
+#include <cctype>
 #include "matrix_functions.hpp"
 int main(int argc, char **argv)
 {
@@ -10,22 +11,22 @@ int main(int argc, char **argv)
     return 1;
   }
   else if (argc > 4)
-    {
-      std::cerr << "Too many arguments" << "\n";
-      return 1;
-    }
+  {
+    std::cerr << "Too many arguments" << "\n";
+    return 1;
+  }
 
-  int temp = 0;
+  size_t temp = 0;
   while (argv[1][temp] != '\0')
   {
-    if (!(argv[1][0] >= '0' && argv[1][0] <= '9'))
+    if (!(std::isdigit(argv[1][temp])))
     {
       std::cerr << "First parameter is not a number" << "\n";
       return 1;
     }
     ++temp;
   }
-  if (temp > 1)
+  if ((temp > 1) || (argv[1][0] > '2'))
   {
     std::cerr << "First parameter is out of range" << "\n";
     return 1;

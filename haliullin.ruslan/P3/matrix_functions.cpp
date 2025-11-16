@@ -27,7 +27,7 @@ void haliullin::FllIncrementWave(int *arr, size_t rows, size_t cols)
     for (size_t j = k; j < cols - k; ++j)
     {
       arr[k * cols + j] += (k + 1);
-      if (2*k < rows - 1)
+      if (2 * k < rows - 1)
       {
         arr[(rows - (k + 1)) * cols + j] += (k + 1);
       }
