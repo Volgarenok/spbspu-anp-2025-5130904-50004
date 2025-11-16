@@ -86,7 +86,7 @@ int main(int argc, char **argv)
     {
       delete[] arr;
     }
-    return 1;
+    return 2;
   }
   in.close();
 
