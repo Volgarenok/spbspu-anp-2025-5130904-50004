@@ -1,4 +1,4 @@
-#include "functions2.hpp"
+#include "functions.hpp"
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -97,3 +97,4 @@ int main(int argc, char* argv[])
 
   return 0;
 }
+

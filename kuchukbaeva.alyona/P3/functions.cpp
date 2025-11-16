@@ -1,7 +1,7 @@
-#include "functions2.hpp"
+#include "functions.hpp"
 #include <iostream>
-#include <fstream>
-#include <cstdlib>
+#include <istream>
+#include <ostream>
 
 bool kuchukbaeva::CntLocMax(int** matrix, size_t rows, size_t cols, size_t i, size_t j)
 {
