@@ -46,7 +46,7 @@ int main() {
   using ivanov::Line;
   Line l = Line();
   get_line(std::cin, l);
-  l.space_cleaner();
+  l.del_latinus();
   l.get_line();
   return 0;
 }
@@ -154,12 +154,14 @@ void ivanov::Line::space_cleaner() noexcept{
   *this = tmp;
 }
 void ivanov::Line::del_latinus() noexcept {
+  Line tmp = Line();
   for (size_t i = 0; i < get_size(); ++i) {
-    if (isalpha(get(i))) {
-      std::cout << i << std::endl;
-      rmv(i);
+    if (!isalpha(get(i))) {
+      tmp.next(get(i));
     }
   }
+  *this = tmp;
+  space_cleaner();
 }
 
 ivanov::Line ivanov::Line::get_letters() const {
