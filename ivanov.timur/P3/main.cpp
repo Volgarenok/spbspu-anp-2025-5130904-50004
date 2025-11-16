@@ -82,6 +82,9 @@ int main(int argc, char ** argv) {
         input >> matrix[i][j];
         if (input.fail()) {
           std::cerr << "Error: Invalid matrix data" << std::endl;
+          for (int k = 0; k <= i; k++) {
+            free(matrix[k]);
+          }
           free(matrix);
           return 2;
         }
