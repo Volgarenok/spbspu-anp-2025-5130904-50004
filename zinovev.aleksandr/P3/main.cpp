@@ -2,7 +2,7 @@
 #include <fstream>
 #include <exception>
 #include <cctype>
-#include "zinovev.h"
+#include "matrix_operations.hpp"
 
 int main(int argc, char** argv)
 {
@@ -68,19 +68,8 @@ int main(int argc, char** argv)
 
   if (argv[1][0] == '1')
   {
-    if (rows * cols > 1000)
-    {
-      std::cerr << "ERROR: The array is too large" << "\n";
-      return 1;
-    }
-
     int array[10000] = {};
     zinovev::processArray(input, output, array, rows, cols);
-
-    if (!input)
-    {
-      return 2;
-    }
   }
   else if (argv[1][0] == '2')
   {
@@ -97,14 +86,12 @@ int main(int argc, char** argv)
     }
 
     zinovev::processArray(input, output, array, rows, cols);
-
-    if (!input)
-    {
-      delete[] array;
-      return 2;
-    }
-
     delete[] array;
+  }
+
+  if (!input)
+  {
+    return 2;
   }
 
   return 0;

@@ -1,4 +1,4 @@
-#include "zinovev.h"
+#include "matrix_operations.hpp"
 #include <iostream>
 
 std::istream& zinovev::readInput(std::istream& input, int* array, size_t rows, size_t cols)
@@ -97,7 +97,7 @@ void zinovev::fillSpiral(int* array, size_t rows, size_t cols)
   }
 }
 
-int zinovev::findLongestColumn(int* array, size_t rows, size_t cols)
+int zinovev::findLongestColumn(const int* array, size_t rows, size_t cols)
 {
   if (rows == 0)
   {
