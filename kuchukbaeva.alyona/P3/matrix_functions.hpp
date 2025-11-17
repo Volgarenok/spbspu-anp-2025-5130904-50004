@@ -1,5 +1,5 @@
-#ifndef FUNCTIONS_HPP
-#define FUNCTIONS_HPP
+#ifndef MATRIX_FUNCTIONS_HPP
+#define MATRIX_FUNCTIONS_HPP
 #include <cstddef>
 #include <iosfwd>
 

@@ -1,4 +1,4 @@
-#include "functions.hpp"
+#include "matrix_functions.hpp"
 #include <iostream>
 #include <istream>
 #include <ostream>
@@ -45,38 +45,52 @@ int kuchukbaeva::countLocMax(const int* matrix, size_t rows, size_t cols)
 
 void kuchukbaeva::LftBotClk(int* matrix, size_t rows, size_t cols)
 {
-  int top = 0;
-  int bottom = static_cast<int>(rows) - 1;
-  int left = 0;
-  int right = static_cast<int>(cols) - 1;
-  int schet = 1;
+  size_t top = 0;
+  size_t bottom = rows - 1;
+  size_t left = 0;
+  size_t right = cols - 1;
+  size_t schet = 1;
 
   while (top <= bottom && left <= right)
   {
-    for (int i = bottom; i >= top; i--)
+    for (size_t i = bottom; ; --i)
     {
       matrix[i * cols + left] -= schet++;
+      if (i == top)
+      {
+        break;
+      }
     }
     left++;
-    if (left > right) break;
-
-    for (int j = left; j <= right; j++)
+    if (left > right)
+    {
+       break;
+    }
+    for (size_t j = left; j <= right; ++j)
     {
       matrix[top * cols + j] -= schet++;
     }
     top++;
-    if (top > bottom) break;
-
-    for (int i = top; i <= bottom; i++)
+    if (top > bottom)
+    {
+       break;
+    }
+    for (size_t i = top; i <= bottom; ++i)
     {
       matrix[i * cols + right] -= schet++;
     }
     right--;
-    if (left > right) break;
-
-    for (int j = right; j >= left; j--)
+    if (left > right)
+    {
+       break;
+    }
+    for (size_t j = right; ; --j)
     {
       matrix[bottom * cols + j] -= schet++;
+      if (j == left)
+      {
+        break;
+      }
     }
     bottom--;
   }
