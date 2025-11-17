@@ -5,8 +5,8 @@ namespace ivanov
 {
   void fll_inc_wav(int mtr[], int rows, int cols);
   void fll_inc_wav(int** mtr, int rows, int cols);
-  int max_sum_mdg(int matrix[], int rows, int cols);
-  int max_sum_mdg(int** matrix, int rows, int cols);
+  int max_sum_mdg(int matrix[], int rows, int cols) const;
+  int max_sum_mdg(int** matrix, int rows, int cols) const;
 }
 
 int main(int argc, char ** argv)
@@ -63,11 +63,11 @@ int main(int argc, char ** argv)
     for (int i = 0; i < rows * cols; i++)
     {
       input >> matrix[i];
-      if (input.fail())
-      {
-        std::cerr << "Error: Invalid matrix data" << std::endl;
-        return 2;
-      }
+    }
+    if (input.fail())
+    {
+      std::cerr << "Error: Invalid matrix data" << std::endl;
+      return 2;
     }
     ivanov::fll_inc_wav(matrix, rows, cols);
     int result = ivanov::max_sum_mdg(matrix, rows, cols);
@@ -82,7 +82,7 @@ int main(int argc, char ** argv)
     }
     for (int i = 0; i < rows; i++)
     {
-      matrix[i] = static_cast<int *>(malloc(sizeof(int) * cols));
+      matrix[i] = static_cast< int * >(malloc(sizeof(int) * cols));
       if (matrix[i] == nullptr)
       {
         std::cerr << "Error: Memory segmentaion" << std::endl;
