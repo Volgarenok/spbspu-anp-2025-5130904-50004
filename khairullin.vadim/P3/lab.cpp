@@ -182,8 +182,6 @@ int main (int argc, char ** argv)
         }
         khair::filling(array, input, rows, cols, command);
         output << khairullin::localmax(array, rows, cols) << "\n";
-        const int MIN_SIZE = std::min(rows, cols);
-        const int MAX_SIZE = std::max(rows, cols);
         int * square_array = reinterpret_cast<int *>(std::malloc(MIN_SIZE * MIN_SIZE * sizeof(int)));
         if (square_array == nullptr)
         {
@@ -206,6 +204,7 @@ int main (int argc, char ** argv)
         {
           output << "False\n";
         }
+        free(square_array)       
       }
     }
     else if (rows == 0 and cols == 0)
