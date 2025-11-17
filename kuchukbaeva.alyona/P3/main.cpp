@@ -1,4 +1,4 @@
-#include "functions.hpp"
+#include "matrix_functions.hpp"
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -17,20 +17,19 @@ int main(int argc, char* argv[])
   }
   int num = 0;
   char* endp = nullptr;
-  long res = 0;
-  res = std::strtol(argv[1], &endp, 10);
+  long res = std::strtol(argv[1], &endp, 10);
   if (endp == argv[1] || *endp != '\0')
   {
     std::cerr << "First parameter is not a number" << "\n";
     return 1;
   }
-  num = static_cast<int>(res);
-  if (num != 1 && num != 2)
+  if (res != 1 && res != 2)
   {
     std::cerr << "First parameter is out of range" << "\n";
     return 1;
   }
-    std::ifstream in(argv[2]);
+  num = res;
+  std::ifstream in(argv[2]);
   if (!in.is_open())
   {
     std::cerr << "Cannot open input file" << "\n";
