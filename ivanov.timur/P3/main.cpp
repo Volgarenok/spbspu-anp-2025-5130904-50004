@@ -4,8 +4,7 @@
 namespace ivanov
 {
   void fll_inc_wav(int* mtr, int rows, int cols);
-  int max_sum_mdg(int matrix[], int rows, int cols);
-  int max_sum_mdg(int** matrix, int rows, int cols);
+  int max_sum_mdg(int* matrix, int rows, int cols);
 }
 
 int main(int argc, char ** argv)
@@ -73,10 +72,10 @@ int main(int argc, char ** argv)
     output << result << std::endl;
   }
   else {
-    int* matrix = static_cast< int * >(malloc(sizeof(int) * cols));
+    int* matrix = static_cast< int * >(malloc(sizeof(int) * rows * cols));
     if (matrix == nullptr)
     {
-      std::cerr << "Error: Memory segmentaion" << std::endl;
+      std::cerr << "Error: Memory allocation failed" << std::endl;
       return 2;
     }
     for (int i = 0; i < rows * cols; i++)
@@ -89,6 +88,10 @@ int main(int argc, char ** argv)
         return 2;
       }
     }
+    ivanov::fll_inc_wav(matrix, rows, cols);
+    int result = ivanov::max_sum_mdg(matrix, rows, cols);
+    output << result << std::endl;
+    free(matrix);
   }
 }
     ivanov::fll_inc_wav(matrix, rows, cols);
@@ -121,65 +124,38 @@ void ivanov::fll_inc_wav(int* mtr, int rows, int cols)
   }
 }
 
-int ivanov::max_sum_mdg(int matrix[], int rows, int cols)
+int ivanov::max_sum_mdg(int* matrix, int rows, int cols)
 {
   if (rows == 0 || cols == 0)
   {
     return 0;
   }
-  int size_sums = rows + cols - 1;
-  int sums[1000] = {};
+  const int size_sums = rows + cols - 1;
+
+  int sums[10000] = {};
   for (int i = 0; i < rows; i++)
   {
     for (int j = 0; j < cols; j++)
     {
-      int s = i + j;
-      sums[s] += matrix[i * cols + j];
+      const int diagonal_index = i + j;
+      sums[diagonal_index] += matrix[i * cols + j];
     }
   }
-  int main_anti = rows - 1;
+  const int main_anti_diagonal = rows - 1;
   int max_sum = 0;
+  bool found_valid = false;
+  
   for (int s = 0; s < size_sums; s++)
   {
-    if (s == main_anti)
+    if (s == main_anti_diagonal)
     {
       continue;
-    }
-    if (sums[s] > max_sum)
+    } 
+    if (!found_valid || sums[s] > max_sum)
     {
       max_sum = sums[s];
+      found_valid = true;
     }
   }
-  return max_sum;
-}
-int ivanov::max_sum_mdg(int** matrix, int rows, int cols)
-{
-  if (rows == 0 || cols == 0)
-  {
-    return 0;
-  }
-  int size_sums = rows + cols - 1;
-  int sums[1000] = {};
-  for (int i = 0; i < rows; i++)
-  {
-    for (int j = 0; j < cols; j++)
-    {
-      int s = i + j;
-      sums[s] += matrix[i][j];
-    }
-  }
-  int main_anti = rows - 1;
-  int max_sum = 0;
-  for (int s = 0; s < size_sums; s++)
-  {
-    if (s == main_anti)
-    {
-      continue;
-    }
-    if (sums[s] > max_sum)
-    {
-      max_sum = sums[s];
-    }
-  }
-  return max_sum;
+  return found_valid ? max_sum : 0;
 }
