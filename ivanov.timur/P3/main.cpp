@@ -5,8 +5,8 @@ namespace ivanov
 {
   void fll_inc_wav(int mtr[], int rows, int cols);
   void fll_inc_wav(int** mtr, int rows, int cols);
-  int max_sum_mdg(int matrix[], int rows, int cols) const;
-  int max_sum_mdg(int** matrix, int rows, int cols) const;
+  int max_sum_mdg(int matrix[], int rows, int cols);
+  int max_sum_mdg(int** matrix, int rows, int cols);
 }
 
 int main(int argc, char ** argv)
@@ -172,7 +172,7 @@ void ivanov::fll_inc_wav(int** mtr, int rows, int cols)
   }
 }
 
-int ivanov::max_sum_mdg(int matrix[], int rows, int cols) const
+int ivanov::max_sum_mdg(int matrix[], int rows, int cols)
 {
   if (rows == 0 || cols == 0)
   {
@@ -203,7 +203,7 @@ int ivanov::max_sum_mdg(int matrix[], int rows, int cols) const
   }
   return max_sum;
 }
-int ivanov::max_sum_mdg(int** matrix, int rows, int cols) const
+int ivanov::max_sum_mdg(int** matrix, int rows, int cols)
 {
   if (rows == 0 || cols == 0)
   {
