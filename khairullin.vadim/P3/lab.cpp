@@ -204,7 +204,7 @@ int main (int argc, char ** argv)
         {
           output << "False\n";
         }
-        free(square_array)
+        free(square_array);
       }
     }
     else if (rows == 0 and cols == 0)
