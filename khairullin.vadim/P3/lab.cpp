@@ -198,6 +198,14 @@ int main (int argc, char ** argv)
           }
         }
         free(array);
+        if (khairullin::triangle(square_array, MIN_SIZE))
+        {
+          output << "True\n";
+        }
+        else
+        {
+          output << "False\n";
+        }
       }
     }
     else if (rows == 0 and cols == 0)
