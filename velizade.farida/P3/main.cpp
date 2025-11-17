@@ -138,6 +138,12 @@ int main(int argc, char** argv)
     return 1;
   }
 
+  if (argv[1][1])
+  {
+    std::cerr << "First parametr must be one character"
+    return 1;
+  }
+
   char num = argv[1][0];
   if (num != '1' && num != '2')
   {
