@@ -65,7 +65,7 @@ namespace khairullin
       {
         if (j != size - 1)
         {
-          counter += khairullin::CheckZero(array, i, j, size);
+          counter += CheckZero(array, i, j, size);
         }
       }
       if (count_of_nulls_on_row - 1 == counter)

@@ -67,15 +67,17 @@ int main (int argc, char ** argv)
         int * array = reinterpret_cast<int *> (std::malloc(rows * cols * sizeof(int)));
         if (array == nullptr)
         {
-          throw std::bad_alloc();
+          std::cerr << "Bad alloc\n";
+          return 2;
         }
         khair::filling(array, input, rows, cols, command);
-        output << khairullin::localmax(array, rows, cols) << "\n";
+        output << khair::localmax(array, rows, cols) << "\n";
         int * square_array = reinterpret_cast<int *>(std::malloc(MIN_SIZE * MIN_SIZE * sizeof(int)));
         if (square_array == nullptr)
         {
           free(array);
-          throw std::bad_alloc();
+          std::cerr << "Bad alloc\n";
+          return 2;
         }
         for (int i = 0; i < MIN_SIZE; i++)
         {
@@ -85,7 +87,7 @@ int main (int argc, char ** argv)
           }
         }
         free(array);
-        if (khairullin::triangle(square_array, MIN_SIZE))
+        if (khair::triangle(square_array, MIN_SIZE))
         {
           output << "True\n";
         }
@@ -105,11 +107,6 @@ int main (int argc, char ** argv)
   catch(const std::invalid_argument & msg)
   {
     std::cerr << "ERROR: " << msg.what() << "\n";
-    return 2;
-  }
-  catch(const std::bad_alloc & e)
-  {
-    std::cerr << "ERROR: " << e.what() << "\n";
     return 2;
   }
   catch(...)
