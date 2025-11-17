@@ -46,7 +46,7 @@ namespace alekseev {
 
 
   void modify(size_t & i, size_t & j, size_t & modifier_id,
-              size_t & top, size_t & bottom, size_t & left, size_t & right)
+      size_t & top, size_t & bottom, size_t & left, size_t & right)
   {
     if (j > right) {
       ++top;
