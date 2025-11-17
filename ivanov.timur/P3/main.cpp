@@ -158,6 +158,4 @@ int ivanov::max_sum_mdg(int* matrix, int rows, int cols)
     }
   }
   return found_valid ? max_sum : 0;
-} 
-  
- 
+}
