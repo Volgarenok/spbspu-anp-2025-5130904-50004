@@ -37,19 +37,18 @@ int main(int argc, char **argv)
   size_t rows = 0;
   size_t cols = 0;
   size_t res = 0;
+
   if (!in.is_open() || !out.is_open())
   {
     std::cerr << "Opening files error" << "\n";
     return 2;
   }
-  if (!(in >> rows))
+
+  in >> rows;
+  in >> cols;
+  if (!in)
   {
-    std::cerr << "Incorrect value for rows" << "\n";
-    return 2;
-  }
-  else if (!(in >> cols))
-  {
-    std::cerr << "Incorrect value for columns" << "\n";
+    std::cerr << "Incorrect input" << "\n";
     return 2;
   }
   if ((rows == 0) && (cols == 0))
