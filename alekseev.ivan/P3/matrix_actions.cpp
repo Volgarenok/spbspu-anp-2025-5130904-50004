@@ -12,7 +12,7 @@ namespace alekseev {
       }
     }
     if (input.fail()) {
-      throw std::invalid_argument("Matrix unread");
+      throw std::logic_error("Matrix unread");
     }
   }
 
@@ -33,8 +33,8 @@ namespace alekseev {
   {
     int modifiers[4]{0, 1, 0, -1};
     size_t modifier_id = 0;
-    size_t i = 1ull, j = 1ull;
-    size_t top = 1ull, bottom = rows, left = 1ull, right = cols;
+    size_t i = 1, j = 1;
+    size_t top = 1, bottom = rows, left = 1, right = cols;
     for (size_t k = 0ull; k < rows * cols; ++k) {
       matrix[(i - 1) * cols + (j - 1)] -= k + 1;
 
@@ -108,7 +108,7 @@ namespace alekseev {
       }
     }
 
-    size_t counter = 0ull;
+    size_t counter = 0;
     for (size_t j = 0ull; j < cols; ++j) {
       int maximum = *max_of_column(matrix, rows, cols, j);
       for (size_t i = 0ull; i < rows; ++i) {
