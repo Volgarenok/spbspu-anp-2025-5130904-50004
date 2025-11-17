@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstddef>
+#include <string>
 #include "matrix_actions.h"
 
 namespace alekseev {
@@ -25,7 +26,7 @@ int main(int argc, char ** argv)
     std::cerr << "Matrix unread" << "\n";
     return 2;
   }
-  int num = argv[1][0] == '1' ? 1 : 2;
+  int num = std::stoi(argv[1]);
   int * matrix = nullptr;
   int temp[SIZE];
   if (num == 1) {
@@ -56,18 +57,18 @@ int main(int argc, char ** argv)
 bool alekseev::check_cl_args(int argc, char ** argv)
 {
   if (argc < 4) {
-    throw std::logic_error("Not enough arguments");
+    throw std::invalid_argument("Not enough arguments");
   } else if (argc > 4) {
-    throw std::logic_error("Too many arguments");
+    throw std::invalid_argument("Too many arguments");
   }
-  for (char * i = argv[1]; *i != '\0'; ++i) {
-    if (*i < '0' or *i > '9') {
-      throw std::logic_error("First parameter is not a number");
-    }
+  int num = 0;
+  try {
+    num = std::stoi(argv[1]);
+  } catch (const std::invalid_argument & e) {
+    throw std::invalid_argument("First parameter is not a number");
   }
-  char num = argv[1][0];
-  if (!(num == '1' || num == '2')) {
-    throw std::logic_error("First parameter is out of range");
+  if (!(num == 1 || num == 2)) {
+    throw std::invalid_argument("First parameter is out of range");
   }
   return true;
 }

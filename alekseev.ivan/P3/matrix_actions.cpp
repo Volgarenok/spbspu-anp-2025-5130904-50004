@@ -12,7 +12,7 @@ namespace alekseev {
       }
     }
     if (input.fail()) {
-      throw std::logic_error("Matrix unread");
+      throw std::invalid_argument("Matrix unread");
     }
   }
 
