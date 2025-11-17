@@ -7,8 +7,8 @@ namespace khairullin
   int check_arguments(int argc, char ** argv, int command);
   void filling(int * array, std::ifstream & input, int rows, int cols, int command);
   int localmax(int * array, int rows, int cols);
-  int CheckZero(int * array, int index1,int index2, int size);
-  bool triangle(int *array, int size);
+  int CheckZero(int * array, int index1, int index2, int size);
+  bool triangle(int * array, int size);
   void work_with_dinamic(int rows, int cols,std::ifstream & input, std::ofstream & output, int command);
   void work_with_static(int rows, int cols, std::ifstream & input, std::ofstream & output, int command);
 }
@@ -114,64 +114,6 @@ int khairullin::check_arguments(int argc, char ** argv, int command)
   }
   return 0;
 }
-void khairullin::work_with_static(int rows, int cols, std::ifstream & input, std::ofstream & output, int command)
-{
-  int array[10000] = {};
-  khairullin::filling(array, input, rows, cols, command);
-  output << khairullin::localmax(array, rows, cols) << "\n";
-  int square_array[10000] = {};
-  const int MIN_SIZE = std::min(rows, cols);
-  const int MAX_SIZE = std::max(rows, cols);
-  for (int i = 0; i < MIN_SIZE; ++i)
-  {
-    for(int j = 0; j < MIN_SIZE; ++j)
-    {
-      square_array[i * MIN_SIZE + j] = array[i * MAX_SIZE + j];
-    }
-  }
-  if (khairullin::triangle(square_array, MIN_SIZE))
-  {
-    output << "True\n";
-  }
-  else
-  {
-    output << "False\n";
-  }
-}
-void khairullin::work_with_dinamic(int rows, int cols, std::ifstream & input, std::ofstream & output, int command)
-{
-  int * array = reinterpret_cast<int *> (std::malloc(rows * cols * sizeof(int)));
-  if (array == nullptr)
-  {
-    throw std::bad_alloc();
-  }
-  khairullin::filling(array, input, rows, cols, command);
-  output << khairullin::localmax(array, rows, cols) << "\n";
-  const int MIN_SIZE = std::min(rows, cols);
-  const int MAX_SIZE = std::max(rows, cols);
-  int * square_array = reinterpret_cast<int *>(std::malloc(MIN_SIZE * MIN_SIZE * sizeof(int)));
-  if (square_array == nullptr)
-  {
-    throw std::bad_alloc();
-  }
-  for (int i = 0; i < MIN_SIZE; i++)
-  {
-    for (int j = 0; j < MIN_SIZE; ++j)
-    {
-      square_array[MIN_SIZE * i + j] = array[MAX_SIZE * i + j];
-    }
-  }
-  free(array);
-  if (khairullin::triangle(square_array, MIN_SIZE))
-  {
-    output << "True\n";
-  }
-  else
-  {
-    output << "False\n";
-  }
-  free(square_array);
-}
 int main (int argc, char ** argv)
 {
   int command = 0;
@@ -195,23 +137,67 @@ int main (int argc, char ** argv)
     std::ofstream output(argv[3]);
     int rows = 0, cols = 0;
     input >> rows >> cols;
+    const int MIN_SIZE = std::min(rows, cols);
+    const int MAX_SIZE = std::max(rows, cols);
     if (!input)
     {
-      throw std::logic_error("File is empty");
+      std::cerr << "File is empty\n";
+      return 2;
     }
     else if ((rows == 0 and cols != 0) || (rows != 0 and cols == 0) || (rows < 0 or cols < 0))
     {
-      throw std::runtime_error("Invalid rows or columns");
+      std::cerr << "Invalid rows or columns\n";
+      return 2;
     }
     else if (rows != 0 and cols != 0)
     {
       if (argv[1][0] == '1')
       {
-        khair::work_with_static(rows, cols, input, output, command);
+        int array[10000] = {};
+        khair::filling(array, input, rows, cols, command);
+        output << khairullin::localmax(array, rows, cols) << "\n";
+        int square_array[10000] = {};
+        for (int i = 0; i < MIN_SIZE; ++i)
+        {
+          for(int j = 0; j < MIN_SIZE; ++j)
+          {
+              square_array[i * MIN_SIZE + j] = array[i * MAX_SIZE + j];
+          }
+        }
+        if (khair::triangle(square_array, MIN_SIZE))
+        {
+          output << "True\n";
+        }
+        else
+        {
+          output << "False\n";
+        }
       }
       else if (argv[1][0] == '2')
       {
-        khair::work_with_dinamic(rows, cols, input, output, command);
+        int * array = reinterpret_cast<int *> (std::malloc(rows * cols * sizeof(int)));
+        if (array == nullptr)
+        {
+          throw std::bad_alloc();
+        }
+        khair::filling(array, input, rows, cols, command);
+        output << khairullin::localmax(array, rows, cols) << "\n";
+        const int MIN_SIZE = std::min(rows, cols);
+        const int MAX_SIZE = std::max(rows, cols);
+        int * square_array = reinterpret_cast<int *>(std::malloc(MIN_SIZE * MIN_SIZE * sizeof(int)));
+        if (square_array == nullptr)
+        {
+          free(array);
+          throw std::bad_alloc();
+        }
+        for (int i = 0; i < MIN_SIZE; i++)
+        {
+          for (int j = 0; j < MIN_SIZE; ++j)
+          {
+            square_array[MIN_SIZE * i + j] = array[MAX_SIZE * i + j];
+          }
+        }
+        free(array);
       }
     }
     else if (rows == 0 and cols == 0)
@@ -219,11 +205,6 @@ int main (int argc, char ** argv)
       output << "Count of local maximums - 0\n";
       output << "False\n";
     }
-  }
-  catch (const std::runtime_error & err)
-  {
-    std::cerr << "ERROR: " << err.what() << "\n";
-    return 2;
   }
   catch(const std::invalid_argument & msg)
   {
@@ -233,11 +214,6 @@ int main (int argc, char ** argv)
   catch(const std::bad_alloc & e)
   {
     std::cerr << "ERROR: " << e.what() << "\n";
-    return 2;
-  }
-  catch (std::logic_error & exc)
-  {
-    std::cerr << "ERROR: " << exc.what() << "\n";
     return 2;
   }
   catch(...)
