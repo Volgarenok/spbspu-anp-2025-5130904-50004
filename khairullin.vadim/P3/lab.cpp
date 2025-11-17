@@ -30,7 +30,7 @@ void khairullin::filling(int * array, std::ifstream & input, int rows, int cols,
 }
 int khairullin::CheckZero(int * array, int index1, int index2, int size)
 {
-  if (array[index1 * size + index2] == array[index1 * size + index2 + 1] and array[index1 * size + index2] == 0)
+  if (array[index1 * size + index2] == array[index1 * size + index2 + 1] && array[index1 * size + index2] == 0)
   {
     return 1;
   }
@@ -46,13 +46,13 @@ int khairullin::localmax(int * array, int rows, int cols)
   {
     for (int j = 0; j < cols; ++j)
     {
-      if (i != 0 and j != 0 and i != rows - 1 and j != cols - 1)
+      if (i != 0 && j != 0 && i != rows - 1 && j != cols - 1)
       {
-        if(array[i*cols + j] > array[(i-1)*cols+j]
-            and array[i * cols + j] > array[(i+1)*cols
-                + j]  and array[i*cols + j] > array[i *
-                    cols + j-1] and array[i*cols + j] >
-                        array[i*cols + j+1])
+        if(array[i*cols + j] > array[(i-1) * cols+j]
+            && array[i * cols + j] > array[(i+1) * cols
+                + j] && array[i * cols + j] > array[i *
+                    cols + j-1] && array[i * cols + j] >
+                        array[i * cols + j+1])
             {
               counter_of_max++;
             }
