@@ -12,13 +12,15 @@ namespace velizade
 
 std::istream& velizade::readArr(std::istream& input, int* arr, size_t rows, size_t cols)
 {
+  int value;
   for (size_t i = 0; i < rows * cols; i++)
   {
-    if (!(input >> arr[i]))
+    if (!(input >> value))
     {
       std::cerr << "Incorrect matrix input" << "\n";
       return input;
     }
+    arr[i] = value;
   }
   return input;
 }
