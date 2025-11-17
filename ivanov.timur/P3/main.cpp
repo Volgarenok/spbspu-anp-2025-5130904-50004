@@ -3,8 +3,7 @@
 
 namespace ivanov
 {
-  void fll_inc_wav(int mtr[], int rows, int cols);
-  void fll_inc_wav(int** mtr, int rows, int cols);
+  void fll_inc_wav(int* mtr, int rows, int cols);
   int max_sum_mdg(int matrix[], int rows, int cols);
   int max_sum_mdg(int** matrix, int rows, int cols);
 }
@@ -74,100 +73,50 @@ int main(int argc, char ** argv)
     output << result << std::endl;
   }
   else {
-    int** matrix = static_cast< int ** >(malloc(sizeof(int*) * cols));
+    int* matrix = static_cast< int * >(malloc(sizeof(int) * cols));
     if (matrix == nullptr)
     {
       std::cerr << "Error: Memory segmentaion" << std::endl;
       return 2;
     }
-    for (int i = 0; i < rows; i++)
+    for (int i = 0; i < rows * cols; i++)
     {
-      matrix[i] = static_cast< int * >(malloc(sizeof(int) * cols));
-      if (matrix[i] == nullptr)
+      input >> matrix[i];
+      if (input.fail())
       {
-        std::cerr << "Error: Memory segmentaion" << std::endl;
-        for (int j = 0; j <= i; j++)
-        {
-          free(matrix[j]);
-        }
+        std::cerr << "Error: Invalid matrix data" << std::endl;
         free(matrix);
         return 2;
       }
     }
-    for (int i = 0; i < rows; i++)
-    {
-      for (int j = 0; j < cols; j++)
-      {
-        input >> matrix[i][j];
-        if (input.fail())
-        {
-          std::cerr << "Error: Invalid matrix data" << std::endl;
-          for (int k = 0; k <= i; k++)
-          {
-            free(matrix[k]);
-          }
-          free(matrix);
-          return 2;
-        }
-      }
-    }
+  }
+}
     ivanov::fll_inc_wav(matrix, rows, cols);
     int result = ivanov::max_sum_mdg(matrix, rows, cols);
     output << result << std::endl;
-    for (int i = 0; i < rows; i++)
-    {
-      free(matrix[i]);
-    }
     free(matrix);
   }
   return 0;
 }
 
-void ivanov::fll_inc_wav(int mtr[], int rows, int cols)
+void ivanov::fll_inc_wav(int* mtr, int rows, int cols)
 {
   int lvs = (std::min(rows, cols) + 1) / 2;
   for (int lv = 0; lv < lvs; lv++)
   {
     int inc = lv + 1;
+    int* top_row = mtr + lv * cols;
+    int* bottom_row = mtr + (rows - lv - 1) * cols;
     for (int j = lv; j < cols - lv; j++)
     {
-      mtr[lv * cols + j] += inc;
-    }
-    for (int j = lv; j < cols - lv; j++)
-    {
-      mtr[(rows - lv - 1) * cols + j] += inc;
+      top_row[j] += inc;
+      bottom_row[j] += inc;
     }
     for (int i = lv + 1; i < rows - lv - 1; i++)
     {
-      mtr[i * cols + lv] += inc;
-    }
-    for (int i = lv + 1; i < rows - lv - 1; i++)
-    {
-      mtr[i * cols + (cols - lv - 1)] += inc;
-    }
-  }
-}
-void ivanov::fll_inc_wav(int** mtr, int rows, int cols)
-{
-  int lvs = (std::min(rows, cols) + 1) / 2;
-  for (int lv = 0; lv < lvs; lv++)
-  {
-    int inc = lv + 1;
-    for (int j = lv; j < cols - lv; j++)
-    {
-      mtr[lv][j] += inc;
-    }
-    for (int j = lv; j < cols - lv; j++)
-    {
-      mtr[rows - lv - 1][j] += inc;
-    }
-    for (int i = lv + 1; i < rows - lv - 1; i++)
-    {
-      mtr[i][lv] += inc;
-    }
-    for (int i = lv + 1; i < rows - lv - 1; i++)
-    {
-      mtr[i][cols - lv - 1] += inc;
+      int* current_row = mtr + i * cols;
+      current_row[lv] += inc;
+      current_row[cols - lv - 1] += inc;
     }
   }
 }
