@@ -170,12 +170,6 @@ int main(int argc, char** argv)
 
   if (num == '1')
   {
-    if (rows * cols > 10000)
-    {
-      std::cerr << "Too large matrix for fixed storage" << "\n";
-      return 2;
-    }
-
     int arr[10000] = {};
     if (!velizade::readArr(input, arr, rows, cols))
     {
