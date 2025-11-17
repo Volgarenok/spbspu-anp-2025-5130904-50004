@@ -172,7 +172,7 @@ void ivanov::fll_inc_wav(int** mtr, int rows, int cols)
   }
 }
 
-int ivanov::max_sum_mdg(int matrix[], int rows, int cols)
+int ivanov::max_sum_mdg(int matrix[], int rows, int cols) const
 {
   if (rows == 0 || cols == 0)
   {
@@ -204,7 +204,7 @@ int ivanov::max_sum_mdg(int matrix[], int rows, int cols)
   delete[] sums;
   return max_sum;
 }
-int ivanov::max_sum_mdg(int** matrix, int rows, int cols)
+int ivanov::max_sum_mdg(int** matrix, int rows, int cols) const
 {
   if (rows == 0 || cols == 0)
   {
