@@ -44,7 +44,10 @@ std::ostream& velizade::writeResult(std::ostream& output, const int* arr, size_t
 
 int velizade::countLocalMins(const int* arr, size_t rows, size_t cols)
 {
-  if (rows < 3 || cols < 3) return 0;
+  if (rows < 3 || cols < 3) 
+  {
+    return 0;
+  }
 
   int count = 0;
   for (size_t i = 1; i < rows - 1; i++)
@@ -146,7 +149,7 @@ int main(int argc, char** argv)
   char num = argv[1][0];
   if (num != '1' && num != '2')
   {
-    std::cerr << "First parametr out of range or first parametr os nor a number" << "\n";
+    std::cerr << "First parametr out of range or first parametr is not a number" << "\n";
     return 1;
   }
 
