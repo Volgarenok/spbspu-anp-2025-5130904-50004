@@ -179,7 +179,7 @@ int ivanov::max_sum_mdg(int matrix[], int rows, int cols) const
     return 0;
   }
   int size_sums = rows + cols - 1;
-  int* sums = new int[size_sums]();
+  int sums[1000] = {};
   for (int i = 0; i < rows; i++)
   {
     for (int j = 0; j < cols; j++)
@@ -201,7 +201,6 @@ int ivanov::max_sum_mdg(int matrix[], int rows, int cols) const
       max_sum = sums[s];
     }
   }
-  delete[] sums;
   return max_sum;
 }
 int ivanov::max_sum_mdg(int** matrix, int rows, int cols) const
@@ -211,7 +210,7 @@ int ivanov::max_sum_mdg(int** matrix, int rows, int cols) const
     return 0;
   }
   int size_sums = rows + cols - 1;
-  int* sums = new int[size_sums]();
+  int sums[1000] = {};
   for (int i = 0; i < rows; i++)
   {
     for (int j = 0; j < cols; j++)
@@ -233,6 +232,5 @@ int ivanov::max_sum_mdg(int** matrix, int rows, int cols) const
       max_sum = sums[s];
     }
   }
-  delete[] sums;
   return max_sum;
 }
