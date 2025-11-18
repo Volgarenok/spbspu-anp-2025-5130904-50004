@@ -2,4 +2,6 @@
 #include <fstream>
 #include <stdexcept>
 
-int main()
+int main(){
+
+}
