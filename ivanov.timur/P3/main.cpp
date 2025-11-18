@@ -148,3 +148,4 @@ int ivanov::get_result(int *matrix, int rows, int cols) {
   fll_inc_wav(matrix, rows, cols);
   return max_sum_mdg(matrix, rows, cols);
 }
+
