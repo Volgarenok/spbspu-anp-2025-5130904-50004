@@ -84,7 +84,7 @@ namespace alekseev {
   }
 
 
-  int * max_of_column(int * matrix, const size_t rows, const size_t cols, size_t j)
+  int * max_of_column(int * matrix, const size_t rows, const size_t cols, const size_t j)
   {
     int * ma = matrix + j;
     for (size_t i = 0ull; i < rows; ++i) {
@@ -96,28 +96,19 @@ namespace alekseev {
   }
 
 
-  size_t cnt_sdl_pnt(int * matrix, size_t rows, size_t cols)
+  size_t cnt_sdl_pnt(int * matrix, const size_t rows, const size_t cols)
   {
-    bool * str_mins = new bool[rows * cols];
-    for (size_t i = 0; i < rows; ++i) {
-      int * start = matrix + i * cols;
-      int * end = start + cols;
-      int minimum = *min(start, end);
-      for (size_t j = 0; j < cols; ++j) {
-        str_mins[i * cols + j] = (*(start + j) == minimum);
-      }
-    }
-
     size_t counter = 0;
-    for (size_t j = 0ull; j < cols; ++j) {
-      int maximum = *max_of_column(matrix, rows, cols, j);
-      for (size_t i = 0ull; i < rows; ++i) {
-        if (matrix[i * cols + j] == maximum && str_mins[i * cols + j]) {
-          ++counter;
+    for (size_t i = 0ull; i < rows; ++i) {
+      int mi = *min(matrix + i * cols, matrix + i * cols + cols);
+      for (size_t j = 0ull; j < cols; ++j) {
+        if (matrix[i * cols + j] == mi) {
+          if (matrix[i * cols + j] == *max_of_column(matrix, rows, cols, j)) {
+            ++counter;
+          }
         }
       }
     }
-    delete[] str_mins;
     return counter;
   }
 }

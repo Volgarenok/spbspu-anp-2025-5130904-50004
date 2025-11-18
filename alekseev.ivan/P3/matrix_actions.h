@@ -9,7 +9,7 @@ namespace alekseev {
   void modify(size_t & i, size_t & j, size_t & modifier_id,
       size_t & top, size_t & bottom, size_t & left, size_t & right);
   int * min(int * start, const int * end);
-  int * max_of_column(int * matrix, const size_t rows, const size_t cols, size_t j);
-  size_t cnt_sdl_pnt(int * matrix, size_t rows, size_t cols);
+  int * max_of_column(int * matrix, const size_t rows, const size_t cols, const size_t j);
+  size_t cnt_sdl_pnt(int * matrix, const size_t rows, const size_t cols);
 }
 #endif
