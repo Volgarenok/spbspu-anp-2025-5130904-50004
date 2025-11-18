@@ -6,6 +6,7 @@ namespace ivanov
 {
   void fll_inc_wav(int* mtr, int rows, int cols);
   int max_sum_mdg(int* matrix, int rows, int cols);
+  int get_result(int * matrix, int rows, int cols);
 }
 
 int main(int argc, char** argv)
@@ -65,16 +66,13 @@ int main(int argc, char** argv)
     for (int i = 0; i < rows * cols; i++)
     {
       input >> matrix[i];
-      if (input.fail())
-      {
-        std::cerr << "Error: Invalid matrix data" << std::endl;
-        return 2;
-      }
     }
-
-    ivanov::fll_inc_wav(matrix, rows, cols);
-    int result = ivanov::max_sum_mdg(matrix, rows, cols);
-    output << result << std::endl;
+    if (input.fail() || input.eof())
+    {
+      std::cerr << "Error: Invalid matrix data" << std::endl;
+      return 2;
+    }
+    output << ivanov::get_result(matrix, rows, cols) << std::endl;
   }
   else
   {
@@ -95,10 +93,7 @@ int main(int argc, char** argv)
         return 2;
       }
     }
-
-    ivanov::fll_inc_wav(matrix, rows, cols);
-    int result = ivanov::max_sum_mdg(matrix, rows, cols);
-    output << result << std::endl;
+    output << ivanov::get_result(matrix, rows, cols) << std::endl;
     free(matrix);
   }
 
@@ -173,3 +168,9 @@ int ivanov::max_sum_mdg(int* matrix, int rows, int cols)
 
   return found_valid ? max_sum : 0;
 }
+
+int ivanov::get_result(int *matrix, int rows, int cols) {
+  fll_inc_wav(matrix, rows, cols);
+  return max_sum_mdg(matrix, rows, cols);
+}
+
