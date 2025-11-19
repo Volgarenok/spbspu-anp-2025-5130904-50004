@@ -180,6 +180,8 @@ int main(int argc, char** argv)
   if (!(input >> rows) || !(input >> cols))
   {
     std::cerr << "Incorrect matrix dimensions" << "\n";
+    input.close();
+    output.close();
     return 2;
   }
 
@@ -188,6 +190,8 @@ int main(int argc, char** argv)
     int arr[10000] = {};
     if (!velizade::readArr(input, arr, rows, cols))
     {
+      input.close();
+      output.close();
       return 2;
     }
 
@@ -199,22 +203,26 @@ int main(int argc, char** argv)
     try
     {
       arr = new int[rows * cols]();
-      if (!velizade::readArr(input, arr, rows, cols))
-      {
-        delete[] arr;
-        return 2;
-      }
-
-      velizade::processArray(num, arr, rows, cols, output);
-      delete[] arr;
     }
     catch (const std::bad_alloc&)
     {
       std::cerr << "Memory allocation error" << "\n";
-      delete[] arr;
+      input.close();
+      output.close();
       return 2;
     }
-  }
+    if (!velizade::readArr(input, arr, rows, cols))
+    {
+      delete[] arr;
+      input.close();
+      output.close();
+      return 2;
+    }
 
+    velizade::processArray(num, arr, rows, cols, output);
+    delete[] arr;
+  }
+  input.close();
+  output.close();
   return 0;
 }
