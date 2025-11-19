@@ -8,6 +8,7 @@ namespace velizade
   std::ostream& writeResult(std::ostream& output, const int* arr, size_t rows, size_t cols, int result);
   int countLocalMins(const int* arr, size_t rows, size_t cols);
   void leftTopClockwise(int* arr, size_t rows, size_t cols);
+  int processArray(char task, int* arr, size_t rows, size_t cols, std::ostream& output); 
 }
 
 std::istream& velizade::readArr(std::istream& input, int* arr, size_t rows, size_t cols)
@@ -125,6 +126,20 @@ void velizade::leftTopClockwise(int* arr, size_t rows, size_t cols)
   }
 }
 
+int velizade::processArray(char task, int* arr, size_t rows, size_t cols, std::ostream& output)
+{
+  int result = 0;
+  
+  if (task == '1')
+  {
+    result = countLocationMins(arr, rows, cols);
+  }
+  else if (mode == '2')
+  {
+    leftTopClockwise(arr, rows, cols);
+    result = 0;
+  }
+
 int main(int argc, char** argv)
 {
   if (argc > 4)
@@ -176,8 +191,7 @@ int main(int argc, char** argv)
       return 2;
     }
 
-    int result = velizade::countLocalMins(arr, rows, cols);
-    velizade::writeResult(output, arr, rows, cols, result);
+    velizade::processArray(num, arr, rows, cols, output);
   }
   else
   {
@@ -191,9 +205,7 @@ int main(int argc, char** argv)
         return 2;
       }
 
-      velizade::leftTopClockwise(arr, rows, cols);
-      velizade::writeResult(output, arr, rows, cols, 0);
-
+      velizade::processArray(num, arr, rows, cols, output);
       delete[] arr;
     }
     catch (const std::bad_alloc&)
