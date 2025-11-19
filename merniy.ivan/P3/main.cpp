@@ -43,7 +43,8 @@ int main(int argc, char* argv[]) {
     fout << n << " " << m << "\n";
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
-            fout << a[i][j] << " ";
+            fout << a[i][j];
+            if (j < m - 1) fout << " ";
         }
         fout << "\n";
     }
