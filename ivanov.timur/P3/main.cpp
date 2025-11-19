@@ -45,21 +45,8 @@ int main(int argc, char** argv)
   }
   if (num == '1')
   {
-    if (rows * cols > 10000)
-    {
-      std::cerr << "Error: Matrix too large for static array" << std::endl;
-      return 1;
-    }
     int matrix[10000];
-    for (int i = 0; i < rows * cols; i++)
-    {
-      input >> matrix[i];
-    }
-    if (input.fail() || input.eof())
-    {
-      std::cerr << "Error: Invalid matrix data" << std::endl;
-      return 2;
-    }
+    ivanov::write_in(matrix, rows, cols, std::move(input), false);
     output << ivanov::get_result(matrix, rows, cols) << std::endl;
   }
   else
@@ -70,16 +57,7 @@ int main(int argc, char** argv)
       std::cerr << "Error: Memory allocation failed" << std::endl;
       return 2;
     }
-    for (int i = 0; i < rows * cols; i++)
-    {
-      input >> matrix[i];
-      if (input.fail())
-      {
-        std::cerr << "Error: Invalid matrix data" << std::endl;
-        free(matrix);
-        return 2;
-      }
-    }
+    ivanov::write_in(matrix, rows, cols, std::move(input), true);
     output << ivanov::get_result(matrix, rows, cols) << std::endl;
     free(matrix);
   }

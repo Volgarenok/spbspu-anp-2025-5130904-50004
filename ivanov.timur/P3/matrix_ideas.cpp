@@ -1,5 +1,7 @@
 #include "matrix_ideas.h"
 #include <algorithm>
+#include <iostream>
+#include <fstream>
 
 void ivanov::fll_inc_wav(int* mtr, int rows, int cols)
 {
@@ -62,4 +64,20 @@ int ivanov::max_sum_mdg(const int* matrix, int rows, int cols)
 int ivanov::get_result(int *matrix, int rows, int cols) {
   fll_inc_wav(matrix, rows, cols);
   return max_sum_mdg(matrix, rows, cols);
+}
+bool ivanov::write_in(int *matrix, int rows, int cols, std::ifstream input, bool is_dynamic) {
+  for (int i = 0; i < rows * cols; i++)
+  {
+    input >> matrix[i];
+  }
+  if (input.fail() || input.eof())
+  {
+    std::cerr << "Error: Invalid matrix data" << std::endl;
+    if (is_dynamic)
+    {
+      free(matrix);
+    }
+    return false;
+  }
+  return true;
 }
