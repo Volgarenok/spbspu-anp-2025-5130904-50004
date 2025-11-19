@@ -1,6 +1,5 @@
 #include "io.h"
 #include <iostream>
-#include <iostream>
 #include <stdexcept>
 
 int Nepochatova::checkArgs(int argc, char **argv) {
@@ -12,11 +11,12 @@ int Nepochatova::checkArgs(int argc, char **argv) {
 
     if (*p == '\0') { throw std::invalid_argument("First parametr is not a number"); }
     while (*p) {
-        if (*p < '0' || *p > '9') {
+        if (*p < '0' || *p > '9')
             throw std::invalid_argument("First parametr is not a number");
-            ++p;
-        }
+        ++p;
+
     }
+    return 0;
 }
 
 
@@ -39,4 +39,18 @@ int * Nepochatova::readMatrix(const std::string &filename, int &n, int &m) {
                 throw std::runtime_error("invalid matrix data");
             }
     return arr;
+}
+void writeMatrix(std::ofstream& out, const int* arr, int n, int m) {
+    if (arr == nullptr || n == 0 || m == 0) {
+        out << "0 0\n";
+        return;
+    }
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            out << arr[i * m + j] << " ";
+            out << "\n";
+        }
+
+    }
 }
