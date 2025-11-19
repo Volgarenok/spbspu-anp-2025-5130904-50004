@@ -1,5 +1,6 @@
 #ifndef MATRIX_IDEAS_H
 #define MATRIX_IDEAS_H
+#include <fstream>
 
 namespace ivanov
 {

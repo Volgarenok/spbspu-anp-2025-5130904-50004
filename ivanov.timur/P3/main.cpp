@@ -46,7 +46,10 @@ int main(int argc, char** argv)
   if (num == '1')
   {
     int matrix[10000];
-    ivanov::write_in(matrix, rows, cols, std::move(input), false);
+    if (!ivanov::write_in(matrix, rows, cols, std::move(input), false))
+    {
+      return 2;
+    }
     output << ivanov::get_result(matrix, rows, cols) << std::endl;
   }
   else
@@ -57,7 +60,10 @@ int main(int argc, char** argv)
       std::cerr << "Error: Memory allocation failed" << std::endl;
       return 2;
     }
-    ivanov::write_in(matrix, rows, cols, std::move(input), true);
+    if (!ivanov::write_in(matrix, rows, cols, std::move(input), true))
+    {
+      return 2;
+    }
     output << ivanov::get_result(matrix, rows, cols) << std::endl;
     free(matrix);
   }
