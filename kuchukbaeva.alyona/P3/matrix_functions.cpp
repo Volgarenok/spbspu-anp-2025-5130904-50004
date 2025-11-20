@@ -53,13 +53,9 @@ void kuchukbaeva::lftBotClk(int* matrix, size_t rows, size_t cols)
 
   while (top <= bottom && left <= right)
   {
-    for (size_t i = bottom; ; --i)
+    for (size_t i = bottom; i >= top && i < rows; --i)
     {
       matrix[i * cols + left] -= schet++;
-      if (i == top)
-      {
-        break;
-      }
     }
     left++;
     if (left > right)
@@ -84,13 +80,9 @@ void kuchukbaeva::lftBotClk(int* matrix, size_t rows, size_t cols)
     {
        break;
     }
-    for (size_t j = right; ; --j)
+    for (size_t j = right; j >= left && j < cols ; --j)
     {
       matrix[bottom * cols + j] -= schet++;
-      if (j == left)
-      {
-        break;
-      }
     }
     bottom--;
   }
