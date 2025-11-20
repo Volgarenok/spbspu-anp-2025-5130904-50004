@@ -87,7 +87,7 @@ int numAnalysis(const char* s)
   if (s[0] == '2' && s[1] == '\0') {
     return 2;
   }
-  
+
   return ERROR_INVALID_VALUE;
 }
 
