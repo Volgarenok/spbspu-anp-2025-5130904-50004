@@ -17,6 +17,7 @@ int main(int argc, char **argv)
   if (!std::isdigit(argv[1][0]))
   {
     std::cerr << "First parameter is not a number" << "\n";
+    return 1;
   }
   if ((argv[1][1] != '\0') || (argv[1][0] > '2'))
   {
