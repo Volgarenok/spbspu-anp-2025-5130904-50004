@@ -10,15 +10,15 @@ bool kuchukbaeva::cntLocMax(const int* matrix, size_t rows, size_t cols, size_t 
     return false;
   }
   int m = matrix[i * cols + j];
-  for (int k = -1; k <= 1; ++k)
+  for (size_t k = i - 1; k <= i + 1; ++k)
   {
-    for (int f = -1; f <= 1; ++f)
+    for (size_t f = j - 1; f <= j + 1; ++f)
     {
-      if (k == 0 && f == 0)
+      if (k == i && f == j)
       {
         continue;
       }
-      if (matrix[(i + k) * cols + (j + f)] >= m)
+      if (matrix[k * cols + f] >= m)
       {
         return false;
       }
@@ -98,7 +98,6 @@ void kuchukbaeva::lftBotClk(int* matrix, size_t rows, size_t cols)
 
 bool kuchukbaeva::readMatrix(std::istream &in, int *matrix, size_t rows, size_t cols)
 {
-  size_t count = 0;
   for (size_t i = 0; i < rows * cols; ++i)
   {
     if (!(in >> matrix[i]))

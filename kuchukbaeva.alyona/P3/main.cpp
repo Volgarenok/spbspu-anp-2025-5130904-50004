@@ -52,20 +52,11 @@ int main(int argc, char* argv[])
     return 2;
   }
 
-  if (rows == 0 && cols == 0)
+  if (rows == 0 || cols == 0)
   {
-    out << 0 << "\n";
-    out << rows << " " << 0 << "\n";
-    in.close();
-    out.close();
+    out << "0\n0 0\n";
     return 0;
   }
-  else if (rows == 0 || cols == 0)
-  {
-    std::cerr << "Cannot read matrix" << "\n";
-    return 2;
-  }
-
   const size_t matrixSize = rows * cols;
   int* matrix = nullptr;
   int static_matrix[10000] = {};
@@ -95,7 +86,7 @@ int main(int argc, char* argv[])
   }
   in.close();
   int locMaxCount = kuchukbaeva::countLocMax(matrix, rows, cols);
-  kuchukbaeva::LftBotClk(matrix, rows, cols);
+  kuchukbaeva::lftBotClk(matrix, rows, cols);
   kuchukbaeva::writeMatrix(out, matrix, rows, cols, locMaxCount);
   if (num == 2)
   {
@@ -104,4 +95,3 @@ int main(int argc, char* argv[])
 
   return 0;
 }
-
