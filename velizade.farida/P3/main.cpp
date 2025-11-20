@@ -8,7 +8,7 @@ namespace velizade
   std::ostream& writeResult(std::ostream& output, const int* arr, size_t rows, size_t cols, int result);
   int countLocalMins(const int* arr, size_t rows, size_t cols);
   void leftTopClockwise(int* arr, size_t rows, size_t cols);
-  int processArray(char task, int* arr, size_t rows, size_t cols, std::ostream& output); 
+  int processArray(char task, int* arr, size_t rows, size_t cols, std::ostream& output);
 }
 
 std::istream& velizade::readArr(std::istream& input, int* arr, size_t rows, size_t cols)
@@ -47,7 +47,7 @@ std::ostream& velizade::writeResult(std::ostream& output, const int* arr, size_t
 
 int velizade::countLocalMins(const int* arr, size_t rows, size_t cols)
 {
-  if (rows < 3 || cols < 3) 
+  if (rows < 3 || cols < 3)
   {
     return 0;
   }
