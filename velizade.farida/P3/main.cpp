@@ -129,7 +129,7 @@ void velizade::leftTopClockwise(int* arr, size_t rows, size_t cols)
 int velizade::processArray(char task, int* arr, size_t rows, size_t cols, std::ostream& output)
 {
   int result = 0;
-  
+
   if (task == '1')
   {
     result = countLocationMins(arr, rows, cols);
