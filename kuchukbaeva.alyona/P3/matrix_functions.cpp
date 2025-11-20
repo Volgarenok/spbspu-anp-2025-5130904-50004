@@ -3,7 +3,7 @@
 #include <istream>
 #include <ostream>
 
-bool kuchukbaeva::CntLocMax(const int* matrix, size_t rows, size_t cols, size_t i, size_t j)
+bool kuchukbaeva::cntLocMax(const int* matrix, size_t rows, size_t cols, size_t i, size_t j)
 {
   if (i == 0 || i == rows - 1 || j == 0 || j == cols - 1)
   {
@@ -43,7 +43,7 @@ int kuchukbaeva::countLocMax(const int* matrix, size_t rows, size_t cols)
   return count;
 }
 
-void kuchukbaeva::LftBotClk(int* matrix, size_t rows, size_t cols)
+void kuchukbaeva::lftBotClk(int* matrix, size_t rows, size_t cols)
 {
   size_t top = 0;
   size_t bottom = rows - 1;
@@ -96,35 +96,26 @@ void kuchukbaeva::LftBotClk(int* matrix, size_t rows, size_t cols)
   }
 }
 
-std::istream& kuchukbaeva::readMatrix(std::istream &in, int *arr, size_t rows, size_t cols)
+bool kuchukbaeva::readMatrix(std::istream &in, int *matrix, size_t rows, size_t cols)
 {
   size_t count = 0;
-  for (size_t i = 0; i < rows * cols && in >> arr[i]; ++i)
-  {
-    ++count;
-  }
-  if (!in)
-  {
-    std::cerr << "Unexpected input" << "\n";
-  }
-  else if (count < rows * cols)
-  {
-    std::cerr << "Not enough elements" << "\n";
-  }
-  return in;
-}
-
-std::ostream& kuchukbaeva::writeMatrix(std::ostream& out, const int* matrix, size_t rows, size_t cols, int locMaxCount)
-{
-  out << locMaxCount << "\n";
   for (size_t i = 0; i < rows * cols; ++i)
   {
-    out << matrix[i];
-    if (i < rows * cols -1)
+    if (!(in >> matrix[i]))
     {
-      out << " ";
+      return false;
     }
   }
+  return true;
+}
+
+void kuchukbaeva::writeMatrix(std::ostream& out, const int* matrix, size_t rows, size_t cols, int locMaxCount)
+{
+  out << locMaxCount << "\n";
+  out << rows << " " << cols;
+  for (size_t i = 0; i < rows * cols; ++i)
+  {
+    out << " " << matrix[i];
+  }
   out << "\n";
-  return out;
 }
