@@ -34,7 +34,7 @@ int kuchukbaeva::countLocMax(const int* matrix, size_t rows, size_t cols)
   {
     for (size_t j = 1; j < cols - 1; j++)
     {
-      if (CntLocMax(matrix, rows, cols, i, j))
+      if (cntLocMax(matrix, rows, cols, i, j))
       {
         count++;
       }
