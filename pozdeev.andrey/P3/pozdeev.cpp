@@ -95,7 +95,7 @@ int processStatic(std::ifstream& fin, std::ofstream& fout, size_t rows, size_t c
 {
   size_t numElements = rows * cols;
 
-  if (numElements > (size_t)MAX_SIZE) {
+  if (numElements > static_cast<size_t>(MAX_SIZE)) {
     std::cerr << "ERROR: Matrix too large for static array\n" << std::endl;
     return 2;
   }
@@ -148,7 +148,7 @@ int processDynamic(std::ifstream& fin, std::ofstream& fout, size_t rows, size_t 
     }
   }
 
-  spiral(dynamicMatrix, (int)rows, (int)cols);
+  spiral(dynamicMatrix, static_cast<int>(rows), static_cast<int>(cols));
 
   fout << rows << " " << cols;
   for (size_t i = 0; i < numElements; ++i) {
