@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstddef>
+#include <iomanip>
 #include "string_actions.h"
 
 
@@ -11,14 +12,23 @@ int main()
 {
   char * user_string = nullptr;
   size_t length = 0;
-  char * removed_latin_letters = nullptr;
-  char * excluded_second = nullptr;
   try {
     user_string = alekseev::str_inp(std::cin, length);
-    removed_latin_letters = reinterpret_cast<char *>(malloc(sizeof(char) * (length + 1)));
-    excluded_second = reinterpret_cast<char *>(malloc(sizeof(char) * (length + 1)));
   } catch (std::bad_alloc & e) {
-    std::cerr << e.what() << "\n";
+    std::cerr << "Memory allocation error!" << "\n";
+    return 1;
+  }
+  char * excluded_second = reinterpret_cast<char *>(malloc(sizeof(char) * (length + 1)));
+  char* removed_latin_letters = reinterpret_cast<char *>(malloc(sizeof(char) * (length + 1)));
+  if (!excluded_second) {
+    std::cerr << "Memory allocation error!" << "\n";
+    free(user_string);
+    return 1;
+  }
+  if (!removed_latin_letters) {
+    std::cerr << "Memory allocation error!" << "\n";
+    free(user_string);
+    free(excluded_second);
     return 1;
   }
   const char * second = "abc";
