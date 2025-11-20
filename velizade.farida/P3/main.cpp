@@ -129,16 +129,18 @@ void velizade::leftTopClockwise(int* arr, size_t rows, size_t cols)
 int velizade::processArray(char task, int* arr, size_t rows, size_t cols, std::ostream& output)
 {
   int result = 0;
-
   if (task == '1')
   {
-    result = countLocationMins(arr, rows, cols);
+    result = countLocalMins(arr, rows, cols);
   }
-  else if (mode == '2')
+  else if (task == '2')
   {
     leftTopClockwise(arr, rows, cols);
     result = 0;
   }
+  writeResult(output, arr, rows, cols, result);
+  return 0;
+}
 
 int main(int argc, char** argv)
 {
@@ -152,10 +154,9 @@ int main(int argc, char** argv)
     std::cerr << "Not enough arguments" << "\n";
     return 1;
   }
-
   if (argv[1][1])
   {
-    std::cerr << "First parametr must be one character"
+    std::cerr << "First parametr must be one character" << "\n";
     return 1;
   }
 
@@ -218,7 +219,6 @@ int main(int argc, char** argv)
       output.close();
       return 2;
     }
-
     velizade::processArray(num, arr, rows, cols, output);
     delete[] arr;
   }
