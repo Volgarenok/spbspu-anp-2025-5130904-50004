@@ -88,7 +88,7 @@ void kuchukbaeva::lftBotClk(int* matrix, size_t rows, size_t cols)
   }
 }
 
-bool kuchukbaeva::readMatrix(std::istream &in, int *matrix, size_t rows, size_t cols)
+bool kuchukbaeva::readMatrix(std::istream& in, int *matrix, size_t rows, size_t cols)
 {
   for (size_t i = 0; i < rows * cols; ++i)
   {
