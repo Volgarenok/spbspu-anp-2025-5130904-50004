@@ -1,4 +1,4 @@
-#include "pozdeev.h"
+#include "pozdeev.hpp"
 
 int main(int argc, char* argv[])
 {
