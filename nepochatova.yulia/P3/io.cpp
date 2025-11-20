@@ -19,7 +19,6 @@ int Nepochatova::checkArgs(int argc, char **argv) {
     return 0;
 }
 
-
 int * Nepochatova::readMatrix(const std::string &filename, int &n, int &m) {
     std::ifstream in(filename);
     if (!in)
