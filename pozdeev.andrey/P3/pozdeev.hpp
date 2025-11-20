@@ -6,7 +6,7 @@
 
 namespace pozdeev
 {
-const int MAX_SIZE = 10000;
+constexpr int MAX_SIZE = 10000;
 
 int countNonSequentialRows(const int* matrix, int rows, int cols);
 void spiral(int* matrix, int rows, int cols);
