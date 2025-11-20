@@ -14,18 +14,11 @@ int main(int argc, char **argv)
     std::cerr << "Too many arguments" << "\n";
     return 1;
   }
-
-  size_t temp = 0;
-  while (argv[1][temp] != '\0')
+  if (!std::isdigit(argv[1][0]))
   {
-    if (!(std::isdigit(argv[1][temp])))
-    {
-      std::cerr << "First parameter is not a number" << "\n";
-      return 1;
-    }
-    ++temp;
+    std::cerr << "First parameter is not a number" << "\n";
   }
-  if ((temp > 1) || (argv[1][0] > '2'))
+  if ((argv[1][1] != '\0') || (argv[1][0] > '2'))
   {
     std::cerr << "First parameter is out of range" << "\n";
     return 1;
