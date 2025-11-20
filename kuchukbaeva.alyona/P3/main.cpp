@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
   }
   else
   {
-    matrix = static_cast<int*>(malloc(matrixSize * sizeof(int)));
+    matrix = static_cast< int* >(malloc(matrixSize * sizeof(int)));
     if (matrix == nullptr)
     {
       std::cerr << "Troubles with memory" << "\n";
