@@ -6,7 +6,6 @@
 
 namespace pozdeev {
   constexpr int MAX_SIZE = 10000;
-  
   constexpr int ERROR_INVALID_FORMAT = 91;
   constexpr int ERROR_INVALID_VALUE = 92;
 
