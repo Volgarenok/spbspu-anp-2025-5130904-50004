@@ -11,10 +11,10 @@ int countNonSequentialRows(const int* matrix, int rows, int cols)
 
     int rowsWithoutConsecutive = 0;
 
-    for (int r = 0; r < rows; ++r)
+    for (size_t r = 0; r < rows; ++r)
     {
         bool hasConsecutive = false;
-        for (int c = 0; c < cols - 1; ++c)
+        for (size_t c = 0; c < cols - 1; ++c)
         {
             if (matrix[r * cols + c] == matrix[r * cols + c + 1])
             {
@@ -43,7 +43,7 @@ void spiral(int* matrix, int rows, int cols)
 
     while (top <= bottom && left <= right)
     {
-        for (int r = bottom; r >= top; --r)
+        for (size_t r = bottom; r >= top; --r)
         {
             matrix[r * cols + left] -= decrement;
             decrement++;
@@ -53,7 +53,7 @@ void spiral(int* matrix, int rows, int cols)
             break;
         }
 
-        for (int c = left; c <= right; ++c)
+        for (size_t c = left; c <= right; ++c)
         {
             matrix[top * cols + c] -= decrement;
             decrement++;
@@ -63,7 +63,7 @@ void spiral(int* matrix, int rows, int cols)
             break;
         }
 
-        for (int r = top; r <= bottom; ++r)
+        for (size_t r = top; r <= bottom; ++r)
         {
             matrix[r * cols + right] -= decrement;
             decrement++;
@@ -73,7 +73,7 @@ void spiral(int* matrix, int rows, int cols)
             break;
         }
 
-        for (int c = right; c >= left; --c)
+        for (size_t c = right; c >= left; --c)
         {
             matrix[bottom * cols + c] -= decrement;
             decrement++;
@@ -100,7 +100,7 @@ int numAnalysis(const char* s, int& outVal)
         return 0;
     }
 
-    for (int i = 0; s[i] != '\0'; ++i)
+    for (size_t i = 0; s[i] != '\0'; ++i)
     {
         if (s[i] < '0' || s[i] > '9')
         {
@@ -129,7 +129,7 @@ int processStatic(std::ifstream& fin, std::ofstream& fout, int rows, int cols)
         return 0;
     }
 
-    for (int i = 0; i < numElements; ++i)
+    for (size_t i = 0; i < numElements; ++i)
     {
         if (!(fin >> staticMatrix[i]))
         {
@@ -166,7 +166,7 @@ int processDynamic(std::ifstream& fin, std::ofstream& fout, int rows, int cols)
         return 2;
     }
 
-    for (int i = 0; i < numElements; ++i)
+    for (size_t i = 0; i < numElements; ++i)
     {
         if (!(fin >> dynamicMatrix[i]))
         {
@@ -186,7 +186,7 @@ int processDynamic(std::ifstream& fin, std::ofstream& fout, int rows, int cols)
     spiral(dynamicMatrix, rows, cols);
 
     fout << rows << " " << cols;
-    for (int i = 0; i < numElements; ++i)
+    for (size_t i = 0; i < numElements; ++i)
     {
         fout << " " << dynamicMatrix[i];
     }
