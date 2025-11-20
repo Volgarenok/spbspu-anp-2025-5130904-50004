@@ -54,8 +54,8 @@ int main(int argc, char* argv[])
     return 2;
   }
 
-  size_t rows = (size_t)temp_rows;
-  size_t cols = (size_t)temp_cols;
+  size_t rows = static_cast<size_t>(temp_rows);
+  size_t cols = static_cast<size_t>(temp_cols);
 
 
   if (num == 1) {
