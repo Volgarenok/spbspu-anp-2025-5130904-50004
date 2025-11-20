@@ -1,64 +1,88 @@
-#include "logic.hpp"
+#include "matrix.hpp"
+#include <algorithm>
 #include <iostream>
 
-namespace vasilenko {
-
-  int cntcolnsm(const int* matrix, int rows, int cols) {
-    int count = 0;
-    if (rows < 2) {
-      return cols;
-    }
-
-    for (int j = 0; j < cols; ++j) {
-      bool has_consecutive = false;
-      for (size_t i = 0; i < static_cast< size_t >(rows) - 1; ++i) {
-        if (matrix[i * cols + j] == matrix[(i + 1) * cols + j]) {
-          has_consecutive = true;
-          break;
-        }
-      }
-      if (!has_consecutive) {
-        count++;
-      }
-    }
-    return count;
+int vasilenko::countColsNsm(const int* matrix, size_t rows, size_t cols)
+{
+  int count = 0;
+  if (rows < 2)
+  {
+    return static_cast< int >(cols);
   }
 
-  int maxsumsdg(const int* matrix, int rows, int cols) {
-    if (rows == 0 || cols == 0) {
-      return 0;
-    }
-
-    int max_sum = 0;
-    bool first_diag = true;
-
-    for (int k = 1 - cols; k < rows; ++k) {
-      int current_sum = 0;
-      for (size_t i = 0; i < static_cast< size_t >(rows); ++i) {
-        int j = static_cast< int >(i) - k;
-        if (j >= 0 && j < cols) {
-          current_sum += matrix[i * cols + j];
-        }
-      }
-
-      if (first_diag) {
-        max_sum = current_sum;
-        first_diag = false;
-      } else {
-
-        max_sum = (current_sum > max_sum) ? current_sum : max_sum;
+  for (size_t j = 0; j < cols; ++j)
+  {
+    bool hasConsecutive = false;
+    for (size_t i = 0; i < rows - 1; ++i)
+    {
+      if (matrix[i * cols + j] == matrix[(i + 1) * cols + j])
+      {
+        hasConsecutive = true;
+        break;
       }
     }
-    return max_sum;
+    if (!hasConsecutive)
+    {
+      count++;
+    }
   }
+  return count;
+}
 
-  int input_array(std::istream& in, int* matrix, size_t size) {
-    for (size_t i = 0; i < size; ++i) {
-      in >> matrix[i];
-      if (in.fail()) {
-        return 1;
-      }
-    }
+int vasilenko::maxSumSdg(const int* matrix, size_t rows, size_t cols)
+{
+  if (rows == 0 || cols == 0)
+  {
     return 0;
+  }
+
+  int maxSum = 0;
+  bool firstDiag = true;
+
+  size_t diagCount = rows + cols - 1;
+
+  for (size_t d = 0; d < diagCount; ++d)
+  {
+    size_t r = 0;
+    size_t c = 0;
+
+    if (d < cols)
+    {
+      r = 0;
+      c = cols - 1 - d;
+    }
+    else
+    {
+      r = d - cols + 1;
+      c = 0;
+    }
+
+    int currentSum = 0;
+    while (r < rows && c < cols)
+    {
+      currentSum += matrix[r * cols + c];
+      r++;
+      c++;
+    }
+
+    if (firstDiag)
+    {
+      maxSum = currentSum;
+      firstDiag = false;
+    }
+    else
+    {
+      maxSum = std::max(maxSum, currentSum);
+    }
+  }
+
+  return maxSum;
+}
+
+void vasilenko::inputMatrix(std::istream& in, int* matrix, const size_t size)
+{
+  for (size_t i = 0; i < size; ++i)
+  {
+    in >> matrix[i];
   }
 }

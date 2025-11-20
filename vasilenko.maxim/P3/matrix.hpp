@@ -1,14 +1,13 @@
-#ifndef LOGIC_HPP
-#define LOGIC_HPP
+#ifndef MATRIX_HPP
+#define MATRIX_HPP
 
-#include <iosfwd>
+#include <iostream>
 
-namespace vasilenko {
-
-  int cntcolnsm(const int* matrix, int rows, int cols);
-  int maxsumsdg(const int* matrix, int rows, int cols);
-
-  int input_array(std::istream& in, int* matrix, size_t size);
+namespace vasilenko
+{
+  int countColsNsm(const int* matrix, size_t rows, size_t cols);
+  int maxSumSdg(const int* matrix, size_t rows, size_t cols);
+  void inputMatrix(std::istream& in, int* matrix, const size_t size);
 }
 
 #endif

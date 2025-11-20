@@ -1,80 +1,122 @@
-#include <iostream>
+#include <algorithm>
 #include <fstream>
-#include <cstdlib>
-#include <cstring>
+#include <iostream>
 
-#include "logic.hpp"
+#include "matrix.hpp"
 
-int main(int argc, char** argv) {
-  if (argc != 4) {
+bool isStringEqual(const char* s1, const char* s2)
+{
+  size_t i = 0;
+  while (s1[i] != '\0' && (s1[i] == s2[i]))
+  {
+    i++;
+  }
+  return (s1[i] == '\0' && s2[i] == '\0');
+}
+
+int main(int argc, char** argv)
+{
+  if (argc != 4)
+  {
     std::cerr << "Invalid number of arguments\n";
     return 1;
   }
 
-  if (std::strcmp(argv[1], "1") != 0 && std::strcmp(argv[1], "2") != 0) {
+  if (!isStringEqual(argv[1], "1") && !isStringEqual(argv[1], "2"))
+  {
     std::cerr << "First parameter is invalid (must be 1 or 2)\n";
     return 1;
   }
 
   std::ifstream input(argv[2]);
-  if (!input.is_open()) {
+  if (!input.is_open())
+  {
     std::cerr << "Cannot open input file\n";
     return 2;
   }
 
-  int rows = 0, cols = 0;
-  input >> rows >> cols;
-  if (input.fail() || rows < 0 || cols < 0) {
+  int readRows = 0;
+  int readCols = 0;
+  input >> readRows >> readCols;
+
+  if (input.fail())
+  {
     std::cerr << "Cannot read matrix dimensions\n";
     return 2;
   }
 
+  if (readRows < 0 || readCols < 0)
+  {
+    std::cerr << "Invalid matrix dimensions\n";
+    return 2;
+  }
+
+  size_t rows = static_cast< size_t >(readRows);
+  size_t cols = static_cast< size_t >(readCols);
+  size_t numElements = rows * cols;
+
   int* matrix = nullptr;
+  constexpr size_t MAX_STATIC_SIZE = 10000;
+  int staticBuffer[MAX_STATIC_SIZE] = {};
 
-  int static_buffer[10000] = {};
-
-  if (std::strcmp(argv[1], "1") == 0) {
-
-    matrix = static_buffer;
-  } else {
-
-    size_t num_elements = static_cast< size_t >(rows) * cols;
-    if (num_elements > 0) {
-
-      matrix = static_cast< int * >(malloc(sizeof(int) * num_elements));
-      if (!matrix) {
+  if (isStringEqual(argv[1], "1"))
+  {
+    if (numElements > MAX_STATIC_SIZE)
+    {
+      std::cerr << "Static matrix size exceeds limit\n";
+      return 2;
+    }
+    matrix = staticBuffer;
+  }
+  else
+  {
+    if (numElements > 0)
+    {
+      try
+      {
+        matrix = new int[numElements];
+      }
+      catch (...)
+      {
         std::cerr << "Memory allocation failed\n";
         return 1;
       }
     }
   }
 
-
-  size_t total_size = static_cast< size_t >(rows) * cols;
-  if (vasilenko::input_array(input, matrix, total_size) != 0) {
-    std::cerr << "Invalid matrix element data\n";
-    if (std::strcmp(argv[1], "2") == 0) {
-      free(matrix);
+  if (numElements > 0)
+  {
+    vasilenko::inputMatrix(input, matrix, numElements);
+    if (input.fail())
+    {
+      std::cerr << "Invalid matrix element data\n";
+      if (isStringEqual(argv[1], "2"))
+      {
+        delete[] matrix;
+      }
+      return 2;
     }
-    return 2;
   }
   input.close();
 
   std::ofstream output(argv[3]);
-  if (!output.is_open()) {
+  if (!output.is_open())
+  {
     std::cerr << "Cannot open output file\n";
-    if (std::strcmp(argv[1], "2") == 0) {
-      free(matrix);
+    if (isStringEqual(argv[1], "2"))
+    {
+      delete[] matrix;
     }
     return 1;
   }
 
-  output << vasilenko::cntcolnsm(matrix, rows, cols) << "\n";
-  output << vasilenko::maxsumsdg(matrix, rows, cols) << "\n";
+  output << vasilenko::countColsNsm(matrix, rows, cols) << "\n";
+  output << vasilenko::maxSumSdg(matrix, rows, cols) << "\n";
   output.close();
 
-  if (std::strcmp(argv[1], "2") == 0) {
-    free(matrix);
+  if (isStringEqual(argv[1], "2"))
+  {
+    delete[] matrix;
   }
 
   return 0;
