@@ -76,8 +76,6 @@ void velizade::leftTopClockwise(int* arr, size_t rows, size_t cols)
 {
   if (rows == 0 || cols == 0) return;
 
-  int* temp = new int[rows * cols];
-
   int top = 0, bottom = rows - 1;
   int left = 0, right = cols - 1;
   int decrement = 1;
