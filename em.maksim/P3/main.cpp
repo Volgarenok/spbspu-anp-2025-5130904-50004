@@ -1,4 +1,4 @@
-#include "matrix_operations.h"
+#include "matrix_operations.hpp"
 #include <iostream>
 
 int main(int argc, char* argv[])

@@ -14,6 +14,6 @@ bool write_matrix(const char* filename, const int* matrix, int rows, int cols, b
 void process_left_bottom_clockwise(int* matrix, int rows, int cols);
 void build_smooth_matrix(int* matrix, int rows, int cols);
 
-} // namespace em
+}
 
 #endif
