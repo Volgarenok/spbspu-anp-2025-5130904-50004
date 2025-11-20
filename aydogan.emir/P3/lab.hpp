@@ -2,7 +2,7 @@
 #define LAB_HPP
 #include <iosfwd>
 
-namespace aydogan 
+namespace aydogan
 {
 std::istream& readMatrix(std::istream& input, int* arr, int count);
 int numColLsr(int r, int c, const int* a);
