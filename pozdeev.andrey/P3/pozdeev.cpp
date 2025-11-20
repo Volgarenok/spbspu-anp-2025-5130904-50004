@@ -11,7 +11,6 @@ int countNonSequentialRows(const int* matrix, size_t rows, size_t cols)
   }
 
   int rowsWithoutConsecutive = 0;
-
   for (size_t r = 0; r < rows; ++r) {
     bool hasConsecutive = false;
     for (size_t c = 0; c < cols - 1; ++c) {
@@ -102,7 +101,6 @@ int processStatic(std::ifstream& fin, std::ofstream& fout, size_t rows, size_t c
   }
 
   int staticMatrix[MAX_SIZE];
-
   if (numElements == 0) {
     fout << "0";
     return 0;
