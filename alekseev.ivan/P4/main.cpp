@@ -21,22 +21,23 @@ int main()
     return 1;
   }
   std::cout << user_string << "\n" << length << "\n";
-  // char * excluded_second = reinterpret_cast<char *>(malloc(sizeof(char) * (length + 1)));
-  // if (!excluded_second) {
-  //   std::cerr << "Memory allocation error!" << "\n";
-  //   free(user_string);
-  //   return 1;
-  // }
+  char * excluded_second = reinterpret_cast<char *>(malloc(sizeof(char) * (length + 1)));
+  if (!excluded_second) {
+    std::cerr << "Memory allocation error!" << "\n";
+    free(user_string);
+    return 1;
+  }
+  const char * second = "abc";
+  alekseev::exc_scd(user_string, length, second, 3, excluded_second);
+  free(excluded_second);
+  std::cout << excluded_second << "\n";
+
   // char * removed_latin_letters = reinterpret_cast<char *>(malloc(sizeof(char) * (length + 1)));
   // if (!removed_latin_letters) {
   //   std::cerr << "Memory allocation error!" << "\n";
   //   free(user_string);
-  //   free(excluded_second);
   //   return 1;
   // }
-  // const char * second = "abc";
-  // alekseev::exc_scd(user_string, length, second, 3, excluded_second);
-  // std::cout << excluded_second << "\n";
   // alekseev::lat_rmv(user_string, length, removed_latin_letters);
   // std::cout << removed_latin_letters << "\n";
 }
