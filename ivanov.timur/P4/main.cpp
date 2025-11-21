@@ -23,6 +23,7 @@ int main() {
   size_t size = 0;
   get_line(std::cin, content, size);
   if (size == 1) {
+    delete[] content;
     std::cout << "\n";
     return 0;
   }
