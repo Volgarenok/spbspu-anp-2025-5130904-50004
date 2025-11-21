@@ -14,7 +14,7 @@ int main()
 {
   char *arr = nullptr;
   size_t size = 0;
-  
+
   arr = haliullin::getline(std::cin, size);
   if (arr == nullptr)
   {
@@ -37,7 +37,7 @@ char *haliullin::getline(std::istream &in, size_t &size)
   char symb = '\0';
   char *arr = nullptr;
   size = 0;
-  
+
   in >> symb;
   if (in)
   {
@@ -69,7 +69,7 @@ char *haliullin::getline(std::istream &in, size_t &size)
         temp[i] = arr[i];
       }
       temp[size] = symb;
-      
+
       free(arr);
       arr = temp;
       ++size;
