@@ -1,6 +1,6 @@
 #include <iostream>
 #include "string_ideas.h"
-void get_line(std::istream & in, char* data, size_t size) {
+void get_line(std::istream & in, char*& data, size_t& size) {
   bool is_skipws = in.flags() & std::ios_base::skipws;
   if (is_skipws) {
     in >> std::noskipws;
