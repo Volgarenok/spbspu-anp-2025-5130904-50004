@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
-#include <cstring>
 
 namespace zvyagin
 {
@@ -156,7 +155,8 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    if (std::strcmp(argv[1], "1") != 0 && std::strcmp(argv[1], "2") != 0)
+    int num = std::atoi(argv[1]);
+    if (num != 1 && num != 2)
     {
         std::cerr << "First parameter must be 1 or 2\n";
         return 1;
@@ -191,7 +191,7 @@ int main(int argc, char** argv)
         return 0;
     }
 
-    if (std::strcmp(argv[1], "1") == 0)
+    if (num == 1)
     {
         if (n * m > 10000)
         {
@@ -224,7 +224,7 @@ int main(int argc, char** argv)
         output << mat.count_local_maxima() << '\n';
         output.close();
     }
-    else // argv[1] == "2"
+    else // num == 2
     {
         zvyagin::DynamicMatrix mat;
         mat.rows = n;
@@ -237,28 +237,21 @@ int main(int argc, char** argv)
             return 1;
         }
 
-        bool read_error = false;
         for (unsigned i = 0; i < n * m; ++i)
         {
             if (!(input >> mat.data[i]))
             {
-                read_error = true;
-                break;
+                std::free(mat.data);
+                std::cerr << "Invalid matrix element data\n";
+                return 2;
             }
         }
         input.close();
 
-        if (read_error)
-        {
-            mat.free();
-            std::cerr << "Invalid matrix element data\n";
-            return 2;
-        }
-
         std::ofstream output(argv[3]);
         if (!output.is_open())
         {
-            mat.free();
+            std::free(mat.data);
             std::cerr << "Cannot open output file\n";
             return 1;
         }
@@ -267,7 +260,7 @@ int main(int argc, char** argv)
         output << mat.count_local_maxima() << '\n';
         output.close();
 
-        mat.free();
+        std::free(mat.data);
     }
 
     return 0;
