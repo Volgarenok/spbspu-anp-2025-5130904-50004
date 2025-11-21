@@ -14,6 +14,7 @@ bool ivanov::del_lat(char*& content, size_t& size) {
         c++;
       }
     }
+    delete[] content;
     content = tmp;
     size-=c;
     return true;
@@ -47,7 +48,6 @@ bool ivanov::spc_rmv(char*& content, size_t& size) {
     return true;
   }
   catch (...) {
-    delete[] content;
     return false;
   }
 }
@@ -60,6 +60,7 @@ bool ivanov::merge(char*& content1, char* content2, size_t& size1, size_t size2)
     for (size_t i = size1; i < size1 + size2; ++i) {
       tmp[i] = content2[i - size1];
     }
+    delete[] content1;
     content1 = tmp;
     size1+=size2;
     return true;
@@ -82,6 +83,7 @@ bool ivanov::get_find(char*& content, size_t& size) {
       x++;
       z++;
     }
+    delete[] content;
     content = tmp;
     size = l;
     return true;
