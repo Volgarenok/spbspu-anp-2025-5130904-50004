@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
     return 2;
   }
 
-  int temp_rows, temp_cols;
+  int temp_rows = 0, temp_cols = 0;
   if (!(fin >> temp_rows) || !(fin >> temp_cols)) {
     std::cerr << "ERROR: Invalid matrix dimensions format or file is empty" << std::endl;
     fin.close();
@@ -56,7 +56,6 @@ int main(int argc, char* argv[])
 
   size_t rows = static_cast<size_t>(temp_rows);
   size_t cols = static_cast<size_t>(temp_cols);
-
 
   if (num == 1) {
     exit = pozdeev::processStatic(fin, fout, rows, cols);

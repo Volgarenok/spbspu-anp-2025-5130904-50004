@@ -26,46 +26,59 @@ int countNonSequentialRows(const int* matrix, size_t rows, size_t cols)
   return rowsWithoutConsecutive;
 }
 
-void spiral(int* matrix, int rows, int cols)
+void spiral(int* matrix, size_t rows, size_t cols)
 {
-  if (rows <= 0 || cols <= 0) {
+  if (rows == 0 || cols == 0) {
     return;
   }
 
-  int top = 0, bottom = rows - 1;
-  int left = 0, right = cols - 1;
+  size_t top = 0;
+  size_t bottom = rows - 1;
+  size_t left = 0;
+  size_t right = cols - 1;
   int decrement = 1;
 
   while (top <= bottom && left <= right) {
-    for (int r = bottom; r >= top; --r) {
+    for (size_t i = bottom + 1; i > top; --i) {
+      size_t r = i - 1;
       matrix[r * cols + left] -= decrement;
       decrement++;
     }
-    if (++left > right) {
+    left++;
+    if (left > right) {
       break;
     }
 
-    for (int c = left; c <= right; ++c) {
+    for (size_t c = left; c <= right; ++c) {
       matrix[top * cols + c] -= decrement;
       decrement++;
     }
-    if (++top > bottom) {
+    top++;
+    if (top > bottom) {
       break;
     }
 
-    for (int r = top; r <= bottom; ++r) {
+    for (size_t r = top; r <= bottom; ++r) {
       matrix[r * cols + right] -= decrement;
       decrement++;
     }
-    if (--right < left) {
+    if (right == 0) {
+      break;
+    }
+    right--;
+    if (left > right) {
       break;
     }
 
-    for (int c = right; c >= left; --c) {
+    for (size_t i = right + 1; i > left; --i) {
+      size_t c = i - 1;
       matrix[bottom * cols + c] -= decrement;
       decrement++;
     }
-    --bottom;
+    if (bottom == 0) {
+      break;
+    }
+    bottom--;
   }
 }
 
@@ -148,7 +161,7 @@ int processDynamic(std::ifstream& fin, std::ofstream& fout, size_t rows, size_t 
     }
   }
 
-  spiral(dynamicMatrix, static_cast<int>(rows), static_cast<int>(cols));
+  spiral(dynamicMatrix, rows, cols);
 
   fout << rows << " " << cols;
   for (size_t i = 0; i < numElements; ++i) {
