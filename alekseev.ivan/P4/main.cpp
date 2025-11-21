@@ -5,7 +5,7 @@
 
 
 namespace alekseev {
-  char * str_inp(std::istream & inp, size_t & length);
+  char * get_line(std::istream & inp, size_t & length);
   char * resize_alloc(char * old_str, size_t old_size, size_t new_size);
 }
 
@@ -15,12 +15,13 @@ int main()
   char * user_string = nullptr;
   size_t length = 0;
   try {
-    user_string = alekseev::str_inp(std::cin, length);
+    user_string = alekseev::get_line(std::cin, length);
   } catch (std::bad_alloc & e) {
     std::cerr << "Memory allocation error!" << "\n";
     return 1;
   }
   std::cout << user_string << "\n" << length << "\n";
+
   char * excluded_second = reinterpret_cast<char *>(malloc(sizeof(char) * (length + 1)));
   if (!excluded_second) {
     std::cerr << "Memory allocation error!" << "\n";
@@ -29,8 +30,8 @@ int main()
   }
   const char * second = "abc";
   alekseev::exc_scd(user_string, length, second, 3, excluded_second);
-  free(excluded_second);
   std::cout << excluded_second << "\n";
+  free(excluded_second);
 
   // char * removed_latin_letters = reinterpret_cast<char *>(malloc(sizeof(char) * (length + 1)));
   // if (!removed_latin_letters) {
@@ -43,7 +44,7 @@ int main()
 }
 
 
-char * alekseev::str_inp(std::istream & inp, size_t & length)
+char * alekseev::get_line(std::istream & inp, size_t & length)
 {
   size_t size = 10;
   char * result = reinterpret_cast<char *>(malloc(sizeof(char) * size));
@@ -60,15 +61,16 @@ char * alekseev::str_inp(std::istream & inp, size_t & length)
   length = 0;
   inp >> current_char;
   while (current_char != '\n' && inp) {
-    result[length++] = current_char;
-    if (length == size - 1) {
+    if (++length == size - 1) {
       char * temp = resize_alloc(result, size, size + 10);
       if (!temp) {
         free(result);
         throw std::bad_alloc();
       }
+      size += 10;
       result = temp;
     }
+    result[length - 1] = current_char;
     inp >> current_char;
   }
   char * temp = resize_alloc(result, size, length);
@@ -82,7 +84,6 @@ char * alekseev::str_inp(std::istream & inp, size_t & length)
   if (is_skipws) {
     inp >> std::skipws;
   }
-
   return result;
 }
 
