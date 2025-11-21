@@ -1,4 +1,4 @@
-#include "function.hpp"
+#include "matrix_operations.hpp"
 #include <iostream>
 
 std::istream& velizade::readArr(std::istream& input, int* arr, size_t rows, size_t cols)
