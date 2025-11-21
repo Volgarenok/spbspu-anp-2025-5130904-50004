@@ -3,7 +3,7 @@
 #include <cctype>
 #include <cstddef>
 
-bool ivanov::del_lat(char* content, size_t size) {
+bool ivanov::del_lat(char*& content, size_t& size) {
   try {
     char* tmp = new char[100000];
     size_t c = 0;
@@ -14,23 +14,21 @@ bool ivanov::del_lat(char* content, size_t size) {
         c++;
       }
     }
-    delete[] content;
     content = tmp;
     size-=c;
     return true;
   }
   catch (...) {
-    delete[] content;
     return false;
   }
 }
-void ivanov::output(const char* content, size_t size) {
+void ivanov::output(const char* content, size_t& size) {
   for (size_t i = 0; i < size; ++i) {
     std::cout << content[i];
   }
   std::cout << "\n";
 }
-bool ivanov::spc_rmv(char *content, size_t size) {
+bool ivanov::spc_rmv(char*& content, size_t& size) {
   try {
     char* tmp = new char[100000];
     bool flag = false;
@@ -44,6 +42,7 @@ bool ivanov::spc_rmv(char *content, size_t size) {
       }
     }
     delete[] content;
+    content = tmp;
     size-=c;
     return true;
   }
@@ -52,7 +51,7 @@ bool ivanov::spc_rmv(char *content, size_t size) {
     return false;
   }
 }
-bool ivanov::merge(char* content1, char* content2, size_t size1, size_t size2) {
+bool ivanov::merge(char*& content1, char* content2, size_t& size1, size_t size2) {
   try {
     char* tmp = new char[100000];
     for (size_t i = 0; i < size1; ++i) {
@@ -61,19 +60,15 @@ bool ivanov::merge(char* content1, char* content2, size_t size1, size_t size2) {
     for (size_t i = size1; i < size1 + size2; ++i) {
       tmp[i] = content2[i - size1];
     }
-    delete[] content1;
-    delete[] content2;
     content1 = tmp;
     size1+=size2;
     return true;
   }
   catch (...) {
-    delete[] content1;
-    delete[] content2;
     return false;
   }
 }
-bool ivanov::get_find(char* content, size_t size) {
+bool ivanov::get_find(char*& content, size_t& size) {
   try {
     char* tmp = new char[100000];
     size_t l = 0;
@@ -87,13 +82,11 @@ bool ivanov::get_find(char* content, size_t size) {
       x++;
       z++;
     }
-    delete[] content;
     content = tmp;
     size = l;
     return true;
   }
   catch (...) {
-    delete[] content;
     return false;
   }
 }
