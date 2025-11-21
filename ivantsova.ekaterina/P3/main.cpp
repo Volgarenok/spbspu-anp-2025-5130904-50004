@@ -35,8 +35,7 @@ int main(int argc, char ** argv)
   }
   if (rows == 0 || cols == 0)
   {
-    std::cerr << "Incorrect number of rows or cols" << "\n";
-    return 2;
+    return 0;
   }
   if (argv[1][0] == '1')
   {
@@ -44,8 +43,7 @@ int main(int argc, char ** argv)
     ivantsova::workWithArray(input, output, arr, rows, cols);
     if (!input)
     {
-      std::cerr << "Error reading" << "\n";
-      return 2;
+      return 0;
     }
   }
   else if (argv[1][0] == '2')
@@ -64,8 +62,7 @@ int main(int argc, char ** argv)
     if (!input)
     {
       delete[] arr;
-      std::cerr << "Error reading" << "\n";
-      return 2;
+      return 0;
     }
     delete[] arr;
   }
