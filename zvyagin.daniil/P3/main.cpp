@@ -5,7 +5,7 @@
 namespace zvyagin
 {
 
-unsigned count_columns_no_same_adjacent(const int* data, unsigned rows, unsigned cols)
+size_t count_columns_no_same_adjacent(const int* data, size_t rows, size_t cols)
 {
     if (cols == 0) {
         return 0;
@@ -14,10 +14,10 @@ unsigned count_columns_no_same_adjacent(const int* data, unsigned rows, unsigned
         return cols;
     }
     unsigned count = 0;
-    for (unsigned j = 0; j < cols; ++j)
+    for (size_t j = 0; j < cols; ++j)
     {
         bool has_same = false;
-        for (unsigned i = 0; i < rows - 1; ++i)
+        for (size_t i = 0; i < rows - 1; ++i)
         {
             if (data[i * cols + j] == data[(i + 1) * cols + j])
             {
@@ -32,15 +32,15 @@ unsigned count_columns_no_same_adjacent(const int* data, unsigned rows, unsigned
     return count;
 }
 
-unsigned count_local_maxima(const int* data, unsigned rows, unsigned cols)
+size_t count_local_maxima(const int* data, size_t rows, size_t cols)
 {
     if (rows < 3 || cols < 3) {
         return 0;
     }
     unsigned count = 0;
-    for (unsigned i = 1; i < rows - 1; ++i)
+    for (size_t i = 1; i < rows - 1; ++i)
     {
-        for (unsigned j = 1; j < cols - 1; ++j)
+        for (size_t j = 1; j < cols - 1; ++j)
         {
             int cur = data[i * cols + j];
             bool is_max = true;
@@ -64,7 +64,6 @@ unsigned count_local_maxima(const int* data, unsigned rows, unsigned cols)
     }
     return count;
 }
-
 } // namespace zvyagin
 
 int main(int argc, char** argv)
@@ -89,7 +88,7 @@ int main(int argc, char** argv)
         return 2;
     }
 
-    unsigned n, m;
+    size_t n, m;
     if (!(input >> n >> m))
     {
         std::cerr << "Cannot read matrix dimensions\n";
@@ -113,7 +112,7 @@ int main(int argc, char** argv)
     if (num == 1)
     {
         int fixed[10000];
-        for (unsigned i = 0; i < n * m; ++i)
+        for (size_t i = 0; i < n * m; ++i)
         {
             if (!(input >> fixed[i]))
             {
