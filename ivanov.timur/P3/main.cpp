@@ -1,71 +1,73 @@
 #include <fstream>
 #include <iostream>
+#include <cstring>
 #include "matrix_ideas.h"
 int main(int argc, char** argv)
 {
   if (argc != 4)
   {
-    std::cerr << "Error: Incorrect number of arguments" << std::endl;
+    std::cerr << "Error: Incorrect number of arguments" << "\n";
     return 1;
   }
   std::ifstream input(argv[2]);
   std::ofstream output(argv[3]);
   if (!input.is_open())
   {
-    std::cerr << "Error: Cannot open input file" << std::endl;
+    std::cerr << "Error: Cannot open input file" << "\n";
     return 1;
   }
   if (!output.is_open())
   {
-    std::cerr << "Error: Cannot open output file" << std::endl;
+    std::cerr << "Error: Cannot open output file" << "\n";
     return 2;
   }
   char num = argv[1][0];
-  if (num != '1' && num != '2')
+  if ((num != '1' && num != '2') || strlen(argv[1]) != 1)
   {
-    std::cerr << "Error: Wrong question" << std::endl;
+    std::cerr << "Error: Wrong question" << "\n";
     return 1;
   }
-  int rows, cols;
+  int rows = 0;
+  int cols = 0;
   input >> rows >> cols;
   if (input.fail())
   {
-    std::cerr << "Error: Input fail" << std::endl;
+    std::cerr << "Error: Input fail" << "\n";
     return 1;
   }
   if (rows < 0 || cols < 0)
   {
-    std::cerr << "Error: Invalid matrix dimensions" << std::endl;
+    std::cerr << "Error: Invalid matrix dimensions" << "\n";
     return 1;
   }
   if (rows == 0 || cols == 0)
   {
-    output << 0 << std::endl;
+    output << 0 << "\n";
     return 0;
   }
+  auto matrix = {};
+  bool flag = true;
   if (num == '1')
   {
-    int matrix[10000];
-    if (!ivanov::write_in(matrix, rows, cols, std::move(input), false))
-    {
-      return 2;
-    }
-    output << ivanov::get_result(matrix, rows, cols) << std::endl;
+    int mtr[10000] = {};
+    matrix = mtr;
+    flag = false;
   }
   else
   {
-    int* matrix = static_cast<int*>(malloc(sizeof(int) * rows * cols));
-    if (matrix == nullptr)
+    int* mtr = static_cast< int * >(malloc(sizeof(int) * rows * cols));
+    if (mtr == nullptr)
     {
-      std::cerr << "Error: Memory allocation failed" << std::endl;
+      std::cerr << "Error: Memory allocation failed" << "\n";
       return 2;
     }
-    if (!ivanov::write_in(matrix, rows, cols, std::move(input), true))
-    {
-      return 2;
-    }
-    output << ivanov::get_result(matrix, rows, cols) << std::endl;
-    free(matrix);
+    matrix = mtr;
   }
+  if (!ivanov::write_in(matrix, rows, cols, input, flag))
+  {
+    return 2;
+  }
+  ivanov::fll_inc_wav(matrix, rows, cols);
+  output << ivanov::max_sum_mdg(matrix, rows, cols) << "\n";
   return 0;
 }

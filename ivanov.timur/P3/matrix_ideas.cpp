@@ -61,11 +61,7 @@ int ivanov::max_sum_mdg(const int* matrix, int rows, int cols)
   }
   return found_valid ? max_sum : 0;
 }
-int ivanov::get_result(int *matrix, int rows, int cols) {
-  fll_inc_wav(matrix, rows, cols);
-  return max_sum_mdg(matrix, rows, cols);
-}
-bool ivanov::write_in(int *matrix, int rows, int cols, std::ifstream input, bool is_dynamic) {
+bool ivanov::write_in(int* matrix, int rows, int cols, std::ifstream input, bool is_dynamic) {
   for (int i = 0; i < rows * cols; i++)
   {
     input >> matrix[i];
