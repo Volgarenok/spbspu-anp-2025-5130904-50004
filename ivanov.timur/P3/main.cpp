@@ -52,7 +52,7 @@ int main(int argc, char** argv)
     std::cerr << "Error: Memory allocation failed" << "\n";
     return 2;
   }
-  if (!ivanov::write_in((num == '1') ? mtr : matrix, rows, cols, input, (num == '1') ? false : true))
+  if (!ivanov::write_in((num == '1') ? mtr : matrix, rows, cols, input, (num != '1')))
   {
     return 2;
   }

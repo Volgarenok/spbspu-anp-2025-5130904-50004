@@ -6,17 +6,17 @@
 void ivanov::fll_inc_wav(int* mtr, int rows, int cols)
 {
   int lvs = (std::min(rows, cols) + 1) / 2;
-  for (int lv = 0; lv < lvs; lv++)
+  for (size_t lv = 0; lv < lvs; lv++)
   {
     int inc = lv + 1;
     int* top_row = mtr + lv * cols;
     int* bottom_row = mtr + (rows - lv - 1) * cols;
-    for (int j = lv; j < cols - lv; j++)
+    for (size_t j = lv; j < cols - lv; j++)
     {
       top_row[j] += inc;
       bottom_row[j] += inc;
     }
-    for (int i = lv + 1; i < rows - lv - 1; i++)
+    for (size_t i = lv + 1; i < rows - lv - 1; i++)
     {
       int* current_row = mtr + i * cols;
       current_row[lv] += inc;
@@ -30,24 +30,24 @@ int ivanov::max_sum_mdg(const int* matrix, int rows, int cols)
   {
     return 0;
   }
-  const int size_sums = rows + cols - 1;
+  int size_sums = rows + cols - 1;
   if (size_sums > 10000)
   {
     return 0;
   }
   int sums[10000] = {};
-  for (int i = 0; i < rows; i++)
+  for (size_t i = 0; i < rows; i++)
   {
-    for (int j = 0; j < cols; j++)
+    for (size_t j = 0; j < cols; j++)
     {
-      const int diagonal_index = i + j;
+      int diagonal_index = i + j;
       sums[diagonal_index] += matrix[i * cols + j];
     }
   }
-  const int main_anti_diagonal = rows - 1;
+  int main_anti_diagonal = rows - 1;
   int max_sum = 0;
   bool found_valid = false;
-  for (int s = 0; s < size_sums; s++)
+  for (size_t s = 0; s < size_sums; s++)
   {
     if (s == main_anti_diagonal)
     {
@@ -62,7 +62,7 @@ int ivanov::max_sum_mdg(const int* matrix, int rows, int cols)
   return found_valid ? max_sum : 0;
 }
 bool ivanov::write_in(int* matrix, int rows, int cols, std::ifstream& input, bool is_dynamic) {
-  for (int i = 0; i < rows * cols; i++)
+  for (size_t i = 0; i < rows * cols; i++)
   {
     input >> matrix[i];
   }
