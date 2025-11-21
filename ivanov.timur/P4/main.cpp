@@ -22,7 +22,7 @@ int main() {
   char* content = new char[100000];
   size_t size = 0;
   get_line(std::cin, content, size);
-  if (size == 0) {
+  if (size == 1) {
     std::cout << "\n";
     return 0;
   }
