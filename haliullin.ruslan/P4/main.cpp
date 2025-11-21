@@ -62,6 +62,7 @@ char *haliullin::getline(std::istream &in, size_t &size)
         {
           in >> std::skipws;
         }
+        free(arr);
         return nullptr;
       }
       for (size_t i = 0; i < size; ++i)
@@ -74,12 +75,12 @@ char *haliullin::getline(std::istream &in, size_t &size)
       arr = temp;
       ++size;
     }
+    arr[size - 1] = 0;
   }
   if (is_skipws)
   {
     in >> std::skipws;
   }
-  arr[size - 1] = 0;
   return arr;
 }
 
