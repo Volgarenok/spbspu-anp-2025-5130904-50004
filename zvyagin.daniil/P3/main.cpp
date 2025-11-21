@@ -33,8 +33,13 @@ void DynamicMatrix::free()
 
 unsigned FixedMatrix::count_columns_no_same_adjacent() const
 {
-    if (cols == 0) return 0;
-    if (rows < 2) return cols;
+    if (cols == 0) {
+      return 0;
+    }
+
+    if (rows < 2) {
+      return cols;
+    }
 
     unsigned count = 0;
     for (unsigned j = 0; j < cols; ++j)
@@ -56,14 +61,15 @@ unsigned FixedMatrix::count_columns_no_same_adjacent() const
 
 unsigned DynamicMatrix::count_columns_no_same_adjacent() const
 {
-    if (cols == 0) return 0;
-    if (rows < 2) return cols;
+    if (cols == 0) {
+        return 0;
+    }
+    if (rows < 2) {
+        return cols;
+    }
 
     unsigned count = 0;
     for (unsigned j = 0; j < cols; ++j)
-    {
-        bool has_same = false;
-        for (unsigned i = 0; i < rows - 1; ++i)
         {
             if (data[i * cols + j] == data[(i + 1) * cols + j])
             {
@@ -100,8 +106,9 @@ unsigned FixedMatrix::count_local_maxima() const
                     }
                 }
             }
-            if (is_max)
+            if (is_max) {
                 ++count;
+            }
         }
     }
     return count;
@@ -136,7 +143,6 @@ unsigned DynamicMatrix::count_local_maxima() const
     }
     return count;
 }
-
 } // namespace zvyagin
 
 int main(int argc, char** argv)
@@ -221,7 +227,7 @@ int main(int argc, char** argv)
         mat.rows = n;
         mat.cols = m;
 
-        mat.data = static_cast<int*>(std::malloc(n * m * sizeof(int)));
+        mat.data = static_cast<int *>(std::malloc(n * m * sizeof(int)));
         if (!mat.data && n * m > 0)
         {
             std::cerr << "Memory allocation failed\n";
