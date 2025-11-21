@@ -70,6 +70,9 @@ unsigned DynamicMatrix::count_columns_no_same_adjacent() const
 
     unsigned count = 0;
     for (unsigned j = 0; j < cols; ++j)
+    {
+        bool has_same = false;
+        for (unsigned i = 0; i < rows - 1; ++i)
         {
             if (data[i * cols + j] == data[(i + 1) * cols + j])
             {
