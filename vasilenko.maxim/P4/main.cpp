@@ -55,8 +55,22 @@ int main()
   }
   buffer[size] = '\0';
 
+  char* missingRes = nullptr;
+  try
+  {
+    missingRes = new char[27];
+  }
+  catch (const std::bad_alloc& e)
+  {
+    std::cerr << "Memory allocation failed: " << e.what() << "\n";
+    delete[] buffer;
+    return 1;
+  }
 
-  delete[] mergeRes;
+  vasilenko::findMissingLetters(buffer, missingRes);
+  std::cout << missingRes << "\n";
+  delete[] missingRes;
+
   delete[] buffer;
 
   return 0;
