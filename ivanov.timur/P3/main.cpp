@@ -27,24 +27,26 @@ int main(int argc, char** argv)
     std::cerr << "Error: Wrong question" << "\n";
     return 1;
   }
-  int rows = 0;
-  int cols = 0;
-  input >> rows >> cols;
+  int r = 0;
+  int c = 0;
+  input >> r >> c;
   if (input.fail())
   {
     std::cerr << "Error: Input fail" << "\n";
     return 1;
   }
-  if (rows < 0 || cols < 0)
+  if (r < 0 || c < 0)
   {
     std::cerr << "Error: Invalid matrix dimensions" << "\n";
     return 1;
   }
-  if (rows == 0 || cols == 0)
+  if (r == 0 || c == 0)
   {
     output << 0 << "\n";
     return 0;
   }
+  size_t rows = r;
+  size_t cols = c;
   int mtr[10000] = {};
   int* matrix = static_cast< int * >(malloc(sizeof(int) * rows * cols));
   if (matrix == nullptr && num == '2')

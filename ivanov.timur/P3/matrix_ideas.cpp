@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 
-void ivanov::fll_inc_wav(int* mtr, int rows, int cols)
+void ivanov::fll_inc_wav(int* mtr, size_t rows, size_t cols)
 {
   int lvs = (std::min(rows, cols) + 1) / 2;
   for (size_t lv = 0; lv < lvs; lv++)
@@ -24,7 +24,7 @@ void ivanov::fll_inc_wav(int* mtr, int rows, int cols)
     }
   }
 }
-int ivanov::max_sum_mdg(const int* matrix, int rows, int cols)
+int ivanov::max_sum_mdg(const int* matrix, size_t rows, size_t cols)
 {
   if (rows == 0 || cols == 0)
   {
@@ -61,7 +61,7 @@ int ivanov::max_sum_mdg(const int* matrix, int rows, int cols)
   }
   return found_valid ? max_sum : 0;
 }
-bool ivanov::write_in(int* matrix, int rows, int cols, std::ifstream& input, bool is_dynamic) {
+bool ivanov::write_in(int* matrix, size_t rows, size_t cols, std::ifstream& input, bool is_dynamic) {
   for (size_t i = 0; i < rows * cols; i++)
   {
     input >> matrix[i];

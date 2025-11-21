@@ -4,9 +4,9 @@
 
 namespace ivanov
 {
-  void fll_inc_wav(int* mtr, int rows, int cols);
-  int max_sum_mdg(const int* matrix, int rows, int cols);
-  bool write_in(int* matrix, int rows, int cols, std::ifstream& input, bool is_dynamic);
+  void fll_inc_wav(int* mtr, size_t rows, size_t cols);
+  int max_sum_mdg(const int* matrix, size_t rows, size_t cols);
+  bool write_in(int* matrix, size_t rows, size_t cols, std::ifstream& input, bool is_dynamic);
 }
 
 #endif
