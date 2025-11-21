@@ -24,7 +24,8 @@ int main() {
   get_line(std::cin, content, size);
   if (size == 1) {
     delete[] content;
-    return 0;
+    std::cerr << "No data provided" << "\n";
+    return 2;
   }
   if (!ivanov::del_lat(content, size)) {
     delete[] content;
