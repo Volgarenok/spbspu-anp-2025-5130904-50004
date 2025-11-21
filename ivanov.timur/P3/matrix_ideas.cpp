@@ -31,7 +31,7 @@ int ivanov::max_sum_mdg(const int* matrix, size_t rows, size_t cols)
   {
     return 0;
   }
-  int sums[10000] = {};
+  size_t sums[10000] = {};
   for (size_t i = 0; i < rows; i++)
   {
     for (size_t j = 0; j < cols; j++)
