@@ -49,7 +49,7 @@ int main(int argc, char** argv)
   size_t cols = c;
   int mtr[10000] = {};
   int* matrix = nullptr;
-  if (n == '2')
+  if (num == '2')
   {
     matrix = static_cast< int * >(malloc(sizeof(int) * rows * cols));
   }
@@ -64,7 +64,7 @@ int main(int argc, char** argv)
   }
   ivanov::fll_inc_wav((num == '1') ? mtr : matrix, rows, cols);
   output << ivanov::max_sum_mdg((num == '1') ? mtr : matrix, rows, cols) << "\n";
-  if (n == '2')
+  if (num == '2')
   {
     free(matrix);
   }
