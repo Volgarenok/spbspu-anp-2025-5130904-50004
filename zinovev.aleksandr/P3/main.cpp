@@ -1,7 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <exception>
-#include <cctype>
 #include "matrix_operations.hpp"
 
 int main(int argc, char** argv)
@@ -14,12 +13,12 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  if (argv[1][0] == '\0' || argv[1][1] != '\0' || !std::isdigit(argv[1][0])) {
+  if (argv[1][0] == '\0') {
     std::cerr << "First parameter is out of range\n";
     return 1;
   }
 
-  if (argv[1][0] != '1' && argv[1][0] != '2') {
+  if ((argv[1][0] != '1' && argv[1][0] != '2') || argv[1][1] != '\0') {
     std::cerr << "First parameter is out of range\n";
     return 1;
   }
