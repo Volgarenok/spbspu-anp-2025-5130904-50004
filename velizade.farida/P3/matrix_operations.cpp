@@ -27,9 +27,15 @@ std::ostream& velizade::writeResult(std::ostream& output, const int* arr, size_t
       for (size_t j = 0; j < cols; j++)
       {
         output << arr[i * cols + j];
-        if (j < cols - 1) output << " ";
+        if (j < cols - 1)
+        {
+           output << " ";
+        }
       }
-      if (i < rows - 1) output << "\n";
+      if (i < rows - 1)
+      {
+        output << "\n";
+      }
     }
   }
   return output;
@@ -54,7 +60,10 @@ int velizade::countLocalMins(const int* arr, size_t rows, size_t cols)
       {
         for (int dj = -1; dj <= 1; dj++)
         {
-          if (di == 0 && dj == 0) continue;
+          if (di == 0 && dj == 0)
+          {
+            continue;
+          }
           size_t ni = i + di;
           size_t nj = j + dj;
           if (current >= arr[ni * cols + nj])
@@ -63,10 +72,16 @@ int velizade::countLocalMins(const int* arr, size_t rows, size_t cols)
             break;
           }
         }
-        if (!isLocalMin) break;
+        if (!isLocalMin)
+        {
+          break;
+        }
       }
 
-      if (isLocalMin) count++;
+      if (isLocalMin)
+      {
+        count++;
+      }
     }
   }
   return count;
@@ -74,8 +89,10 @@ int velizade::countLocalMins(const int* arr, size_t rows, size_t cols)
 
 void velizade::leftTopClockwise(int* arr, size_t rows, size_t cols)
 {
-  if (rows == 0 || cols == 0) return;
-
+  if (rows == 0 || cols == 0)
+  {
+    return;
+  }
   int top = 0, bottom = rows - 1;
   int left = 0, right = cols - 1;
   int decrement = 1;
