@@ -5,60 +5,7 @@
 namespace zvyagin
 {
 
-struct FixedMatrix {
-    unsigned rows = 0;
-    unsigned cols = 0;
-    int data[10000] = {};
-
-    unsigned count_columns_no_same_adjacent() const;
-    unsigned count_local_maxima() const;
-};
-
-struct DynamicMatrix {
-    unsigned rows = 0;
-    unsigned cols = 0;
-    int* data = nullptr;
-
-    void free();
-    unsigned count_columns_no_same_adjacent() const;
-    unsigned count_local_maxima() const;
-};
-
-void DynamicMatrix::free()
-{
-    std::free(data);
-    data = nullptr;
-}
-
-unsigned FixedMatrix::count_columns_no_same_adjacent() const
-{
-    if (cols == 0) {
-      return 0;
-    }
-
-    if (rows < 2) {
-      return cols;
-    }
-
-    unsigned count = 0;
-    for (unsigned j = 0; j < cols; ++j)
-    {
-        bool has_same = false;
-        for (unsigned i = 0; i < rows - 1; ++i)
-        {
-            if (data[i * cols + j] == data[(i + 1) * cols + j])
-            {
-                has_same = true;
-                break;
-            }
-        }
-        if (!has_same)
-            ++count;
-    }
-    return count;
-}
-
-unsigned DynamicMatrix::count_columns_no_same_adjacent() const
+unsigned count_columns_no_same_adjacent(const int* data, unsigned rows, unsigned cols)
 {
     if (cols == 0) {
         return 0;
@@ -66,7 +13,6 @@ unsigned DynamicMatrix::count_columns_no_same_adjacent() const
     if (rows < 2) {
         return cols;
     }
-
     unsigned count = 0;
     for (unsigned j = 0; j < cols; ++j)
     {
@@ -79,16 +25,18 @@ unsigned DynamicMatrix::count_columns_no_same_adjacent() const
                 break;
             }
         }
-        if (!has_same)
+        if (!has_same) {
             ++count;
+        }
     }
     return count;
 }
 
-unsigned FixedMatrix::count_local_maxima() const
+unsigned count_local_maxima(const int* data, unsigned rows, unsigned cols)
 {
-    if (rows < 3 || cols < 3) return 0;
-
+    if (rows < 3 || cols < 3) {
+        return 0;
+    }
     unsigned count = 0;
     for (unsigned i = 1; i < rows - 1; ++i)
     {
@@ -100,9 +48,10 @@ unsigned FixedMatrix::count_local_maxima() const
             {
                 for (int dj = -1; dj <= 1; ++dj)
                 {
-                    if (di == 0 && dj == 0) continue;
-                    if (cur <= data[(i + di) * cols + (j + dj)])
-                    {
+                    if (di == 0 && dj == 0) {
+                        continue;
+                    }
+                    if (cur <= data[(i + di) * cols + (j + dj)]) {
                         is_max = false;
                         break;
                     }
@@ -116,35 +65,6 @@ unsigned FixedMatrix::count_local_maxima() const
     return count;
 }
 
-unsigned DynamicMatrix::count_local_maxima() const
-{
-    if (rows < 3 || cols < 3) return 0;
-
-    unsigned count = 0;
-    for (unsigned i = 1; i < rows - 1; ++i)
-    {
-        for (unsigned j = 1; j < cols - 1; ++j)
-        {
-            int cur = data[i * cols + j];
-            bool is_max = true;
-            for (int di = -1; di <= 1 && is_max; ++di)
-            {
-                for (int dj = -1; dj <= 1; ++dj)
-                {
-                    if (di == 0 && dj == 0) continue;
-                    if (cur <= data[(i + di) * cols + (j + dj)])
-                    {
-                        is_max = false;
-                        break;
-                    }
-                }
-            }
-            if (is_max)
-                ++count;
-        }
-    }
-    return count;
-}
 } // namespace zvyagin
 
 int main(int argc, char** argv)
@@ -178,7 +98,6 @@ int main(int argc, char** argv)
 
     if (n == 0 || m == 0)
     {
-        // Корректная матрица нулевого размера → результат 0
         std::ofstream output(argv[3]);
         if (!output.is_open())
         {
@@ -199,18 +118,16 @@ int main(int argc, char** argv)
             return 2;
         }
 
-        zvyagin::FixedMatrix mat;
-        mat.rows = n;
-        mat.cols = m;
-
+        int fixed[10000];
         for (unsigned i = 0; i < n * m; ++i)
         {
-            if (!(input >> mat.data[i]))
+            if (!(input >> fixed[i]))
             {
                 std::cerr << "Invalid matrix element data\n";
                 return 2;
             }
         }
+
         input.close();
 
         std::ofstream output(argv[3]);
@@ -220,18 +137,15 @@ int main(int argc, char** argv)
             return 1;
         }
 
-        output << mat.count_columns_no_same_adjacent() << '\n';
-        output << mat.count_local_maxima() << '\n';
+        output << zvyagin::count_columns_no_same_adjacent(fixed, n, m) << '\n';
+        output << zvyagin::count_local_maxima(fixed, n, m) << '\n';
         output.close();
     }
-    else // num == 2
-    {
-        zvyagin::DynamicMatrix mat;
-        mat.rows = n;
-        mat.cols = m;
 
-        mat.data = static_cast<int *>(std::malloc(n * m * sizeof(int)));
-        if (!mat.data && n * m > 0)
+    else
+    {
+        int* dyn = static_cast<int*>(std::malloc(n * m * sizeof(int)));
+        if (!dyn && n * m > 0)
         {
             std::cerr << "Memory allocation failed\n";
             return 1;
@@ -239,9 +153,9 @@ int main(int argc, char** argv)
 
         for (unsigned i = 0; i < n * m; ++i)
         {
-            if (!(input >> mat.data[i]))
+            if (!(input >> dyn[i]))
             {
-                std::free(mat.data);
+                std::free(dyn);
                 std::cerr << "Invalid matrix element data\n";
                 return 2;
             }
@@ -251,17 +165,16 @@ int main(int argc, char** argv)
         std::ofstream output(argv[3]);
         if (!output.is_open())
         {
-            std::free(mat.data);
+            std::free(dyn);
             std::cerr << "Cannot open output file\n";
             return 1;
         }
 
-        output << mat.count_columns_no_same_adjacent() << '\n';
-        output << mat.count_local_maxima() << '\n';
+        output << zvyagin::count_columns_no_same_adjacent(dyn, n, m) << '\n';
+        output << zvyagin::count_local_maxima(dyn, n, m) << '\n';
         output.close();
 
-        std::free(mat.data);
+        std::free(dyn);
     }
-
     return 0;
 }
