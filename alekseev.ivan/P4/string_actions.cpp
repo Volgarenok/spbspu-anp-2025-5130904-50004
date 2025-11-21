@@ -22,7 +22,7 @@ size_t alekseev::exc_scd(const char * first, const size_t length1,
 }
 
 
-size_t alekseev::lat_rmv(char * original, size_t length, char * result)
+size_t alekseev::lat_rmv(const char * original, const size_t length, char * result)
 {
   size_t length_result = 0;
   for (size_t i = 0; i < length; ++i) {
