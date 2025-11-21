@@ -42,6 +42,11 @@ int main(int argc, char ** argv)
   {
     int arr[10000] = {};
     ivantsova::workWithArray(input, output, arr, rows, cols);
+    if (!input)
+    {
+      std::cerr << "Error reading" << "\n";
+      return 2;
+    }
   }
   else if (argv[1][0] == '2')
   {
@@ -56,6 +61,12 @@ int main(int argc, char ** argv)
       return 1;
     }
     ivantsova::workWithArray(input, output, arr, rows, cols);
+    if (!input)
+    {
+      delete[] arr;
+      std::cerr << "Error reading" << "\n";
+      return 2;
+    }
     delete[] arr;
   }
   return 0;
