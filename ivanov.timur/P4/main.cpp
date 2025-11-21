@@ -2,7 +2,7 @@
 #include "string_ideas.h"
 void get_line(std::istream & in, char*& data, size_t& size) {
   bool is_skipws = in.flags() & std::ios_base::skipws;
-  if (is_skipws) {
+  if (is_skipws){
     in >> std::noskipws;
   }
   char tmp = '\n';
@@ -22,6 +22,10 @@ int main() {
   char* content = new char[100000];
   size_t size = 0;
   get_line(std::cin, content, size);
+  if (size == 0) {
+    std::cout << "\n";
+    return 0;
+  }
   if (!ivanov::del_lat(content, size)) {
     delete[] content;
     return 1;
