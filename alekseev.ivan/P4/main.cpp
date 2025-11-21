@@ -37,17 +37,17 @@ int main()
   std::cout << excluded_second << "\n";
   free(excluded_second);
 
-  // char * removed_latin_letters = reinterpret_cast<char *>(malloc(sizeof(char) * (length + 1)));
-  // if (!removed_latin_letters) {
-  //   std::cerr << "Memory allocation error!" << "\n";
-  //   free(user_string);
-  //   return 1;
-  // }
-  // alekseev::lat_rmv(user_string, length, removed_latin_letters);
-  // std::cout << removed_latin_letters << "\n";
-  // free(removed_latin_letters);
-  free(user_string);
+  char * removed_latin_letters = reinterpret_cast<char *>(malloc(sizeof(char) * (length + 1)));
+  if (!removed_latin_letters) {
+    std::cerr << "Memory allocation error!" << "\n";
+    free(user_string);
+    return 1;
+  }
+  alekseev::lat_rmv(user_string, length, removed_latin_letters);
+  std::cout << removed_latin_letters << "\n";
+  free(removed_latin_letters);
 
+  free(user_string);
 }
 
 

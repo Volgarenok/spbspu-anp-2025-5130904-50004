@@ -20,3 +20,17 @@ size_t alekseev::exc_scd(const char * first, const size_t length1,
   result[length_result] = '\0';
   return length_result;
 }
+
+
+size_t alekseev::lat_rmv(char * original, size_t length, char * result)
+{
+  size_t length_result = 0;
+  for (size_t i = 0; i < length; ++i) {
+    if (!isalpha(original[i])) {
+      result[length_result++] = original[i];
+    }
+  }
+  result[length_result] = '\0';
+  return length_result;
+}
+
