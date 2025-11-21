@@ -13,10 +13,13 @@ std::istream & ivantsova::readArr(std::istream & input, int * arr, size_t rows, 
   if (!input)
   {
     std::cerr << "Incorrect input" << "\n";
+    input.clear();
+    input.setstate(std::ios::failbit);
   }
   else if (rows * cols > number)
   {
     std::cerr << "Not enough elements" << "\n";
+    input.setstate(std::ios::failbit);
   }
   return input;
 }
