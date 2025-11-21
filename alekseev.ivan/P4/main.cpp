@@ -19,6 +19,9 @@ int main()
   } catch (std::bad_alloc & e) {
     std::cerr << "Memory allocation error!" << "\n";
     return 1;
+  } catch (std::invalid_argument & e) {
+    std::cerr << e.what() << "\n";
+    return 1;
   }
   std::cout << user_string << "\n" << length << "\n";
 
@@ -29,7 +32,8 @@ int main()
     return 1;
   }
   const char * second = "abc";
-  alekseev::exc_scd(user_string, length, second, 3, excluded_second);
+  const size_t second_len = 3;
+  alekseev::exc_scd(user_string, length, second, second_len, excluded_second);
   std::cout << excluded_second << "\n";
   free(excluded_second);
 
@@ -41,6 +45,9 @@ int main()
   // }
   // alekseev::lat_rmv(user_string, length, removed_latin_letters);
   // std::cout << removed_latin_letters << "\n";
+  // free(removed_latin_letters);
+  free(user_string);
+
 }
 
 
@@ -72,6 +79,10 @@ char * alekseev::get_line(std::istream & inp, size_t & length)
     }
     result[length - 1] = current_char;
     inp >> current_char;
+  }
+  if (!length || !inp) {
+    free(result);
+    throw std::invalid_argument("Invalid input");
   }
   char * temp = resize_alloc(result, size, length);
   if (!temp) {
