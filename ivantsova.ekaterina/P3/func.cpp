@@ -37,7 +37,6 @@ std::ostream & ivantsova::writeArr(std::ostream & output, const int * arr, size_
 
 void ivantsova::reduceElements(int * arr, size_t rows, size_t cols)
 {
-  size_t t = rows * cols;
   int left = 0;
   int right = cols - 1;
   int up = 0;
