@@ -52,7 +52,17 @@ int main()
     arr = temp;
     ++size;
   }
+  haliullin::writeString(arr, size);
   free(arr);
-  std::cout << "test" << "\n";
   return 0;
 }
+
+void haliullin::writeString(const char *arr, size_t size)
+{
+  for (size_t i = 0; i < size; ++i)
+  {
+    std::cout << arr[i];
+  }
+  std::cout << "\n";
+}
+
