@@ -58,5 +58,6 @@ int main(int argc, char** argv)
   }
   ivanov::fll_inc_wav((num == '1') ? mtr : matrix, rows, cols);
   output << ivanov::max_sum_mdg((num == '1') ? mtr : matrix, rows, cols) << "\n";
+  free(matrix);
   return 0;
 }
