@@ -5,7 +5,7 @@ void get_line(std::istream & in, char*& data, size_t& size) {
   if (is_skipws) {
     in >> std::noskipws;
   }
-  char tmp;
+  char tmp = '\n';
   in >> tmp;
   while (tmp != '\n' && !std::cin) {
     data[size] = tmp;
