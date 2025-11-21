@@ -6,6 +6,7 @@
 
 namespace alekseev {
   char * str_inp(std::istream & inp, size_t & length);
+  char * resize_alloc(char * old_str, size_t old_size, size_t new_size);
 }
 
 
@@ -59,16 +60,41 @@ char * alekseev::str_inp(std::istream & inp, size_t & length)
   inp >> current_char;
   while (current_char != '\n' && inp) {
     result[length++] = current_char;
-    inp >> current_char;
     if (length == size - 1) {
-
+      char * temp = resize_alloc(result, size, size + 10);
+      if (!temp) {
+        free(result);
+        throw std::bad_alloc();
+      }
+      result = temp;
     }
+    inp >> current_char;
   }
+  char * temp = resize_alloc(result, size, length);
+  if (!temp) {
+    free(result);
+    throw std::bad_alloc();
+  }
+  result = temp;
   result[length] = '\0';
 
   if (is_skipws) {
     inp >> std::skipws;
   }
 
+  return result;
+}
+
+
+char * alekseev::resize_alloc(char * old_str, size_t old_size, size_t new_size)
+{
+  char * result = reinterpret_cast<char *>(malloc(sizeof(char) * new_size));
+  if (result) {
+    const size_t size = old_size < new_size ? old_size : new_size;
+    for (size_t i = 0; i < size; i++) {
+      result[i] = old_str[i];
+    }
+    free(old_str);
+  }
   return result;
 }
