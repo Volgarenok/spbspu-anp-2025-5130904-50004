@@ -112,12 +112,6 @@ int main(int argc, char** argv)
 
     if (num == 1)
     {
-        if (n * m > 10000)
-        {
-            std::cerr << "Static matrix size exceeds limit (10000)\n";
-            return 2;
-        }
-
         int fixed[10000];
         for (unsigned i = 0; i < n * m; ++i)
         {
