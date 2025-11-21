@@ -29,14 +29,15 @@ int main(int argc, char** argv)
 
   std::ifstream input(argv[2]);
   std::ofstream output(argv[3]);
+
+  size_t rows = 0;
+  size_t cols = 0;
+
   if (!input.is_open() || !output.is_open())
   {
     std::cerr << "Error opening files" << "\n";
     return 1;
   }
-
-  size_t rows = 0;
-  size_t cols = 0;
 
   if (!(input >> rows) || !(input >> cols))
   {
