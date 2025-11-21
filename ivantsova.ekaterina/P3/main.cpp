@@ -35,7 +35,8 @@ int main(int argc, char ** argv)
   }
   if (rows == 0 || cols == 0)
   {
-    return 0;
+    std::cerr << "Incorrect number of rows or cols" << "\n";
+    return 2;
   }
   if (argv[1][0] == '1')
   {
