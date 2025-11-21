@@ -1,4 +1,4 @@
-#include "func.hpp"
+#include "functions_for_matrix.hpp"
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -38,11 +38,6 @@ std::ostream & ivantsova::writeArr(std::ostream & output, const int * arr, size_
 void ivantsova::reduceElements(int * arr, size_t rows, size_t cols)
 {
   size_t t = rows * cols;
-  int temp[10000];
-  for (size_t i = 0; i < t; i++)
-  {
-    temp[i] = arr[i];
-  }
   int left = 0;
   int right = cols - 1;
   int up = 0;
@@ -53,7 +48,7 @@ void ivantsova::reduceElements(int * arr, size_t rows, size_t cols)
     for (int i = down; i >= up; i--)
     {
       size_t index = i * cols + left;
-      temp[index] -= step++;
+      arr[index] -= step++;
     }
     left++;
     if (left > right)
@@ -63,7 +58,7 @@ void ivantsova::reduceElements(int * arr, size_t rows, size_t cols)
     for (int i = left; i <= right; i++)
     {
       size_t index = up * cols + i;
-      temp[index] -= step++;
+      arr[index] -= step++;
     }
     up++;
     if (up > down)
@@ -73,7 +68,7 @@ void ivantsova::reduceElements(int * arr, size_t rows, size_t cols)
     for (int i = up; i <= down; i++)
     {
       size_t index = i * cols + right;
-      temp[index] -= step++;
+      arr[index] -= step++;
     }
     right--;
     if (left > right)
@@ -83,13 +78,9 @@ void ivantsova::reduceElements(int * arr, size_t rows, size_t cols)
     for (int i = right; i >= left; i--)
     {
       size_t index = down * cols + i;
-      temp[index] -= step++;
+      arr[index] -= step++;
     }
     down--;
-  }
-  for (size_t i = 0; i < t; i++)
-  {
-    arr[i] = temp[i];
   }
 }
 
@@ -113,4 +104,16 @@ int ivantsova::countColumns(const int * arr, size_t rows, size_t cols)
     }
   }
   return count;
+}
+
+void ivantsova::workWithArray(std::istream & input, std::ostream & output, int * arr, size_t rows, size_t cols)
+{
+  readArr(input, arr, rows, cols);
+    if (!input)
+    {
+      return;
+    }
+    int result = countColumns(arr, rows, cols);
+    reduceElements(arr, rows, cols);
+    writeArr(output, arr, rows, cols, result);
 }
