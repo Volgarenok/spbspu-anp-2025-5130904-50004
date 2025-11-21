@@ -43,7 +43,8 @@ int main(int argc, char ** argv)
     ivantsova::workWithArray(input, output, arr, rows, cols);
     if (!input)
     {
-      return 0;
+      std::cerr << "Incorrect input" << "\n";
+      return 2;
     }
   }
   else if (argv[1][0] == '2')
@@ -62,7 +63,8 @@ int main(int argc, char ** argv)
     if (!input)
     {
       delete[] arr;
-      return 0;
+      std::cerr << "Incorrect input" << "\n";
+      return 2;
     }
     delete[] arr;
   }
