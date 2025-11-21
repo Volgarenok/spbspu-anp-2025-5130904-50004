@@ -19,5 +19,25 @@ void get_line(std::istream & in, char* data, size_t size) {
   }
 }
 int main() {
+  char* content = new char[100000];
+  size_t size = 0;
+  get_line(std::cin, content, size);
+  if (!ivanov::del_lat(content, size)) {
+    return 1;
+  }
+  if (!ivanov::spc_rmv(content, size)) {
+    return 1;
+  }
+  ivanov::output(content, size);
+  char add_content[] = "And I think to myself - what a wonderful world!0";
+  size_t add_size = 48;
+  if (!ivanov::merge(content, add_content, size, add_size)) {
+    return 1;
+  }
+  if (!ivanov::get_find(content, size)) {
+    return 1;
+  }
+  ivanov::output(content, size);
+  delete[] content;
   return 0;
 }
