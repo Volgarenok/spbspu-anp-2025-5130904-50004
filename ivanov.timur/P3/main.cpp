@@ -45,25 +45,14 @@ int main(int argc, char** argv)
     output << 0 << "\n";
     return 0;
   }
-  auto matrix = {};
-  bool flag = true;
-  if (num == '1')
+  int mtr[10000] = {};
+  int* matrix = static_cast< int * >(malloc(sizeof(int) * rows * cols));
+  if (matrix == nullptr && num == '2')
   {
-    int mtr[10000] = {};
-    matrix = mtr;
-    flag = false;
+    std::cerr << "Error: Memory allocation failed" << "\n";
+    return 2;
   }
-  else
-  {
-    int* mtr = static_cast< int * >(malloc(sizeof(int) * rows * cols));
-    if (mtr == nullptr)
-    {
-      std::cerr << "Error: Memory allocation failed" << "\n";
-      return 2;
-    }
-    matrix = mtr;
-  }
-  if (!ivanov::write_in(matrix, rows, cols, input, flag))
+  if (!ivanov::write_in((num == '1') ? mtr : matrix, rows, cols, input, (num == '1') ? false : true))
   {
     return 2;
   }
