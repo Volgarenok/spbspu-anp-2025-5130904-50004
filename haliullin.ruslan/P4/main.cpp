@@ -19,7 +19,7 @@ int main()
   ++size;
   if (!std::cin)
   {
-    std::cerr << "Unexpexted input" << "\n";
+    std::cerr << "Unexpected input" << "\n";
     return 2;
   }
   arr = static_cast < char* >(malloc((size) * sizeof(char)));
@@ -31,6 +31,11 @@ int main()
   arr[0] = symb;
   while (std::cin >> symb && symb != '\0')
   {
+    if(!std::cin)
+    {
+      std::cerr << "Unexpected input" << "\n";
+      return 2;
+    }
     char *temp = nullptr;
     temp = static_cast < char* >(malloc((size + 1) * sizeof(char)));
     if (temp == nullptr)
@@ -47,9 +52,7 @@ int main()
     arr = temp;
     ++size;
   }
-  for(size_t i = 0; i < size; ++i)
-  {
-    std::cout << arr[i] << "\n";
-  }
+  free(arr);
+  std::cout << "test" << "\n";
   return 0;
 }
