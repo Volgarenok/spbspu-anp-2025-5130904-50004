@@ -1,5 +1,6 @@
 #ifndef STRING_IDEAS_H
 #define STRING_IDEAS_H
+#include <cstddef>
 namespace ivanov {
   bool spc_rmv(char* content, size_t size);
   bool del_lat(char* content, size_t size);

@@ -1,6 +1,7 @@
 #include "string_ideas.h"
 #include <iostream>
 #include <cctype>
+#include <cstddef>
 
 bool ivanov::del_lat(char* content, size_t size) {
   try {
