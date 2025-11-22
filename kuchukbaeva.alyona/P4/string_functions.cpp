@@ -59,5 +59,22 @@ namespace kuchukbaeva
     dest[destindex] = '\0';
     return dest;
   }
+  int repDgt(const char* str) noexcept
+  {
+    int counts[10] = {0};
+    for (size_t i = 0; str[i] != '\0'; ++i)
+    {
+      if (std::isdigit(str[i]))
+      {
+        const int digit = str[i] - '0';
+        counts[digit]++;
+        if (counts[digit] > 1)
+        {
+          return 1;
+        }
+      }
+    }
+    return 0;
+  }
 }
 
