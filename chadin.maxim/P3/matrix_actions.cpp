@@ -1,59 +1,130 @@
 #include "matrix_actions.hpp"
 #include <iostream>
+#include <cstdlib>
 
 namespace chadin
 {
-int* readMatrix(std::istream& in, int& rows, int& cols)
+
+std::istream& readArr(std::istream& input, int* arr, std::size_t rows, std::size_t cols)
 {
-  if (!(in >> rows >> cols))
+  std::size_t number = 0;
+  for (std::size_t i = 0; i < rows * cols && input >> arr[i]; ++i)
   {
-    return nullptr;
+    ++number;
   }
-  if (rows < 0 || cols < 0)
+  if (!input)
   {
-    return nullptr;
+    std::cerr << "Incorrect input" << "\n";
   }
+  else if (rows * cols > number)
+  {
+    std::cerr << "Not enough elements" << "\n";
+  }
+  return input;
+}
+
+std::ostream& writeArr(std::ostream& output, const int* arr, std::size_t rows, std::size_t cols, int result)
+{
+  output << result << "\n";
+  for (std::size_t i = 0; i < rows; ++i)
+  {
+    for (std::size_t j = 0; j < cols; ++j)
+    {
+      output << arr[i * cols + j];
+      if (j + 1 < cols)
+      {
+        output << " ";
+      }
+    }
+    output << "\n";
+  }
+  return output;
+}
+
+void increaseElements(int* arr, std::size_t rows, std::size_t cols)
+{
   if (rows == 0 || cols == 0)
   {
-    return new int[0];
+    return;
   }
-  int size = rows * cols;
-  int* matrix = new int[size];
-  for (int i = 0; i < size; ++i)
+
+  std::size_t total = rows * cols;
+  int* temp = new int[total];
+  for (std::size_t i = 0; i < total; ++i)
   {
-    if (!(in >> matrix[i]))
-    {
-      delete[] matrix;
-      return nullptr;
-    }
+    temp[i] = arr[i];
   }
-  return matrix;
+
+  int left = 0;
+  int right = static_cast<int>(cols) - 1;
+  int top = 0;
+  int bottom = static_cast<int>(rows) - 1;
+  int step = 1;
+
+  while (left <= right && top <= bottom)
+  {
+    for (int i = bottom; i >= top; --i)
+    {
+      temp[i * cols + left] += step++;
+    }
+    ++left;
+    if (left > right)
+    {
+      break;
+    }
+
+    for (int j = left; j <= right; ++j)
+    {
+      temp[bottom * cols + j] += step++;
+    }
+    --bottom;
+    if (top > bottom)
+    {
+      break;
+    }
+
+    for (int j = right; j >= left; --j)
+    {
+      temp[top * cols + j] += step++;
+    }
+    ++top;
+    if (top > bottom)
+    {
+      break;
+    }
+
+    for (int i = top; i <= bottom; ++i)
+    {
+      temp[i * cols + right] += step++;
+    }
+    --right;
+  }
+
+  for (std::size_t i = 0; i < total; ++i)
+  {
+    arr[i] = temp[i];
+  }
+
+  delete[] temp;
 }
 
-void deleteMatrix(int* matrix)
-{
-  delete[] matrix;
-}
-
-int countNonZeroDiagonals(const int* matrix, int rows, int cols)
+int countDiagonals(const int* arr, std::size_t rows, std::size_t cols)
 {
   if (rows == 0 || cols == 0)
   {
     return 0;
   }
-  int total_diagonals = rows + cols - 1;
+
   int count = 0;
-  for (int d = 0; d < total_diagonals; ++d)
+
+  for (std::size_t start_col = 0; start_col < cols; ++start_col)
   {
     bool has_zero = false;
-    int start_row = (d < cols) ? 0 : d - cols + 1;
-    int start_col = (d < cols) ? d : 0;
-    int r = start_row;
-    int c = start_col;
-
+    std::size_t r = 0;
+    std::size_t c = start_col;
     while (r < rows && c < cols)
     {
-      if (matrix[r * cols + c] == 0)
+      if (arr[r * cols + c] == 0)
       {
         has_zero = true;
         break;
@@ -61,7 +132,27 @@ int countNonZeroDiagonals(const int* matrix, int rows, int cols)
       ++r;
       ++c;
     }
+    if (!has_zero)
+    {
+      ++count;
+    }
+  }
 
+  for (std::size_t start_row = 1; start_row < rows; ++start_row)
+  {
+    bool has_zero = false;
+    std::size_t r = start_row;
+    std::size_t c = 0;
+    while (r < rows && c < cols)
+    {
+      if (arr[r * cols + c] == 0)
+      {
+        has_zero = true;
+        break;
+      }
+      ++r;
+      ++c;
+    }
     if (!has_zero)
     {
       ++count;
@@ -71,60 +162,4 @@ int countNonZeroDiagonals(const int* matrix, int rows, int cols)
   return count;
 }
 
-void transformSpiralFromBottomLeft(int* matrix, int rows, int cols)
-{
-  if (rows == 0 || cols == 0)
-  {
-    return;
-  }
-
-  int total = rows * cols;
-  bool* visited = new bool[total]();
-  int value = 1;
-  int r = rows - 1;
-  int c = 0;
-
-  const int dr[4] = {0, -1, 0, 1};
-  const int dc[4] = {1, 0, -1, 0};
-  int dir = 0;
-  
-  for (int step = 0; step < total; ++step)
-  {
-    matrix[r * cols + c] += value;
-    visited[r * cols + c] = true;
-    ++value;
-
-    int nr = r + dr[dir];
-    int nc = c + dc[dir];
-
-    if (nr < 0 || nr >= rows || nc < 0 || nc >= cols || visited[nr * cols + nc])
-    {
-      dir = (dir + 1) % 4;
-      nr = r + dr[dir];
-      nc = c + dc[dir];
-    }
-
-    r = nr;
-    c = nc;
-  }
-
-  delete[] visited;
-}
-
-void writeMatrix(std::ostream& out, const int* matrix, int rows, int cols)
-{
-  out << rows << " " << cols << "\n";
-  for (int i = 0; i < rows; ++i)
-  {
-    for (int j = 0; j < cols; ++j)
-    {
-      if (j > 0)
-      {
-        out << " ";
-      }
-      out << matrix[i * cols + j];
-    }
-    out << "\n";
-  }
-}
 }

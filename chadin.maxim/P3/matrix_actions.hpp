@@ -1,14 +1,19 @@
 #ifndef MATRIX_ACTIONS_HPP
 #define MATRIX_ACTIONS_HPP
 #include <iostream>
+#include <cstddef>
 
 namespace chadin
 {
-int* readMatrix(std::istream& in, int& rows, int& cols);
-void deleteMatrix(int* matrix);
-int countNonZeroDiagonals(const int* matrix, int rows, int cols);
-void transformSpiralFromBottomLeft(int* matrix, int rows, int cols);
-void writeMatrix(std::ostream& out, const int* matrix, int rows, int cols);
+
+std::istream& readArr(std::istream& input, int* arr, std::size_t rows, std::size_t cols);
+
+std::ostream& writeArr(std::ostream& output, const int* arr, std::size_t rows, std::size_t cols, int result);
+
+void increaseElements(int* arr, std::size_t rows, std::size_t cols);
+
+int countDiagonals(const int* arr, std::size_t rows, std::size_t cols);
+
 }
 
 #endif
