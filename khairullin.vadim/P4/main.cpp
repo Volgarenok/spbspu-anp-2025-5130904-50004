@@ -1,6 +1,5 @@
 #include <iostream>
 #include "khairullin.hpp"
- 
 
 int main()
 {
