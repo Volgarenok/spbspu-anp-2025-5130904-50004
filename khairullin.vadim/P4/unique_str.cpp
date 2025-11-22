@@ -1,8 +1,9 @@
 #include <iostream>
+#include "khairullin.hpp"
 
 namespace khairullin
 {
-  void khairullin::unique_str(char * str1; char * str2; size_t size1; size_t size2)
+  void unique_str(const char * str1, const char * str2, size_t size1, const size_t size2)
   {
     bool flag = false;
     for (size_t i = 0; i < size1; ++i)

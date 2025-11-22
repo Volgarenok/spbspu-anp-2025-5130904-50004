@@ -1,13 +1,14 @@
 #include <iostream>
+#include "khairullin.hpp"
 
 namespace khairullin
 {
-  void khairullin::delete_vowels(char * str, size_t size)
+  void delete_vowels(const char * str, size_t size)
   {
     bool flag = false;
     const size_t count_vowels = 12;
-    char vowels[const_vowels] = {'A', 'a', 'o', 'O', 'i', 'I', 'u', 'U', 'e', 'E', 'y', 'Y'};
-    for (size_t i = 0; i < size; ++j)
+    char vowels[count_vowels] = {'A', 'a', 'o', 'O', 'i', 'I', 'u', 'U', 'e', 'E', 'y', 'Y'};
+    for (size_t i = 0; i < size; ++i)
     {
       for (size_t j = 0; j < count_vowels; ++j)
       {

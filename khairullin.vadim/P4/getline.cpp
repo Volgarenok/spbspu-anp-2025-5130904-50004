@@ -29,11 +29,11 @@ namespace khairullin
       }
       ++i;
     }
+    if (!is_skipws)
+    {
+      input >> std::skipws;
+    }
+    return i;
   }
-  if (!is_skipws)
-  {
-    input >> std::skipws;
-  }
-  return i;
 }
 
