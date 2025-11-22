@@ -60,4 +60,42 @@ int main()
     chadin::writeArr(output, arr, rows, cols, result);
   }
   
+  else if (argv[1][0] == '2')
+  {
+    std::size_t total = rows * cols;
+    if (rows != 0 && total / rows != cols)
+    {
+      std::cerr << "Too large matrix" << "\n";
+      return 2;
+    }
+
+    int* arr = nullptr;
+    if (total > 0)
+    {
+      try
+      {
+        arr = new int[total] {};
+      }
+      catch (const std::bad_alloc&)
+      {
+        std::cerr << "Error" << "\n";
+        return 1;
+      }
+    }
+    
+     chadin::readArr(input, arr, rows, cols);
+    if (!input)
+    {
+      delete[] arr;
+      return 2;
+    }
+    input.close();
+
+    chadin::increaseElements(arr, rows, cols);
+    chadin::writeArr(output, arr, rows, cols, 0);
+
+    delete[] arr;
+  }
+
+  return 0;
 }
