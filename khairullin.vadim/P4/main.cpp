@@ -12,10 +12,12 @@ int main()
     const char str2[size2] = {'F', 'o', 'r', 'e', 'x', 'a', 'm', 'p', 'l', 'e', '\0'};
     khairullin::unique_str(str1, str2, size1, size2);
     khairullin::delete_vowels(str1, size1);
+    delete [] str1;
   }
   catch (std::bad_alloc & msg)
   {
     std::cerr << msg.what();
+    delete [] str1;
     return 1;
   }
 }
