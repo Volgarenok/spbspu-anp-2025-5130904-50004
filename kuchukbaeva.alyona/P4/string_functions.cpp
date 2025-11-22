@@ -1,6 +1,7 @@
 #include "string_functions.hpp"
 #include <cctype>
 #include <new>
+#include <istream>
 
 namespace kuchukbaeva
 {
@@ -15,26 +16,20 @@ namespace kuchukbaeva
   }
   char* readStr(std::istream& input)
   {
-    size_t sizes = 16;
-    size_t length = 0;
-    char* buffer = new (std::nothrow) char[sizes];
-    char c = 0;
-    if (!buffer)
+    if (input.peek() == std::char_traits< char >::eof())
     {
-      delete[] buffer;
       return nullptr;
     }
+    size_t sizes = 16;
+    size_t length = 0;
+    char* buffer = new char[sizes];
+    char c = 0;
     while (input.get(c) && c != '\n')
     {
       if (length + 1 >= sizes)
       {
         size_t new_sizes = sizes * 2;
-        char* new_buffer = new (std::nothrow) char[new_sizes];
-        if (!new_buffer)
-        {
-          delete[] buffer;
-          return nullptr;
-        }
+        char* new_buffer = new  char[new_sizes];
         for (size_t i = 0; i < length; ++i)
         {
           new_buffer[i] = buffer[i];
