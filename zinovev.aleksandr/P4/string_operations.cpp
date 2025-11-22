@@ -60,11 +60,28 @@ char* zinovev::SetLine(std::istream & in, size_t& size, size_t& number_of_letter
 
 void zinovev::CutLetters(char* arr, char* arr_ptr, size_t& size, size_t& size_ptr)
 {
+  size_t skip = 0;
 
+  for (size_t i = 0; i < size; ++i)
+  {
+    if (std::isalpha(arr[i]))
+    {
+      ++skip;
+    }
+    else
+    {
+      arr_ptr[i - skip] = arr[i];
+    }
+  }
+
+  size_ptr = size - skip;
 }
 
 void zinovev::GetLine(std::ostream & out, char* array, const size_t size)
 {
+  if (array == nullptr)
+    return;
+
   for (size_t i = 0; i < size; ++i)
     out << array[i];
 
