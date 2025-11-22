@@ -41,4 +41,23 @@ int main()
     return 2;
   }
 
+  if (argv[1][0] == '1')
+  {
+    if (rows > 10000 || cols > 10000 || rows * cols > 10000)
+    {
+      std::cerr << "Too large matrix" << "\n";
+      return 2;
+    }
+    int arr[10000] = {};
+    chadin::readArr(input, arr, rows, cols);
+    if (!input)
+    {
+      return 2;
+    }
+    input.close();
+
+    int result = chadin::countDiagonals(arr, rows, cols);
+    chadin::writeArr(output, arr, rows, cols, result);
+  }
+  
 }
