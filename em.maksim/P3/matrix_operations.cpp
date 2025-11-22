@@ -242,3 +242,5 @@ void build_smooth_matrix(int* matrix, int rows, int cols)
 
   free_matrix(temp);
 }
+
+}
