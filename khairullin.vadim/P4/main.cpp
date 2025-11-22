@@ -17,7 +17,6 @@ int main()
   catch (std::bad_alloc & msg)
   {
     std::cerr << msg.what();
-    delete [] str1;
     return 1;
   }
 }
