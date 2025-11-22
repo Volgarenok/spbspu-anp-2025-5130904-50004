@@ -6,16 +6,29 @@ char* zinovev::SetLine(std::istream & in, size_t& size, size_t& number_of_letter
   size_t number = 10;
   char* Mass = (char*)malloc(number * sizeof(char));
 
+  if (Mass == nullptr)
+    return Mass;
+
   size = 0;
+  number_of_letters = 0;
 
   while (in >> Mass[size] && Mass[size] != '\n')
   {
     ++size;
 
+    if (std::isalpha(Mass[size - 1]))
+      number_of_letters++;
+
     if (size == number)
     {
       number += number;
       char* Mass_ptr = (char*)malloc(number * sizeof(char));
+
+      if (Mass_ptr == nullptr)
+      {
+        free(Mass);
+        return Mass_ptr;
+      }
 
       for (size_t k = 0; k < size; ++k)
         Mass_ptr[k] = Mass[k];
@@ -28,6 +41,12 @@ char* zinovev::SetLine(std::istream & in, size_t& size, size_t& number_of_letter
   }
 
   char* Arr = (char*)malloc((size + 1) * sizeof(char));
+
+  if (Arr == nullptr)
+  {
+    free(Mass);
+    return Arr;
+  }
 
   for (size_t k = 0; k < size; ++k)
     Arr[k] = Mass[k];
