@@ -11,7 +11,7 @@ int main()
     const size_t size2 = 11;
     if (size1 == 0)
     {
-      std::cerr << "No string";
+      std::cerr << "No string\n";
       return 1;
     }
     const char str2[size2] = {'F', 'o', 'r', 'e', 'x', 'a', 'm', 'p', 'l', 'e', '\0'};
