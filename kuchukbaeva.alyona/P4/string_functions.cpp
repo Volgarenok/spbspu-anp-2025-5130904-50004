@@ -17,14 +17,24 @@ namespace kuchukbaeva
   {
     size_t sizes = 16;
     size_t length = 0;
-    char* buffer = new char[sizes];
+    char* buffer = new (std::nothrow) char[sizes];
     char c = 0;
+    if (!buffer)
+    {
+      delete[] buffer;
+      return nullptr;
+    }
     while (input.get(c) && c != '\n')
     {
       if (length + 1 >= sizes)
       {
         size_t new_sizes = sizes * 2;
-        char* new_buffer = new char[new_sizes];
+        char* new_buffer = new (std::nothrow) char[new_sizes];
+        if (!new_buffer)
+        {
+          delete[] buffer;
+          return nullptr;
+        }
         for (size_t i = 0; i < length; ++i)
         {
           new_buffer[i] = buffer[i];
