@@ -6,7 +6,7 @@ int main()
 {
   try
   {
-    char* input_str = input_str = kuchukbaeva::readStr(std::cin);
+    char* input_str = kuchukbaeva::readStr(std::cin);
     const size_t len = kuchukbaeva::strLen(input_str);
     char* res_str = new char[len + 1];
     kuchukbaeva::rmvVow(input_str, res_str);
