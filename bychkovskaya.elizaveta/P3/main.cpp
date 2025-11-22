@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cctype>
 namespace bychkovskaya {
 
 bool ifNumber(char** m)
@@ -16,7 +17,7 @@ bool ifNumber(char** m)
     }
     ++k1;
   }
-  if (k==k1) {
+  if (k == k1) {
     return true;
   }
   return false;
@@ -27,7 +28,7 @@ int* create(size_t rows, size_t cols)
   int* result = nullptr;
   try {
     result = new int [rows * cols];
-  } catch (...) {
+  } catch (const std::bad_alloc& e) {
     throw "Not enough memory";
   }
   return result;
@@ -63,70 +64,14 @@ size_t cntColNsm(const int* m, size_t rows, size_t cols)
   return count;
 }
 
-void cutToSquareDynamic(int*& m, size_t& rows, size_t& cols)
-{
-  if (rows > cols) {
-    int* tmp = bychkovskaya::create(cols, cols);
-    for (size_t i = 0; i < cols; ++i) {
-      for (size_t j = 0; j < cols; ++j) {
-        tmp[i * cols + j] = m[i * cols + j];
-      }
-    }
-    delete[] m;
-    m = tmp;
-    rows = cols;
-  } else if (rows < cols) {
-    int* tmp = bychkovskaya::create(rows, rows);
-    for (size_t i = 0; i < rows; ++i) {
-      for (size_t j = 0; j < rows; ++j) {
-        tmp[i * rows + j] = m[i * cols + j];
-      }
-    }
-    delete[] m;
-    m = tmp;
-    cols = rows;
-  }
-}
-
-void cutToSquareFixed(size_t& rows, size_t& cols)
-{
-  if (rows > cols) {
-    rows = cols;
-  } else if (rows < cols) {
-    cols = rows;
-  }
-}
-
-size_t cntNzrDigDynamic(int*& m, size_t& rows, size_t& cols)
-{
-  bychkovskaya::cutToSquareDynamic(m, rows, cols);
-  size_t count = 0;
-  int k = -int(rows) + 1;
-  while (k < int(rows)) {
-    size_t countDiag = 0;
-    for (size_t i = 0; i < rows; ++i) {
-      for (size_t j = 0; j < cols; j++) {
-        if (i == j) {
-          if ((int(i * cols + j) + k >= 0) && (int(i * cols + j) + k < int(rows * cols))) {
-            if (m[i * cols + j + k] == 0) {
-              ++countDiag;
-            }
-          }
-        }
-      }
-    }
-    if (countDiag == 0 && k!=0) {
-      ++count;
-    }
-    ++k;
-  }
-  return count;
-}
-
-size_t cntNzrDigFixed(const int* m, size_t& rows, size_t& cols)
+size_t cntNzrDig(const int* m, size_t& rows, size_t& cols)
 {
   size_t originalCols = cols;
-  bychkovskaya::cutToSquareFixed(rows, cols);
+  if (rows > cols) {
+    rows = cols;
+  } else if (rows < cols) {
+    cols = rows;
+  }
   size_t count = 0;
   int k = -int(rows) + 1;
   while (k < int(rows)) {
@@ -161,7 +106,7 @@ int main(int argc, char** argv)
     std::cerr << "Not enough arguments" << "\n";
     return 1;
   }
-  if (argc == 4) {
+  else {
     size_t rows = 0;
     size_t cols = 0;
     std::ifstream input(argv[2]);
@@ -170,8 +115,7 @@ int main(int argc, char** argv)
       std::cerr << "Wrong matrix input" << "\n";
       return 2;
     }
-    char num = argv[1][0];
-    if (num == '1') {
+    if (argv[1][0] == '1') {
       int fixedMatrix[10000];
       try {
         bychkovskaya::inputMatrix(input, fixedMatrix, rows, cols);
@@ -182,9 +126,9 @@ int main(int argc, char** argv)
       input.close();
       std::ofstream output(argv[3]);
       output << bychkovskaya::cntColNsm(fixedMatrix, rows, cols) << "\n";
-      output << bychkovskaya::cntNzrDigFixed(fixedMatrix, rows, cols) << "\n";
+      output << bychkovskaya::cntNzrDig(fixedMatrix, rows, cols) << "\n";
       output.close();
-    } else if (num == '2') {
+    } else if (argv[1][0] == '2') {
       int* dynamicMatrix = nullptr;
       try {
         dynamicMatrix = bychkovskaya::create(rows, cols);
@@ -197,7 +141,7 @@ int main(int argc, char** argv)
         input.close();
         std::ofstream output(argv[3]);
         output << bychkovskaya::cntColNsm(dynamicMatrix, rows, cols) << "\n";
-        output << bychkovskaya::cntNzrDigDynamic(dynamicMatrix, rows, cols) << "\n";
+        output << bychkovskaya::cntNzrDig(dynamicMatrix, rows, cols) << "\n";
         delete[] dynamicMatrix;
       } catch (const char* e) {
         std::cerr << e << "\n";
