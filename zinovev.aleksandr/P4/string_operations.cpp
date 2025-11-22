@@ -1,8 +1,12 @@
 #include "string_operations.hpp"
 #include <cstdlib>
+#include <iomanip>
 
 char* zinovev::SetLine(std::istream & in, size_t& size, size_t& number_of_letters)
 {
+  if (in >> std::skipws)
+    in >> std::noskipws;
+
   size_t number = 10;
   char* Mass = (char*)malloc(number * sizeof(char));
 
@@ -39,6 +43,8 @@ char* zinovev::SetLine(std::istream & in, size_t& size, size_t& number_of_letter
       Mass_ptr = nullptr;
     }
   }
+
+  in >> std::skipws;
 
   char* Arr = (char*)malloc((size + 1) * sizeof(char));
 
