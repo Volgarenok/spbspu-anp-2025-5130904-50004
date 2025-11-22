@@ -39,4 +39,25 @@ namespace kuchukbaeva
     buffer[length] = '\0';
     return buffer;
   }
+  int isVowel(char c)
+  {
+    const char lower = std::tolower(c);
+    return (lower == 'a' || lower == 'e' || lower == 'i' || lower == 'o' || lower == 'u' || lower == 'y');
+  }
+
+  char* rmvVow(const char* src, char* dest) noexcept
+  {
+    size_t destindex = 0;
+    for (size_t i = 0; src[i] != '\0'; ++i)
+    {
+      if (!std::isalpha(src[i]) || !isVowel(src[i]))
+      {
+        dest[destindex] = src[i];
+        destindex++;
+      }
+    }
+    dest[destindex] = '\0';
+    return dest;
+  }
 }
+
