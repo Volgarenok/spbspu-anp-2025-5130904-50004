@@ -8,10 +8,19 @@ int main()
   size_t number_of_letters = 0;
   char* arr = zinovev::SetLine(std::cin, size, number_of_letters);
 
+  if (arr == nullptr)
+    return 1;
+
   zinovev::GetLine(std::cout, arr, size);
 
   size_t size_ptr = 0;
   char* arr_ptr = (char*)malloc((size - number_of_letters) * sizeof(char));
+
+  if (arr_ptr == nullptr)
+  {
+    free(arr);
+    return 1;
+  }
 
   zinovev::CutLetters(arr, arr_ptr, size, size_ptr);
   zinovev::GetLine(std::cout, arr_ptr, size_ptr);

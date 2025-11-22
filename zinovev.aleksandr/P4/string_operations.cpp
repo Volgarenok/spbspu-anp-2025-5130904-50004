@@ -54,5 +54,15 @@ void zinovev::GetLine(std::ostream & out, char* array, const size_t size)
 
 int zinovev::GetRepetitions(const char* arr, const size_t size)
 {
-  return 0;
+  int counter = 0;
+
+  for (size_t i = 0; i < size; ++i)
+    for (size_t k = i + 1; k < size; ++k)
+      if (arr[i] == arr[k])
+      {
+        ++counter;
+        break;
+      }
+
+  return counter;
 }
