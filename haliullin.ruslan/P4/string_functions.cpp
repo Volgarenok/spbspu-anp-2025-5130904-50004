@@ -62,12 +62,14 @@ size_t haliullin::DIF_LAT(const char *arr, size_t str_size)
 {
   size_t count = 0;
   size_t ind = 0;
+  char symb = '\0';
   bool info[26] = {};
   for (size_t i = 0; i < str_size; ++i)
   {
-    if ((arr[i] >= 'a' && arr[i] <= 'z') || (arr[i] >= 'A' && arr[i] <= 'Z'))
+    symb = char(std::tolower(arr[i]));
+    if (symb >= 'a' && symb <= 'z')
     {
-      ind = char(std::tolower(arr[i])) - 'a';
+      ind = symb - 'a';
       if (!info[ind])
       {
         info[ind] = true;
