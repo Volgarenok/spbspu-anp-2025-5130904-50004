@@ -29,6 +29,10 @@ int main() {
     }
     buf[len] = '\0';
 
+    const char* second = "abc_ef";
+    int result = aushev::has_sam(buf, second);
+    std::printf("%d\n", result);
+
     delete[] buf;
     return 0;
 }
