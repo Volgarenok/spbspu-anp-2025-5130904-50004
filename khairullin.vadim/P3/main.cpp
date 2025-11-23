@@ -67,9 +67,9 @@ int main (int argc, char ** argv)
       }
       khair::filling(array, input, rows, cols, command);
       output << khair::localMax(array, rows, cols) << "\n";
-      for (int i = 0; i < MIN_SIZE; i++)
+      for (size_t i = 0; i < MIN_SIZE; i++)
       {
-        for (int j = 0; j < MIN_SIZE; ++j)
+        for (size_t j = 0; j < MIN_SIZE; ++j)
         {
           square_array[MIN_SIZE * i + j] = array[MAX_SIZE * i + j];
         }
