@@ -4,44 +4,32 @@
 
 namespace khairullin
 {
-  size_t getline(std::istream & input, char *& data, size_t & size)
+  size_t getline(std::istream & input, char *& data, size_t size)
   {
-    bool is_skipws = input.flags() & std::ios_base::skipws;
-    if (is_skipws)
-    {
-      input >> std::noskipws;
-    }
     try
     {
       size_t i = 0;
-      char symbol;
-      while (input >> symbol && symbol != '\n')
+      while (true)
       {
-        if (i >= size - 1)
+        char * temp = new char [size + 1];
+        for (size_t j = 0; j < i; ++j)
         {
-          char * temp = new char [size + 10];
-          for (size_t j = 0; j < i; ++j)
-          {
-            temp[j] = data[j];
-          }
-          delete [] data;
-          data = temp;
-          size += 10;
+          temp[j] = data[j];
         }
-        data[i] = symbol;
+        delete [] data;
+        data = temp;
+        size++;
+        if (!(input >> data[i]) or data[i] == '\n')
+        {
+          data[i] = '\0';
+          break;
+        }
         ++i;
-        input >> symbol;
-      }
-      data[i] = '\0';
-      if (is_skipws)
-      {
-        input >> std::skipws;
       }
       return i;
     }
-    catch(...)
+    catch (...)
     {
-      delete [] data;
       throw;
     }
   }
