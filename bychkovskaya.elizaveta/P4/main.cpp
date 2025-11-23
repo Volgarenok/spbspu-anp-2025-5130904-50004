@@ -9,26 +9,27 @@ char * create(size_t size)
   return array;
 }
 
-char * getline(std::istream & in, size_t & size)
+char * getline(std::istream & in)
 {
+  size_t count = 1;
   bool is_skipws = in.flags() & std::ios_base::skipws;
   if (is_skipws) {
     in >> std::noskipws;
   }
-  char * data = create(size + 1);
+  char * data = create(count + 1);
   in >> data[0];
-  ++size;
+  ++count;
   while (!in.eof() && !in.bad()) {
-    char * tmp = create(size + 1);
-    for (size_t i = 0; i < size - 1; ++i) {
+    char * tmp = create(count + 1);
+    for (size_t i = 0; i < count - 1; ++i) {
       tmp[i] = data[i];
     }
-    in >> tmp[size - 1];
+    in >> tmp[count - 1];
     free(data);
     data = tmp;
-    ++size;
+    ++count;
   }
-  data[size-2] = '\0';
+  data[count-2] = '\0';
   if (is_skipws) {
     in >> std::skipws;
   }
