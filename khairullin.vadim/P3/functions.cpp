@@ -55,10 +55,10 @@ namespace khairullin
   }
   bool triangle(const int * array, int size)
   {
-    int sum_of_zeroes = 0;
-    int count_of_nulls_on_row = size - 1;
-    int counter = 0;
-    const int COUNT_OF_ROWS_WITH_ZEROES = size - 1;
+    size_t sum_of_zeroes = 0;
+    size_t count_of_nulls_on_row = size - 1;
+    size_t counter = 0;
+    const size_t COUNT_OF_ROWS_WITH_ZEROES = size - 1;
     for (size_t i = 0; i < COUNT_OF_ROWS_WITH_ZEROES; ++i)
     {
       for (size_t j = 0; j < size; ++j)
