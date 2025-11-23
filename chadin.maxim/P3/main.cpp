@@ -3,7 +3,7 @@
 #include <fstream>
 #include <cstdlib>
 
-int main()
+int main(int argc, char** argv)
 {
   if (argc != 4)
   {
