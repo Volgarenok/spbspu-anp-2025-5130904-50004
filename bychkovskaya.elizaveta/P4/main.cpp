@@ -9,27 +9,29 @@ char * create(size_t size)
   return array;
 }
 
-char * getline(std::istream & in)
+char * getline(std::istream & in, size_t & size)
 {
-  size_t count = 1;
+  size = 1; 
   bool is_skipws = in.flags() & std::ios_base::skipws;
   if (is_skipws) {
     in >> std::noskipws;
   }
-  char * data = create(count + 1);
+  char * data = create(size + 1);
   in >> data[0];
-  ++count;
-  while (!in.eof() && !in.bad()) {
-    char * tmp = create(count + 1);
-    for (size_t i = 0; i < count - 1; ++i) {
-      tmp[i] = data[i];
+  ++size; 
+  while (in) {
+    char * tmp = create(size + 1); 
+    for (size_t i = 0; i < size - 1; ++i) {    
+      tmp[i] = data[i]; 
     }
-    in >> tmp[count - 1];
-    free(data);
-    data = tmp;
-    ++count;
+    in >> tmp[size - 1];
+    if (in)  {   
+      free(data);
+      data = tmp;
+      ++size;
+    }  
   }
-  data[count-2] = '\0';
+  data[size-1] = '\0';  
   if (is_skipws) {
     in >> std::skipws;
   }
@@ -41,12 +43,20 @@ char * getline(std::istream & in)
 
 // }
 
-// excsnd() 
+//взять первую строку и каждый ее символ сравнить с каждым символом второй строки (два фора)
+//в новый массив длина которого равна длине первой строки записать те символы который не встречаются во второй строке
+
+// excsnd(const char * str1, const char * str2,) 
 // {
 
 // }
 
 int main()
 {
-  // size_t size = 1;
+  size_t size = 0;
+  char * data = getline(std::cin, size);
+  std::cout << "\n";
+  std::cout << size << "\n";
+  std::cout << data << "\n";
+  free(data);
 }
