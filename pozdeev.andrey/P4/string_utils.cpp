@@ -51,3 +51,14 @@ char * pozdeev::removeLatin(char * destination, const char * source)
   destination[writeIndex] = '\0';
   return destination;
 }
+
+bool pozdeev::checkStream(std::istream & stream)
+{
+  if (!stream.fail()) {
+    return true;
+  }
+  if (stream.eof()) {
+    return true;
+  }
+  return false;
+}
