@@ -1,4 +1,4 @@
-#include <algorithm>
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 
@@ -51,12 +51,25 @@ int main(int argc, char** argv)
     return 2;
   }
 
-  size_t rows = static_cast< size_t >(readRows);
-  size_t cols = static_cast< size_t >(readCols);
+  size_t rows = readRows;
+  size_t cols = readCols;
   size_t numElements = rows * cols;
 
+  if (numElements == 0)
+  {
+    input.close();
+    std::ofstream output(argv[3]);
+    if (!output.is_open())
+    {
+      std::cerr << "Cannot open output file\n";
+      return 1;
+    }
+    output << "0\n0\n";
+    return 0;
+  }
+
   int* matrix = nullptr;
-  constexpr size_t MAX_STATIC_SIZE = 10000;
+  const size_t MAX_STATIC_SIZE = 10000;
   int staticBuffer[MAX_STATIC_SIZE] = {};
 
   if (isStringEqual(argv[1], "1"))
@@ -70,32 +83,23 @@ int main(int argc, char** argv)
   }
   else
   {
-    if (numElements > 0)
+    matrix = reinterpret_cast< int* >(std::malloc(numElements * sizeof(int)));
+    if (!matrix)
     {
-      try
-      {
-        matrix = new int[numElements];
-      }
-      catch (...)
-      {
-        std::cerr << "Memory allocation failed\n";
-        return 1;
-      }
+      std::cerr << "Memory allocation failed\n";
+      return 1;
     }
   }
 
-  if (numElements > 0)
+  vasilenko::inputMatrix(input, matrix, numElements);
+  if (input.fail())
   {
-    vasilenko::inputMatrix(input, matrix, numElements);
-    if (input.fail())
+    std::cerr << "Invalid matrix element data\n";
+    if (isStringEqual(argv[1], "2"))
     {
-      std::cerr << "Invalid matrix element data\n";
-      if (isStringEqual(argv[1], "2"))
-      {
-        delete[] matrix;
-      }
-      return 2;
+      std::free(matrix);
     }
+    return 2;
   }
   input.close();
 
@@ -105,7 +109,7 @@ int main(int argc, char** argv)
     std::cerr << "Cannot open output file\n";
     if (isStringEqual(argv[1], "2"))
     {
-      delete[] matrix;
+      std::free(matrix);
     }
     return 1;
   }
@@ -116,7 +120,7 @@ int main(int argc, char** argv)
 
   if (isStringEqual(argv[1], "2"))
   {
-    delete[] matrix;
+    std::free(matrix);
   }
 
   return 0;
