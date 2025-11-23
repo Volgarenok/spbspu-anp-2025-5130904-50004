@@ -40,34 +40,27 @@ namespace alekseev {
 
       i += modifiers[modifier_id % 4];
       j += modifiers[(modifier_id + 1) % 4];
-      modify(i, j, modifier_id, top, bottom, left, right);
-    }
-  }
-
-
-  void modify(size_t & i, size_t & j, size_t & modifier_id,
-      size_t & top, size_t & bottom, size_t & left, size_t & right)
-  {
-    if (j > right) {
-      ++top;
-      j = right;
-      ++i;
-      ++modifier_id;
-    } else if (i > bottom) {
-      --right;
-      i = bottom;
-      --j;
-      ++modifier_id;
-    } else if (j < left) {
-      --bottom;
-      j = left;
-      --i;
-      ++modifier_id;
-    } else if (i < top) {
-      ++left;
-      i = top;
-      ++j;
-      ++modifier_id;
+      if (j > right) {
+        ++top;
+        j = right;
+        ++i;
+        ++modifier_id;
+      } else if (i > bottom) {
+        --right;
+        i = bottom;
+        --j;
+        ++modifier_id;
+      } else if (j < left) {
+        --bottom;
+        j = left;
+        --i;
+        ++modifier_id;
+      } else if (i < top) {
+        ++left;
+        i = top;
+        ++j;
+        ++modifier_id;
+      }
     }
   }
 
