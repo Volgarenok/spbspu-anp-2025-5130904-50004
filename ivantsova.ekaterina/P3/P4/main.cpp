@@ -65,6 +65,11 @@ char * ivantsova::addDigits(const char * str1, const char * str2, size_t size1, 
 
 void ivantsova::printString(std::ostream & out, const char * str, size_t size)
 {
+  for (size_t i = 0; i < size; ++i)
+  {
+    out << str[i];
+  }
+  out << "\n";
 }
 
 int main()
