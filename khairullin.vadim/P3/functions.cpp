@@ -1,12 +1,13 @@
 #include "functions.hpp"
 #include <iostream>
 #include <fstream>
+#include <cstddef>
 
 namespace khairullin
 {
   void filling(int * array, std::ifstream & input, int rows, int cols, int command)
   {
-    for (int i = 0; i < rows * cols; ++i)
+    for (size_t i = 0; i < rows * cols; ++i)
     {
       input >> array[i];
       if (input.fail() or input.eof())
@@ -31,12 +32,12 @@ namespace khairullin
       return 0;
     }
   }
-  int localmax(const int * array, int rows, int cols)
+  int localMax(const int * array, int rows, int cols)
   {
     int counter_of_max = 0;
-    for (int i = 0; i < rows; ++i)
+    for (size_t i = 0; i < rows; ++i)
     {
-      for (int j = 0; j < cols; ++j)
+      for (size_t j = 0; j < cols; ++j)
       {
         if (i != 0 && j != 0 && i != rows - 1 && j != cols - 1)
         {
@@ -61,7 +62,7 @@ namespace khairullin
     const int COUNT_OF_ROWS_WITH_ZEROES = size - 1;
     for (int i = 0; i < COUNT_OF_ROWS_WITH_ZEROES; ++i)
     {
-      for (int j = 0; j < size; ++j)
+      for (size_t j = 0; j < size; ++j)
       {
         if (j != size - 1)
         {
@@ -98,10 +99,6 @@ namespace khairullin
     {
       std::cerr << "First parameter is out of range\n";
       return 1;
-    }
-    else if (command == 1 or command == 2)
-    {
-      return 0;
     }
     return 0;
   }
