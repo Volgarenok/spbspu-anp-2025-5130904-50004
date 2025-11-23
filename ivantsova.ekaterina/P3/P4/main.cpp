@@ -57,6 +57,32 @@ char * ivantsova::readLine(std::istream & in, size_t & size)
 
 char * ivantsova::interleaveStrings(const char * str1, const char * str2, size_t size1, size_t & result_size)
 {
+  size_t size2 = 0;
+  while (str2[size2] != '\0')
+  {
+    ++size2;
+  }
+  size_t max_size = (size1 > size2) ? size1 : size2;
+  result_size = size1 + size2;
+  char * result = static_cast<char *>(malloc((result_size + 1) * sizeof(char)));
+  if (result == nullptr)
+  {
+    return result;
+  }
+  size_t index = 0;
+  for (size_t i = 0; i < max_size; ++i)
+  {
+    if (i < size1)
+    {
+      result[index++] = str1[i];
+    }
+    if (i < size2)
+    {
+      result[index++] = str2[i];
+    }
+  }
+  result[result_size] = '\0';
+  return result;
 }
 
 char * ivantsova::addDigits(const char * str1, const char * str2, size_t size1, size_t & result_size)
