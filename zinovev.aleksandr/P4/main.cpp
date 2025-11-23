@@ -11,6 +11,13 @@ int main()
   if (arr == nullptr)
     return 1;
 
+  if (size == 0)
+  {
+    std::cerr << "Empty input\n";
+    free(arr);
+    return 1;
+  }
+
   zinovev::GetLine(std::cout, arr, size);
 
   size_t size_ptr = 0;
