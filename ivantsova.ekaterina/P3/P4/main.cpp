@@ -133,4 +133,44 @@ void ivantsova::printString(std::ostream & out, const char * str, size_t size)
 
 int main()
 {
+  size_t size = 0;
+  char * input_str = ivantsova::readLine(std::cin, size);
+  if (input_str == nullptr)
+  {
+    std::cerr << "Memory allocation error" << "\n";
+    return 1;
+  }
+  if (size == 0)
+  {
+    std::cerr << "Empty input" << "\n";
+    free(input_str);
+    return 1;
+  }
+
+  const char * second_str_for_ils = "def ";
+  size_t result_for_ils_size = 0;
+  char * result_for_ils = ivantsova::interleaveStrings(input_str, second_str_for_ils, size, result_for_ils_size);
+  if (result_for_ils == nullptr)
+  {
+    std::cerr << "Memory allocation error" << "\n";
+    free(input_str);
+    return 1;
+  }
+  ivantsova::printString(std::cout, result_for_ils, result_for_ils_size);
+
+  const char * second_str_for_ad = "g1h2k";
+  size_t result_for_ad_size = 0;
+  char * result_for_ad = ivantsova::addDigits(input_str, second_str_for_ad, size, result_for_ad_size);
+  if (result_for_ad == nullptr)
+  {
+    std::cerr << "Memory allocation error" << "\n";
+    free(input_str);
+    free(result_for_ils);
+    return 1;
+  }
+  ivantsova::printString(std::cout, result_for_ad, result_for_ad_size);
+  free(input_str);
+  free(result_for_ils);
+  free(result_for_ad);
+  return 0;
 }
