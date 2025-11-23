@@ -33,6 +33,16 @@ int main() {
     int result = aushev::has_sam(buf, second);
     std::printf("%d\n", result);
 
+    char* clean = new (std::nothrow) char[len + 1];
+    if (!clean) {
+        delete[] buf;
+        std::fputs("Allocation error\n", stderr);
+        return 1;
+    }
+    aushev::spc_rmv(clean, buf);
+    std::puts(clean);
+
     delete[] buf;
+    delete[] clean;
     return 0;
 }
