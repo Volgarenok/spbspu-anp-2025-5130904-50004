@@ -71,6 +71,25 @@ int main()
   std::cout << missingRes << "\n";
   delete[] missingRes;
 
+  const char* secondStr = "def_";
+  char* mergeRes = nullptr;
+  size_t totalLen = std::strlen(buffer) + std::strlen(secondStr) + 1;
+
+  try
+  {
+    mergeRes = new char[totalLen];
+  }
+  catch (const std::bad_alloc& e)
+  {
+    std::cerr << "Memory allocation failed: " << e.what() << "\n";
+    delete[] buffer;
+    return 1;
+  }
+
+  vasilenko::mergeStrings(buffer, secondStr, mergeRes);
+  std::cout << mergeRes << "\n";
+
+  delete[] mergeRes;
   delete[] buffer;
 
   return 0;
