@@ -4,7 +4,7 @@
 #include <iostream>
 
 namespace alekseev {
-  void input_matrix(std::istream & input, int * matrix, const size_t rows, const size_t cols)
+  void input_matrix(std::istream & input, int * matrix, size_t rows, size_t cols)
   {
     for (size_t i = 0ull; i < rows; ++i) {
       for (size_t j = 0ull; j < cols; ++j) {
@@ -17,7 +17,7 @@ namespace alekseev {
   }
 
 
-  void output_matrix(std::ostream & output, int * matrix, const size_t rows, const size_t cols)
+  void output_matrix(std::ostream & output, int * matrix, size_t rows, size_t cols)
   {
     for (size_t i = 0ull; i < rows; ++i) {
       output << matrix[i * cols];
@@ -29,7 +29,7 @@ namespace alekseev {
   }
 
 
-  void lft_top_clk(int * matrix, const size_t rows, const size_t cols)
+  void lft_top_clk(int * matrix, size_t rows, size_t cols)
   {
     int modifiers[4]{0, 1, 0, -1};
     size_t modifier_id = 0;
@@ -65,7 +65,7 @@ namespace alekseev {
   }
 
 
-  int * min(int * start, const int * end)
+  int * min(int * start, int * end)
   {
     int * m = start;
     for (int * id = start + 1; id < end; ++id) {
@@ -77,7 +77,7 @@ namespace alekseev {
   }
 
 
-  int * max_of_column(int * matrix, const size_t rows, const size_t cols, const size_t j)
+  int * max_of_column(int * matrix, size_t rows, size_t cols, size_t j)
   {
     int * ma = matrix + j;
     for (size_t i = 0ull; i < rows; ++i) {
@@ -89,7 +89,7 @@ namespace alekseev {
   }
 
 
-  size_t cnt_sdl_pnt(int * matrix, const size_t rows, const size_t cols)
+  size_t cnt_sdl_pnt(int * matrix, size_t rows, size_t cols)
   {
     size_t counter = 0;
     for (size_t i = 0ull; i < rows; ++i) {
