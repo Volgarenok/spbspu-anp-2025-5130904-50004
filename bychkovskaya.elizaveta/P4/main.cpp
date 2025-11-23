@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cctype>
+#include <iomanip>
 
 char * create(size_t size) 
 {
@@ -10,10 +11,14 @@ char * create(size_t size)
 
 char * getline(std::istream & in, size_t & size)
 {
+  bool is_skipws = in.flags() & std::ios_base::skipws;
+  if (is_skipws) {
+    in >> std::noskipws;
+  }
   char * data = create(size + 1);
-  std::cin >> data[0];
+  in >> data[0];
   ++size;
-  while (!in.eof() || !in.bad()) {
+  while (!in.eof() && !in.bad()) {
     char * tmp = create(size + 1);
     for (size_t i = 0; i < size - 1; ++i) {
       tmp[i] = data[i];
@@ -24,6 +29,9 @@ char * getline(std::istream & in, size_t & size)
     ++size;
   }
   data[size-2] = '\0';
+  if (is_skipws) {
+    in >> std::skipws;
+  }
   return data;
 }
 
