@@ -32,7 +32,7 @@ int main()
     std::cerr << "Error opening files" << "\n";
     return 1;
   }
-  
+
   std::size_t rows = 0;
   std::size_t cols = 0;
   if (!(input >> rows) || !(input >> cols))
@@ -59,7 +59,7 @@ int main()
     int result = chadin::countDiagonals(arr, rows, cols);
     chadin::writeArr(output, arr, rows, cols, result);
   }
-  
+
   else if (argv[1][0] == '2')
   {
     std::size_t total = rows * cols;
@@ -82,7 +82,7 @@ int main()
         return 1;
       }
     }
-    
+
      chadin::readArr(input, arr, rows, cols);
     if (!input)
     {
