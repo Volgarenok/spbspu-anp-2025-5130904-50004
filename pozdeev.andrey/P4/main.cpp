@@ -25,6 +25,10 @@ int main()
     char inputChar = 0;
 
     while (std::cin >> inputChar) {
+      if (inputChar == '\n') {
+        break;
+      }
+
       if (currentSize + 1 >= currentCapacity) {
         size_t newCapacity = currentCapacity * resizeFactor;
         char * newBuffer = static_cast <char *> (std::malloc(newCapacity * sizeof(char)));
@@ -49,6 +53,13 @@ int main()
     }
 
     std::cin.flags(originalFlags);
+
+    if (currentSize == 0) {
+      if (std::cin.fail()) {
+        std::free(inputString);
+        throw std::runtime_error("No input data");
+      }
+    }
 
     if (!pozdeev::checkStream(std::cin)) {
       std::free(inputString);
