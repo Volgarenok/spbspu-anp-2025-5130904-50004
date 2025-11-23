@@ -34,3 +34,20 @@ char * pozdeev::removeExtraSpaces(char * destination, const char * source)
   destination[writeIndex] = '\0';
   return destination;
 }
+
+char * pozdeev::removeLatin(char * destination, const char * source)
+{
+  size_t readIndex = 0;
+  size_t writeIndex = 0;
+
+  while (source[readIndex] != '\0') {
+    if (std::isalpha(source[readIndex]) == 0) {
+      destination[writeIndex] = source[readIndex];
+      writeIndex = writeIndex + 1;
+    }
+    readIndex = readIndex + 1;
+  }
+
+  destination[writeIndex] = '\0';
+  return destination;
+}
