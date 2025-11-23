@@ -49,4 +49,29 @@ int main()
     }
 
     std::cin.flags(originalFlags);
+
+    if (!pozdeev::checkStream(std::cin)) {
+      std::free(inputString);
+      throw std::runtime_error("Input stream error");
+    }
+
+    inputString[currentSize] = '\0';
+
+    char * spaceRemovedResult = static_cast <char *> (std::malloc((currentSize + 1) * sizeof(char)));
+    char * latinRemovedResult = static_cast <char *> (std::malloc((currentSize + 1) * sizeof(char)));
+
+    if (spaceRemovedResult == nullptr) {
+      std::free(inputString);
+      if (latinRemovedResult != nullptr) {
+        std::free(latinRemovedResult);
+      }
+      throw std::bad_alloc();
+    }
+
+    if (latinRemovedResult == nullptr) {
+      std::free(inputString);
+      std::free(spaceRemovedResult);
+      throw std::bad_alloc();
+    }
+  }
 }
