@@ -8,7 +8,7 @@ char* zinovev::SetLine(std::istream & in, size_t& size, size_t& number_of_letter
     in >> std::noskipws;
 
   size_t number = 10;
-  char* Mass = (char*)malloc(number * sizeof(char));
+  char* Mass = static_cast<char*>(malloc(number * sizeof(char)));
 
   if (Mass == nullptr)
     return Mass;
@@ -26,7 +26,7 @@ char* zinovev::SetLine(std::istream & in, size_t& size, size_t& number_of_letter
     if (size == number)
     {
       number += number;
-      char* Mass_ptr = (char*)malloc(number * sizeof(char));
+      char* Mass_ptr = static_cast<char*>(malloc(number * sizeof(char)));
 
       if (Mass_ptr == nullptr)
       {
@@ -46,7 +46,7 @@ char* zinovev::SetLine(std::istream & in, size_t& size, size_t& number_of_letter
 
   in >> std::skipws;
 
-  char* Arr = (char*)malloc((size + 1) * sizeof(char));
+  char* Arr = static_cast<char*>(malloc((size + 1) * sizeof(char)));
 
   if (Arr == nullptr)
   {

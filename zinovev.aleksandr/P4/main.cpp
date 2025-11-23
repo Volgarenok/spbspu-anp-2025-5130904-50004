@@ -14,7 +14,7 @@ int main()
   zinovev::GetLine(std::cout, arr, size);
 
   size_t size_ptr = 0;
-  char* arr_ptr = (char*)malloc((size - number_of_letters) * sizeof(char));
+  char* arr_ptr = static_cast<char*>(malloc((size - number_of_letters) * sizeof(char)));
 
   if (arr_ptr == nullptr)
   {
