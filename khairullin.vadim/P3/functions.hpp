@@ -5,8 +5,8 @@
 namespace khairullin
 {
   int check_arguments(int argc, char ** argv, int command);
-  void filling(int * array, std::ifstream & input, int rows, int cols, int command);
-  int localmax(const int * array, int rows, int cols);
+  void filling(int * array, std::ifstream & input, size_t rows, size_t cols, int command);
+  int localMax(const int * array, size_t rows, size_t cols);
   int CheckZero(const int * array, int index1, int index2, int size);
   bool triangle(const int * array, int size);
 }

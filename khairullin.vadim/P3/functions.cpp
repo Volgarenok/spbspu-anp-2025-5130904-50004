@@ -4,12 +4,12 @@
 
 namespace khairullin
 {
-  void filling(int * array, std::ifstream & input, int rows, int cols, int command)
+  void filling(int * array, std::ifstream & input, size_t rows, size_t cols, int command)
   {
-    for (int i = 0; i < rows * cols; ++i)
+    for (size_t i = 0; i < rows * cols; ++i)
     {
       input >> array[i];
-      if (input.fail() or input.eof())
+      if (input.fail() || input.eof())
       {
         if (command == 2)
         {
@@ -31,12 +31,12 @@ namespace khairullin
       return 0;
     }
   }
-  int localmax(const int * array, int rows, int cols)
+  int localMax(const int * array, size_t rows, size_t cols)
   {
     int counter_of_max = 0;
-    for (int i = 0; i < rows; ++i)
+    for (size_t i = 0; i < rows; ++i)
     {
-      for (int j = 0; j < cols; ++j)
+      for (size_t j = 0; j < cols; ++j)
       {
         if (i != 0 && j != 0 && i != rows - 1 && j != cols - 1)
         {
@@ -59,9 +59,9 @@ namespace khairullin
     int count_of_nulls_on_row = size - 1;
     int counter = 0;
     const int COUNT_OF_ROWS_WITH_ZEROES = size - 1;
-    for (int i = 0; i < COUNT_OF_ROWS_WITH_ZEROES; ++i)
+    for (size_t i = 0; i < COUNT_OF_ROWS_WITH_ZEROES; ++i)
     {
-      for (int j = 0; j < size; ++j)
+      for (size_t j = 0; j < size; ++j)
       {
         if (j != size - 1)
         {
@@ -98,10 +98,6 @@ namespace khairullin
     {
       std::cerr << "First parameter is out of range\n";
       return 1;
-    }
-    else if (command == 1 or command == 2)
-    {
-      return 0;
     }
     return 0;
   }
