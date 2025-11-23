@@ -42,13 +42,18 @@ char * getline(std::istream & in, size_t & size)
   return data;
 }
 
-// latrmv()
-// {
+void latrmv(const char * str, char * result)
+{
+  size_t k = 0;
+  for (size_t i = 0; str[i] != '\0'; ++i) {
+    if (!std::isalpha(str[i])) {
+      result[k] = str[i];
+      ++k;
+    }
+  }
+result[k] = '\0';
+}
 
-// }
-
-//взять первую строку и каждый ее символ сравнить с каждым символом второй строки (два фора)
-//в новый массив длина которого равна длине первой строки записать те символы который не встречаются во второй строке
 
 void excsnd(const char * str1, const char * str2, char * result) 
 {
@@ -66,22 +71,31 @@ void excsnd(const char * str1, const char * str2, char * result)
       ++k;
     }
   }
+  result[k] = '\0';
 }
 
 int main()
 {
+  size_t size = 0;
   size_t size1 = 0;
   size_t size2 = 0;
+  std::cout << "\n" << "Удалить латинкские буквы" << "\n";
+  std::cout << "Введите строку" << "\n";
+  char * str = getline(std::cin, size);
+  char * result = create(size);
+  latrmv(str, result);
+  std::cout << "\n" << result;
+  std::cout << "\n" << "Удалить повторяющиеся в двух строках символы" << "\n";
   std::cout << "\n" << "Введите первую строку" << "\n";
   char * str1 = getline(std::cin, size1);
   std::cout << "\n" << size1 << "\n";
   std::cout << "\n" << "Введите вторую строку" << "\n";
   char * str2 = getline(std::cin, size2);
   std::cout << "\n" << size2 << "\n";
-  char * result = create(size1);
-  excsnd(str1, str2, result);
+  char * result12 = create(size1);
+  excsnd(str1, str2, result12);
   std::cout << "\n";
-  std::cout << result << "\n";
+  std::cout << result12 << "\n";
   free(str1);
   free(str2);
 }
