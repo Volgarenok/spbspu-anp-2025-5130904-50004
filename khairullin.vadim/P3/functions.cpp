@@ -20,7 +20,7 @@ namespace khairullin
     }
     input.close();
   }
-  int CheckZero(const int * array, int index1, int index2, int size)
+  int CheckZero(const int * array, size_t index1, size_t index2, size_t size)
   {
     if (array[index1 * size + index2] == array[index1 * size + index2 + 1] && array[index1 * size + index2] == 0)
     {
@@ -53,7 +53,7 @@ namespace khairullin
     }
     return counter_of_max;
   }
-  bool triangle(const int * array, int size)
+  bool triangle(const int * array, size_t size)
   {
     size_t sum_of_zeroes = 0;
     size_t count_of_nulls_on_row = size - 1;

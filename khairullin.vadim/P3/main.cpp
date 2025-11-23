@@ -26,8 +26,8 @@ int main (int argc, char ** argv)
     std::ofstream output(argv[3]);
     int rows = 0, cols = 0;
     input >> rows >> cols;
-    const int MIN_SIZE = std::min(rows, cols);
-    const int MAX_SIZE = std::max(rows, cols);
+    const size_t MIN_SIZE = std::min(rows, cols);
+    const size_t MAX_SIZE = std::max(rows, cols);
     if (!input)
     {
       std::cerr << "File is empty\n";
