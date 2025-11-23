@@ -3,7 +3,7 @@
 
 namespace khairullin
 {
-  void delete_vowels(const char * str, size_t size)
+  void delete_vowels(char * str, size_t size)
   {
     bool flag = false;
     const size_t count_vowels = 12;
