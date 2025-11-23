@@ -18,4 +18,35 @@ int main()
     if (inputString == nullptr) {
       throw std::bad_alloc();
     }
+
+    std::ios_base::fmtflags originalFlags = std::cin.flags();
+    std::cin >> std::noskipws;
+
+    char inputChar = 0;
+
+    while (std::cin >> inputChar) {
+      if (currentSize + 1 >= currentCapacity) {
+        size_t newCapacity = currentCapacity * resizeFactor;
+        char * newBuffer = static_cast <char *> (std::malloc(newCapacity * sizeof(char)));
+
+        if (newBuffer == nullptr) {
+          std::free(inputString);
+          std::cin.flags(originalFlags);
+          throw std::bad_alloc();
+        }
+
+        for (size_t i = 0; i < currentSize; ++i) {
+          newBuffer[i] = inputString[i];
+        }
+
+        std::free(inputString);
+        inputString = newBuffer;
+        currentCapacity = newCapacity;
+      }
+
+      inputString[currentSize] = inputChar;
+      currentSize = currentSize + 1;
+    }
+
+    std::cin.flags(originalFlags);
 }
