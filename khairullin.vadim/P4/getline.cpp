@@ -10,7 +10,7 @@ namespace khairullin
     if (is_skipws)
     {
       input >> std::noskipws;
-    } 
+    }
     try
     {
       size_t i = 0;
