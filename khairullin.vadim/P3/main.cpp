@@ -66,6 +66,7 @@ int main (int argc, char ** argv)
         }
       }
       khair::filling(array, input, rows, cols, command);
+      input.close();
       output << khair::localMax(array, rows, cols) << "\n";
       for (size_t i = 0; i < MIN_SIZE; i++)
       {
@@ -97,6 +98,11 @@ int main (int argc, char ** argv)
   catch(const std::invalid_argument & msg)
   {
     std::cerr << "ERROR: " << msg.what() << "\n";
+    if (command == 2)
+    {
+      free(array);
+      free(square_array);
+    }
     return 2;
   }
 }

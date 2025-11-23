@@ -11,14 +11,9 @@ namespace khairullin
       input >> array[i];
       if (input.fail() || input.eof())
       {
-        if (command == 2)
-        {
-          free(array);
-        }
         throw std::invalid_argument("Error: file includes the mistake");
       }
     }
-    input.close();
   }
   int CheckZero(const int * array, size_t index1, size_t index2, size_t size)
   {
