@@ -6,6 +6,10 @@
 namespace khair = khairullin;
 int main (int argc, char ** argv)
 {
+  int * array = nullptr;
+  int * square_array = nullptr;
+  int static_array[10000] = {};
+  int static_square_array[10000] = {};
   int command = 0;
   if (argc != 1)
   {
@@ -40,10 +44,6 @@ int main (int argc, char ** argv)
     }
     else if (rows != 0 and cols != 0)
     {
-      int * array = nullptr;
-      int * square_array = nullptr;
-      int static_array[10000] = {};
-      int static_square_array[10000] = {};
       if (argv[1][0] == '1')
       {
         array = static_array;
