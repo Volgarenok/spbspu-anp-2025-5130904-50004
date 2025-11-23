@@ -73,5 +73,24 @@ int main()
       std::free(spaceRemovedResult);
       throw std::bad_alloc();
     }
+
+    pozdeev::removeExtraSpaces(spaceRemovedResult, inputString);
+    std::cout << spaceRemovedResult << std::endl;
+
+    pozdeev::removeLatin(latinRemovedResult, inputString);
+    std::cout << latinRemovedResult << std::endl;
+
+    std::free(inputString);
+    std::free(spaceRemovedResult);
+    std::free(latinRemovedResult);
+
+  } catch (const std::bad_alloc &) {
+    std::cerr << "Error: Memory allocation failed" << std::endl;
+    return 1;
+  } catch (const std::exception & e) {
+    std::cerr << "Error: " << e.what() << std::endl;
+    return 1;
   }
+
+  return 0;
 }
