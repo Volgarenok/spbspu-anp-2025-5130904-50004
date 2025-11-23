@@ -65,7 +65,7 @@ int main (int argc, char ** argv)
           return 2;
         }
       }
-      khair::filling(array, input, rows, cols, command);
+      khair::filling(array, input, rows, cols);
       input.close();
       output << khair::localMax(array, rows, cols) << "\n";
       for (size_t i = 0; i < MIN_SIZE; i++)

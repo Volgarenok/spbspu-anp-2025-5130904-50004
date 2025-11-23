@@ -4,7 +4,7 @@
 
 namespace khairullin
 {
-  void filling(int * array, std::ifstream & input, size_t rows, size_t cols, int command)
+  void filling(int * array, std::ifstream & input, size_t rows, size_t cols)
   {
     for (size_t i = 0; i < rows * cols; ++i)
     {
