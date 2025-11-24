@@ -4,7 +4,7 @@
 
 namespace alekseev {
   size_t exc_scd(const char * first, const size_t length1,
-    const char * second, const size_t length2, char * result);
+      const char * second, const size_t length2, char * result);
   size_t lat_rmv(const char * original, const size_t length, char * result);
 }
 

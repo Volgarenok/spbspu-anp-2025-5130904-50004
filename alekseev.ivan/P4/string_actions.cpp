@@ -2,8 +2,9 @@
 #include <cstddef>
 #include <cctype>
 
+
 size_t alekseev::exc_scd(const char * first, const size_t length1,
-  const char * second, const size_t length2, char * result)
+    const char * second, const size_t length2, char * result)
 {
   size_t length_result = 0;
   for (size_t i = 0; i < length1; ++i) {
@@ -33,4 +34,3 @@ size_t alekseev::lat_rmv(const char * original, const size_t length, char * resu
   result[length_result] = '\0';
   return length_result;
 }
-
