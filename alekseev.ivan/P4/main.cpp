@@ -23,7 +23,6 @@ int main()
     std::cerr << e.what() << "\n";
     return 1;
   }
-  std::cout << user_string << "\n" << length << "\n";
 
   char * excluded_second = reinterpret_cast<char *>(malloc(sizeof(char) * (length + 1)));
   if (!excluded_second) {
@@ -84,7 +83,7 @@ char * alekseev::get_line(std::istream & inp, size_t & length)
     free(result);
     throw std::invalid_argument("Invalid input");
   }
-  char * temp = resize_alloc(result, size, length);
+  char * temp = resize_alloc(result, size, length + 1);
   if (!temp) {
     free(result);
     throw std::bad_alloc();
