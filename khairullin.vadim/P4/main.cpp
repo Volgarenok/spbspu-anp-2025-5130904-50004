@@ -11,7 +11,7 @@ int main()
   {
     str1 = new char [10];
     size_t realsize = 0;
-    size1 = khairullin::getline(std::cin, str1, size1);
+    realsize = khairullin::getline(std::cin, str1, size1);
     if (realsize == 0)
     {
       std::cerr << "No string\n";

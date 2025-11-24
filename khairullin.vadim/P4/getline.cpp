@@ -4,7 +4,7 @@
 
 namespace khairullin
 {
-  size_t getline(std::istream & input, char *& data, size_t size)
+  size_t getline(std::istream & input, char *& data, size_t & size)
   {
     bool is_skipws = input.flags() & std::ios_base::skipws;
     if (is_skipws)
