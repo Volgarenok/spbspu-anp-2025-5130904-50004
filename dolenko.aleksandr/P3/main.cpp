@@ -3,110 +3,7 @@
 #include <cstdlib>
 #include <cctype>
 
-namespace dolenko {
-
-constexpr size_t MAX_FIXED_SIZE = 10000;
-constexpr size_t MAX_ROWS = 100;
-constexpr size_t MAX_COLS = 100;
-
-std::istream& readMatrix(std::istream& in, int* arr, size_t rows, size_t cols);
-std::ostream& writeMatrix(std::ostream& out, size_t res);
-int findLongestColumn(const int* data, size_t rows, size_t cols);
-int countLocalMins(const int* data, size_t rows, size_t cols);
-
-std::istream& readMatrix(std::istream& in, int* arr, size_t rows, size_t cols)
-{
-  for (size_t i = 0; i < rows; ++i) {
-    for (size_t j = 0; j < cols; ++j) {
-      in >> arr[i * cols + j];
-    }
-  }
-  return in;
-}
-
-std::ostream& writeMatrix(std::ostream& out, size_t res)
-{
-  out << res;
-  return out;
-}
-
-int findLongestColumn(const int* data, size_t rows, size_t cols)
-{
-  if (rows == 0 || cols == 0) {
-    return 0;
-  }
-
-  int maxLength = 0;
-  int columnWithMax = 0;
-
-  for (size_t j = 0; j < cols; ++j) {
-    int currentLength = 1;
-    int maxCurrentCol = 1;
-
-    for (size_t i = 1; i < rows; ++i) {
-      int current = data[i * cols + j];
-      int previous = data[(i - 1) * cols + j];
-
-      if (current == previous) {
-        currentLength++;
-      } else {
-        if (currentLength > maxCurrentCol) {
-          maxCurrentCol = currentLength;
-        }
-        currentLength = 1;
-      }
-    }
-
-    if (currentLength > maxCurrentCol) {
-      maxCurrentCol = currentLength;
-    }
-
-    if (maxCurrentCol > maxLength) {
-      maxLength = maxCurrentCol;
-      columnWithMax = static_cast<int>(j) + 1;
-    }
-  }
-
-  return columnWithMax;
-}
-
-int countLocalMins(const int* data, size_t rows, size_t cols)
-{
-  if (rows < 3 || cols < 3) {
-    return 0;
-  }
-
-  int count = 0;
-
-  for (size_t i = 1; i < rows - 1; ++i) {
-    for (size_t j = 1; j < cols - 1; ++j) {
-      int current = data[i * cols + j];
-      bool isLocalMin = true;
-
-      for (int di = -1; di <= 1 && isLocalMin; ++di) {
-        for (int dj = -1; dj <= 1 && isLocalMin; ++dj) {
-          if (di == 0 && dj == 0) {
-            continue;
-          }
-          size_t ni = i + di;
-          size_t nj = j + dj;
-          int neighbor = data[ni * cols + nj];
-          if (current >= neighbor) {
-            isLocalMin = false;
-          }
-        }
-      }
-
-      if (isLocalMin) {
-        count++;
-      }
-    }
-  }
-
-  return count;
-}
-
-}
+#include "functions.hpp"
 
 int main(int argc, char** argv)
 {
@@ -127,7 +24,8 @@ int main(int argc, char** argv)
   std::ifstream in(argv[2]);
   std::ofstream out(argv[3]);
 
-  if (!in.is_open()) {
+  if (!in.is_open())
+  {
     std::cerr << "Cannot open input file";
     return 2;
   }
@@ -135,14 +33,17 @@ int main(int argc, char** argv)
   size_t rows = 0;
   size_t cols = 0;
 
-  if (!(in >> rows >> cols)) {
+  if (!(in >> rows >> cols))
+  {
     std::cerr << "Cannot read matrix dimensions";
     in.close();
     return 2;
   }
 
-  if (num == 1) {
-    if (rows > dolenko::MAX_ROWS || cols > dolenko::MAX_COLS || rows * cols > dolenko::MAX_FIXED_SIZE) {
+  if (num == 1)
+  {
+    if (rows > dolenko::k_max_rows || cols > dolenko::k_max_cols || rows * cols > dolenko::k_max_fixed_size)
+    {
       std::cerr << "Matrix too large for fixed array";
       in.close();
       return 2;
@@ -151,23 +52,29 @@ int main(int argc, char** argv)
 
   int* matrix_data = nullptr;
 
-  if (num == 1) {
-    static int fixed_matrix[dolenko::MAX_ROWS * dolenko::MAX_COLS];
+  if (num == 1)
+  {
+    static int fixed_matrix[dolenko::k_max_rows * dolenko::k_max_cols];
     matrix_data = fixed_matrix;
-  } else {
+  }
+  else
+  {
     matrix_data = static_cast<int*>(std::malloc(rows * cols * sizeof(int)));
-    if (matrix_data == nullptr) {
+    if (matrix_data == nullptr)
+    {
       std::cerr << "Memory allocation failed";
       in.close();
       return 2;
     }
   }
 
-  dolenko::readMatrix(in, matrix_data, rows, cols);
+  dolenko::read_matrix(in, matrix_data, rows, cols);
 
-  if (!in) {
+  if (!in)
+  {
     std::cerr << "Error reading matrix data";
-    if (num == 2) {
+    if (num == 2)
+    {
       std::free(matrix_data);
     }
     in.close();
@@ -176,25 +83,28 @@ int main(int argc, char** argv)
 
   in.close();
 
-  int localMins = dolenko::countLocalMins(matrix_data, rows, cols);
-  int longestColumn = dolenko::findLongestColumn(matrix_data, rows, cols);
+  int local_mins = dolenko::count_local_mins(matrix_data, rows, cols);
+  int longest_column = dolenko::find_longest_column(matrix_data, rows, cols);
 
-  if (!out.is_open()) {
+  if (!out.is_open())
+  {
     std::cerr << "Cannot open output file";
-    if (num == 2) {
+    if (num == 2)
+    {
       std::free(matrix_data);
     }
     return 1;
   }
 
-  dolenko::writeMatrix(out, localMins);
+  dolenko::write_matrix(out, local_mins);
   out << std::endl;
-  dolenko::writeMatrix(out, longestColumn);
+  dolenko::write_matrix(out, longest_column);
   out << std::endl;
 
   out.close();
 
-  if (num == 2) {
+  if (num == 2)
+  {
     std::free(matrix_data);
   }
 
