@@ -1,7 +1,6 @@
 #include "matrix_operations.hpp"
 #include <fstream>
 #include <iostream>
-#include <cstring>
 
 namespace em {
 
@@ -9,32 +8,66 @@ bool validate_arguments(int argc, char* argv[])
 {
   if (argc != 4)
   {
-    std::cerr << "Invalid number of arguments" << std::endl;
+    std::cerr << "Invalid number of arguments";
     return false;
   }
 
   char first_char = argv[1][0];
   if (first_char != '1' && first_char != '2')
   {
-    std::cerr << "First parameter is out of range or not a number" << std::endl;
+    std::cerr << "First parameter is out of range or not a number";
     return false;
   }
 
   return true;
 }
 
-int* create_matrix(int rows, int cols)
+bool read_matrix(const char* filename, int* matrix, int& rows, int& cols, int max_size)
 {
-  if (rows <= 0 || cols <= 0)
-  {
-    return nullptr;
-  }
-  return new int[rows * cols]();
-}
+  rows = 0;
+  cols = 0;
 
-void free_matrix(int* matrix)
-{
-  delete[] matrix;
+  std::ifstream file(filename);
+  if (!file.is_open())
+  {
+    std::cerr << "Cannot open input file: " << filename;
+    return false;
+  }
+
+  file >> rows >> cols;
+
+  if (file.fail())
+  {
+    return false;
+  }
+
+  if (rows < 0 || cols < 0)
+  {
+    return false;
+  }
+
+  if (rows == 0 && cols == 0)
+  {
+    return true;
+  }
+
+  if (rows * cols > max_size)
+  {
+    return false;
+  }
+
+  for (int i = 0; i < rows; ++i)
+  {
+    for (int j = 0; j < cols; ++j)
+    {
+      if (!(file >> matrix[i * cols + j]))
+      {
+        return false;
+      }
+    }
+  }
+
+  return true;
 }
 
 bool read_matrix(const char* filename, int** matrix, int& rows, int& cols)
@@ -46,12 +79,7 @@ bool read_matrix(const char* filename, int** matrix, int& rows, int& cols)
   std::ifstream file(filename);
   if (!file.is_open())
   {
-    std::cerr << "Cannot open input file: " << filename << std::endl;
-    return false;
-  }
-
-  if (file.peek() == std::ifstream::traits_type::eof())
-  {
+    std::cerr << "Cannot open input file: " << filename;
     return false;
   }
 
@@ -73,7 +101,7 @@ bool read_matrix(const char* filename, int** matrix, int& rows, int& cols)
     return true;
   }
 
-  *matrix = create_matrix(rows, cols);
+  *matrix = new int[rows * cols]();
   if (!*matrix)
   {
     return false;
@@ -85,7 +113,7 @@ bool read_matrix(const char* filename, int** matrix, int& rows, int& cols)
     {
       if (!(file >> (*matrix)[i * cols + j]))
       {
-        free_matrix(*matrix);
+        delete[] *matrix;
         *matrix = nullptr;
         return false;
       }
@@ -192,7 +220,7 @@ void build_smooth_matrix(int* matrix, int rows, int cols)
     return;
   }
 
-  int* temp = create_matrix(rows, cols);
+  int* temp = new int[rows * cols]();
   if (!temp)
   {
     return;
@@ -240,7 +268,7 @@ void build_smooth_matrix(int* matrix, int rows, int cols)
     matrix[i] = temp[i];
   }
 
-  free_matrix(temp);
+  delete[] temp;
 }
 
 }
