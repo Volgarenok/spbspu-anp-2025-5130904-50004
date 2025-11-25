@@ -9,47 +9,10 @@ constexpr size_t MAX_FIXED_SIZE = 10000;
 constexpr size_t MAX_ROWS = 100;
 constexpr size_t MAX_COLS = 100;
 
-int** allocateDynamicMatrix(size_t rows, size_t cols);
-void freeDynamicMatrix(int** data, size_t rows);
 std::istream& readMatrix(std::istream& in, int* arr, size_t rows, size_t cols);
-std::ostream& writeMatrix(std::ostream& out, const int* arr, size_t rows, size_t cols, size_t res);
+std::ostream& writeMatrix(std::ostream& out, size_t res);
 int findLongestColumn(const int* data, size_t rows, size_t cols);
 int countLocalMins(const int* data, size_t rows, size_t cols);
-
-int** allocateDynamicMatrix(size_t rows, size_t cols)
-{
-  if (rows == 0 || cols == 0) {
-    return nullptr;
-  }
-
-  int** data = static_cast<int**>(std::malloc(rows * sizeof(int*)));
-  if (data == nullptr) {
-    return nullptr;
-  }
-
-  for (size_t i = 0; i < rows; ++i) {
-    data[i] = static_cast<int*>(std::malloc(cols * sizeof(int)));
-    if (data[i] == nullptr) {
-      for (size_t j = 0; j < i; ++j) {
-        std::free(data[j]);
-      }
-      std::free(data);
-      return nullptr;
-    }
-  }
-
-  return data;
-}
-
-void freeDynamicMatrix(int** data, size_t rows)
-{
-  if (data != nullptr) {
-    for (size_t i = 0; i < rows; ++i) {
-      std::free(data[i]);
-    }
-    std::free(data);
-  }
-}
 
 std::istream& readMatrix(std::istream& in, int* arr, size_t rows, size_t cols)
 {
@@ -61,7 +24,7 @@ std::istream& readMatrix(std::istream& in, int* arr, size_t rows, size_t cols)
   return in;
 }
 
-std::ostream& writeMatrix(std::ostream& out, const int* arr, size_t rows, size_t cols, size_t res)
+std::ostream& writeMatrix(std::ostream& out, size_t res)
 {
   out << res;
   return out;
@@ -224,8 +187,10 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  out << localMins << std::endl;
-  out << longestColumn << std::endl;
+  dolenko::writeMatrix(out, localMins);
+  out << std::endl;
+  dolenko::writeMatrix(out, longestColumn);
+  out << std::endl;
 
   out.close();
 
