@@ -1,6 +1,5 @@
 #include "io.h"
-#include "io.cpp"
-#include "process.cpp"
+#include <iostream>
 #include <stdexcept>
 
 int main(int argc, char **argv) {
@@ -8,7 +7,7 @@ int main(int argc, char **argv) {
         Nepochatova::checkArgs(argc, argv);
 
         int n, m;
-        int* arr = Nepochatova::readMatrix(argv[2], n, m);
+        int** arr = Nepochatova::readMatrix(argv[2], n, m);
 
         if (argv[1][0] == '1') {
             Nepochatova::transformMatrixSpiral(arr, n, m);
@@ -19,7 +18,9 @@ int main(int argc, char **argv) {
         }
 
         std::ofstream out(argv[3]);
-        writeMatrix(out, arr, n, m);
+        Nepochatova:: writeMatrix(out, arr, n, m);
+        for (int i = 0; i < n; ++i)
+            delete[] arr[i];
 
         delete[] arr;
     } catch (const std::exception &e) {
