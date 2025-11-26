@@ -34,4 +34,30 @@ void Nepochatova::transformMatrixSpiral(int** arr, int n, int m) {
     }
 }
 
-void Nepochatova::transformMatrixCircular(int** arr, int n, int m) {}
+void Nepochatova::transformMatrixCircular(int** arr, int n, int m) {
+    int layer = 1;
+    int top = 0, bottom = n - 1, left = 0, right = m - 1;
+
+    while (top <= bottom && left <= right) {
+
+        for (int j = left; j <= right; j++)
+            arr[top][j] += layer;
+
+        for (int i = top + 1; i <= bottom; i++)
+            arr[i][right] += layer;
+
+        if (top < bottom) {
+            for (int j = right - 1; j >= left; j--)
+                arr[bottom][j] += layer;
+        }
+
+        if (left < right) {
+            for (int i = bottom - 1; i > top; i--)
+                arr[i][left] += layer;
+        }
+
+        top++; bottom--; left++; right--;
+        layer++;
+    }
+
+}
