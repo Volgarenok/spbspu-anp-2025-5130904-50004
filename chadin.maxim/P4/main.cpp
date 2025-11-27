@@ -59,5 +59,9 @@ int main()
       std::cerr << "Error: Incomplete input." << std::endl;
       return 1;
     }
+
+    int hasSame = chadin::hasSameSymbols(line1, line2);
+    std::cout << hasSame << '\n';
+
     
 }
