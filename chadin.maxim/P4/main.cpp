@@ -2,10 +2,10 @@
 #include <iostream>
 #include <cstdlib>
 
-namespace
-{
+namespace {
+
 char* readLine()
-{
+  {
   const size_t initialSize = 64;
   size_t capacity = initialSize;
   size_t length = 0;
@@ -31,6 +31,7 @@ char* readLine()
     }
     buffer[length++] = static_cast<char>(ch);
   }
+
   if (ch == EOF && length == 0)
   {
     std::free(buffer);
@@ -40,26 +41,39 @@ char* readLine()
   buffer[length] = '\0';
   return buffer;
 }
+
 }
 
+int main() {
+  bool processedAtLeastOnePair = false;
 
-int main()
-{
   while (true)
   {
     char* line1 = readLine();
     if (line1 == nullptr)
     {
+      if (!processedAtLeastOnePair)
+      {
+        std::cerr << "Error: No input provided." << std::endl;
+        return 1;
+      }
       break;
     }
 
     char* line2 = readLine();
     if (line2 == nullptr)
     {
-      std::free(line1);
-      std::cerr << "Error: Incomplete input." << std::endl;
-      return 1;
+      line2 = static_cast<char*>(std::malloc(1));
+      if (line2 == nullptr)
+      {
+        std::free(line1);
+        std::cerr << "Error: Memory allocation failed." << std::endl;
+        return 2;
+      }
+      line2[0] = '\0';
     }
+
+    processedAtLeastOnePair = true;
 
     int hasSame = chadin::hasSameSymbols(line1, line2);
     std::cout << hasSame << '\n';
@@ -86,7 +100,7 @@ int main()
       std::free(line1);
       std::free(line2);
       std::cerr << "Error: Memory allocation failed." << std::endl;
-      return 1;
+      return 2;
     }
 
     int dgtErr = chadin::digitSnd(line1, line2, result, resultSize);
@@ -96,7 +110,7 @@ int main()
       std::free(line2);
       std::free(result);
       std::cerr << "Error: digitSnd failed." << std::endl;
-      return 1;
+      return 2;
     }
 
     std::cout << result << '\n';
