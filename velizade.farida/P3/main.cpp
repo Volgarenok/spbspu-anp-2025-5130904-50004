@@ -14,14 +14,9 @@ int main(int argc, char** argv)
     std::cerr << "Not enough arguments" << "\n";
     return 1;
   }
-  if (argv[1][1])
-  {
-    std::cerr << "First parametr must be one character" << "\n";
-    return 1;
-  }
 
   char num = argv[1][0];
-  if (num != '1' && num != '2')
+  if (argv[1][1] != '\n' && num != '1' && num != '2')
   {
     std::cerr << "Icorrect first parametr" << "\n";
     return 1;
@@ -52,12 +47,15 @@ int main(int argc, char** argv)
     int arr[10000] = {};
     if (!velizade::readArr(input, arr, rows, cols))
     {
+      std::cerr << "Error reading matrix data" << "\n";
       input.close();
       output.close();
       return 2;
     }
 
-    velizade::processArray(num, arr, rows, cols, output);
+    int local_mins_count = velizade::countLocalMins(arr, rows, cols);
+    velizade::leftTopClockwise(arr, rows, cols);
+    velizade::writeResult(output, arr, rows, cols, local_mins_count);
   }
   else
   {
@@ -75,12 +73,15 @@ int main(int argc, char** argv)
     }
     if (!velizade::readArr(input, arr, rows, cols))
     {
+      std::cerr << "Error reading matrix data" << "\n";
       delete[] arr;
       input.close();
       output.close();
       return 2;
     }
-    velizade::processArray(num, arr, rows, cols, output);
+    int local_mins_count = velizade::countLocalMins(arr, rows, cols);
+    velizade::leftTopClockwise(arr, rows, cols);
+    velizade::writeResult(output, arr, rows, cols, local_mins_count);
     delete[] arr;
   }
   input.close();
