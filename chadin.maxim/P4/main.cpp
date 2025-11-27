@@ -54,7 +54,8 @@ int main()
     }
 
     char* line2 = readLine();
-    if (line2 == nullptr) {
+    if (line2 == nullptr)
+    {
       std::free(line1);
       std::cerr << "Error: Incomplete input." << std::endl;
       return 1;
@@ -62,6 +63,31 @@ int main()
 
     int hasSame = chadin::hasSameSymbols(line1, line2);
     std::cout << hasSame << '\n';
+
+    size_t len1 = 0;
+    while (line1[len1] != '\0')
+    {
+      ++len1;
+    }
+
+    size_t digits2 = 0;
+    for (size_t i = 0; line2[i] != '\0'; ++i)
+    {
+      if (line2[i] >= '0' && line2[i] <= '9')
+      {
+        ++digits2;
+      }
+    }
+
+    size_t resultSize = len1 + digits2 + 1;
+    char* result = static_cast<char*>(std::malloc(resultSize));
+    if (result == nullptr)
+    {
+      std::free(line1);
+      std::free(line2);
+      std::cerr << "Error: Memory allocation failed." << std::endl;
+      return 1;
+    }
 
     
 }
