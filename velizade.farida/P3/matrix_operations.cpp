@@ -41,14 +41,14 @@ std::ostream& velizade::writeResult(std::ostream& output, const int* arr, size_t
   return output;
 }
 
-int velizade::countLocalMins(const int* arr, size_t rows, size_t cols)
+size_t velizade::countLocalMins(const int* arr, size_t rows, size_t cols)
 {
   if (rows < 3 || cols < 3)
   {
     return 0;
   }
 
-  int count = 0;
+  size_t count = 0;
   for (size_t i = 1; i < rows - 1; i++)
   {
     for (size_t j = 1; j < cols - 1; j++)
@@ -129,20 +129,4 @@ void velizade::leftTopClockwise(int* arr, size_t rows, size_t cols)
       left++;
     }
   }
-}
-
-int velizade::processArray(char task, int* arr, size_t rows, size_t cols, std::ostream& output)
-{
-  int result = 0;
-  if (task == '1')
-  {
-    result = countLocalMins(arr, rows, cols);
-  }
-  else if (task == '2')
-  {
-    leftTopClockwise(arr, rows, cols);
-    result = 0;
-  }
-  writeResult(output, arr, rows, cols, result);
-  return 0;
 }

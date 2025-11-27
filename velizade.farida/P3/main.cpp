@@ -41,25 +41,13 @@ int main(int argc, char** argv)
     output.close();
     return 2;
   }
-
+  int* arr = nullptr;
   if (num == '1')
   {
     int arr[10000] = {};
-    if (!velizade::readArr(input, arr, rows, cols))
-    {
-      std::cerr << "Error reading matrix data" << "\n";
-      input.close();
-      output.close();
-      return 2;
-    }
-
-    int local_mins_count = velizade::countLocalMins(arr, rows, cols);
-    velizade::leftTopClockwise(arr, rows, cols);
-    velizade::writeResult(output, arr, rows, cols, local_mins_count);
   }
   else
   {
-    int* arr = nullptr;
     try
     {
       arr = new int[rows * cols]();
@@ -71,20 +59,25 @@ int main(int argc, char** argv)
       output.close();
       return 2;
     }
-    if (!velizade::readArr(input, arr, rows, cols))
+    if (velizade::readArr(input, arr, rows, cols))
+    {
+      size_t local_mins_count = velizade::countLocalMins(arr, rows, cols);
+      velizade::leftTopClockwise(arr, rows, cols);
+      velizade::writeResult(output, arr, rows, cols, local_mins_count);
+    }
+    else
     {
       std::cerr << "Error reading matrix data" << "\n";
-      delete[] arr;
-      input.close();
-      output.close();
-      return 2;
+      if (num == '2')
+      {
+        delete[] arr;
+        input.close();
+        output.close();
+        return 2;
+      }
     }
-    int local_mins_count = velizade::countLocalMins(arr, rows, cols);
-    velizade::leftTopClockwise(arr, rows, cols);
-    velizade::writeResult(output, arr, rows, cols, local_mins_count);
-    delete[] arr;
+    input.close();
+    output.close();
+    return 0;
   }
-  input.close();
-  output.close();
-  return 0;
 }
