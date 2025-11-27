@@ -59,3 +59,15 @@ size_t zvyagin::count_local_maxima(const int* data, size_t rows, size_t cols)
     }
     return count;
 }
+
+bool zvyagin::readMatrix(std::ifstream& input, int* data, size_t size)
+{
+    for (size_t i = 0; i < size; ++i)
+    {
+        if (!(input >> data[i]))
+        {
+            return false;
+        }
+    }
+    return true;
+}

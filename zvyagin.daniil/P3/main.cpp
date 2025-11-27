@@ -61,13 +61,10 @@ int main(int argc, char** argv)
     if (num == 1)
     {
         int fixed[10000];
-        for (size_t i = 0; i < n * m; ++i)
+        if (!zvyagin::readMatrix(input, fixed, n * m))
         {
-            if (!(input >> fixed[i]))
-            {
-                std::cerr << "Invalid matrix element data\n";
-                return 2;
-            }
+            std::cerr << "Invalid matrix element data\n";
+            return 2;
         }
 
         input.close();
@@ -93,15 +90,13 @@ int main(int argc, char** argv)
             return 1;
         }
 
-        for (unsigned i = 0; i < n * m; ++i)
+        if (!zvyagin::readMatrix(input, dyn, n * m))
         {
-            if (!(input >> dyn[i]))
-            {
-                std::free(dyn);
-                std::cerr << "Invalid matrix element data\n";
-                return 2;
-            }
+            std::free(dyn);
+            std::cerr << "Invalid matrix element data\n";
+            return 2;
         }
+
         input.close();
 
         output.open(argv[3]);
