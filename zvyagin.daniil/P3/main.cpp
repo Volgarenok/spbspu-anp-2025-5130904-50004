@@ -35,7 +35,7 @@ int main(int argc, char** argv)
         return 2;
     }
 
-    size_t n, m;
+    size_t n = 0, m = 0;
     if (!(input >> n >> m))
     {
         std::cerr << "Cannot read matrix dimensions\n";
