@@ -23,7 +23,7 @@ int main(int argc, char** argv)
   char num = argv[1][0];
   if (num != '1' && num != '2')
   {
-    std::cerr << "First parametr out of range or first parametr is not a number" << "\n";
+    std::cerr << "Icorrect first parametr" << "\n";
     return 1;
   }
 
