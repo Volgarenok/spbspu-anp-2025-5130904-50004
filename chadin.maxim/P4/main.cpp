@@ -89,5 +89,17 @@ int main()
       return 1;
     }
 
+    int dgtErr = chadin::digitSnd(line1, line2, result, resultSize);
+    if (dgtErr != 0)
+    {
+      std::free(line1);
+      std::free(line2);
+      std::free(result);
+      std::cerr << "Error: digitSnd failed." << std::endl;
+      return 1;
+    }
+
+    std::cout << result << '\n';
+
     
 }
