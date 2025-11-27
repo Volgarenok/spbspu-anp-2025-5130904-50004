@@ -45,4 +45,19 @@ char* readLine()
 
 int main()
 {
+  while (true)
+  {
+    char* line1 = readLine();
+    if (line1 == nullptr)
+    {
+      break;
+    }
+
+    char* line2 = readLine();
+    if (line2 == nullptr) {
+      std::free(line1);
+      std::cerr << "Error: Incomplete input." << std::endl;
+      return 1;
+    }
+    
 }
