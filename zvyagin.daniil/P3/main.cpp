@@ -11,7 +11,17 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    int num = std::atoi(argv[1]);
+    int num;
+    try {
+        num = std::stoi(argv[1]);
+    } catch (const std::invalid_argument&) {
+        std::cerr << "First parameter is not a number\n";
+        return 1;
+    } catch (const std::out_of_range&) {
+        std::cerr << "First parameter is out of range\n";
+        return 1;
+    }
+
     if (num != 1 && num != 2)
     {
         std::cerr << "First parameter must be 1 or 2\n";
