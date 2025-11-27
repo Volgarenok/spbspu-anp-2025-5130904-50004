@@ -1,4 +1,3 @@
-//functions.hpp
 #ifndef ZVYAGIN_FUNCTIONS_HPP
 #define ZVYAGIN_FUNCTIONS_HPP
 
