@@ -101,5 +101,10 @@ int main()
 
     std::cout << result << '\n';
 
-    
+    std::free(line1);
+    std::free(line2);
+    std::free(result);
+  }
+
+  return 0;
 }
