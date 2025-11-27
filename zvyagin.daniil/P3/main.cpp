@@ -42,9 +42,11 @@ int main(int argc, char** argv)
         return 2;
     }
 
+    std::ofstream output;
+
     if (n == 0 || m == 0)
     {
-        std::ofstream output(argv[3]);
+        output.open(argv[3]);
         if (!output.is_open())
         {
             std::cerr << "Cannot open output file\n";
@@ -70,7 +72,7 @@ int main(int argc, char** argv)
 
         input.close();
 
-        std::ofstream output(argv[3]);
+        output.open(argv[3]);
         if (!output.is_open())
         {
             std::cerr << "Cannot open output file\n";
@@ -102,7 +104,7 @@ int main(int argc, char** argv)
         }
         input.close();
 
-        std::ofstream output(argv[3]);
+        output.open(argv[3]);
         if (!output.is_open())
         {
             std::free(dyn);
