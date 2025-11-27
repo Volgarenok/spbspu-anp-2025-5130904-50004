@@ -41,10 +41,11 @@ int main(int argc, char** argv)
     output.close();
     return 2;
   }
+  int static_arr[10000] = {};
   int* arr = nullptr;
   if (num == '1')
   {
-    int arr[10000] = {};
+    arr = static_arr;
   }
   else
   {
