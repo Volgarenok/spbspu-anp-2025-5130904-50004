@@ -71,3 +71,9 @@ bool zvyagin::readMatrix(std::ifstream& input, int* data, size_t size)
     }
     return true;
 }
+
+void zvyagin::writeResults(std::ofstream& output, const int* data, size_t rows, size_t cols)
+{
+    output << zvyagin::count_columns_no_same_adjacent(data, rows, cols) << '\n';
+    output << zvyagin::count_local_maxima(data, rows, cols) << '\n';
+}

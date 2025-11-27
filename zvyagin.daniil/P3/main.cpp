@@ -76,8 +76,7 @@ int main(int argc, char** argv)
             return 1;
         }
 
-        output << zvyagin::count_columns_no_same_adjacent(fixed, n, m) << '\n';
-        output << zvyagin::count_local_maxima(fixed, n, m) << '\n';
+        zvyagin::writeResults(output, fixed, n, m);
         output.close();
     }
 
@@ -107,8 +106,7 @@ int main(int argc, char** argv)
             return 1;
         }
 
-        output << zvyagin::count_columns_no_same_adjacent(dyn, n, m) << '\n';
-        output << zvyagin::count_local_maxima(dyn, n, m) << '\n';
+        zvyagin::writeResults(output, dyn, n, m);
         output.close();
 
         std::free(dyn);
