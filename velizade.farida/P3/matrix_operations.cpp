@@ -8,7 +8,6 @@ std::istream& velizade::readArr(std::istream& input, int* arr, size_t rows, size
   {
     if (!(input >> value))
     {
-      std::cerr << "Incorrect matrix input" << "\n";
       return input;
     }
     arr[i] = value;

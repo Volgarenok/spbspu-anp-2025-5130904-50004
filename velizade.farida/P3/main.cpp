@@ -74,9 +74,6 @@ int main(int argc, char** argv)
   if (num == '2')
   {
     delete[] arr;
-    input.close();
-    output.close();
-    return 2;
   }
   input.close();
   output.close();
