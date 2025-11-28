@@ -16,7 +16,7 @@ int main(int argc, char** argv)
   }
 
   char num = argv[1][0];
-  if (argv[1][1] != '\n' && num != '1' && num != '2')
+  if (argv[1][1] != '\0' && num != '1' && num != '2')
   {
     std::cerr << "Icorrect first parametr" << "\n";
     return 1;
