@@ -20,10 +20,63 @@ namespace ahrameev {
         return count;
     }
 
+    int to_lower_latin(char* dest, size_t dest_size, const char* src) {
+        if (!src || !dest) return -1;
+        size_t len = std::strlen(src);
+        if (dest_size < len + 1) return -1;
+        for (size_t i = 0; i < len; ++i) {
+            char c = src[i];
+            dest[i] = (c >= 'A' && c <= 'Z') ? c + 32 : c;
+        }
+        dest[len] = '\0';
+        return (int)len;
+    }
+
+}
+
+int read_line(char** out_buffer) {
+    const int START_SIZE = 10;
+    char* buffer = (char*)malloc(START_SIZE);
+    if (!buffer) return 1;
+
+    int capacity = START_SIZE;
+    int length = 0;
+
+    char c;
+    while (std::cin.get(c)) {
+        if (c == '\n') break;
+        if (length + 1 >= capacity) {
+            int new_capacity = capacity * 2;
+            char* new_buffer = (char*)malloc(new_capacity);
+            if (!new_buffer) { free(buffer); return 1; }
+            for (int i = 0; i < length; ++i) new_buffer[i] = buffer[i];
+            free(buffer);
+            buffer = new_buffer;
+            capacity = new_capacity;
+        }
+        buffer[length++] = c;
+    }
+    buffer[length] = '\0';
+    *out_buffer = buffer;
+    return 0;
 }
 
 int main() {
-    const char* test = "AB";
-    std::cout << ahrameev::count_diff_latin_letters(test) << "\n"
+
+    char* input = nullptr;
+    if (read_line(&input)) {
+        std::cerr << "Alloc error\n";
+        return 1;
+    }
+
+    int n = std::strlen(input);
+    char* lower = (char*)malloc(n + 1);
+    if (!lower) { free(input); return 1; }
+
+    ahrameev::to_lower_latin(lower, n + 1, input);
+    std::cout << "Lower: " << lower << "\n";
+
+    free(input);
+    free(lower);
     return 0;
 }
