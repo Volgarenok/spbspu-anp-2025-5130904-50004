@@ -79,6 +79,6 @@ int main(int argc, char** argv)
     return 2;
   }
   input.close();
-  output.close()
+  output.close();
   return 0;
 }
