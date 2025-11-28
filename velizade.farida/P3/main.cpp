@@ -61,16 +61,20 @@ int main(int argc, char** argv)
       return 2;
     }
   }
-  if (velizade::readArr(input, arr, rows, cols))
-  {
-    size_t local_mins_count = velizade::countLocalMins(arr, rows, cols);
-    velizade::leftTopClockwise(arr, rows, cols);
-    velizade::writeResult(output, arr, rows, cols, local_mins_count);
-  }
-  else
+  if (!velizade::readArr(input, arr, rows, cols))
   {
     std::cerr << "Error reading matrix data" << "\n";
+    if (num == '2')
+    {
+    delete[] arr;
+    }
+    input.close();
+    output.close();
+    return 2;
   }
+  size_t local_mins_count = velizade::countLocalMins(arr, rows, cols);
+  velizade::leftTopClockwise(arr, rows, cols);
+  velizade::writeResult(output, arr, rows, cols, local_mins_count);
   if (num == '2')
   {
     delete[] arr;
