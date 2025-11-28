@@ -1,10 +1,9 @@
 #include "pozdeev.hpp"
-#include <iostream>
 #include <cctype>
+#include <stdexcept>
+#include <iostream>
 
-namespace pozdeev
-{
-int countNonSequentialRows(const int* matrix, size_t rows, size_t cols)
+int pozdeev::countNonSequentialRows(const int * matrix, size_t rows, size_t cols)
 {
   if (rows == 0 || cols == 0) {
     return 0;
@@ -26,71 +25,66 @@ int countNonSequentialRows(const int* matrix, size_t rows, size_t cols)
   return rowsWithoutConsecutive;
 }
 
-void spiral(int* matrix, size_t rows, size_t cols)
+void pozdeev::spiral(int * matrix, size_t rows, size_t cols)
 {
   if (rows == 0 || cols == 0) {
     return;
   }
 
-  size_t top = 0;
-  size_t bottom = rows - 1;
-  size_t left = 0;
-  size_t right = cols - 1;
+  size_t minRow = 0;
+  size_t maxRow = rows - 1;
+  size_t minCol = 0;
+  size_t maxCol = cols - 1;
   int decrement = 1;
+  size_t count = 0;
+  size_t total = rows * cols;
 
-  while (top <= bottom && left <= right) {
-    for (size_t i = bottom + 1; i > top; --i) {
-      size_t r = i - 1;
-      matrix[r * cols + left] -= decrement;
+  while (count < total) {
+    for (size_t r = maxRow + 1; r > minRow && count < total; --r) {
+      matrix[(r - 1) * cols + minCol] -= decrement;
       decrement++;
+      count++;
     }
-    left++;
-    if (left > right) {
-      break;
-    }
+    minCol++;
 
-    for (size_t c = left; c <= right; ++c) {
-      matrix[top * cols + c] -= decrement;
+    for (size_t c = minCol; c <= maxCol && count < total; ++c) {
+      matrix[minRow * cols + c] -= decrement;
       decrement++;
+      count++;
     }
-    top++;
-    if (top > bottom) {
-      break;
-    }
+    minRow++;
 
-    for (size_t r = top; r <= bottom; ++r) {
-      matrix[r * cols + right] -= decrement;
+    for (size_t r = minRow; r <= maxRow && count < total; ++r) {
+      matrix[r * cols + maxCol] -= decrement;
       decrement++;
+      count++;
     }
-    if (right == 0) {
+    if (maxCol == 0) {
       break;
     }
-    right--;
-    if (left > right) {
-      break;
-    }
+    maxCol--;
 
-    for (size_t i = right + 1; i > left; --i) {
-      size_t c = i - 1;
-      matrix[bottom * cols + c] -= decrement;
+    for (size_t c = maxCol + 1; c > minCol && count < total; --c) {
+      matrix[maxRow * cols + (c - 1)] -= decrement;
       decrement++;
+      count++;
     }
-    if (bottom == 0) {
+    if (maxRow == 0) {
       break;
     }
-    bottom--;
+    maxRow--;
   }
 }
 
-int numAnalysis(const char* s)
+int pozdeev::numAnalysis(const char * s)
 {
   if (s == nullptr || s[0] == '\0') {
-    return ERROR_INVALID_FORMAT;
+    throw std::invalid_argument("First parameter is not a number");
   }
 
   for (size_t i = 0; s[i] != '\0'; ++i) {
     if (!std::isdigit(s[i])) {
-      return ERROR_INVALID_FORMAT;
+      throw std::invalid_argument("First parameter is not a number");
     }
   }
 
@@ -101,74 +95,16 @@ int numAnalysis(const char* s)
     return 2;
   }
 
-  return ERROR_INVALID_VALUE;
+  throw std::out_of_range("First parameter is out of range");
 }
 
-int processStatic(std::ifstream& fin, std::ofstream& fout, size_t rows, size_t cols)
+void pozdeev::inputMatrix(std::ifstream & in, int * matrix, size_t size)
 {
-  size_t numElements = rows * cols;
-
-  if (numElements > static_cast<size_t>(MAX_SIZE)) {
-    std::cerr << "ERROR: Matrix too large for static array\n" << std::endl;
-    return 2;
+  for (size_t i = 0; i < size; ++i) {
+    in >> matrix[i];
   }
 
-  int staticMatrix[MAX_SIZE];
-  if (numElements == 0) {
-    fout << "0";
-    return 0;
+  if (!in) {
+    throw std::runtime_error("Invalid matrix element or not enough elements");
   }
-
-  for (size_t i = 0; i < numElements; ++i) {
-    if (!(fin >> staticMatrix[i])) {
-      if (fin.eof()) {
-        std::cerr << "ERROR: Not enough matrix elements\n" << std::endl;
-      } else {
-        std::cerr << "ERROR: Invalid matrix element\n" << std::endl;
-      }
-      return 2;
-    }
-  }
-
-  fout << countNonSequentialRows(staticMatrix, rows, cols);
-  return 0;
-}
-
-int processDynamic(std::ifstream& fin, std::ofstream& fout, size_t rows, size_t cols)
-{
-  size_t numElements = rows * cols;
-
-  if (rows == 0 || cols == 0) {
-    fout << "0 0";
-    return 0;
-  }
-
-  int* dynamicMatrix = new (std::nothrow) int[numElements];
-  if (dynamicMatrix == nullptr) {
-    std::cerr << "ERROR: Memory not allocated for array\n" << std::endl;
-    return 2;
-  }
-
-  for (size_t i = 0; i < numElements; ++i) {
-    if (!(fin >> dynamicMatrix[i])) {
-      if (fin.eof()) {
-        std::cerr << "ERROR: Not enough matrix elements\n" << std::endl;
-      } else {
-        std::cerr << "ERROR: Invalid matrix element\n" << std::endl;
-      }
-      delete[] dynamicMatrix;
-      return 2;
-    }
-  }
-
-  spiral(dynamicMatrix, rows, cols);
-
-  fout << rows << " " << cols;
-  for (size_t i = 0; i < numElements; ++i) {
-    fout << " " << dynamicMatrix[i];
-  }
-
-  delete[] dynamicMatrix;
-  return 0;
-}
 }
