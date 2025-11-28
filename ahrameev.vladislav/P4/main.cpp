@@ -62,21 +62,35 @@ int read_line(char** out_buffer) {
 }
 
 int main() {
+    char* input_str = nullptr;
 
-    char* input = nullptr;
-    if (read_line(&input)) {
-        std::cerr << "Alloc error\n";
+    if (read_line(&input_str) != 0) {
+        std::cerr << "Error: cannot allocate memory\n";
         return 1;
     }
 
-    int n = std::strlen(input);
-    char* lower = (char*)malloc(n + 1);
-    if (!lower) { free(input); return 1; }
+    int diff_count = ahrameev::count_diff_latin_letters(input_str);
+    std::cout << diff_count << '\n';
 
-    ahrameev::to_lower_latin(lower, n + 1, input);
-    std::cout << "Lower: " << lower << "\n";
+    int len = std::strlen(input_str);
+    char* dest = (char*)malloc(len + 1);
+    if (!dest) {
+        std::cerr << "Error: cannot allocate output buffer\n";
+        free(input_str);
+        return 1;
+    }
 
-    free(input);
-    free(lower);
+    int result_len = ahrameev::to_lower_latin(dest, len + 1, input_str);
+    if (result_len == -1) {
+        std::cerr << "Error: conversion failed\n";
+        free(input_str);
+        free(dest);
+        return 1;
+    }
+
+    std::cout << dest << '\n';
+
+    free(input_str);
+    free(dest);
     return 0;
 }
