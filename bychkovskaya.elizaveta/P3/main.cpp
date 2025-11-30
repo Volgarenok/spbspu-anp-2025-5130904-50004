@@ -3,17 +3,13 @@
 #include <cctype>
 namespace bychkovskaya {
 
-bool ifNumber(char** m)
+bool ifNumber(char* m)
 {
   size_t k = 0;
   size_t k1 = 0;
-  for (size_t i = 0; m[1][i]!='\0'; ++i) {
-    for (size_t j = 0; j < 10; j++) {
-      char tmp;
-      tmp = j;
-      if (m[1][i] == tmp + '0') {
-        ++k;
-      }
+  for (size_t i = 0; m[i]!='\0'; ++i) {
+    if (isdigit(m[i])) {
+      ++k;
     }
     ++k1;
   }
@@ -29,7 +25,7 @@ int* create(size_t rows, size_t cols)
   try {
     result = new int [rows * cols];
   } catch (const std::bad_alloc& e) {
-    throw "Not enough memory";
+    throw std::runtime_error("Not enough memory");
   }
   return result;
 }
@@ -40,7 +36,7 @@ std::ifstream& inputMatrix(std::ifstream& in, int* m, size_t rows, size_t cols)
     for (size_t j = 0; j < cols; ++j) {
       in >> m[i * cols + j];
       if (!in) {
-        throw "Wrong matrix input";
+        throw std::invalid_argument("Wrong matrix input");
       }
     }
   }
@@ -64,7 +60,7 @@ size_t cntColNsm(const int* m, size_t rows, size_t cols)
   return count;
 }
 
-size_t cntNzrDig(const int* m, size_t& rows, size_t& cols)
+size_t cntNzrDig(const int* m, size_t rows, size_t cols)
 {
   size_t originalCols = cols;
   if (rows > cols) {
@@ -95,6 +91,11 @@ size_t cntNzrDig(const int* m, size_t& rows, size_t& cols)
   return count;
 }
 
+void outputMatrix(std::ofstream& out, const int* m, size_t rows, size_t cols) {
+  out << bychkovskaya::cntColNsm(m, rows, cols) << "\n";
+  out << bychkovskaya::cntNzrDig(m, rows, cols) << "\n";
+}
+
 }
 
 int main(int argc, char** argv)
@@ -107,53 +108,57 @@ int main(int argc, char** argv)
     return 1;
   }
   else {
-    size_t rows = 0;
-    size_t cols = 0;
-    std::ifstream input(argv[2]);
-    input >> rows >> cols;
-    if (!input) {
-      std::cerr << "Wrong matrix input" << "\n";
-      return 2;
-    }
-    if (argv[1][0] == '1') {
-      int fixedMatrix[10000];
-      try {
-        bychkovskaya::inputMatrix(input, fixedMatrix, rows, cols);
-      } catch (const char* e) {
-        std::cerr << e << "\n";
+    if ((argv[1][0] == '1' || argv[1][0] == '2') && argv[1][1] == '\0') {
+      size_t rows = 0;
+      size_t cols = 0;
+      std::ifstream input(argv[2]);
+      input >> rows >> cols;
+      if (!input) {
+        input.close();
+        std::cerr << "Wrong matrix input" << "\n";
         return 2;
       }
-      input.close();
-      std::ofstream output(argv[3]);
-      output << bychkovskaya::cntColNsm(fixedMatrix, rows, cols) << "\n";
-      output << bychkovskaya::cntNzrDig(fixedMatrix, rows, cols) << "\n";
-      output.close();
-    } else if (argv[1][0] == '2') {
-      int* dynamicMatrix = nullptr;
-      try {
-        dynamicMatrix = bychkovskaya::create(rows, cols);
-      } catch (const char* e) {
-        std::cerr << e << "\n";
-        return 2;
-      }
-      try {
-        bychkovskaya::inputMatrix(input, dynamicMatrix, rows, cols);
+      if (argv[1][0] == '1') {
+        int fixedMatrix[10000];
+        try {
+          bychkovskaya::inputMatrix(input, fixedMatrix, rows, cols);
+        } catch (const std::invalid_argument& e) {
+          input.close();
+          std::cerr << e.what() << "\n";
+          return 2;
+        }
         input.close();
         std::ofstream output(argv[3]);
-        output << bychkovskaya::cntColNsm(dynamicMatrix, rows, cols) << "\n";
-        output << bychkovskaya::cntNzrDig(dynamicMatrix, rows, cols) << "\n";
-        delete[] dynamicMatrix;
-      } catch (const char* e) {
-        std::cerr << e << "\n";
-        delete[] dynamicMatrix;
-        return 2;
+        bychkovskaya::outputMatrix(output, fixedMatrix, rows, cols);
+        output.close();
+      }
+      if (argv[1][0] == '2') {
+        int* dynamicMatrix = nullptr;
+        try {
+          dynamicMatrix = bychkovskaya::create(rows, cols);
+        } catch (const std::runtime_error& e) {
+          std::cerr << e.what() << "\n";
+          return 2;
+        }
+        try {
+          bychkovskaya::inputMatrix(input, dynamicMatrix, rows, cols);
+          input.close();
+          std::ofstream output(argv[3]);
+          bychkovskaya::outputMatrix(output, dynamicMatrix, rows, cols);
+          output.close();
+          delete[] dynamicMatrix;
+        } catch (const std::exception& e) {
+          std::cerr << e.what() << "\n";
+          delete[] dynamicMatrix;
+          return 2;
+        }
       }
     } else {
-      if (bychkovskaya::ifNumber(argv) == 1) {
+      if (bychkovskaya::ifNumber(argv[1]) == 1) {
         std::cerr << "First parameter is out of range" << "\n";
         return 1;
       }
-      if (bychkovskaya::ifNumber(argv) == 0) {
+      if (bychkovskaya::ifNumber(argv[1]) == 0) {
         std::cerr << "First parameter is not a number" << "\n";
         return 1;
       }
