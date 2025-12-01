@@ -16,6 +16,11 @@ int main()
     std::cerr << "Memory allocation error" << "\n";
     return 1;
   }
+  if (size == 0)
+  {
+    return 0;
+  }
+  
   std::cout << "\n";
   std::cout << arr << "\n";
   count = hal::DIF_LAT(arr);
