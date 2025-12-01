@@ -11,6 +11,7 @@ int main()
   size_t count = 0;
 
   arr = hal::getline(std::cin, size);
+
   if (arr == nullptr)
   {
     std::cerr << "Memory allocation error" << "\n";
@@ -18,8 +19,9 @@ int main()
   }
   if (size == 0)
   {
+    std::cerr << "Empty input" << "\n";
     free(arr);
-    return 0;
+    return 1;
   }
 
   std::cout << "\n";
