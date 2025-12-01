@@ -1,4 +1,4 @@
-лл#include "string_operations.hpp"
+#include "string_operations.hpp"
 #include <cstdlib>
 #include <iomanip>
 
