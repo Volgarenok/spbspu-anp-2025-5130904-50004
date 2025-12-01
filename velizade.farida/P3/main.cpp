@@ -14,9 +14,14 @@ int main(int argc, char** argv)
     std::cerr << "Not enough arguments" << "\n";
     return 1;
   }
+  if (argv[1][1])
+  {
+    std::cerr << "First parametr must be one character" << "\n";
+    return 1;
+  }
 
   char num = argv[1][0];
-  if (argv[1][1] != '\n' && num != '1' && num != '2')
+  if (num != '1' && num != '2')
   {
     std::cerr << "First parametr out of range or first parametr is not a number" << "\n";
     return 1;
