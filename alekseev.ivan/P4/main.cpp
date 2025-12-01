@@ -14,15 +14,16 @@ int main()
 {
   char * user_string = nullptr;
   size_t length = 0;
-  try {
-    user_string = alekseev::get_line(std::cin, length);
-  } catch (const std::bad_alloc & e) {
-    std::cerr << "Memory allocation error!" << "\n";
-    return 1;
-  } catch (const std::invalid_argument & e) {
-    std::cerr << e.what() << "\n";
+  user_string = alekseev::get_line(std::cin, length);
+  if (user_string == nullptr) {
+    if (!std::cin) {
+      std::cerr << "std::cin failed" << "\n";
+    } else {
+      std::cerr << "Memory allocation error!" << "\n";
+    }
     return 1;
   }
+
 
   char * excluded_second = reinterpret_cast< char * >(malloc(sizeof(char) * (length + 1)));
   if (!excluded_second) {
@@ -55,7 +56,7 @@ char * alekseev::get_line(std::istream & inp, size_t & length)
   size_t size = 10;
   char * result = reinterpret_cast< char * >(malloc(sizeof(char) * size));
   if (!result) {
-    throw std::bad_alloc();
+    return nullptr;
   }
 
   bool is_skipws = inp.flags() & std::ios_base::skipws;
@@ -71,7 +72,7 @@ char * alekseev::get_line(std::istream & inp, size_t & length)
       char * temp = resize_alloc(result, size, size + 10);
       if (!temp) {
         free(result);
-        throw std::bad_alloc();
+        return nullptr;
       }
       size += 10;
       result = temp;
@@ -81,12 +82,12 @@ char * alekseev::get_line(std::istream & inp, size_t & length)
   }
   if (!length || !inp) {
     free(result);
-    throw std::invalid_argument("Invalid input");
+    return nullptr;
   }
   char * temp = resize_alloc(result, size, length + 1);
   if (!temp) {
     free(result);
-    throw std::bad_alloc();
+    return nullptr;
   }
   result = temp;
   result[length] = '\0';
