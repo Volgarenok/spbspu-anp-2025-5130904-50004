@@ -24,7 +24,7 @@ int main()
 
   char *new_arr = nullptr;
   size_t new_size = hal::sizeWithoutVowels(arr, str_size);
-  new_arr = static_cast < char* >(malloc((new_size + 1) * sizeof(char)));
+  new_arr = reinterpret_cast< char* >(malloc((new_size + 1) * sizeof(char)));
   if (new_arr == nullptr)
   {
     std::cerr << "Memory allocation error" << "\n";
