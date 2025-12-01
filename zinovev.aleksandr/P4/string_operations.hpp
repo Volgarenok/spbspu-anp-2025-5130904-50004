@@ -5,10 +5,10 @@
 
 namespace zinovev
 {
-  char* SetLine(std::istream & in, size_t& size, size_t& number_of_letters);
-  void CutLetters(char* arr, char* ptr, size_t& size, size_t& size_ptr);
-  void GetLine(std::ostream & out, char* array, const size_t size);
-  int GetRepetitions(const char* arr, const size_t size);
+  char* setLine(std::istream& in, size_t& size, size_t& number_of_letters);
+  char* cutLetters(const char* arr, char* arr_ptr, size_t& size, size_t& size_ptr);
+  void printLine(std::ostream& out, const char* array, size_t size);
+  int getRepetitions(const char* arr, size_t size);
 }
 
 #endif

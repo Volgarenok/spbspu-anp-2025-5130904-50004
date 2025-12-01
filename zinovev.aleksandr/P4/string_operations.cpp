@@ -2,73 +2,84 @@
 #include <cstdlib>
 #include <iomanip>
 
-char* zinovev::SetLine(std::istream & in, size_t& size, size_t& number_of_letters)
+char* zinovev::setLine(std::istream& in, size_t& size, size_t& number_of_letters)
 {
   if (in >> std::skipws)
+  {
     in >> std::noskipws;
+  }
 
-  size_t number = 10;
-  char* Mass = static_cast<char*>(malloc(number * sizeof(char)));
+  const size_t INITIAL_BUFFER_SIZE = 10;
+  size_t number = INITIAL_BUFFER_SIZE;
+  char* buffer = static_cast< char* >(malloc(number * sizeof(char)));
 
-  if (Mass == nullptr)
-    return Mass;
+  if (buffer == nullptr)
+  {
+    return buffer;
+  }
 
   size = 0;
   number_of_letters = 0;
 
-  while (in >> Mass[size] && Mass[size] != '\n')
+  while (in >> buffer[size] && buffer[size] != '\n')
   {
     ++size;
 
-    if (std::isalpha(Mass[size - 1]))
+    if (std::isalpha(buffer[size - 1]))
+    {
       number_of_letters++;
+    }
 
     if (size == number)
     {
       number += number;
-      char* Mass_ptr = static_cast<char*>(malloc(number * sizeof(char)));
+      char* new_buffer = static_cast< char* >(malloc(number * sizeof(char)));
 
-      if (Mass_ptr == nullptr)
+      if (new_buffer == nullptr)
       {
-        free(Mass);
-        return Mass_ptr;
+        free(buffer);
+        return new_buffer;
       }
 
       for (size_t k = 0; k < size; ++k)
-        Mass_ptr[k] = Mass[k];
+      {
+        new_buffer[k] = buffer[k];
+      }
 
-      free(Mass);
+      free(buffer);
 
-      Mass = Mass_ptr;
-      Mass_ptr = nullptr;
+      buffer = new_buffer;
+      new_buffer = nullptr;
     }
   }
 
   in >> std::skipws;
 
-  char* Arr = static_cast<char*>(malloc((size + 1) * sizeof(char)));
+  char* result = static_cast< char* >(malloc((size + 1) * sizeof(char)));
 
-  if (Arr == nullptr)
+  if (result == nullptr)
   {
-    free(Mass);
-    return Arr;
+    free(buffer);
+    return result;
   }
 
   for (size_t k = 0; k < size; ++k)
-    Arr[k] = Mass[k];
+  {
+    result[k] = buffer[k];
+  }
 
-  Arr[size] = '\0';
+  result[size] = '\0';
 
-  free(Mass);
+  free(buffer);
 
-  return Arr;
+  return result;
 }
 
-void zinovev::CutLetters(char* arr, char* arr_ptr, size_t& size, size_t& size_ptr)
+char* zinovev::cutLetters(const char* arr, char* arr_ptr, size_t& size, size_t& size_ptr)
 {
   size_t skip = 0;
 
-  for (size_t i = 0; i < size; ++i)
+  for (size_t i = 0; arr[i] != '\0'; ++i)
   {
     if (std::isalpha(arr[i]))
     {
@@ -81,30 +92,37 @@ void zinovev::CutLetters(char* arr, char* arr_ptr, size_t& size, size_t& size_pt
   }
 
   size_ptr = size - skip;
+  return arr_ptr;
 }
 
-void zinovev::GetLine(std::ostream & out, char* array, const size_t size)
+void zinovev::printLine(std::ostream& out, const char* array, size_t size)
 {
   if (array == nullptr)
+  {
     return;
-
+  }
+  
   for (size_t i = 0; i < size; ++i)
+  {
     out << array[i];
-
-  out << "\n";
+  }
 }
 
-int zinovev::GetRepetitions(const char* arr, const size_t size)
+int zinovev::getRepetitions(const char* arr, size_t size)
 {
   int counter = 0;
 
   for (size_t i = 0; i < size; ++i)
+  {
     for (size_t k = i + 1; k < size; ++k)
+    {
       if (arr[i] == arr[k])
       {
         ++counter;
         break;
       }
+    }
+  }
 
   return counter;
 }
