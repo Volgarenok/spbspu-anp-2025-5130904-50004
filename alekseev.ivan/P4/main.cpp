@@ -5,7 +5,7 @@
 
 
 namespace alekseev {
-  char * get_line(std::istream & inp, size_t & length);
+  char * get_line(std::istream & inp, size_t & size);
   char * resize_alloc(char * old_str, size_t old_size, size_t new_size);
 }
 
@@ -51,10 +51,10 @@ int main()
 }
 
 
-char * alekseev::get_line(std::istream & inp, size_t & length)
+char * alekseev::get_line(std::istream & inp, size_t & size)
 {
-  size_t size = 10;
-  char * result = reinterpret_cast< char * >(malloc(sizeof(char) * size));
+  size_t capacity = 10;
+  char * result = reinterpret_cast< char * >(malloc(sizeof(char) * capacity));
   if (!result) {
     return nullptr;
   }
@@ -65,32 +65,32 @@ char * alekseev::get_line(std::istream & inp, size_t & length)
   }
 
   char current_char = ' ';
-  length = 0;
+  size = 0;
   inp >> current_char;
   while (current_char != '\n' && inp) {
-    if (++length == size - 1) {
-      char * temp = resize_alloc(result, size, size + 10);
+    if (++size == capacity - 1) {
+      char * temp = resize_alloc(result, capacity, capacity + 10);
       if (!temp) {
         free(result);
         return nullptr;
       }
-      size += 10;
+      capacity += 10;
       result = temp;
     }
-    result[length - 1] = current_char;
+    result[size - 1] = current_char;
     inp >> current_char;
   }
-  if (!length || !inp) {
+  if (!size || !inp) {
     free(result);
     return nullptr;
   }
-  char * temp = resize_alloc(result, size, length + 1);
+  char * temp = resize_alloc(result, capacity, size + 1);
   if (!temp) {
     free(result);
     return nullptr;
   }
   result = temp;
-  result[length] = '\0';
+  result[size] = '\0';
 
   if (is_skipws) {
     inp >> std::skipws;
@@ -104,7 +104,7 @@ char * alekseev::resize_alloc(char * old_str, size_t old_size, size_t new_size)
   char * result = reinterpret_cast< char * >(malloc(sizeof(char) * new_size));
   if (result) {
     const size_t size = old_size < new_size ? old_size : new_size;
-    for (size_t i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; ++i) {
       result[i] = old_str[i];
     }
     free(old_str);
