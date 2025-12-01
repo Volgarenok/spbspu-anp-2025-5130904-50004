@@ -9,7 +9,7 @@ char* read_string(std::istream& input, size_t size)
     return nullptr;
   }
   size_t i = 0;
-  inr ch = input.get();
+  int ch = input.get();
   while (i < size && ch != EOF && ch != '\n')
   {
     str[i++] = static_cast<char>(ch);
@@ -49,6 +49,7 @@ int rep_sym(char* buffer, const char* str)
     {
       continue;
     }
+    int count = 0;
     if (count > 1)
     {
       buffer[pos++] = str[i];

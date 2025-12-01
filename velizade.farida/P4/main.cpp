@@ -43,7 +43,7 @@ int main()
     free(buf2);
     return 1;
   }
-  if (velizade::uni_two(buf2, input, "def_") ! = 0)
+  if (velizade::uni_two(buf2, input, "def_") != 0)
   {
     std::cerr << "UNI_TWO failed" << "\n";
     free(input);
