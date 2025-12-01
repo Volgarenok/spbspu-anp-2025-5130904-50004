@@ -26,3 +26,34 @@ void print_string(std::ostream& output, const char* str)
     output << str;
   }
 }
+
+int rep_sym(char* buffer, const char* str)
+{
+  if (!buffer || !str)
+  {
+    return 1;
+  }
+  size_t pos = 0;
+  for (size_t i = 0; str[i]; i++)
+  {
+    bool already_added = false;
+    for (size_t k = 0; k < pos; k++)
+    {
+      if (buffer[k] == str[i])
+      {
+        already_added = true;
+        break;
+      }
+    }
+    if (already_added)
+    {
+      continue;
+    }
+    if (count > 1)
+    {
+      buffer[pos++] = str[i];
+    }
+  }
+  buffer[pos] = '\0';
+  return 0;
+}
