@@ -46,7 +46,7 @@ char *haliullin::getline(std::istream &in, size_t &size)
       free(arr);
       arr = temp;
     }
-    
+
     arr[s++] = symb;
   }
 
@@ -65,7 +65,9 @@ size_t haliullin::DIF_LAT(const char *arr)
   size_t count = 0;
   size_t ind = 0;
   char symb = '\0';
-  bool info[26] = {};
+  const size_t alphs = 26;
+  bool info[alphs] = {};
+  
   for (size_t i = 0; arr[i] != '\0'; ++i)
   {
     symb = char(std::tolower(arr[i]));
@@ -126,11 +128,3 @@ size_t haliullin::sizeWithoutVowels(const char *arr)
   return count;
 }
 
-void haliullin::writeString(const char *arr)
-{
-  for (size_t i = 0; arr[i] != '\0'; ++i)
-  {
-    std::cout << arr[i];
-  }
-  std::cout << std::endl;
-}

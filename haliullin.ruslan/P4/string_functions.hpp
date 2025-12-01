@@ -8,6 +8,5 @@ namespace haliullin
   char *RMV_VOW(char *new_arr, const char *arr);
   bool isVowel(const char c);
   size_t sizeWithoutVowels(const char *arr);
-  void writeString(const char *arr);
 }
 #endif

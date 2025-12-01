@@ -16,8 +16,8 @@ int main()
     std::cerr << "Memory allocation error" << "\n";
     return 1;
   }
-
-  hal::writeString(arr);
+  std::cout << "\n";
+  std::cout << arr << "\n";
   count = hal::DIF_LAT(arr);
   std::cout << count << "\n";
 
@@ -30,7 +30,7 @@ int main()
     return 1;
   }
   new_arr = hal::RMV_VOW(new_arr, arr);
-  hal::writeString(new_arr);
+  std::cout << new_arr << "\n";
 
   free(arr);
   free(new_arr);
