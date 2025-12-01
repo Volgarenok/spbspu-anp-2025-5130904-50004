@@ -70,8 +70,8 @@ char * alekseev::get_line(std::istream & inp, size_t & size)
   while (current_char != '\n' && inp) {
     if (++size == capacity - 1) {
       char * temp = resize_alloc(result, capacity, capacity + 10);
+      free(result);
       if (!temp) {
-        free(result);
         return nullptr;
       }
       capacity += 10;
@@ -85,8 +85,8 @@ char * alekseev::get_line(std::istream & inp, size_t & size)
     return nullptr;
   }
   char * temp = resize_alloc(result, capacity, size + 1);
+  free(result);
   if (!temp) {
-    free(result);
     return nullptr;
   }
   result = temp;
@@ -107,7 +107,6 @@ char * alekseev::resize_alloc(char * old_str, size_t old_size, size_t new_size)
     for (size_t i = 0; i < size; ++i) {
       result[i] = old_str[i];
     }
-    free(old_str);
   }
   return result;
 }
