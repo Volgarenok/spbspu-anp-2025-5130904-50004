@@ -93,10 +93,10 @@ char *haliullin::RMV_VOW(char *new_arr, const char *arr)
     symb = char(std::tolower(arr[i]));
     if (!isVowel(symb))
     {
-      new_arr[ind] = arr[i];
-      ++ind;
+      new_arr[ind++] = arr[i];
     }
   }
+  new_arr[ind] = '\0';
   return new_arr;
 }
 
