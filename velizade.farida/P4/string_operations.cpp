@@ -18,3 +18,11 @@ char* read_string(std::istream& input, size_t size)
   str[i] = '\0';
   return str;
 }
+
+void print_string(std::ostream& output, const char* str)
+{
+  if (str)
+  {
+    output << str;
+  }
+}
