@@ -42,11 +42,11 @@ char *haliullin::getline(std::istream &in, size_t &size)
       {
         temp[i] = arr[i];
       }
-
       cap *= 2;
       free(arr);
       arr = temp;
     }
+    
     arr[s++] = symb;
   }
 
@@ -60,16 +60,16 @@ char *haliullin::getline(std::istream &in, size_t &size)
   return arr;
 }
 
-size_t haliullin::DIF_LAT(const char *arr, size_t str_size)
+size_t haliullin::DIF_LAT(const char *arr)
 {
   size_t count = 0;
   size_t ind = 0;
   char symb = '\0';
   bool info[26] = {};
-  for (size_t i = 0; i < str_size; ++i)
+  for (size_t i = 0; arr[i] != '\0'; ++i)
   {
     symb = char(std::tolower(arr[i]));
-    if (symb >= 'a' && symb <= 'z')
+    if (std::isalpha(symb))
     {
       ind = symb - 'a';
       if (!info[ind])
@@ -82,11 +82,11 @@ size_t haliullin::DIF_LAT(const char *arr, size_t str_size)
   return count;
 }
 
-char *haliullin::RMV_VOW(char *new_arr, const char *arr, size_t str_size)
+char *haliullin::RMV_VOW(char *new_arr, const char *arr)
 {
   size_t ind = 0;
   char symb = '\0';
-  for (size_t i = 0; i < str_size; ++i)
+  for (size_t i = 0; arr[i] != '\0'; ++i)
   {
     symb = char(std::tolower(arr[i]));
     if (!isVowel(symb))
@@ -111,11 +111,11 @@ bool haliullin::isVowel(const char c)
   return false;
 }
 
-size_t haliullin::sizeWithoutVowels(const char *arr, size_t str_size)
+size_t haliullin::sizeWithoutVowels(const char *arr)
 {
   size_t count = 0;
   char symb = '\0';
-  for (size_t i = 0; i < str_size; ++i)
+  for (size_t i = 0; arr[i] != '\0'; ++i)
   {
     symb = char(std::tolower(arr[i]));
     if (!isVowel(symb))
@@ -126,11 +126,11 @@ size_t haliullin::sizeWithoutVowels(const char *arr, size_t str_size)
   return count;
 }
 
-void haliullin::writeString(const char *arr, size_t str_size)
+void haliullin::writeString(const char *arr)
 {
-  for (size_t i = 0; i < str_size; ++i)
+  for (size_t i = 0; arr[i] != '\0'; ++i)
   {
     std::cout << arr[i];
   }
-  std::cout << "\n";
+  std::cout << std::endl;
 }
