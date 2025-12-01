@@ -8,28 +8,26 @@ char *haliullin::getline(std::istream &in, size_t &size)
   {
     in >> std::noskipws;
   }
-  char symb = '\0';
-  char *arr = nullptr;
-  size = 0;
 
-  in >> symb;
-  if (in)
+  char symb = '\0';
+  size_t s = 0;
+  size_t cap = 10;
+  char *arr = reinterpret_cast< char* >(malloc(cap * sizeof(char)));
+  if (arr == nullptr)
   {
-    ++size;
-    arr = static_cast < char* >(malloc(sizeof(char)));
-    if (arr == nullptr)
+    if (is_skipws)
     {
-      if (is_skipws)
-      {
-        in >> std::skipws;
-      }
-      return nullptr;
+      in >> std::skipws;
     }
-    arr[0] = symb;
-    while (in >> symb && symb != '\0')
+    return nullptr;
+  }
+
+  while (in >> symb && symb != '\n')
+  {
+    if (s == cap)
     {
-      char *temp = nullptr;
-      temp = static_cast < char* >(malloc((size + 1) * sizeof(char)));
+      char *temp = reinterpret_cast< char* >(malloc(2 * cap * sizeof(char)));
+
       if (temp == nullptr)
       {
         if (is_skipws)
@@ -39,22 +37,26 @@ char *haliullin::getline(std::istream &in, size_t &size)
         free(arr);
         return nullptr;
       }
-      for (size_t i = 0; i < size; ++i)
+
+      for (size_t i = 0; i < s; ++i)
       {
         temp[i] = arr[i];
       }
-      temp[size] = symb;
 
+      cap *= 2;
       free(arr);
       arr = temp;
-      ++size;
     }
-    arr[size - 1] = 0;
+    arr[s++] = symb;
   }
+
   if (is_skipws)
   {
     in >> std::skipws;
   }
+
+  arr[s] = '\0';
+  size = s;
   return arr;
 }
 
