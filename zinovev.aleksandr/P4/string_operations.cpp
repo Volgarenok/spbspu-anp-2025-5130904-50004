@@ -1,4 +1,4 @@
-#include "string_operations.hpp"
+лл#include "string_operations.hpp"
 #include <cstdlib>
 #include <iomanip>
 
@@ -101,7 +101,7 @@ void zinovev::printLine(std::ostream& out, const char* array, size_t size)
   {
     return;
   }
-  
+
   for (size_t i = 0; i < size; ++i)
   {
     out << array[i];
