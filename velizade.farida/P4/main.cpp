@@ -1,3 +1,4 @@
+#include "string_operations.hpp"
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
