@@ -18,9 +18,10 @@ int main()
   }
   if (size == 0)
   {
+    free(arr);
     return 0;
   }
-  
+
   std::cout << "\n";
   std::cout << arr << "\n";
   count = hal::DIF_LAT(arr);
@@ -32,6 +33,7 @@ int main()
   if (new_arr == nullptr)
   {
     std::cerr << "Memory allocation error" << "\n";
+    free(arr);
     return 1;
   }
   new_arr = hal::RMV_VOW(new_arr, arr);
