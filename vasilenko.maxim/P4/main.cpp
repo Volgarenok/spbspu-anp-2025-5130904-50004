@@ -55,6 +55,13 @@ int main()
   }
   buffer[size] = '\0';
 
+  if (buffer[0] == '\0')
+  {
+    std::cerr << "Error: Input string is empty.\n";
+    delete[] buffer;
+    return 1;
+  }
+
   char* missingRes = nullptr;
   try
   {
