@@ -8,7 +8,7 @@ int main()
   char* input = velizade::read_string(std::cin, size);
   if (!input)
   {
-    std::cerr << "Memorry error" << "\n";
+    std::cerr << "Memory error" << "\n";
     return 1;
   }
   if (!input[0])
