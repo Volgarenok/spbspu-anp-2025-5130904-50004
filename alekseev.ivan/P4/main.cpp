@@ -33,7 +33,8 @@ int main()
   }
   const char * second = "abc";
   const size_t second_len = 3;
-  alekseev::exc_scd(user_string, length, second, second_len, excluded_second);
+  size_t length_result = 0;
+  alekseev::exc_scd(user_string, length, second, second_len, excluded_second, length_result);
   std::cout << excluded_second << "\n";
   free(excluded_second);
 
@@ -43,7 +44,7 @@ int main()
     free(user_string);
     return 1;
   }
-  alekseev::lat_rmv(user_string, length, removed_latin_letters);
+  alekseev::lat_rmv(user_string, length, removed_latin_letters, length_result);
   std::cout << removed_latin_letters << "\n";
   free(removed_latin_letters);
 
