@@ -16,15 +16,15 @@ int main()
   size_t length = 0;
   try {
     user_string = alekseev::get_line(std::cin, length);
-  } catch (std::bad_alloc & e) {
+  } catch (const std::bad_alloc & e) {
     std::cerr << "Memory allocation error!" << "\n";
     return 1;
-  } catch (std::invalid_argument & e) {
+  } catch (const std::invalid_argument & e) {
     std::cerr << e.what() << "\n";
     return 1;
   }
 
-  char * excluded_second = reinterpret_cast<char *>(malloc(sizeof(char) * (length + 1)));
+  char * excluded_second = reinterpret_cast< char * >(malloc(sizeof(char) * (length + 1)));
   if (!excluded_second) {
     std::cerr << "Memory allocation error!" << "\n";
     free(user_string);
@@ -36,7 +36,7 @@ int main()
   std::cout << excluded_second << "\n";
   free(excluded_second);
 
-  char * removed_latin_letters = reinterpret_cast<char *>(malloc(sizeof(char) * (length + 1)));
+  char * removed_latin_letters = reinterpret_cast< char * >(malloc(sizeof(char) * (length + 1)));
   if (!removed_latin_letters) {
     std::cerr << "Memory allocation error!" << "\n";
     free(user_string);
@@ -53,7 +53,7 @@ int main()
 char * alekseev::get_line(std::istream & inp, size_t & length)
 {
   size_t size = 10;
-  char * result = reinterpret_cast<char *>(malloc(sizeof(char) * size));
+  char * result = reinterpret_cast< char * >(malloc(sizeof(char) * size));
   if (!result) {
     throw std::bad_alloc();
   }
@@ -100,7 +100,7 @@ char * alekseev::get_line(std::istream & inp, size_t & length)
 
 char * alekseev::resize_alloc(char * old_str, size_t old_size, size_t new_size)
 {
-  char * result = reinterpret_cast<char *>(malloc(sizeof(char) * new_size));
+  char * result = reinterpret_cast< char * >(malloc(sizeof(char) * new_size));
   if (result) {
     const size_t size = old_size < new_size ? old_size : new_size;
     for (size_t i = 0; i < size; i++) {
