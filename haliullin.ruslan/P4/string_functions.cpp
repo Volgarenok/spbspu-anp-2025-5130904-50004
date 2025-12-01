@@ -67,7 +67,7 @@ size_t haliullin::DIF_LAT(const char *arr)
   char symb = '\0';
   const size_t alphs = 26;
   bool info[alphs] = {};
-  
+
   for (size_t i = 0; arr[i] != '\0'; ++i)
   {
     symb = char(std::tolower(arr[i]));
