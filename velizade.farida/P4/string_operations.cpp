@@ -1,4 +1,4 @@
-#include "velizade.hpp"
+#include "string_operations.hpp"
 #include <cstdlib>
 
 char* read_string(std::istream& input, size_t size)
