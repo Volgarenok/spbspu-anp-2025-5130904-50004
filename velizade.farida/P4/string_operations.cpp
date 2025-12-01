@@ -57,3 +57,27 @@ int rep_sym(char* buffer, const char* str)
   buffer[pos] = '\0';
   return 0;
 }
+
+int uni_two(char* buffer, const char* str1, const char* str2)
+{
+  if (!buffer || !str1 || !str2)
+  {
+    return 1;
+  }
+  size_t i = 0;
+  size_t j = 0;
+  size_t pos = 0;
+  while (str1[i] || str2[j])
+  {
+    if (str1[i])
+    {
+      buffer[pos++] = str1[i++];
+    }
+    if (str2[j])
+    {
+      buffer[pos++] = str2[j++];
+    }
+  }
+  buffer[pos] = '\0';
+  return 0;
+}
