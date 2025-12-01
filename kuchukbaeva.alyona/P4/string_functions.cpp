@@ -12,34 +12,46 @@ size_t kuchukbaeva::strLen(const char* str)
   }
   return len;
 }
-char* kuchukbaeva::readStr(std::istream& input)
+char* kuchukbaeva::readStr(std::istream& input, size_t& read_size)
 {
-  if (input.peek() == std::char_traits< char >::eof())
-  {
-    return nullptr;
-  }
-  size_t sizes = 16;
-  size_t length = 0;
-  char* buffer = new char[sizes];
+  size_t capacity = 16;
+  size_t size = 0;
+  char* buffer = new char[capacity];
   char c = 0;
+  input >> std::noskipws;
   while (input.get(c) && c != '\n')
   {
-    if (length + 1 >= sizes)
+    if (size + 1 >= capacity)
     {
-      size_t new_sizes = sizes * 2;
-      char* new_buffer = new  char[new_sizes];
-      for (size_t i = 0; i < length; ++i)
+      size_t new_capacity = capacity * 2;
+      char* new_buffer = nullptr;
+      try
+      {
+        new_buffer = new char[new_capacity];
+      }
+      catch (...)
+      {
+        delete[] buffer;
+        throw;
+      }
+      for (size_t i = 0; i < size; ++i)
       {
         new_buffer[i] = buffer[i];
       }
       delete[] buffer;
       buffer = new_buffer;
-      sizes = new_sizes;
+      capacity = new_capacity;
     }
-    buffer[length] = c;
-    length++;
+    buffer[size] = c;
+    size++;
   }
-  buffer[length] = '\0';
+  if (size == 0 && !input)
+  {
+    delete[] buffer;
+    return nullptr;
+  }
+  buffer[size] = '\0';
+  read_size = size;
   return buffer;
 }
 int kuchukbaeva::isVowel(char c)
@@ -53,7 +65,7 @@ char* kuchukbaeva::rmvVow(const char* src, char* dest) noexcept
   size_t destindex = 0;
   for (size_t i = 0; src[i] != '\0'; ++i)
   {
-    if (!std::isalpha(src[i]) || !isVowel(src[i]))
+    if (!isVowel(src[i]))
     {
       dest[destindex] = src[i];
       destindex++;
@@ -79,5 +91,4 @@ int kuchukbaeva::repDgt(const char* str) noexcept
   }
   return 0;
 }
-
 

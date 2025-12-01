@@ -6,13 +6,13 @@ int main()
 {
   try
   {
-    char* input_str = kuchukbaeva::readStr(std::cin);
+    size_t len = 0;
+    char* input_str = kuchukbaeva::readStr(std::cin, len);
     if (input_str == nullptr)
     {
       std::cerr << "Empty input" << "\n";
       return 1;
     }
-    const size_t len = kuchukbaeva::strLen(input_str);
     char* res_str = new char[len + 1];
     kuchukbaeva::rmvVow(input_str, res_str);
     std::cout << res_str << "\n";
