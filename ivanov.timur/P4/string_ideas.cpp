@@ -3,7 +3,7 @@
 #include <cctype>
 #include <cstddef>
 
-void ivanov::get_line(std::istream & in, char*& data, size_t& size)
+void ivanov::get_line(std::istream &in, char *&data, size_t &size)
 {
   bool is_skipws = in.flags() & std::ios_base::skipws;
   if (is_skipws)
@@ -26,7 +26,7 @@ void ivanov::get_line(std::istream & in, char*& data, size_t& size)
   }
 }
 
-bool ivanov::del_lat(char*& content, size_t& size) {
+bool ivanov::del_lat(char *&content, size_t &size) {
   try
   {
     char* tmp = new char[100000];
@@ -52,7 +52,7 @@ bool ivanov::del_lat(char*& content, size_t& size) {
     return false;
   }
 }
-void ivanov::output(const char* content, size_t& size)
+void ivanov::output(const char *content, size_t &size)
 {
   for (size_t i = 0; i < size; ++i)
   {
@@ -60,7 +60,7 @@ void ivanov::output(const char* content, size_t& size)
   }
   std::cout << "\n";
 }
-bool ivanov::spc_rmv(char*& content, size_t& size)
+bool ivanov::spc_rmv(char *&content, size_t &size)
 {
   try
   {
@@ -89,7 +89,7 @@ bool ivanov::spc_rmv(char*& content, size_t& size)
     return false;
   }
 }
-bool ivanov::merge(char*& content1, char* content2, size_t& size1, size_t size2)
+bool ivanov::merge(char *&content1, char *content2, size_t &size1, size_t size2)
 {
   try
   {
@@ -112,7 +112,7 @@ bool ivanov::merge(char*& content1, char* content2, size_t& size1, size_t size2)
     return false;
   }
 }
-bool ivanov::get_find(char*& content, size_t& size)
+bool ivanov::get_find(char *&content, size_t &size)
 {
   try
   {
@@ -140,7 +140,7 @@ bool ivanov::get_find(char*& content, size_t& size)
     return false;
   }
 }
-bool ivanov::find(char symbol, const char* content, size_t size)
+bool ivanov::find(char symbol, const char *content, size_t size)
 {
   for (size_t i = 0; i < size; ++i)
   {
