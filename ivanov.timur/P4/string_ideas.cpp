@@ -3,6 +3,29 @@
 #include <cctype>
 #include <cstddef>
 
+void ivanov::get_line(std::istream & in, char*& data, size_t& size)
+{
+  bool is_skipws = in.flags() & std::ios_base::skipws;
+  if (is_skipws)
+  {
+    in >> std::noskipws;
+  }
+  char tmp = '\n';
+  in >> tmp;
+  while (tmp != '\n' && std::cin)
+  {
+    data[size] = tmp;
+    size++;
+    in >> tmp;
+  }
+  data[size] = 0;
+  size++;
+  if (is_skipws)
+  {
+    in >> std::skipws;
+  }
+}
+
 bool ivanov::del_lat(char*& content, size_t& size) {
   try
   {
