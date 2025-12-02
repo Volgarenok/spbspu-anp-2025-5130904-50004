@@ -48,7 +48,7 @@ char * ivanov::del_lat(char *content, size_t &size) {
       e++;
     }
   }
-  char tmp[e];
+  char * tmp = new char[e];
   for (size_t i = 0; i < size; ++i)
   {
     if (!std::isalpha(content[i]))
@@ -61,9 +61,10 @@ char * ivanov::del_lat(char *content, size_t &size) {
     }
   }
   delete[] content;
+  content = tmp;
   size = e;
 
-  return tmp;
+  return content;
 }
 void ivanov::output(const char *content)
 {
@@ -75,7 +76,7 @@ void ivanov::output(const char *content)
 }
 char * ivanov::spc_rmv(char *content, size_t &size)
 {
-  char tmp[size - count(content, ' ')];
+  char * tmp = new char[size - count(content, ' ')];
   bool flag = false;
   size_t c = 0;
   for (size_t i = 0; i < size; ++i)
@@ -91,13 +92,14 @@ char * ivanov::spc_rmv(char *content, size_t &size)
     }
   }
   delete[] content;
+  content = tmp;
   size-=c;
 
-  return tmp;
+  return content;
 }
 char * ivanov::merge(char *content1, char *content2, size_t &size1, size_t size2)
 {
-  char tmp[size1 + size2];
+  char * tmp = new char[size1 + size2];
   for (size_t i = 0; i < size1; ++i)
   {
     tmp[i] = content1[i];
@@ -107,13 +109,14 @@ char * ivanov::merge(char *content1, char *content2, size_t &size1, size_t size2
     tmp[i] = content2[i - size1];
   }
   delete[] content1;
+  content1 = tmp;
   size1+=size2;
 
-  return tmp;
+  return content1;
 }
 char * ivanov::get_find(char *content, size_t &size)
 {
-  char tmp[26];
+  char * tmp = new char[26];
   size_t l = 0;
   char x = 'a';
   char z = 'A';
@@ -128,9 +131,10 @@ char * ivanov::get_find(char *content, size_t &size)
     z++;
   }
   delete[] content;
+  content = tmp;
   size = l;
 
-  return tmp;
+  return content;
 }
 bool ivanov::find(char symbol, const char *content)
 {
