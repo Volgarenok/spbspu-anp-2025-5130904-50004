@@ -7,7 +7,7 @@ namespace ivanov {
   char * del_lat(char *content, size_t &size);
 
   void output(const char *content);
-  char * merge(char *content1, char *content2, size_t &size1, size_t size2);
+  char * merge(char *content1, const char *content2, size_t &size1, size_t size2);
 
   char * get_find(char *content, size_t &size);
 
