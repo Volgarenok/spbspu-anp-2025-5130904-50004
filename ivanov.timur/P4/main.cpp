@@ -1,39 +1,26 @@
 #include <iostream>
 #include "string_ideas.h"
 int main() {
-  char* content = new char[100000];
+  size_t BASE = 10;
+  char* content = new char[BASE];
   size_t size = 0;
-  ivanov::get_line(std::cin, content, size);
+  content = ivanov::get_line(std::cin, content, size, BASE);
   if (size == 1)
   {
     delete[] content;
     std::cerr << "No data provided" << "\n";
     return 2;
   }
-  if (!ivanov::del_lat(content, size))
-  {
-    delete[] content;
-    return 1;
-  }
-  if (!ivanov::spc_rmv(content, size))
-  {
-    delete[] content;
-    return 1;
-  }
-  ivanov::output(content, size);
+  content = ivanov::del_lat(content, size);
+  content = ivanov::spc_rmv(content, size);
+  ivanov::output(content);
+  std::cout << "\n";
   char add_content[] = "And I think to myself - what a wonderful world!0";
   size_t add_size = 48;
-  if (!ivanov::merge(content, add_content, size, add_size))
-  {
-    delete[] content;
-    return 1;
-  }
-  if (!ivanov::get_find(content, size))
-  {
-    delete[] content;
-    return 1;
-  }
-  ivanov::output(content, size);
+  content = ivanov::merge(content, add_content, size, add_size);
+  content = ivanov::get_find(content, size);
+  ivanov::output(content);
+  std::cout << "\n";
   delete[] content;
   return 0;
 }

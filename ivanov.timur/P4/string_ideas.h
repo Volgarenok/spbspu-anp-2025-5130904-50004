@@ -3,12 +3,17 @@
 #include <cstddef>
 #include <iosfwd>
 namespace ivanov {
-  bool spc_rmv(char *&content, size_t &size);
-  bool del_lat(char *&content, size_t &size);
-  void output(const char *content, size_t &size);
-  bool merge(char *&content1, char *content2, size_t &size1, size_t size2);
-  bool get_find(char *&content, size_t &size);
-  bool find(char symbol, const char *content, size_t size);
-  void ivanov::get_line(std::istream &in, char *&data, size_t &size);
+  char * spc_rmv(char *content, size_t &size);
+  char * del_lat(char *content, size_t &size);
+
+  void output(const char *content);
+  char * merge(char *content1, char *content2, size_t &size1, size_t size2);
+
+  char * get_find(char *content, size_t &size);
+
+  bool find(char symbol, const char *content);
+  size_t count(char *content, char symbol);
+
+  char * get_line(std::istream &in, char *data, size_t &size, size_t &length);
 }
 #endif
