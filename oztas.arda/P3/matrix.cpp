@@ -69,36 +69,38 @@ namespace oztas
         }
       }
 
-  for (size_t i = 0; i < static_cast<size_t>(rows); ++i) {
-    for (size_t j = 0; j < static_cast<size_t>(cols); ++j) {
-      matrix[i][j] = tmp[i][j];
+    for (size_t i = 0; i < static_cast<size_t>(rows); ++i) {
+      for (size_t j = 0; j < static_cast<size_t>(cols); ++j) {
+        matrix[i][j] = tmp[i][j];
+      }
+    }
+    freeMatrix(tmp, rows);
+    return true;
+  }
+
+  void writeMatrix(std::ostream& output,
+    const int matrix[][MAX],
+    int rows,
+    int cols)
+  {
+    output << rows << " " << cols;
+    for (size_t i = 0; i < static_cast<size_t>(rows); ++i) {
+      for (size_t j = 0; j < static_cast<size_t>(cols); ++j)
+        output << " " << matrix[i][j];
     }
   }
-  freeMatrix(tmp, rows);
-  return true;
-}
 
-void writeMatrix(std::ostream& output,
-  const int matrix[][MAX],
-  int rows,
-  int cols)
-{
-  output << rows << " " << cols;
-  for (size_t i = 0; i < static_cast<size_t>(rows); ++i) {
-    for (size_t j = 0; j < static_cast<size_t>(cols); ++j)
-      output << " " << matrix[i][j];
-  }
-}
+  void freeMatrix(int** matrix, int rows)
+  {
+    if (!matrix) {
+      return;
+    }
 
-void freeMatrix(int** matrix, int rows)
-{
-  if (!matrix) {
-    return;
+    for (size_t i = 0; i < static_cast<size_t>(rows); ++i) {
+      std::free(matrix[i]);
+    }
+
+    std::free(matrix);
   }
 
-  for (size_t i = 0; i < static_cast<size_t>(rows); ++i) {
-    std::free(matrix[i]);
-  }
-
-  std::free(matrix);
 }
