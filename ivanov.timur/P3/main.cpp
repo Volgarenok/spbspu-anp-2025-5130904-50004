@@ -65,6 +65,7 @@ int main(int argc, char** argv)
     {
       free(matrix);
     }
+    std::cerr << "Input Error\n";
     return 2;
   }
   ivanov::fll_inc_wav((num == '1') ? mtr : matrix, rows, cols);
