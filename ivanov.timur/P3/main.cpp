@@ -58,8 +58,13 @@ int main(int argc, char** argv)
     std::cerr << "Error: Memory allocation failed" << "\n";
     return 2;
   }
-  if (!ivanov::write_in((num == '1') ? mtr : matrix, rows, cols, input, (num != '1')))
+  ivanov::write_in((num == '1') ? mtr : matrix, rows, cols, input)
+  if(std::cin.fail() || std::cin.eof())
   {
+    if(num == '2')
+    {
+      free(matrix);
+    }
     return 2;
   }
   ivanov::fll_inc_wav((num == '1') ? mtr : matrix, rows, cols);
