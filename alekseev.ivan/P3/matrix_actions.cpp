@@ -62,12 +62,15 @@ void alekseev::lft_top_clk(int * matrix, size_t rows, size_t cols)
 }
 
 
-int * alekseev::min(int * start, int * end)
+int * alekseev::min(int * start, size_t k)
 {
+  if (k == 0) {
+    return start;
+  }
   int * m = start;
-  for (int * id = start + 1; id < end; ++id) {
-    if (*id < *m) {
-      m = id;
+  for (size_t i = 1ull; i < k; ++i) {
+    if (start[i] < *m) {
+      m = start + i;
     }
   }
   return m;
@@ -90,7 +93,7 @@ size_t alekseev::cnt_sdl_pnt(int * matrix, size_t rows, size_t cols)
 {
   size_t counter = 0;
   for (size_t i = 0ull; i < rows; ++i) {
-    int mi = *min(matrix + i * cols, matrix + i * cols + cols);
+    int mi = *min(matrix + i * cols, cols);
     for (size_t j = 0ull; j < cols; ++j) {
       if (matrix[i * cols + j] == mi) {
         if (matrix[i * cols + j] == *max_of_column(matrix, rows, cols, j)) {
