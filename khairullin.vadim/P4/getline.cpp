@@ -18,7 +18,7 @@ char * khairullin::getline(std::istream & input, char * data, size_t & size)
     {
       if (size >= capacity - 1)
       {
-        char * temp = new char [capacity + 10];
+        char * temp = new char[capacity + 10];
         for (size_t j = 0; j < size; ++j)
         {
           temp[j] = data[j];
@@ -39,7 +39,7 @@ char * khairullin::getline(std::istream & input, char * data, size_t & size)
   }
   catch (std::bad_alloc & error)
   {
+    delete [] data;
     throw;
   }
 }
-
