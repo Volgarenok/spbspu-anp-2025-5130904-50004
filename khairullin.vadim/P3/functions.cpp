@@ -8,6 +8,10 @@ void khairullin::filling(int * array, std::ifstream & input, size_t rows, size_t
   {
     input >> array[i];
   }
+  if (input.fail())
+  {
+    throw std::logic_error("Not enough elements");
+  }
 }
 int khairullin::checkZero(const int * array, size_t index1, size_t index2, size_t size)
 {

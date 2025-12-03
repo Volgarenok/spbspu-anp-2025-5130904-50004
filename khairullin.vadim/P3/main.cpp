@@ -58,7 +58,15 @@ int main(int argc, char ** argv)
         return 2;
       }
     }
-    khair::filling(array, input, rows, cols);
+    try
+    {
+      khair::filling(array, input, rows, cols);
+    }
+    catch (const std::logic_error & err)
+    {
+      std::cout << err.what() << "\n";
+      return 1;
+    }
     input.close();
     output << khair::localMax(array, rows, cols) << "\n";
     for (size_t i = 0; i < MIN_SIZE; i++)
