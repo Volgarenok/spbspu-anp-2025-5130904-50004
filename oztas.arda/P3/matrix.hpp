@@ -1,6 +1,6 @@
 #ifndef OZTAS_T3_MATRIX_HPP
 #define OZTAS_T3_MATRIX_HPP
-1
+
 #include <iosfwd>
 
 namespace oztas
