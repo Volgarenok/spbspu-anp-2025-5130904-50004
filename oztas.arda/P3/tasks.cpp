@@ -34,7 +34,7 @@ namespace oztas
     return result;
   }
 
-  void applyFillIncreasingWave(const int matrix[][MAX], int rows, int cols)
+  void applyFillIncreasingWave(const int matrix[][MAX], int rows, int cols);
   {
     int value = 1;
     int top = 0, bottom = rows - 1;
