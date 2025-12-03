@@ -64,7 +64,7 @@ bool khairullin::triangle(const int * array, size_t size)
   return (sum_of_zeroes == COUNT_OF_ROWS_WITH_ZEROES);
 }
 int khairullin::check_arguments(int argc, char ** argv)
-{ 
+{
   int command = argv[1][0] - '0';
   if (argc < 4)
   {
