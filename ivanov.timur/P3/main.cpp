@@ -59,7 +59,7 @@ int main(int argc, char** argv)
     return 2;
   }
   ivanov::write_in((num == '1') ? mtr : matrix, rows, cols, input);
-  if(std::cin.fail() || std::cin.eof())
+  if(input.fail() || input.eof())
   {
     if(num == '2')
     {
