@@ -23,7 +23,7 @@ namespace oztas
         return nullptr;
       }
 
-      for (size_t i = 0; i < rows; ++i) {
+      for (size_t i = 0; i < static_cast<size_t>(rows); ++i) {
         matrix[i] = static_cast <int*>(std::malloc(cols * sizeof(int)));
         if (!matrix[i]) {
           for (size_t j = 0; j < i; ++j)
