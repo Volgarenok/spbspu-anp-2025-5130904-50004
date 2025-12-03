@@ -65,6 +65,10 @@ int main(int argc, char ** argv)
     catch (const std::logic_error & err)
     {
       std::cout << err.what() << "\n";
+      if (argv[1][0] == '2')
+      {
+        free(array);
+      }
       return 1;
     }
     input.close();
