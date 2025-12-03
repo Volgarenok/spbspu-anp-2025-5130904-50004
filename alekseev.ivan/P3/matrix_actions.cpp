@@ -14,7 +14,7 @@ void alekseev::input_matrix(std::istream & input, int * matrix, size_t rows, siz
 }
 
 
-void alekseev::output_matrix(std::ostream & output, int * matrix, size_t rows, size_t cols)
+void alekseev::output_matrix(std::ostream & output, const int * matrix, size_t rows, size_t cols)
 {
   for (size_t i = 0ull; i < rows; ++i) {
     output << matrix[i * cols];
@@ -62,12 +62,12 @@ void alekseev::lft_top_clk(int * matrix, size_t rows, size_t cols)
 }
 
 
-int * alekseev::min(int * start, size_t k)
+const int * alekseev::min(const int * start, size_t k)
 {
   if (k == 0) {
     return start;
   }
-  int * m = start;
+  const int * m = start;
   for (size_t i = 1ull; i < k; ++i) {
     if (start[i] < *m) {
       m = start + i;
@@ -77,9 +77,9 @@ int * alekseev::min(int * start, size_t k)
 }
 
 
-int * alekseev::max_of_column(int * matrix, size_t rows, size_t cols, size_t j)
+const int * alekseev::max_of_column(const int * matrix, size_t rows, size_t cols, size_t j)
 {
-  int * ma = matrix + j;
+  const int * ma = matrix + j;
   for (size_t i = 0ull; i < rows; ++i) {
     if (*ma < matrix[i * cols + j]) {
       ma = matrix + i * cols + j;
@@ -89,7 +89,7 @@ int * alekseev::max_of_column(int * matrix, size_t rows, size_t cols, size_t j)
 }
 
 
-size_t alekseev::cnt_sdl_pnt(int * matrix, size_t rows, size_t cols)
+size_t alekseev::cnt_sdl_pnt(const int * matrix, size_t rows, size_t cols)
 {
   size_t counter = 0;
   for (size_t i = 0ull; i < rows; ++i) {
