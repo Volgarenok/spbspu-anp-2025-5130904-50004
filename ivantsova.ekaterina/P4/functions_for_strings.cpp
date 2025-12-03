@@ -5,11 +5,13 @@
 
 char * ivantsova::readLine(std::istream & in, size_t & size)
 {
+  std::ios_base::fmtflags flags = in.flags();
   in >> std::noskipws;
   size_t c = 10;
-  char * buffer = static_cast<char *>(malloc(c * sizeof(char)));
+  char * buffer = reinterpret_cast<char *>(malloc(c * sizeof(char)));
   if (buffer == nullptr)
   {
+    in.flags(flags);
     return buffer;
   }
   size = 0;
@@ -18,13 +20,15 @@ char * ivantsova::readLine(std::istream & in, size_t & size)
   {
     if (size == c - 1)
     {
-      c *= 2;
-      char * new_buffer = static_cast<char *>(malloc(c * sizeof(char)));
+      size_t new_c = c * 2;
+      char * new_buffer = reinterpret_cast<char *>(malloc(new_c * sizeof(char)));
       if (new_buffer == nullptr)
       {
         free(buffer);
+        in.flags(flags);
         return new_buffer;
       }
+      c = new_c;
       for (size_t i = 0; i < size; ++i)
       {
         new_buffer[i] = buffer[i];
@@ -34,10 +38,11 @@ char * ivantsova::readLine(std::istream & in, size_t & size)
     }
     buffer[size++] = current_char;
   }
-  char * result = static_cast<char *>(malloc((size + 1) * sizeof(char)));
+  char * result = reinterpret_cast<char *>(malloc((size + 1) * sizeof(char)));
   if (result == nullptr)
   {
     free(buffer);
+    in.flags(flags);
     return result;
   }
   for (size_t i = 0; i < size; ++i)
@@ -46,11 +51,11 @@ char * ivantsova::readLine(std::istream & in, size_t & size)
   }
   result[size] = '\0';
   free(buffer);
-  in >> std::skipws;
+  in.flags(flags);
   return result;
 }
 
-char * ivantsova::interleaveStrings(const char * str1, const char * str2, size_t size1, size_t & result_size)
+void ivantsova::interleaveStrings(const char * str1, const char * str2, size_t size1, char * result)
 {
   size_t size2 = 0;
   while (str2[size2] != '\0')
@@ -58,12 +63,6 @@ char * ivantsova::interleaveStrings(const char * str1, const char * str2, size_t
     ++size2;
   }
   size_t max_size = (size1 > size2) ? size1 : size2;
-  result_size = size1 + size2;
-  char * result = static_cast<char *>(malloc((result_size + 1) * sizeof(char)));
-  if (result == nullptr)
-  {
-    return result;
-  }
   size_t index = 0;
   for (size_t i = 0; i < max_size; ++i)
   {
@@ -76,30 +75,15 @@ char * ivantsova::interleaveStrings(const char * str1, const char * str2, size_t
       result[index++] = str2[i];
     }
   }
-  result[result_size] = '\0';
-  return result;
+  result[index] = '\0';
 }
 
-char * ivantsova::addDigits(const char * str1, const char * str2, size_t size1, size_t & result_size)
+void ivantsova::addDigits(const char * str1, const char * str2, size_t size1, char * result, size_t & result_size)
 {
   size_t size2 = 0;
   while (str2[size2] != '\0')
   {
     ++size2;
-  }
-  size_t digit_count = 0;
-  for (size_t i = 0; i < size2; ++i)
-  {
-    if (std::isdigit(static_cast<unsigned char>(str2[i])))
-    {
-      ++digit_count;
-    }
-  }
-  result_size = size1 + digit_count;
-  char * result = static_cast<char *>(malloc((result_size + 1) * sizeof(char)));
-  if (result == nullptr)
-  {
-    return result;
   }
   for (size_t i = 0; i < size1; ++i)
   {
@@ -113,15 +97,11 @@ char * ivantsova::addDigits(const char * str1, const char * str2, size_t size1, 
       result[index++] = str2[i];
     }
   }
-  result[result_size] = '\0';
-  return result;
+  result_size = index;
+  result[index] = '\0';
 }
 
 void ivantsova::printString(std::ostream & out, const char * str, size_t size)
 {
-  for (size_t i = 0; i < size; ++i)
-  {
-    out << str[i];
-  }
-  out << "\n";
+  out << str << "\n";
 }

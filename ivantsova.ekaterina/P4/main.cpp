@@ -19,19 +19,30 @@ int main()
   }
 
   const char * second_str_for_ils = "def ";
-  size_t result_for_ils_size = 0;
-  char * result_for_ils = ivantsova::interleaveStrings(input_str, second_str_for_ils, size, result_for_ils_size);
+  size_t ils_size = 0;
+  while (second_str_for_ils[ils_size] != '\0')
+  {
+    ++ils_size;
+  }
+  size_t result_for_ils_size = size + ils_size;
+  char * result_for_ils = reinterpret_cast<char *>(malloc((result_for_ils_size + 1) * sizeof(char)));
   if (result_for_ils == nullptr)
   {
     std::cerr << "Memory allocation error" << "\n";
     free(input_str);
     return 1;
   }
+  ivantsova::interleaveStrings(input_str, second_str_for_ils, size, result_for_ils);
   ivantsova::printString(std::cout, result_for_ils, result_for_ils_size);
 
   const char * second_str_for_ad = "g1h2k";
-  size_t result_for_ad_size = 0;
-  char * result_for_ad = ivantsova::addDigits(input_str, second_str_for_ad, size, result_for_ad_size);
+  size_t ad_size = 0;
+  while (second_str_for_ad[ad_size] != '\0')
+  {
+    ++ad_size;
+  }
+  size_t result_for_ad_size = size + ad_size;
+  char * result_for_ad = reinterpret_cast<char *>(malloc((result_for_ad_size + 1) * sizeof(char)));
   if (result_for_ad == nullptr)
   {
     std::cerr << "Memory allocation error" << "\n";
@@ -39,7 +50,9 @@ int main()
     free(result_for_ils);
     return 1;
   }
-  ivantsova::printString(std::cout, result_for_ad, result_for_ad_size);
+  size_t actual_result_for_ad_size = 0;
+  ivantsova::addDigits(input_str, second_str_for_ad, size, result_for_ad, actual_result_for_ad_size);
+  ivantsova::printString(std::cout, result_for_ad, actual_result_for_ad_size);
   free(input_str);
   free(result_for_ils);
   free(result_for_ad);
