@@ -101,7 +101,7 @@ void ivantsova::addDigits(const char * str1, const char * str2, size_t size1, ch
   result[index] = '\0';
 }
 
-void ivantsova::printString(std::ostream & out, const char * str, size_t size)
+void ivantsova::printString(std::ostream & out, const char * str)
 {
   out << str << "\n";
 }
