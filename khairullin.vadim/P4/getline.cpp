@@ -25,7 +25,7 @@ char * khairullin::getline(std::istream & input, char * data, size_t & size)
         }
         delete [] data;
         data = temp;
-        size += 10;
+        capacity += 10;
       }
       data[size] = symbol;
       ++size;
