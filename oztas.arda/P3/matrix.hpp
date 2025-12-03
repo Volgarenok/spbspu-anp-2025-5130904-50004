@@ -5,11 +5,11 @@
 
 namespace oztas
 {
-    bool readMatrix(std::istream& input, int**& matrix, int& rows, int& cols);
+  bool readMatrix(std::istream& input, int**& matrix, int& rows, int& cols);
 
-    void writeMatrix(std::ostream& output, int* const* matrix, int rows, int cols);
+  void writeMatrix(std::ostream& output, int* const* matrix, int rows, int cols);
 
-    void freeMatrix(int** matrix, int rows);
+  void freeMatrix(int** matrix, int rows);
 }
 
 #endif
