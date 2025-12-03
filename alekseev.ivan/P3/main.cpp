@@ -11,7 +11,7 @@ namespace alekseev {
 
 int main(int argc, char ** argv)
 {
-  size_t SIZE = 10000;
+  constexpr size_t SIZE = 10000;
   try {
     alekseev::check_cl_args(argc, argv);
   } catch (const std::exception & e) {
