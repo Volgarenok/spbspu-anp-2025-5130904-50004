@@ -5,95 +5,100 @@
 
 namespace oztas
 {
-    namespace
+  namespace
+  {
+    int** allocateMatrix(int rows, int cols)
     {
-        int** allocateMatrix(int rows, int cols)
-        {
-            if (rows < 0 || cols < 0) {
-                return nullptr;
-            }
+      if (rows < 0 || cols < 0) {
+        return nullptr;
+      }
 
-            // Handle empty matrix
-            if (rows == 0 || cols == 0) {
-                return nullptr;
-            }
+      // Handle empty matrix
+      if (rows == 0 || cols == 0) {
+        return nullptr;
+      }
 
-            int** matrix = static_cast<int**>(std::malloc(rows * sizeof(int*)));
-            if (!matrix) {
-                return nullptr;
-            }
+      int** matrix = static_cast <int**>(std::malloc(rows * sizeof(int*)));
+      if (!matrix) {
+        return nullptr;
+      }
 
-            for (int i = 0; i < rows; ++i) {
-                matrix[i] = static_cast<int*>(std::malloc(cols * sizeof(int)));
-                if (!matrix[i]) {
-                    for (int j = 0; j < i; ++j) {
-                        std::free(matrix[j]);
-                    }
-                    std::free(matrix);
-                    return nullptr;
-                }
-            }
-
-            return matrix;
+      for (size_t i = 0; i < rows; ++i) {
+        matrix[i] = static_cast <int*>(std::malloc(cols * sizeof(int)));
+        if (!matrix[i]) {
+          for (size_t j = 0; j < i; ++j)
+            std::free(matrix[j]);
+          std::free(matrix);
+          return nullptr;
         }
+      }
+
+      return matrix;
+    }
+  }
+
+  bool readMatrix(std::istream& input,
+    int matrix[][MAX],
+    int& rows,
+    int& cols)
+  {
+    if (!(input >> rows >> cols)) {
+      return false;
     }
 
-    bool readMatrix(std::istream& input, int**& matrix, int& rows, int& cols)
-    {
-        matrix = nullptr;
-        rows = 0;
-        cols = 0;
-
-        if (!(input >> rows >> cols)) {
-            return false;
-        }
-
-        // Check for valid dimensions
-        if (rows < 0 || cols < 0) {
-            return false;
-        }
-
-        // Empty matrix is valid
-        if (rows == 0 || cols == 0) {
-            return true;
-        }
-
-        int** tmp = allocateMatrix(rows, cols);
-        if (!tmp) {
-            return false;
-        }
-
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                if (!(input >> tmp[i][j])) {
-                    freeMatrix(tmp, rows);
-                    return false;
-                }
-            }
-        }
-
-        matrix = tmp;
-        return true;
+    // Check for valid dimensions
+    if (rows < 0 || cols < 0) {
+      return false;
     }
 
-    void writeMatrix(std::ostream& output, int* const* matrix, int rows, int cols)
-    {
-        output << rows << " " << cols;
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                output << " " << matrix[i][j];
-            }
-        }
+    // Empty matrix is valid
+    if (rows == 0 || cols == 0) {
+      return true;
     }
 
-    void freeMatrix(int** matrix, int rows)
-    {
-        if (!matrix) {
-            return;
-        }
-        for (int i = 0; i < rows; ++i) {
-            std::free(matrix[i]);
-        }
-        std::free(matrix);
+    int** tmp = allocateMatrix(rows, cols);
+    if (!tmp) {
+      return false;
     }
+
+    for (size_t i = 0; i < static_cast<size_t>(rows); ++i)
+      for (size_t j = 0; j < static_cast<size_t>(cols); ++j) {
+        if (!(input >> tmp[i][j])) {
+          freeMatrix(tmp, rows);
+          return false;
+        }
+      }
+
+  for (size_t i = 0; i < static_cast<size_t>(rows); ++i) {
+    for (size_t j = 0; j < static_cast<size_t>(cols); ++j) {
+      matrix[i][j] = tmp[i][j];
+    }
+  }
+  freeMatrix(tmp, rows);
+  return true;
+}
+
+void writeMatrix(std::ostream& output,
+  const int matrix[][MAX],
+  int rows,
+  int cols)
+{
+  output << rows << " " << cols;
+  for (size_t i = 0; i < static_cast<size_t>(rows); ++i) {
+    for (size_t j = 0; j < static_cast<size_t>(cols); ++j)
+      output << " " << matrix[i][j];
+  }
+}
+
+void freeMatrix(int** matrix, int rows)
+{
+  if (!matrix) {
+    return;
+  }
+
+  for (size_t i = 0; i < static_cast<size_t>(rows); ++i) {
+    std::free(matrix[i]);
+  }
+
+  std::free(matrix);
 }
