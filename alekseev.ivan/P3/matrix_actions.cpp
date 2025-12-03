@@ -11,9 +11,6 @@ void alekseev::input_matrix(std::istream & input, int * matrix, size_t rows, siz
       input >> matrix[i * cols + j];
     }
   }
-  if (input.fail()) {
-    throw std::invalid_argument("Matrix unread");
-  }
 }
 
 
