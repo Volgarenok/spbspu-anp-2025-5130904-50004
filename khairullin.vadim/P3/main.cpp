@@ -68,6 +68,7 @@ int main(int argc, char ** argv)
       if (argv[1][0] == '2')
       {
         free(array);
+        free(square_array);
       }
       return 1;
     }
