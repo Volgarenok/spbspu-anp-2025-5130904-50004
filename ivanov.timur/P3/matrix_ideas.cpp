@@ -57,19 +57,9 @@ int ivanov::max_sum_mdg(const int* matrix, size_t rows, size_t cols)
   }
   return found_valid ? max_sum : 0;
 }
-bool ivanov::write_in(int* matrix, size_t rows, size_t cols, std::ifstream& input, bool is_dynamic) {
+void ivanov::write_in(int* matrix, size_t rows, size_t cols, std::ifstream& input) {
   for (size_t i = 0; i < rows * cols; i++)
   {
     input >> matrix[i];
   }
-  if (input.fail() || input.eof())
-  {
-    std::cerr << "Error: Invalid matrix data" << std::endl;
-    if (is_dynamic)
-    {
-      free(matrix);
-    }
-    return false;
-  }
-  return true;
 }
