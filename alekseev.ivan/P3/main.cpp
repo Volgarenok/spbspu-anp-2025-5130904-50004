@@ -4,6 +4,7 @@
 #include <string>
 #include "matrix_actions.h"
 
+
 namespace alekseev {
   bool check_cl_args(int argc, char ** argv, int & num);
 }
@@ -64,11 +65,7 @@ bool alekseev::check_cl_args(int argc, char ** argv, int & num)
     throw std::invalid_argument("Too many arguments");
   }
   int t = 0;
-  try {
-    t = std::stoi(argv[1]);
-  } catch (const std::invalid_argument & e) {
-    throw std::invalid_argument("First parameter is not a number");
-  }
+  t = std::stoi(argv[1]);
   if (!(t == 1 || t == 2)) {
     throw std::invalid_argument("First parameter is out of range");
   }
