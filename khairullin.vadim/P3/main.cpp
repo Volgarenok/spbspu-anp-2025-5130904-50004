@@ -19,13 +19,6 @@ int main(int argc, char ** argv)
   std::ofstream output(argv[3]);
   int rows = 0, cols = 0;
   input >> rows >> cols;
-  if (!rows && !cols)
-  {
-    output << 0 << "\n";
-    output << std::boolalpha;
-    output << true << "\n";
-    return 0;
-  }
   int * array = nullptr;
   int * square_array = nullptr;
   int fixed_array[10000] = {};
@@ -36,6 +29,13 @@ int main(int argc, char ** argv)
   {
     std::cerr << "File is empty\n";
     return 2;
+  }
+  if (!rows && !cols)
+  {
+    output << 0 << "\n";
+    output << std::boolalpha;
+    output << true << "\n";
+    return 0;
   }
   else if (rows < 0 || cols < 0)
   {
@@ -67,6 +67,8 @@ int main(int argc, char ** argv)
   if (input.fail())
   {
     std::cout << "Not enough elements\n";
+    free(array);
+    free(square_array);
     return 2;
   }
   input.close();
