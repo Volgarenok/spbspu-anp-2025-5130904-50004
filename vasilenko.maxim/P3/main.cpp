@@ -1,4 +1,4 @@
-k#include <cstdlib>
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 
