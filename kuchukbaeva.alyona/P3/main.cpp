@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
   }
 
   size_t schet_count = kuchukbaeva::readMatrix(in, matrix, rows, cols);
-  if (schet_count != kuchukbaeva::readMatrix(in, matrix, rows, cols))
+  if (schet_count != matrixSize)
   {
     std::cerr << "Cannot reading matrix elements expected " << matrixSize << " and read  " << schet_count << "\n";
     in.close();

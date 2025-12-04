@@ -95,7 +95,7 @@ size_t kuchukbaeva::readMatrix(std::istream& in, int *matrix, size_t rows, size_
   {
     if (in >> matrix[i])
     {
-      return schet_count++;
+      schet_count++;
     }
     else
     {
