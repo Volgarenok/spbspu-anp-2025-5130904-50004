@@ -1,4 +1,4 @@
-#include "functions_for_matrix.hpp"
+#include "matrix.hpp"
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -12,14 +12,14 @@ std::istream & ivantsova::readArr(std::istream & input, int * arr, size_t rows, 
   }
   if (!input)
   {
-    return input;
+    return;
   }
   return input;
 }
 
 std::ostream & ivantsova::writeArr(std::ostream & output, const int * arr, size_t rows, size_t cols, int result)
 {
-  output << result << "\n";
+  output << result;
   for (size_t i = 0; i < rows; ++i)
   {
     for (size_t j = 0; j < cols; ++j)
