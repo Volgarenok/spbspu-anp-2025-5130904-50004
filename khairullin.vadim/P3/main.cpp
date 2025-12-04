@@ -67,8 +67,11 @@ int main(int argc, char ** argv)
   if (input.fail())
   {
     std::cout << "Not enough elements\n";
-    free(array);
-    free(square_array);
+    if (argv[1][0] == '2')
+    {
+      free(array);
+      free(square_array);
+    }
     return 2;
   }
   input.close();
