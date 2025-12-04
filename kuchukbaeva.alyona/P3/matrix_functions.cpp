@@ -27,9 +27,9 @@ bool kuchukbaeva::cntLocMax(const int* matrix, size_t rows, size_t cols, size_t 
   return true;
 }
 
-int kuchukbaeva::countLocMax(const int* matrix, size_t rows, size_t cols)
+size_t kuchukbaeva::countLocMax(const int* matrix, size_t rows, size_t cols)
 {
-  int count = 0;
+  size_t count = 0;
   for (size_t i = 1; i < rows - 1; i++)
   {
     for (size_t j = 1; j < cols - 1; j++)
@@ -60,7 +60,7 @@ void kuchukbaeva::lftBotClk(int* matrix, size_t rows, size_t cols)
     left++;
     if (left > right)
     {
-       break;
+      break;
     }
     for (size_t j = left; j <= right; ++j)
     {
@@ -69,7 +69,7 @@ void kuchukbaeva::lftBotClk(int* matrix, size_t rows, size_t cols)
     top++;
     if (top > bottom)
     {
-       break;
+      break;
     }
     for (size_t i = top; i <= bottom; ++i)
     {
@@ -78,7 +78,7 @@ void kuchukbaeva::lftBotClk(int* matrix, size_t rows, size_t cols)
     right--;
     if (left > right)
     {
-       break;
+      break;
     }
     for (size_t j = right; j >= left && j < cols ; --j)
     {
@@ -88,21 +88,25 @@ void kuchukbaeva::lftBotClk(int* matrix, size_t rows, size_t cols)
   }
 }
 
-bool kuchukbaeva::readMatrix(std::istream& in, int *matrix, size_t rows, size_t cols)
+size_t kuchukbaeva::readMatrix(std::istream& in, int *matrix, size_t rows, size_t cols)
 {
+  size_t schet_count = 0;
   for (size_t i = 0; i < rows * cols; ++i)
   {
-    if (!(in >> matrix[i]))
+    if (in >> matrix[i])
     {
-      return false;
+      return schet_count++;
+    }
+    else
+    {
+      break;
     }
   }
-  return true;
+  return schet_count;
 }
 
-void kuchukbaeva::writeMatrix(std::ostream& out, const int* matrix, size_t rows, size_t cols, int locMaxCount)
+void kuchukbaeva::writeMatrix(std::ostream& out, const int* matrix, size_t rows, size_t cols)
 {
-  out << locMaxCount << "\n";
   out << rows << " " << cols;
   for (size_t i = 0; i < rows * cols; ++i)
   {
