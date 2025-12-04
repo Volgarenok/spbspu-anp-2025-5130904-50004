@@ -12,11 +12,7 @@ std::istream & ivantsova::readArr(std::istream & input, int * arr, size_t rows, 
   }
   if (!input)
   {
-    std::cerr << "Incorrect input" << "\n";
-  }
-  else if (rows * cols > number)
-  {
-    std::cerr << "Not enough elements" << "\n";
+    return input;
   }
   return input;
 }
@@ -37,49 +33,44 @@ std::ostream & ivantsova::writeArr(std::ostream & output, const int * arr, size_
 
 void ivantsova::reduceElements(int * arr, size_t rows, size_t cols)
 {
-  int left = 0;
-  int right = cols - 1;
-  int up = 0;
-  int down = rows - 1;
+  size_t left = 0;
+  size_t up = 0;
+  size_t original_cols = cols;
   int step = 1;
-  while (left <= right && up <= down)
+  while (up < rows && left < cols)
   {
-    for (int i = down; i >= up; i--)
+    for (size_t i = rows - 1; i >= up; i--)
     {
-      size_t index = i * cols + left;
-      arr[index] -= step++;
+      arr[i * original_cols + left] -= step++;
     }
     left++;
-    if (left > right)
+    if (left >= cols)
     {
       break;
     }
-    for (int i = left; i <= right; i++)
+    for (size_t i = left; i < cols; i++)
     {
-      size_t index = up * cols + i;
-      arr[index] -= step++;
+      arr[up * original_cols + i] -= step++;
     }
     up++;
-    if (up > down)
+    if (up >= rows)
     {
       break;
     }
-    for (int i = up; i <= down; i++)
+    for (size_t i = up; i < rows; i++)
     {
-      size_t index = i * cols + right;
-      arr[index] -= step++;
+      arr[i * original_cols + (cols - 1)] -= step++;
     }
-    right--;
-    if (left > right)
+    cols--;
+    if (left >= cols)
     {
       break;
     }
-    for (int i = right; i >= left; i--)
+    for (size_t i = cols - 1; i >= left; i--)
     {
-      size_t index = down * cols + i;
-      arr[index] -= step++;
+      arr[(rows - 1) * original_cols + i] -= step++;
     }
-    down--;
+    rows--;
   }
 }
 
@@ -108,11 +99,11 @@ int ivantsova::countColumns(const int * arr, size_t rows, size_t cols)
 void ivantsova::workWithArray(std::istream & input, std::ostream & output, int * arr, size_t rows, size_t cols)
 {
   readArr(input, arr, rows, cols);
-    if (!input)
-    {
-      return;
-    }
-    int result = countColumns(arr, rows, cols);
-    reduceElements(arr, rows, cols);
-    writeArr(output, arr, rows, cols, result);
+  if (!input)
+  {
+    return;
+  }
+  int result = countColumns(arr, rows, cols);
+  reduceElements(arr, rows, cols);
+  writeArr(output, arr, rows, cols, result);
 }
