@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cctype>
-#include "matrix_functions.hpp"
+#include "matrix.hpp"
 int main(int argc, char **argv)
 {
   if (argc < 4)
@@ -19,7 +19,7 @@ int main(int argc, char **argv)
     std::cerr << "First parameter is not a number" << "\n";
     return 1;
   }
-  if ((argv[1][1] != '\0') || (argv[1][0] > '2'))
+  if ((argv[1][0] > '2') || (argv[1][1] != '\0'))
   {
     std::cerr << "First parameter is out of range" << "\n";
     return 1;
@@ -60,7 +60,7 @@ int main(int argc, char **argv)
     {
       arr = new int[rows * cols];
     }
-    catch(const std::bad_alloc &e)
+    catch (const std::bad_alloc &e)
     {
       std::cerr << e.what() << "\n";
       return 2;
