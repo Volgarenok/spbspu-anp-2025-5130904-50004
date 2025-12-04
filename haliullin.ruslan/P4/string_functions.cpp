@@ -8,28 +8,26 @@ char *haliullin::getline(std::istream &in, size_t &size)
   {
     in >> std::noskipws;
   }
-  char symb = '\0';
-  char *arr = nullptr;
-  size = 0;
 
-  in >> symb;
-  if (in)
+  char symb = '\0';
+  size_t s = 0;
+  size_t cap = 10;
+  char *arr = reinterpret_cast< char* >(malloc(cap * sizeof(char)));
+  if (arr == nullptr)
   {
-    ++size;
-    arr = static_cast < char* >(malloc(sizeof(char)));
-    if (arr == nullptr)
+    if (is_skipws)
     {
-      if (is_skipws)
-      {
-        in >> std::skipws;
-      }
-      return nullptr;
+      in >> std::skipws;
     }
-    arr[0] = symb;
-    while (in >> symb && symb != '\0')
+    return nullptr;
+  }
+
+  while (in >> symb && symb != '\n')
+  {
+    if (s == cap)
     {
-      char *temp = nullptr;
-      temp = static_cast < char* >(malloc((size + 1) * sizeof(char)));
+      char *temp = reinterpret_cast< char* >(malloc(2 * cap * sizeof(char)));
+
       if (temp == nullptr)
       {
         if (is_skipws)
@@ -39,35 +37,41 @@ char *haliullin::getline(std::istream &in, size_t &size)
         free(arr);
         return nullptr;
       }
-      for (size_t i = 0; i < size; ++i)
+
+      for (size_t i = 0; i < s; ++i)
       {
         temp[i] = arr[i];
       }
-      temp[size] = symb;
-
+      cap *= 2;
       free(arr);
       arr = temp;
-      ++size;
     }
-    arr[size - 1] = 0;
+
+    arr[s++] = symb;
   }
+
   if (is_skipws)
   {
     in >> std::skipws;
   }
+
+  arr[s] = '\0';
+  size = s;
   return arr;
 }
 
-size_t haliullin::DIF_LAT(const char *arr, size_t str_size)
+size_t haliullin::DIF_LAT(const char *arr)
 {
   size_t count = 0;
   size_t ind = 0;
   char symb = '\0';
-  bool info[26] = {};
-  for (size_t i = 0; i < str_size; ++i)
+  const size_t alphs = 26;
+  bool info[alphs] = {};
+
+  for (size_t i = 0; arr[i] != '\0'; ++i)
   {
     symb = char(std::tolower(arr[i]));
-    if (symb >= 'a' && symb <= 'z')
+    if (std::isalpha(symb))
     {
       ind = symb - 'a';
       if (!info[ind])
@@ -80,19 +84,19 @@ size_t haliullin::DIF_LAT(const char *arr, size_t str_size)
   return count;
 }
 
-char *haliullin::RMV_VOW(char *new_arr, const char *arr, size_t str_size)
+char *haliullin::RMV_VOW(char *new_arr, const char *arr)
 {
   size_t ind = 0;
   char symb = '\0';
-  for (size_t i = 0; i < str_size; ++i)
+  for (size_t i = 0; arr[i] != '\0'; ++i)
   {
     symb = char(std::tolower(arr[i]));
     if (!isVowel(symb))
     {
-      new_arr[ind] = arr[i];
-      ++ind;
+      new_arr[ind++] = arr[i];
     }
   }
+  new_arr[ind] = '\0';
   return new_arr;
 }
 
@@ -109,11 +113,11 @@ bool haliullin::isVowel(const char c)
   return false;
 }
 
-size_t haliullin::sizeWithoutVowels(const char *arr, size_t str_size)
+size_t haliullin::sizeWithoutVowels(const char *arr)
 {
   size_t count = 0;
   char symb = '\0';
-  for (size_t i = 0; i < str_size; ++i)
+  for (size_t i = 0; arr[i] != '\0'; ++i)
   {
     symb = char(std::tolower(arr[i]));
     if (!isVowel(symb))
@@ -124,11 +128,3 @@ size_t haliullin::sizeWithoutVowels(const char *arr, size_t str_size)
   return count;
 }
 
-void haliullin::writeString(const char *arr, size_t str_size)
-{
-  for (size_t i = 0; i < str_size; ++i)
-  {
-    std::cout << arr[i];
-  }
-  std::cout << "\n";
-}
