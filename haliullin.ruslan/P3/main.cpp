@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cctype>
-#include "matrix_functions.hpp"
+#include "matrix.hpp"
 int main(int argc, char **argv)
 {
   if (argc < 4)

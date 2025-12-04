@@ -1,4 +1,4 @@
-#include "matrix_functions.hpp"
+#include "matrix.hpp"
 #include <iostream>
 std::istream &haliullin::readMatrix(std::istream &in, int *arr, size_t rows, size_t cols)
 {
