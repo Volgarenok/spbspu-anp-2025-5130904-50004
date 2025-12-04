@@ -20,6 +20,10 @@ std::ostream & ivantsova::writeArr(std::ostream & output, const int * arr, size_
     for (size_t j = 0; j < cols; ++j)
     {
       output << arr[i * cols + j];
+      if (j < cols - 1)
+      {
+        output << " ";
+      }
     }
     output << "\n";
   }
