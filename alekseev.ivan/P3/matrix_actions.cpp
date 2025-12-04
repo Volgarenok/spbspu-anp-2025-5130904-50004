@@ -3,51 +3,40 @@
 #include <cstddef>
 #include <iostream>
 
-namespace alekseev {
-  void input_matrix(std::istream & input, int * matrix, const size_t rows, const size_t cols)
-  {
-    for (size_t i = 0ull; i < rows; ++i) {
-      for (size_t j = 0ull; j < cols; ++j) {
-        input >> matrix[i * cols + j];
-      }
-    }
-    if (input.fail()) {
-      throw std::invalid_argument("Matrix unread");
+
+void alekseev::input_matrix(std::istream & input, int * matrix, size_t rows, size_t cols)
+{
+  for (size_t i = 0ull; i < rows; ++i) {
+    for (size_t j = 0ull; j < cols; ++j) {
+      input >> matrix[i * cols + j];
     }
   }
+}
 
 
-  void output_matrix(std::ostream & output, int * matrix, const size_t rows, const size_t cols)
-  {
-    for (size_t i = 0ull; i < rows; ++i) {
-      output << matrix[i * cols];
-      for (size_t j = 1ull; j < cols; ++j) {
-        output << " " << matrix[i * cols + j];
-      }
-      output << "\n";
+void alekseev::output_matrix(std::ostream & output, const int * matrix, size_t rows, size_t cols)
+{
+  for (size_t i = 0ull; i < rows; ++i) {
+    output << matrix[i * cols];
+    for (size_t j = 1ull; j < cols; ++j) {
+      output << " " << matrix[i * cols + j];
     }
+    output << "\n";
   }
+}
 
 
-  void lft_top_clk(int * matrix, const size_t rows, const size_t cols)
-  {
-    int modifiers[4]{0, 1, 0, -1};
-    size_t modifier_id = 0;
-    size_t i = 1, j = 1;
-    size_t top = 1, bottom = rows, left = 1, right = cols;
-    for (size_t k = 0ull; k < rows * cols; ++k) {
-      matrix[(i - 1) * cols + (j - 1)] -= k + 1;
+void alekseev::lft_top_clk(int * matrix, size_t rows, size_t cols)
+{
+  int modifiers[4]{0, 1, 0, -1};
+  size_t modifier_id = 0;
+  size_t i = 1, j = 1;
+  size_t top = 1, bottom = rows, left = 1, right = cols;
+  for (size_t k = 0ull; k < rows * cols; ++k) {
+    matrix[(i - 1) * cols + (j - 1)] -= k + 1;
 
-      i += modifiers[modifier_id % 4];
-      j += modifiers[(modifier_id + 1) % 4];
-      modify(i, j, modifier_id, top, bottom, left, right);
-    }
-  }
-
-
-  void modify(size_t & i, size_t & j, size_t & modifier_id,
-      size_t & top, size_t & bottom, size_t & left, size_t & right)
-  {
+    i += modifiers[modifier_id % 4];
+    j += modifiers[(modifier_id + 1) % 4];
     if (j > right) {
       ++top;
       j = right;
@@ -70,45 +59,48 @@ namespace alekseev {
       ++modifier_id;
     }
   }
+}
 
 
-  int * min(int * start, const int * end)
-  {
-    int * m = start;
-    for (int * id = start + 1; id < end; ++id) {
-      if (*id < *m) {
-        m = id;
-      }
-    }
-    return m;
+const int * alekseev::min(const int * start, size_t k)
+{
+  if (k == 0) {
+    return start;
   }
-
-
-  int * max_of_column(int * matrix, const size_t rows, const size_t cols, const size_t j)
-  {
-    int * ma = matrix + j;
-    for (size_t i = 0ull; i < rows; ++i) {
-      if (*ma < matrix[i * cols + j]) {
-        ma = matrix + i * cols + j;
-      }
+  const int * m = start;
+  for (size_t i = 1ull; i < k; ++i) {
+    if (start[i] < *m) {
+      m = start + i;
     }
-    return ma;
   }
+  return m;
+}
 
 
-  size_t cnt_sdl_pnt(int * matrix, const size_t rows, const size_t cols)
-  {
-    size_t counter = 0;
-    for (size_t i = 0ull; i < rows; ++i) {
-      int mi = *min(matrix + i * cols, matrix + i * cols + cols);
-      for (size_t j = 0ull; j < cols; ++j) {
-        if (matrix[i * cols + j] == mi) {
-          if (matrix[i * cols + j] == *max_of_column(matrix, rows, cols, j)) {
-            ++counter;
-          }
+const int * alekseev::max_of_column(const int * matrix, size_t rows, size_t cols, size_t j)
+{
+  const int * ma = matrix + j;
+  for (size_t i = 0ull; i < rows; ++i) {
+    if (*ma < matrix[i * cols + j]) {
+      ma = matrix + i * cols + j;
+    }
+  }
+  return ma;
+}
+
+
+size_t alekseev::cnt_sdl_pnt(const int * matrix, size_t rows, size_t cols)
+{
+  size_t counter = 0;
+  for (size_t i = 0ull; i < rows; ++i) {
+    int mi = *min(matrix + i * cols, cols);
+    for (size_t j = 0ull; j < cols; ++j) {
+      if (matrix[i * cols + j] == mi) {
+        if (matrix[i * cols + j] == *max_of_column(matrix, rows, cols, j)) {
+          ++counter;
         }
       }
     }
-    return counter;
   }
+  return counter;
 }
