@@ -36,6 +36,9 @@ int main(int argc, char ** argv)
 
   try {
     alekseev::input_matrix(input, matrix, rows, cols);
+    if (input.fail()) {
+      throw std::runtime_error("Matrix unread");
+    }
     std::ofstream output(argv[3]);
     output << alekseev::cnt_sdl_pnt(matrix, rows, cols) << "\n";
     alekseev::lft_top_clk(matrix, rows, cols);
