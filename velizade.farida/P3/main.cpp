@@ -18,7 +18,7 @@ int main(int argc, char** argv)
   char num = argv[1][0];
   if (argv[1][1] != '\0' && num != '1' && num != '2')
   {
-    std::cerr << "Icorrect first parametr" << "\n";
+    std::cerr << "Incorrect first parametr" << "\n";
     return 1;
   }
 
@@ -66,7 +66,7 @@ int main(int argc, char** argv)
     std::cerr << "Error reading matrix data" << "\n";
     if (num == '2')
     {
-    delete[] arr;
+      delete[] arr;
     }
     input.close();
     output.close();
