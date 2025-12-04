@@ -5,15 +5,16 @@
 #include "matrix_actions.h"
 
 namespace alekseev {
-  bool check_cl_args(int argc, char ** argv);
+  bool check_cl_args(int argc, char ** argv, int & num);
 }
 
 
 int main(int argc, char ** argv)
 {
-  constexpr size_t SIZE = 10000;
+  size_t SIZE = 10000;
+  int num = 0;
   try {
-    alekseev::check_cl_args(argc, argv);
+    alekseev::check_cl_args(argc, argv, num);
   } catch (const std::exception & e) {
     std::cerr << e.what() << "\n";
     return 1;
@@ -26,7 +27,6 @@ int main(int argc, char ** argv)
     std::cerr << "Matrix unread" << "\n";
     return 2;
   }
-  int num = std::stoi(argv[1]);
   int * matrix = nullptr;
   int temp[SIZE];
   if (num == 1) {
@@ -37,9 +37,6 @@ int main(int argc, char ** argv)
 
   try {
     alekseev::input_matrix(input, matrix, rows, cols);
-    if (input.fail()) {
-      throw std::invalid_argument("Matrix unread");
-    }
     std::ofstream output(argv[3]);
     output << alekseev::cnt_sdl_pnt(matrix, rows, cols) << "\n";
     alekseev::lft_top_clk(matrix, rows, cols);
@@ -57,21 +54,22 @@ int main(int argc, char ** argv)
 }
 
 
-bool alekseev::check_cl_args(int argc, char ** argv)
+bool alekseev::check_cl_args(int argc, char ** argv, int & num)
 {
   if (argc < 4) {
     throw std::invalid_argument("Not enough arguments");
   } else if (argc > 4) {
     throw std::invalid_argument("Too many arguments");
   }
-  int num = 0;
+  int t = 0;
   try {
-    num = std::stoi(argv[1]);
+    t = std::stoi(argv[1]);
   } catch (const std::invalid_argument & e) {
     throw std::invalid_argument("First parameter is not a number");
   }
   if (!(num == 1 || num == 2)) {
     throw std::invalid_argument("First parameter is out of range");
   }
+  num = t;
   return true;
 }
