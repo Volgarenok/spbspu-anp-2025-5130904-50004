@@ -1,6 +1,5 @@
 #include <fstream>
 #include <iostream>
-#include <cstring>
 #include "matrix_ideas.h"
 int main(int argc, char** argv)
 {
@@ -22,7 +21,7 @@ int main(int argc, char** argv)
     return 2;
   }
   char num = argv[1][0];
-  if ((num != '1' && num != '2') || strlen(argv[1]) != 1)
+  if ((num != '1' && num != '2') || argv[1][1] == '\0')
   {
     std::cerr << "Error: Wrong question" << "\n";
     return 1;
@@ -59,9 +58,9 @@ int main(int argc, char** argv)
     return 2;
   }
   ivanov::write_in((num == '1') ? mtr : matrix, rows, cols, input);
-  if(input.fail() || input.eof())
+  if (input.fail() || input.eof())
   {
-    if(num == '2')
+    if (num == '2')
     {
       free(matrix);
     }
