@@ -3,8 +3,8 @@
 #include <cctype>
 
 
-size_t alekseev::exc_scd(const char * first, const size_t length1,
-    const char * second, const size_t length2, char * result)
+char * alekseev::exc_scd(const char * first, size_t length1,
+    const char * second, size_t length2, char * result, size_t & res_len)
 {
   size_t length_result = 0;
   for (size_t i = 0; i < length1; ++i) {
@@ -19,18 +19,20 @@ size_t alekseev::exc_scd(const char * first, const size_t length1,
     }
   }
   result[length_result] = '\0';
-  return length_result;
+  res_len = length_result;
+  return result;
 }
 
 
-size_t alekseev::lat_rmv(const char * original, const size_t length, char * result)
+char * alekseev::lat_rmv(const char * original, size_t length, char * result, size_t & res_len)
 {
-  size_t length_result = 0;
+  size_t result_length = 0;
   for (size_t i = 0; i < length; ++i) {
     if (!isalpha(original[i])) {
-      result[length_result++] = original[i];
+      result[result_length++] = original[i];
     }
   }
-  result[length_result] = '\0';
-  return length_result;
+  result[result_length] = '\0';
+  res_len = result_length;
+  return result;
 }
