@@ -10,10 +10,6 @@ std::istream & ivantsova::readArr(std::istream & input, int * arr, size_t rows, 
   {
     ++number;
   }
-  if (!input)
-  {
-    return;
-  }
   return input;
 }
 
