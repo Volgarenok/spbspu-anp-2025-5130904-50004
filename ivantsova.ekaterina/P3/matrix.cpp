@@ -13,7 +13,7 @@ std::istream & ivantsova::readArr(std::istream & input, int * arr, size_t rows, 
   return input;
 }
 
-std::ostream & ivantsova::writeArr(std::ostream & output, const int * arr, size_t rows, size_t cols, int result)
+std::ostream & ivantsova::writeArr(std::ostream & output, const int * arr, size_t rows, size_t cols)
 {
   for (size_t i = 0; i < rows; ++i)
   {
@@ -111,6 +111,7 @@ void ivantsova::workWithArray(std::istream & input, std::ostream & output, int *
     return;
   }
   int result = countColumns(arr, rows, cols);
+  output << result << "\n";
   reduceElements(arr, rows, cols);
-  writeArr(output, arr, rows, cols, result);
+  writeArr(output, arr, rows, cols);
 }
