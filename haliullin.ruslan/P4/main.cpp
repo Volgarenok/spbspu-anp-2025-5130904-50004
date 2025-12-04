@@ -2,7 +2,7 @@
 #include <iomanip>
 #include <cstdlib>
 #include <fstream>
-#include "string_functions.hpp"
+#include "line.hpp"
 int main()
 {
   namespace hal = haliullin;

@@ -1,4 +1,4 @@
-#include "string_functions.hpp"
+#include "line.hpp"
 #include <iostream>
 
 char *haliullin::getline(std::istream &in, size_t &size)

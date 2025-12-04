@@ -1,5 +1,5 @@
-#ifndef STRING_FUNCTIONS_HPP
-#define STRING_FUNCTIONS_HPP
+#ifndef LINE_HPP
+#define LINE_HPP
 #include <iostream>
 namespace haliullin
 {
