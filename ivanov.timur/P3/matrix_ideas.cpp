@@ -57,7 +57,7 @@ int ivanov::max_sum_mdg(const int* matrix, size_t rows, size_t cols)
   }
   return found_valid ? max_sum : 0;
 }
-void ivanov::write_in(int* matrix, size_t rows, size_t cols, std::ifstream& input) {
+void ivanov::write_in(int* matrix, size_t rows, size_t cols, std::ifstream &input) {
   for (size_t i = 0; i < rows * cols; i++)
   {
     input >> matrix[i];
