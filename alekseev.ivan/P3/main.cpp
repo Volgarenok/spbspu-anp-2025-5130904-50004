@@ -11,7 +11,6 @@ namespace alekseev {
 
 int main(int argc, char ** argv)
 {
-  size_t SIZE = 10000;
   int num = 0;
   try {
     alekseev::check_cl_args(argc, argv, num);
@@ -28,7 +27,7 @@ int main(int argc, char ** argv)
     return 2;
   }
   int * matrix = nullptr;
-  int temp[SIZE];
+  int temp[10000];
   if (num == 1) {
     matrix = temp;
   } else {
