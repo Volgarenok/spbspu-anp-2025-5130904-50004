@@ -66,7 +66,7 @@ bool alekseev::check_cl_args(int argc, char ** argv, int & num)
   } catch (const std::invalid_argument & e) {
     throw std::invalid_argument("First parameter is not a number");
   }
-  if (!(num == 1 || num == 2)) {
+  if (!(t == 1 || t == 2)) {
     throw std::invalid_argument("First parameter is out of range");
   }
   num = t;
