@@ -1,4 +1,4 @@
-#include <cstdlib>
+k#include <cstdlib>
 #include <fstream>
 #include <iostream>
 
@@ -35,6 +35,13 @@ int main(int argc, char** argv)
     return 2;
   }
 
+  std::ofstream output(argv[3]);
+  if (!output.is_open())
+  {
+    std::cerr << "Cannot open output file\n";
+    return 1;
+  }
+
   int readRows = 0;
   int readCols = 0;
   input >> readRows >> readCols;
@@ -57,13 +64,6 @@ int main(int argc, char** argv)
 
   if (numElements == 0)
   {
-    input.close();
-    std::ofstream output(argv[3]);
-    if (!output.is_open())
-    {
-      std::cerr << "Cannot open output file\n";
-      return 1;
-    }
     output << "0\n0\n";
     return 0;
   }
@@ -102,17 +102,6 @@ int main(int argc, char** argv)
     return 2;
   }
   input.close();
-
-  std::ofstream output(argv[3]);
-  if (!output.is_open())
-  {
-    std::cerr << "Cannot open output file\n";
-    if (isStringEqual(argv[1], "2"))
-    {
-      std::free(matrix);
-    }
-    return 1;
-  }
 
   output << vasilenko::countColsNsm(matrix, rows, cols) << "\n";
   output << vasilenko::maxSumSdg(matrix, rows, cols) << "\n";
