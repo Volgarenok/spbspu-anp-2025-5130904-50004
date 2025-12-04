@@ -74,9 +74,10 @@ int main(int argc, char* argv[])
     }
   }
 
-  if (!kuchukbaeva::readMatrix(in, matrix, rows, cols))
+  size_t read_count = kuchukbaeva::readMatrix(in, matrix, rows, cols);
+  if (read_count != matrixSize)
   {
-    std::cerr << "Cannot reading matrix" << "\n";
+    std::cerr << "Cannot reading matrix elements expected " << matrixSize << " and read  " << read_count << "\n";
     in.close();
     if (num == 2)
     {
@@ -85,9 +86,10 @@ int main(int argc, char* argv[])
     return 2;
   }
   in.close();
-  int locMaxCount = kuchukbaeva::countLocMax(matrix, rows, cols);
+  size_t locMaxCount = kuchukbaeva::countLocMax(matrix, rows, cols);
   kuchukbaeva::lftBotClk(matrix, rows, cols);
-  kuchukbaeva::writeMatrix(out, matrix, rows, cols, locMaxCount);
+  out << locMaxCount << "\n";
+  kuchukbaeva::writeMatrix(out, matrix, rows, cols);
   if (num == 2)
   {
     free(matrix);
