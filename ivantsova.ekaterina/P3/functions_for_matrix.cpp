@@ -40,7 +40,7 @@ void ivantsova::reduceElements(int * arr, size_t rows, size_t cols)
   while (up < rows && left < cols)
   {
     for (size_t i = rows - 1; i >= up && i < rows; i--)
-    {  
+    {
       arr[i * original_cols + left] -= step++;
       if (i == 0 && i >= up)
       {
@@ -53,7 +53,7 @@ void ivantsova::reduceElements(int * arr, size_t rows, size_t cols)
       break;
     }
     for (size_t i = left; i < cols; i++)
-    {      
+    {
       arr[up * original_cols + i] -= step++;
     }
     up++;
@@ -62,7 +62,7 @@ void ivantsova::reduceElements(int * arr, size_t rows, size_t cols)
       break;
     }
     for (size_t i = up; i < rows; i++)
-    {      
+    {
       arr[i * original_cols + (cols - 1)] -= step++;
     }
     cols--;
@@ -71,7 +71,7 @@ void ivantsova::reduceElements(int * arr, size_t rows, size_t cols)
       break;
     }
     for (size_t i = cols - 1; i >= left; i--)
-    {      
+    {
       arr[(rows - 1) * original_cols + i] -= step++;
       if (i == 0)
       {
