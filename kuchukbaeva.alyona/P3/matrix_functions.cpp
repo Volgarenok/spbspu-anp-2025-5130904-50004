@@ -49,13 +49,13 @@ void kuchukbaeva::lftBotClk(int* matrix, size_t rows, size_t cols)
   size_t bottom = rows - 1;
   size_t left = 0;
   size_t right = cols - 1;
-  size_t schet = 1;
+  size_t counter = 1;
 
   while (top <= bottom && left <= right)
   {
     for (size_t i = bottom; i >= top && i < rows; --i)
     {
-      matrix[i * cols + left] -= schet++;
+      matrix[i * cols + left] -= counter++;
     }
     left++;
     if (left > right)
@@ -64,7 +64,7 @@ void kuchukbaeva::lftBotClk(int* matrix, size_t rows, size_t cols)
     }
     for (size_t j = left; j <= right; ++j)
     {
-      matrix[top * cols + j] -= schet++;
+      matrix[top * cols + j] -= counter++;
     }
     top++;
     if (top > bottom)
@@ -73,7 +73,7 @@ void kuchukbaeva::lftBotClk(int* matrix, size_t rows, size_t cols)
     }
     for (size_t i = top; i <= bottom; ++i)
     {
-      matrix[i * cols + right] -= schet++;
+      matrix[i * cols + right] -= counter++;
     }
     right--;
     if (left > right)
@@ -82,7 +82,7 @@ void kuchukbaeva::lftBotClk(int* matrix, size_t rows, size_t cols)
     }
     for (size_t j = right; j >= left && j < cols ; --j)
     {
-      matrix[bottom * cols + j] -= schet++;
+      matrix[bottom * cols + j] -= counter++;
     }
     bottom--;
   }
@@ -90,19 +90,19 @@ void kuchukbaeva::lftBotClk(int* matrix, size_t rows, size_t cols)
 
 size_t kuchukbaeva::readMatrix(std::istream& in, int *matrix, size_t rows, size_t cols)
 {
-  size_t schet_count = 0;
+  size_t read_count = 0;
   for (size_t i = 0; i < rows * cols; ++i)
   {
     if (in >> matrix[i])
     {
-      schet_count++;
+      read_count++;
     }
     else
     {
       break;
     }
   }
-  return schet_count;
+  return read_count;
 }
 
 void kuchukbaeva::writeMatrix(std::ostream& out, const int* matrix, size_t rows, size_t cols)
