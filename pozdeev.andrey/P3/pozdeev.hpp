@@ -1,0 +1,17 @@
+#ifndef POZDEEV_HPP
+#define POZDEEV_HPP
+
+#include <cstddef>
+#include <fstream>
+
+namespace pozdeev {
+  constexpr int MAX_SIZE = 10000;
+
+  int countNonSequentialRows(const int * matrix, size_t rows, size_t cols);
+  void spiral(int * matrix, size_t rows, size_t cols);
+
+  int numAnalysis(const char * s);
+  void inputMatrix(std::ifstream & in, int * matrix, size_t size);
+}
+
+#endif
