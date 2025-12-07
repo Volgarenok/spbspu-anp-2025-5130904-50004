@@ -63,12 +63,14 @@ void read_matrix(const char* filename, int* matrix, int& rows, int& cols, int ma
   {
     for (size_t j = 0; j < static_cast<size_t>(cols); ++j)
     {
-      if (!(file >> matrix[i * cols + j]))
-      {
-        std::cerr << "Failed to read matrix from file";
-        return;
-      }
+      file >> matrix[i * cols + j];
     }
+  }
+
+  if (file.fail() && !file.eof())
+  {
+    std::cerr << "Failed to read matrix from file";
+    return;
   }
 }
 
@@ -115,14 +117,16 @@ void read_matrix(const char* filename, int** matrix, int& rows, int& cols)
   {
     for (size_t j = 0; j < static_cast<size_t>(cols); ++j)
     {
-      if (!(file >> (*matrix)[i * cols + j]))
-      {
-        delete[] *matrix;
-        *matrix = nullptr;
-        std::cerr << "Failed to read matrix from file";
-        return;
-      }
+      file >> (*matrix)[i * cols + j];
     }
+  }
+
+  if (file.fail() && !file.eof())
+  {
+    delete[] *matrix;
+    *matrix = nullptr;
+    std::cerr << "Failed to read matrix from file";
+    return;
   }
 }
 
