@@ -103,8 +103,14 @@ void pozdeev::inputMatrix(std::ifstream & in, int * matrix, size_t size)
   for (size_t i = 0; i < size; ++i) {
     in >> matrix[i];
   }
+}
 
-  if (!in) {
-    throw std::runtime_error("Invalid matrix element or not enough elements");
+void pozdeev::outputMatrix(std::ofstream & out, const int * matrix, size_t rows, size_t cols)
+{
+  out << rows << " " << cols;
+  size_t size = rows * cols;
+  for (size_t i = 0; i < size; ++i) {
+    out << " " << matrix[i];
   }
+  out << "\n";
 }

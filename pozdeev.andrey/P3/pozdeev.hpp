@@ -12,6 +12,7 @@ namespace pozdeev {
 
   int numAnalysis(const char * s);
   void inputMatrix(std::ifstream & in, int * matrix, size_t size);
+  void outputMatrix(std::ofstream & out, const int * matrix, size_t rows, size_t cols);
 }
 
 #endif
