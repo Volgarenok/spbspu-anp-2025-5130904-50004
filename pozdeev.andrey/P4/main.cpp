@@ -19,6 +19,12 @@ int main()
     return 1;
   }
 
+  if (inputSize == 0) {
+    std::free(inputString);
+    std::cerr << "Error: Empty input\n";
+    return 1;
+  }
+
   if (!pozdeev::checkStream(std::cin)) {
     std::free(inputString);
     std::cerr << "Error: Input stream error\n";
