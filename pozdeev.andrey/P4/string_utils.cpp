@@ -1,58 +1,58 @@
 #include "string_utils.hpp"
+#include <cstdlib>
 #include <cctype>
-#include <cstddef>
+#include <iostream>
 
-char * pozdeev::removeExtraSpaces(char * destination, const char * source)
+namespace {
+  constexpr size_t kResizeFactor = 2;
+}
+
+char* pozdeev::readString(std::istream& in, size_t& size, size_t initialCapacity)
 {
-  size_t readIndex = 0;
-  size_t writeIndex = 0;
-  int isSpaceFound = 0;
+  size_t currentCapacity = initialCapacity;
+  size_t currentSize = 0;
+  char* buffer = reinterpret_cast < char* > (std::malloc(currentCapacity * sizeof(char)));
+  if (buffer == nullptr) {
+    return nullptr;
+  }
 
-  while (source[readIndex] != '\0') {
-    if (std::isspace(source[readIndex]) != 0) {
-      if (writeIndex > 0) {
-        if (isSpaceFound == 0) {
-          destination[writeIndex] = ' ';
-          writeIndex = writeIndex + 1;
-          isSpaceFound = 1;
-        }
+  std::ios_base::fmtflags originalFlags = in.flags();
+  in >> std::noskipws;
+
+  char inputChar = 0;
+
+  while (in.get(inputChar) && inputChar != '\n') {
+    if (currentSize + 1 >= currentCapacity) {
+      size_t newCapacity = currentCapacity * kResizeFactor;
+      char* newBuffer = reinterpret_cast < char* > (std::realloc(buffer, newCapacity * sizeof(char)));
+
+      if (newBuffer == nullptr) {
+        std::free(buffer);
+        in.flags(originalFlags);
+        return nullptr;
       }
-    } else {
-      destination[writeIndex] = source[readIndex];
-      writeIndex = writeIndex + 1;
-      isSpaceFound = 0;
+
+      buffer = newBuffer;
+      currentCapacity = newCapacity;
     }
-    readIndex = readIndex + 1;
+
+    buffer[currentSize] = inputChar;
+    ++currentSize;
   }
 
-  if (writeIndex > 0) {
-    if (std::isspace(destination[writeIndex - 1]) != 0) {
-      writeIndex = writeIndex - 1;
-    }
+  in.flags(originalFlags);
+
+  if (currentSize == 0 && in.fail() && !in.eof()) {
+    std::free(buffer);
+    return nullptr;
   }
 
-  destination[writeIndex] = '\0';
-  return destination;
+  buffer[currentSize] = '\0';
+  size = currentSize;
+  return buffer;
 }
 
-char * pozdeev::removeLatin(char * destination, const char * source)
-{
-  size_t readIndex = 0;
-  size_t writeIndex = 0;
-
-  while (source[readIndex] != '\0') {
-    if (std::isalpha(source[readIndex]) == 0) {
-      destination[writeIndex] = source[readIndex];
-      writeIndex = writeIndex + 1;
-    }
-    readIndex = readIndex + 1;
-  }
-
-  destination[writeIndex] = '\0';
-  return destination;
-}
-
-bool pozdeev::checkStream(std::istream & stream)
+bool pozdeev::checkStream(std::istream& stream)
 {
   if (!stream.fail()) {
     return true;
@@ -61,4 +61,54 @@ bool pozdeev::checkStream(std::istream & stream)
     return true;
   }
   return false;
+}
+
+char* pozdeev::removeExtraSpaces(char* destination, const char* source)
+{
+  size_t readIndex = 0;
+  size_t writeIndex = 0;
+  bool isSpaceFound = false;
+
+  while (source[readIndex] != '\0' && std::isspace(source[readIndex])) {
+    ++readIndex;
+  }
+
+  while (source[readIndex] != '\0') {
+    if (std::isspace(source[readIndex])) {
+      if (writeIndex > 0 && !isSpaceFound) {
+        destination[writeIndex] = ' ';
+        ++writeIndex;
+        isSpaceFound = true;
+      }
+    } else {
+      destination[writeIndex] = source[readIndex];
+      ++writeIndex;
+      isSpaceFound = false;
+    }
+    ++readIndex;
+  }
+
+  if (writeIndex > 0 && std::isspace(destination[writeIndex - 1])) {
+    --writeIndex;
+  }
+
+  destination[writeIndex] = '\0';
+  return destination;
+}
+
+char* pozdeev::removeLatin(char* destination, const char* source)
+{
+  size_t readIndex = 0;
+  size_t writeIndex = 0;
+
+  while (source[readIndex] != '\0') {
+    if (!std::isalpha(source[readIndex])) {
+      destination[writeIndex] = source[readIndex];
+      ++writeIndex;
+    }
+    ++readIndex;
+  }
+
+  destination[writeIndex] = '\0';
+  return destination;
 }

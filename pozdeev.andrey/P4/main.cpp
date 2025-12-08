@@ -2,106 +2,51 @@
 #include <cstdlib>
 #include <iostream>
 #include <stdexcept>
+#include <new>
 
 namespace {
-  constexpr size_t initialBufferSize = 16;
-  constexpr size_t resizeFactor = 2;
+  constexpr size_t kInitialBufferSize = 16;
 }
 
 int main()
 {
-  try {
-    size_t currentCapacity = initialBufferSize;
-    size_t currentSize = 0;
+  size_t inputSize = 0;
 
-    char * inputString = static_cast <char *> (std::malloc(currentCapacity * sizeof(char)));
-    if (inputString == nullptr) {
-      throw std::bad_alloc();
-    }
+  char* inputString = pozdeev::readString(std::cin, inputSize, kInitialBufferSize);
 
-    std::ios_base::fmtflags originalFlags = std::cin.flags();
-    std::cin >> std::noskipws;
+  if (inputString == nullptr) {
+    std::cerr << "Error: Failed to read input or allocate memory\n";
+    return 1;
+  }
 
-    char inputChar = 0;
+  if (!pozdeev::checkStream(std::cin)) {
+    std::free(inputString);
+    std::cerr << "Error: Input stream error\n";
+    return 1;
+  }
 
-    while (std::cin >> inputChar) {
-      if (inputChar == '\n') {
-        break;
-      }
+  const size_t result = inputSize + 1;
 
-      if (currentSize + 1 >= currentCapacity) {
-        size_t newCapacity = currentCapacity * resizeFactor;
-        char * newBuffer = static_cast <char *> (std::malloc(newCapacity * sizeof(char)));
+  char* spaceRemovedResult = reinterpret_cast < char* > (std::malloc(result * sizeof(char)));
+  char* latinRemovedResult = reinterpret_cast < char* > (std::malloc(result * sizeof(char)));
 
-        if (newBuffer == nullptr) {
-          std::free(inputString);
-          std::cin.flags(originalFlags);
-          throw std::bad_alloc();
-        }
-
-        for (size_t i = 0; i < currentSize; ++i) {
-          newBuffer[i] = inputString[i];
-        }
-
-        std::free(inputString);
-        inputString = newBuffer;
-        currentCapacity = newCapacity;
-      }
-
-      inputString[currentSize] = inputChar;
-      currentSize = currentSize + 1;
-    }
-
-    std::cin.flags(originalFlags);
-
-    if (currentSize == 0) {
-      if (std::cin.fail()) {
-        std::free(inputString);
-        throw std::runtime_error("No input data");
-      }
-    }
-
-    if (!pozdeev::checkStream(std::cin)) {
-      std::free(inputString);
-      throw std::runtime_error("Input stream error");
-    }
-
-    inputString[currentSize] = '\0';
-
-    char * spaceRemovedResult = static_cast <char *> (std::malloc((currentSize + 1) * sizeof(char)));
-    char * latinRemovedResult = static_cast <char *> (std::malloc((currentSize + 1) * sizeof(char)));
-
-    if (spaceRemovedResult == nullptr) {
-      std::free(inputString);
-      if (latinRemovedResult != nullptr) {
-        std::free(latinRemovedResult);
-      }
-      throw std::bad_alloc();
-    }
-
-    if (latinRemovedResult == nullptr) {
-      std::free(inputString);
-      std::free(spaceRemovedResult);
-      throw std::bad_alloc();
-    }
-
-    pozdeev::removeExtraSpaces(spaceRemovedResult, inputString);
-    std::cout << spaceRemovedResult << std::endl;
-
-    pozdeev::removeLatin(latinRemovedResult, inputString);
-    std::cout << latinRemovedResult << std::endl;
-
+  if (spaceRemovedResult == nullptr || latinRemovedResult == nullptr) {
     std::free(inputString);
     std::free(spaceRemovedResult);
     std::free(latinRemovedResult);
-
-  } catch (const std::bad_alloc &) {
-    std::cerr << "Error: Memory allocation failed" << std::endl;
-    return 1;
-  } catch (const std::exception & e) {
-    std::cerr << "Error: " << e.what() << std::endl;
+    std::cerr << "Error: Memory allocation failed\n";
     return 1;
   }
+
+  pozdeev::removeExtraSpaces(spaceRemovedResult, inputString);
+  std::cout << spaceRemovedResult << '\n';
+
+  pozdeev::removeLatin(latinRemovedResult, inputString);
+  std::cout << latinRemovedResult << '\n';
+
+  std::free(inputString);
+  std::free(spaceRemovedResult);
+  std::free(latinRemovedResult);
 
   return 0;
 }
