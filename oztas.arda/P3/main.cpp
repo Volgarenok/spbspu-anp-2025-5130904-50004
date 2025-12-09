@@ -11,7 +11,6 @@ int main(int argc, char* argv[])
     return 1;
   }
 
-  // Parse task number
   int taskNum = 0;
   try {
     taskNum = std::stoi(argv[1]);
@@ -25,14 +24,12 @@ int main(int argc, char* argv[])
     return 1;
   }
 
-  // Open input file
   std::ifstream input(argv[2]);
   if (!input) {
     std::cerr << "input file error\n";
     return 2;
   }
 
-  // Open output file
   std::ofstream output(argv[3]);
   if (!output) {
     std::cerr << "output file error\n";
@@ -49,13 +46,11 @@ int main(int argc, char* argv[])
     return 2;
   }
 
-  // Handle empty matrix
   if (rows == 0 || cols == 0) {
     output << "0 0";
     return 0;
   }
 
-  // Execute the requested task
   if (taskNum == 1) {
     int result = oztas::countNonZeroDiagonals(matrix, rows, cols);
     output << result;
