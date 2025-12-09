@@ -41,19 +41,16 @@ namespace oztas
     int left = 0, right = cols - 1;
 
     while (top <= bottom && left <= right) {
-      // Top row (left to right)
       for (int j = left; j < right; ++j) {
         matrix[top][j] = value++;
       }
       top++;
 
-      // Right column (top to bottom)
       for (int i = top; i <= bottom; ++i) {
         matrix[i][right] = value++;
       }
       right--;
 
-      // Bottom row (right to left) - if rows remain
       if (top <= bottom) {
         for (int j = right; j >= left; --j) {
           matrix[bottom][j] = value++;
@@ -61,7 +58,6 @@ namespace oztas
         bottom--;
       }
 
-      // Left column (bottom to top) - if columns remain
       if (left <= right) {
         for (int i = bottom; i >= top; --i) {
           matrix[i][left] = value++;
