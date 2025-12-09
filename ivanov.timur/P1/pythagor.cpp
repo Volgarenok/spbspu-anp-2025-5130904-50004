@@ -1,6 +1,6 @@
 #include "pythagor.h"
 
-Pythagor::Pythagor(int a0, int b0, int c0): a(a0), b(b0), c(c0) {}
+Pythagor::Pythagor() {}
 
 void Pythagor::next(int e)
 {
@@ -9,7 +9,16 @@ void Pythagor::next(int e)
   c = e;
 }
 
-bool Pythagor::operator()() const {
+bool Pythagor::get() const
+{
   return ((a * a + b * b == c * c) || (a * a + c * c == b * b) || (b * b + c * c == a * a));
 }
+void Pythagor::take()
+{
+  if (get()) count++;
+}
 
+size_t Pythagor::operator()() const
+{
+  return count;
+}

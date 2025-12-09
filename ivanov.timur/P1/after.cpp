@@ -1,6 +1,6 @@
 #include "after.h"
 
-After::After(int e0): elem(e0) {}
+After::After() {}
 
 void After::next(int e1)
 {
