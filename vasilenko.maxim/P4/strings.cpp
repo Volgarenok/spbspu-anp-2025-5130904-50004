@@ -38,29 +38,23 @@ char* vasilenko::findMissingLetters(const char* src, char* dest)
 
 char* vasilenko::mergeStrings(const char* src1, const char* src2, char* dest)
 {
-  size_t len1 = std::strlen(src1);
-  size_t len2 = std::strlen(src2);
   size_t i = 0;
   size_t j = 0;
   size_t k = 0;
 
-  while (i < len1 && j < len2)
+  while (src1[i] != '\0' && src2[j] != '\0')
   {
     dest[k++] = src1[i++];
     dest[k++] = src2[j++];
   }
 
-  if (i < len1)
+  if (src1[i] != '\0')
   {
     std::strcpy(dest + k, src1 + i);
   }
-  else if (j < len2)
-  {
-    std::strcpy(dest + k, src2 + j);
-  }
   else
   {
-    dest[k] = '\0';
+    std::strcpy(dest + k, src2 + j);
   }
 
   return dest;
