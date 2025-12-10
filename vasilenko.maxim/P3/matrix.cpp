@@ -1,13 +1,14 @@
 #include "matrix.hpp"
+
 #include <algorithm>
 #include <iostream>
 
-int vasilenko::countColsNsm(const int* matrix, size_t rows, size_t cols)
+size_t vasilenko::countColsNsm(const int* matrix, size_t rows, size_t cols)
 {
-  int count = 0;
+  size_t count = 0;
   if (rows < 2)
   {
-    return static_cast< int >(cols);
+    return cols;
   }
 
   for (size_t j = 0; j < cols; ++j)
@@ -79,7 +80,7 @@ int vasilenko::maxSumSdg(const int* matrix, size_t rows, size_t cols)
   return maxSum;
 }
 
-void vasilenko::inputMatrix(std::istream& in, int* matrix, const size_t size)
+void vasilenko::inputMatrix(std::istream& in, int* matrix, size_t size)
 {
   for (size_t i = 0; i < size; ++i)
   {
