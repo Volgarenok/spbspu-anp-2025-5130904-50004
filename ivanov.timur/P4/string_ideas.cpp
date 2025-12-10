@@ -25,20 +25,24 @@ char * ivanov::get_line(std::istream &in, size_t &length, char stop)
     if (size + 1 >= length)
     {
       size_t new_length = length * 2 + 1;
-      try {
-        char *tmx = new char[new_length];
-        for (size_t i = 0; i < size; ++i)
-        {
-          tmx[i] = data[i];
-        }
-        delete[] data;
-        data = tmx;
-        length = new_length;
+      char * tmx = nullptr;
+      try
+      {
+        tmx = new char[new_length];
       }
-      catch (...) {
+      catch (...)
+      {
         delete[] data;
         throw std::logic_error("lol");
       }
+
+      for (size_t i = 0; i < size; ++i)
+      {
+        tmx[i] = data[i];
+      }
+      delete[] data;
+      data = tmx;
+      length = new_length;
     }
     data[size] = tmp;
     size++;
