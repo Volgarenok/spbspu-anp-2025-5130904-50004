@@ -1,10 +1,10 @@
 #include <iostream>
 #include "string_ideas.h"
-int main() {
+int main()
+{
   size_t BASE = 10;
-  char* content = new char[BASE];
   size_t size = 0;
-  content = ivanov::get_line(std::cin, content, size, BASE);
+  char *content = ivanov::get_line(std::cin, size, BASE);
   if (size == 0)
   {
     delete[] content;

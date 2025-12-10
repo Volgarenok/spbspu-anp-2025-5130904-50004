@@ -3,8 +3,9 @@
 #include <cctype>
 #include <cstddef>
 
-char * ivanov::get_line(std::istream &in, char *data, size_t &size, size_t &length)
+char * ivanov::get_line(std::istream &in, size_t &size, size_t &length)
 {
+  char * data = new char[length];
   bool is_skipws = in.flags() & std::ios_base::skipws;
   if (is_skipws)
   {
