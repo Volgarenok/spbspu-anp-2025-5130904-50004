@@ -42,8 +42,8 @@ int main(int argc, char** argv)
     return 1;
   }
 
-  int readRows = 0;
-  int readCols = 0;
+  size_t rows = 0;
+  size_t cols = 0;
   input >> readRows >> readCols;
 
   if (input.fail())
@@ -58,8 +58,6 @@ int main(int argc, char** argv)
     return 2;
   }
 
-  size_t rows = readRows;
-  size_t cols = readCols;
   size_t numElements = rows * cols;
 
   if (numElements == 0)
