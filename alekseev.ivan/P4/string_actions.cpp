@@ -3,13 +3,12 @@
 #include <cctype>
 
 
-char * alekseev::exc_scd(const char * first, size_t length1,
-    const char * second, size_t length2, char * result, size_t & res_len)
+char * alekseev::exc_scd(const char * first, const char * second, char * result, size_t * res_len)
 {
   size_t length_result = 0;
-  for (size_t i = 0; i < length1; ++i) {
+  for (size_t i = 0; first[i]; ++i) {
     bool is_in_second = false;
-    for (size_t j = 0; j < length2; ++j) {
+    for (size_t j = 0; second[j]; ++j) {
       if (first[i] == second[j]) {
         is_in_second = true;
       }
@@ -19,20 +18,20 @@ char * alekseev::exc_scd(const char * first, size_t length1,
     }
   }
   result[length_result] = '\0';
-  res_len = length_result;
+  *res_len = length_result;
   return result;
 }
 
 
-char * alekseev::lat_rmv(const char * original, size_t length, char * result, size_t & res_len)
+char * alekseev::lat_rmv(const char * original, char * result, size_t * res_len)
 {
   size_t result_length = 0;
-  for (size_t i = 0; i < length; ++i) {
+  for (size_t i = 0; original[i]; ++i) {
     if (!isalpha(original[i])) {
       result[result_length++] = original[i];
     }
   }
   result[result_length] = '\0';
-  res_len = result_length;
+  *res_len = result_length;
   return result;
 }
