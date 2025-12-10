@@ -9,10 +9,10 @@ void khairullin::fill(int * array, std::ifstream & input, size_t rows, size_t co
     input >> array[i];
   }
 }
-bool khairullin::checkZero(const int * array, size_t index1, size_t index2, size_t size)
+int khairullin::checkZero(const int * array, size_t index1, size_t index2, size_t size)
 {
   bool flag = false;
-  flag = array[index1 * size + index2] == array[index1 * size + index2 + 1] && array[index1 * size + index2] == 0;
+  flag = (array[index1 * size + index2] == array[index1 * size + index2 + 1] && array[index1 * size + index2] == 0);
   return flag;
 }
 int khairullin::findLocalMax(const int * array, size_t rows, size_t cols)

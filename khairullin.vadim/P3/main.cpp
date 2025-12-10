@@ -19,7 +19,7 @@ int main(int argc, char ** argv)
   std::ofstream output(argv[3]);
   int rows = 0, cols = 0;
   input >> rows >> cols;
-  if (!input)
+  if (input.fail() || !input)
   {
     std::cerr << "File is empty\n";
     return 2;
@@ -32,7 +32,7 @@ int main(int argc, char ** argv)
   int fixed_square_array[10000] = {};
   int * array = reinterpret_cast< int * > (std::malloc(rows * cols * sizeof(int)));
   int * square_array =  reinterpret_cast< int * > (std::malloc(MIN_SIZE * MIN_SIZE * sizeof(int)));
-  if (!rows && !cols)
+  if (!rows || !cols)
   {
     output << 0 << "\n";
     output << std::boolalpha;
@@ -84,9 +84,6 @@ int main(int argc, char ** argv)
   }
   output << std::boolalpha;
   output << khair::checkTriangle(square_matrix, MIN_SIZE) << "\n";
-  if (argv[1][0] == '2')
-  {
-    free(array);
-    free(square_array);
-  }
+  free(array);
+  free(square_array);
 }
