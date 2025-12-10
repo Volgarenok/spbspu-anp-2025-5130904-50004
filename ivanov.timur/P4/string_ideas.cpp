@@ -3,7 +3,7 @@
 #include <cctype>
 #include <cstddef>
 
-char * ivanov::get_line(std::istream &in, size_t &size, size_t &length, char stop)
+char * ivanov::get_line(std::istream &in, size_t &length, char stop)
 {
   char * data = new char[length];
   bool is_skipws = in.flags() & std::ios_base::skipws;
@@ -12,7 +12,7 @@ char * ivanov::get_line(std::istream &in, size_t &size, size_t &length, char sto
     in >> std::noskipws;
   }
   char tmp = stop;
-  size = 0;
+  size_t size = 0;
   in >> tmp;
   while (tmp != stop && in)
   {
@@ -41,31 +41,31 @@ char * ivanov::get_line(std::istream &in, size_t &size, size_t &length, char sto
   return data;
 }
 
-char * ivanov::del_lat(char *content, size_t &size) {
-  if (size == 0)
+char * ivanov::del_lat(char *content, char *tmpx) {
+  if (content[0] == '\0')
   {
     return content;
   }
 
   size_t new_size = 0;
-  for (size_t i = 0; i < size; ++i)
+  size_t c = 0;
+  while (*(content + c))
   {
-    if (!std::isalpha(static_cast< unsigned char >(content[i])))
+    if (!std::isalpha(static_cast< unsigned char >(content[c])))
     {
-      content[new_size++] = content[i];
+      content[new_size++] = content[c];
     }
+    c++;
   }
   content[new_size] = '\0';
-  size = new_size;
-  if (new_size > 0 && new_size < size / 2)
+  if (*content)
   {
-    char * tmp = new char[new_size + 1];
     for (size_t i = 0; i <= new_size; ++i)
     {
-      tmp[i] = content[i];
+      tmpx[i] = content[i];
     }
     delete[] content;
-    content = tmp;
+    content = tmpx;
   }
 
   return content;
@@ -79,18 +79,20 @@ void ivanov::output(const char *content)
     if (content[i] != '\0') std::cout << " ";
   }
 }
-char * ivanov::spc_rmv(char *content, size_t &size)
+char * ivanov::spc_rmv(char *content, char *tmp)
 {
-  if (size == 0) return content;
-
-  size_t new_size = 0;
-  bool last_was_space = false;
-
-  for (size_t i = 0; i < size; ++i)
+  if (!*content)
   {
-    if (content[i] != ' ')
+    return content;
+  }
+  size_t new_size = 0;
+  size_t c = 0;
+  bool last_was_space = false;
+  while (*(content + c))
+  {
+    if (content[c] != ' ')
     {
-      content[new_size++] = content[i];
+      content[new_size++] = content[c];
       last_was_space = false;
     }
     else if (!last_was_space)
@@ -103,39 +105,35 @@ char * ivanov::spc_rmv(char *content, size_t &size)
   {
     new_size--;
   }
-
   content[new_size] = '\0';
-  size = new_size;
-
   return content;
 }
 
-char * ivanov::merge(char *content1, const char *content2, size_t &size1, size_t size2)
+char * ivanov::merge(char *content1, const char *content2, char * tmp, size_t size2)
 {
-  size_t total_size = size1 + size2;
-  char * tmp = new char[total_size + 1];
-
-  for (size_t i = 0; i < size1; ++i)
+  size_t c = 0;
+  while (*(content1 + c))
   {
-    tmp[i] = content1[i];
+    tmp[c] = content1[c];
+    c++;
   }
   for (size_t i = 0; i < size2; ++i)
   {
-    tmp[size1 + i] = content2[i];
+    tmp[c + i] = content2[i];
   }
-  tmp[total_size] = '\0';
+  tmp[c + size2] = '\0';
   delete[] content1;
   content1 = tmp;
-  size1 = total_size;
 
   return content1;
 }
-char * ivanov::get_find(char *content, size_t &size)
+char * ivanov::get_find(char *content, char *tmp)
 {
   bool found[26] = {false};
-  for (size_t i = 0; i < size; ++i)
+  size_t e = 0;
+  while (*(content + e))
   {
-    char c = content[i];
+    char c = content[e];
     if (c >= 'a' && c <= 'z')
     {
       found[c - 'a'] = true;
@@ -144,13 +142,13 @@ char * ivanov::get_find(char *content, size_t &size)
     {
       found[c - 'A'] = true;
     }
+    e++;
   }
   size_t found_count = 0;
   for (bool f : found)
   {
     if (f) found_count++;
   }
-  char * tmp = new char[found_count + 1];
   size_t index = 0;
   for (char c = 'a'; c <= 'z'; ++c)
   {
@@ -162,7 +160,6 @@ char * ivanov::get_find(char *content, size_t &size)
   tmp[found_count] = '\0';
   delete[] content;
   content = tmp;
-  size = found_count;
 
   return content;
 }
