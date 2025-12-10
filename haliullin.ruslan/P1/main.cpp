@@ -9,7 +9,7 @@ namespace haliullin
     size_t operator()() const;
     private:
       size_t k_;
-      int a = 0, b = 0, c = 0;
+      int a, b, c;
   };
 
   struct DivRem
@@ -19,27 +19,62 @@ namespace haliullin
     size_t operator()() const;
     private:
       size_t k_;
-      int prev = 0, cur = 0;
+      int prev, cur;
   };
 }
 
-haliullin::PythagorTriple():
-  k_(0)
+haliullin::PythagorTriple::PythagorTriple():
+  k_(0),
+  a(0),
+  b(0),
+  c(0)
 {
 }
 
-void haliullin::PythagorTriple()(int n)
+void haliullin::PythagorTriple::operator()(int n)
 {
   a = b;
   b = c;
   c = n;
-  k_ += (a * a + b * b == c * c) || (a * a + c * c == b * b) || (b * b + c * c == a * a);
+
+  int a2 = a * a;
+  int b2 = b * b;
+  int c2 = c * c;
+
+  if ((a2 + b2 == c2) || (a2 + c2 == b2) || (b2 + c2 == a2))
+  {
+    ++k_;
+  }
 }
 
-void haliullin::PythagorTriple()() const
+size_t haliullin::PythagorTriple::operator()() const
 {
   return k_;
 }
+
+
+haliullin::DivRem::DivRem():
+  k_(0),
+  prev(0),
+  cur(0)
+{
+}
+
+void haliullin::DivRem::operator()(int n)
+{
+  prev = cur;
+  cur = n;
+  if ((prev != 0) && (cur % prev == 0))
+  {
+    ++k_;
+  }
+}
+
+size_t haliullin::DivRem::operator()() const
+{
+  return k_;
+}
+
 
 
 int main()
@@ -47,8 +82,8 @@ int main()
   namespace hal = haliullin;
 
   int num = 0;
-  hal::PythagorTriple count_pth = hal::PythagorTriple();
-  hal::DivRem count_div_rem = hal::DivRem();
+  hal::PythagorTriple count_pth;
+  hal::DivRem count_div_rem;
 
   size_t count = 0;
 
@@ -79,7 +114,7 @@ int main()
   else if (count < 3)
   {
     std::cerr << "Too short a sequence for pyfagor" << "\n";
-    std::cout << count_div_rem << "\n";
+    std::cout << count_div_rem() << "\n";
     return 2;
   }
 
