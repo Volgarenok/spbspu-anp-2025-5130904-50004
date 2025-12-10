@@ -11,7 +11,6 @@ void khairullin::fill(int * array, std::ifstream & input, size_t rows, size_t co
 }
 int khairullin::checkZero(const int * array, size_t index1, size_t index2, size_t size)
 {
-  bool flag = false;
   bool left_element = false;
   left_element = array[index1 * size + index2];
   bool right_element = false;
