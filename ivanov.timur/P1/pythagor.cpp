@@ -2,7 +2,7 @@
 
 Pythagor::Pythagor() {}
 
-void Pythagor::next(int e)
+void Pythagor::operator()(int e)
 {
   a = b;
   b = c;

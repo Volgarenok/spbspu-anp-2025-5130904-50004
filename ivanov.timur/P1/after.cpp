@@ -2,11 +2,11 @@
 
 After::After() {}
 
-void After::next(int e1)
+void After::operator()(int e)
 {
-  if (e1 > e0)
+  if (e > elem)
   {
-    elem = e1;
+    elem = e;
     count = 0;
   }
   else

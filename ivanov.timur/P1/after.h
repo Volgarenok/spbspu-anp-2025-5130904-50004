@@ -3,7 +3,7 @@
 struct After {
   After();
 
-  void next(int e1);
+  void operator()(int e);
   size_t operator()() const;
 
 private:

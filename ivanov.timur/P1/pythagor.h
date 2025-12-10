@@ -3,7 +3,7 @@
 struct Pythagor {
   Pythagor();
 
-  void next(int e);
+  void operator()(int e);
   size_t operator()() const;
 
   bool get() const;
