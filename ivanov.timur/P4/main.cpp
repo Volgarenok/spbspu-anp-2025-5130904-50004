@@ -11,8 +11,8 @@ int main()
     std::cerr << "No data provided" << "\n";
     return 2;
   }
-  content = ivanov::del_lat(content, size);
-  content = ivanov::spc_rmv(content, size);
+  char * ncontent = ivanov::del_lat(content, size);
+  content = ivanov::spc_rmv(ncontent, size);
   ivanov::output(content);
   std::cout << "\n";
   const char add_content[] = "And I think to myself - what a wonderful world!0";
