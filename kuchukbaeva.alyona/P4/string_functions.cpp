@@ -3,15 +3,6 @@
 #include <new>
 #include <istream>
 
-size_t kuchukbaeva::strLen(const char* str)
-{
-  size_t len = 0;
-  while (str[len] != '\0')
-  {
-    ++len;
-  }
-  return len;
-}
 char* kuchukbaeva::readStr(std::istream& input, size_t& read_size)
 {
   size_t capacity = 16;
