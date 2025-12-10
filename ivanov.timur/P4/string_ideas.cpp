@@ -50,7 +50,7 @@ char * ivanov::del_lat(char *content, size_t &size) {
   size_t new_size = 0;
   for (size_t i = 0; i < size; ++i)
   {
-    if (!std::isalpha(static_cast<unsigned char>(content[i])))
+    if (!std::isalpha(static_cast< unsigned char >(content[i])))
     {
       content[new_size++] = content[i];
     }
