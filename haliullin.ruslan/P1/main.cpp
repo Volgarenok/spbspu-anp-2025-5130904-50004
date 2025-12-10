@@ -1,8 +1,56 @@
 #include <iostream>
+
+namespace haliullin
+{
+  struct PythagorTriple
+  {
+    PythagorTriple();
+    void operator()(int n);
+    size_t operator()() const;
+    private:
+      size_t k_;
+      int a = 0, b = 0, c = 0;
+  };
+
+  struct DivRem
+  {
+    DivRem();
+    void operator()(int n);
+    size_t operator()() const;
+    private:
+      size_t k_;
+      int prev = 0, cur = 0;
+  };
+}
+
+haliullin::PythagorTriple():
+  k_(0)
+{
+}
+
+void haliullin::PythagorTriple()(int n)
+{
+  a = b;
+  b = c;
+  c = n;
+  k_ += (a * a + b * b == c * c) || (a * a + c * c == b * b) || (b * b + c * c == a * a);
+}
+
+void haliullin::PythagorTriple()() const
+{
+  return k_;
+}
+
+
 int main()
 {
+  namespace hal = haliullin;
+
   int num = 0;
-  size_t count_pth = 0, count_div_rem = 0, count = 0;
+  hal::PythagorTriple count_pth = hal::PythagorTriple();
+  hal::DivRem count_div_rem = hal::DivRem();
+
+  size_t count = 0;
 
   while (std::cin >> num && num != 0)
   {
@@ -11,11 +59,8 @@ int main()
       break;
     }
 
-    if (count)
-    {
-      ++count_pth;
-      ++count_div_rem;
-    }
+    count_pth(num);
+    count_div_rem(num);
     ++count;
   }
 
@@ -38,6 +83,6 @@ int main()
     return 2;
   }
 
-  std::cout << count_pth << "\n" << count_div_rem << "\n";
+  std::cout << count_pth() << "\n" << count_div_rem() << "\n";
   return 0;
 }
