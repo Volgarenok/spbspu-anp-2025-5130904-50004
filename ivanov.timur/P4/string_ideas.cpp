@@ -24,7 +24,7 @@ char * ivanov::get_line(std::istream &in, size_t &length, char stop)
   {
     if (size + 1 >= length)
     {
-      size_t new_length = length * 2;
+      size_t new_length = length * 2 + 1;
       try {
         char *tmx = new char[new_length];
         for (size_t i = 0; i < size; ++i)
