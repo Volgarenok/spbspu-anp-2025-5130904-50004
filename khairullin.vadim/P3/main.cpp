@@ -45,7 +45,7 @@ int main(int argc, char ** argv)
   {
     std::cerr << "Invalid rows or columns\n";
     free(square_array);
-    free(square);
+    free(array);
     return 2;
   }
   if (argv[1][0] == '1')
