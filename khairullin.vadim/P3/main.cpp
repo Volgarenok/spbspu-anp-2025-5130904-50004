@@ -19,12 +19,14 @@ int main(int argc, char ** argv)
   std::ofstream output(argv[3]);
   int rows = 0, cols = 0;
   input >> rows >> cols;
-  int * array = nullptr;
-  int * square_array = nullptr;
-  int fixed_array[10000] = {};
-  int fixed_square_array[10000] = {};
   const size_t MIN_SIZE = std::min(rows, cols);
   const size_t MAX_SIZE = std::max(rows, cols);
+  int * matrix = nullptr;
+  int * square_matrix = nullptr;
+  int fixed_array[10000] = {};
+  int fixed_square_array[10000] = {};
+  int * array = reinterpret_cast< int * > (std::malloc(rows * cols * sizeof(int)));
+  int * square_array =  reinterpret_cast< int * > (std::malloc(MIN_SIZE * MIN_SIZE * sizeof(int)));
   if (!input)
   {
     std::cerr << "File is empty\n";
@@ -44,47 +46,44 @@ int main(int argc, char ** argv)
   }
   if (argv[1][0] == '1')
   {
-    array = fixed_array;
-    square_array = fixed_square_array;
+    matrix = fixed_array;
+    square_matrix = fixed_square_array;
   }
   else if (argv[1][0] == '2')
   {
-    array = reinterpret_cast< int * > (std::malloc(rows * cols * sizeof(int)));
-    if (array == nullptr)
+    matrix = array;
+    if (!matrix)
     {
       std::cerr << "Bad alloc\n";
       return 2;
     }
-    square_array = reinterpret_cast< int * > (std::malloc(MIN_SIZE * MIN_SIZE * sizeof(int)));
-    if (square_array == nullptr)
+    square_matrix = square_array;
+    if (!square_matrix)
     {
       std::cerr << "Bad alloc\n";
       free(array);
       return 2;
     }
   }
-  khair::fill(array, input, rows, cols);
+  khair::fill(matrix, input, rows, cols);
   if (input.fail())
   {
     std::cout << "Not enough elements\n";
-    if (argv[1][0] == '2')
-    {
-      free(array);
-      free(square_array);
-    }
+    free(array);
+    free(square_array);
     return 2;
   }
   input.close();
-  output << khair::findLocalMax(array, rows, cols) << "\n";
+  output << khair::findLocalMax(matrix, rows, cols) << "\n";
   for (size_t i = 0; i < MIN_SIZE; i++)
   {
     for (size_t j = 0; j < MIN_SIZE; ++j)
     {
-      square_array[MIN_SIZE * i + j] = array[MAX_SIZE * i + j];
+      square_matrix[MIN_SIZE * i + j] = matrix[MAX_SIZE * i + j];
     }
   }
   output << std::boolalpha;
-  output << khair::checkTriangle(square_array, MIN_SIZE) << "\n";
+  output << khair::checkTriangle(square_matrix, MIN_SIZE) << "\n";
   if (argv[1][0] == '2')
   {
     free(array);
