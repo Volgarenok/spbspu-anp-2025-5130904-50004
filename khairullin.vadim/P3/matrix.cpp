@@ -29,7 +29,7 @@ int khairullin::findLocalMax(const int * array, size_t rows, size_t cols)
       {
         bool localmax = false;
         localmax = array[i * cols + j] > array[(i - 1) * cols + j];
-	localmax = localmax && array[i * cols + j] > array[(i + 1) * cols + j];
+        localmax = localmax && array[i * cols + j] > array[(i + 1) * cols + j];
         localmax = localmax && array[i * cols + j] > array[i * cols + j - 1];
         localmax = localmax && array[i * cols + j] > array[i * cols + j + 1];
         if (localmax)
