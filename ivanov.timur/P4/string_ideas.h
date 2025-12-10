@@ -10,6 +10,6 @@ namespace ivanov {
   char * get_find(char *content, size_t &size);
   bool find(char symbol, const char *content);
   size_t count(char *content, char symbol);
-  char * get_line(std::istream &in, char *data, size_t &size, size_t &length);
+  char * get_line(std::istream &in, size_t &size, size_t &length, char stop);
 }
 #endif

@@ -4,7 +4,7 @@ int main()
 {
   size_t BASE = 10;
   size_t size = 0;
-  char *content = ivanov::get_line(std::cin, size, BASE);
+  char *content = ivanov::get_line(std::cin, size, BASE, '\n');
   if (size == 0)
   {
     delete[] content;
