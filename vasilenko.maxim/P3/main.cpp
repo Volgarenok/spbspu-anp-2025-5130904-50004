@@ -52,12 +52,6 @@ int main(int argc, char** argv)
     return 2;
   }
 
-  if (rows < 0 || cols < 0)
-  {
-    std::cerr << "Invalid matrix dimensions\n";
-    return 2;
-  }
-
   size_t numElements = rows * cols;
 
   if (numElements == 0)
