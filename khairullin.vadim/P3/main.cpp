@@ -19,6 +19,11 @@ int main(int argc, char ** argv)
   std::ofstream output(argv[3]);
   int rows = 0, cols = 0;
   input >> rows >> cols;
+  if (!input)
+  {
+    std::cerr << "File is empty\n";
+    return 2;
+  }
   const size_t MIN_SIZE = std::min(rows, cols);
   const size_t MAX_SIZE = std::max(rows, cols);
   int * matrix = nullptr;
@@ -27,11 +32,6 @@ int main(int argc, char ** argv)
   int fixed_square_array[10000] = {};
   int * array = reinterpret_cast< int * > (std::malloc(rows * cols * sizeof(int)));
   int * square_array =  reinterpret_cast< int * > (std::malloc(MIN_SIZE * MIN_SIZE * sizeof(int)));
-  if (!input)
-  {
-    std::cerr << "File is empty\n";
-    return 2;
-  }
   if (!rows && !cols)
   {
     output << 0 << "\n";
