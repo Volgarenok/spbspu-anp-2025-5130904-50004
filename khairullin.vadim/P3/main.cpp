@@ -37,11 +37,15 @@ int main(int argc, char ** argv)
     output << 0 << "\n";
     output << std::boolalpha;
     output << true << "\n";
+    free(square_array);
+    free(array);
     return 0;
   }
   else if (rows < 0 || cols < 0)
   {
     std::cerr << "Invalid rows or columns\n";
+    free(square_array);
+    free(square);
     return 2;
   }
   if (argv[1][0] == '1')
