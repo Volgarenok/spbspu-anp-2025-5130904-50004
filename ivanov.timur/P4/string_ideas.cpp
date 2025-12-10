@@ -25,7 +25,7 @@ char * ivanov::get_line(std::istream &in, size_t &length, char stop)
       }
       catch (...) {
         delete[] data;
-        throw(std::logic_error);
+        throw std::logic_error("lol");
       }
       for (size_t i = 0; i < size; ++i)
       {
