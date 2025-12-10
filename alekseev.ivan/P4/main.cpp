@@ -6,7 +6,7 @@
 
 namespace alekseev {
   char * get_line(std::istream & inp, size_t & size);
-  char * resize_alloc(char * old_str, size_t old_size, size_t new_size);
+  char * resize_alloc(const char * old_str, size_t old_size, size_t new_size);
 }
 
 
@@ -100,7 +100,7 @@ char * alekseev::get_line(std::istream & inp, size_t & size)
 }
 
 
-char * alekseev::resize_alloc(char * old_str, size_t old_size, size_t new_size)
+char * alekseev::resize_alloc(const char * old_str, size_t old_size, size_t new_size)
 {
   char * result = reinterpret_cast< char * >(malloc(sizeof(char) * new_size));
   if (result) {
