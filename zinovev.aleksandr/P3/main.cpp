@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <exception>
-#include "matrix_operations.hpp"
+#include "matrix.hpp"
 
 int main(int argc, char** argv)
 {
@@ -57,7 +57,7 @@ int main(int argc, char** argv)
 
     try {
       array = new int[rows * cols]{};
-    } catch (std::bad_alloc& e) {
+    } catch (const std::bad_alloc& e) {
       std::cerr << "ERROR: Memory allocation failed - " << e.what() << "\n";
       return 1;
     }

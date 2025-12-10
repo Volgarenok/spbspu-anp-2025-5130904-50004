@@ -1,22 +1,10 @@
-#include "matrix_operations.hpp"
+#include "matrix.hpp"
 #include <iostream>
 
 std::istream& zinovev::readInput(std::istream& input, int* array, size_t rows, size_t cols)
 {
-  size_t quantity = 0;
-
   for (size_t i = 0; i < rows * cols && input >> array[i]; ++i) {
-    ++quantity;
   }
-
-  if (!input) {
-    std::cerr << "ERROR: Incorrect input\n";
-    std::cerr << "Number of inputted items: " << quantity << "\n";
-  } else if (rows * cols > quantity) {
-    std::cerr << "ERROR: Not enough elements have been entered\n";
-    std::cerr << "Number of inputted items: " << quantity << "\n";
-  }
-
   return input;
 }
 
@@ -124,9 +112,19 @@ std::ostream& zinovev::writeOutput(std::ostream& output, const int* array, size_
 
 void zinovev::processArray(std::istream& input, std::ostream& output, int* array, size_t rows, size_t cols)
 {
-  readInput(input, array, rows, cols);
+  size_t quantity = 0;
+
+  for (size_t i = 0; i < rows * cols && input >> array[i]; ++i) {
+    ++quantity;
+  }
 
   if (!input) {
+    std::cerr << "ERROR: Incorrect input\n";
+    std::cerr << "Number of inputted items: " << quantity << "\n";
+    return;
+  } else if (rows * cols > quantity) {
+    std::cerr << "ERROR: Not enough elements have been entered\n";
+    std::cerr << "Number of inputted items: " << quantity << "\n";
     return;
   }
 

@@ -1,5 +1,5 @@
-#ifndef MATRIX_OPERATIONS_HPP
-#define MATRIX_OPERATIONS_HPP
+#ifndef MATRIX_HPP
+#define MATRIX_HPP
 
 #include <iostream>
 
