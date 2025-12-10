@@ -3,51 +3,63 @@
 #include <cctype>
 #include <cstddef>
 
-char * ivanov::get_line(std::istream &in, size_t &length, char stop)
+char *ivanov::get_line(std::istream &in, size_t &length, char stop)
 {
-  char * data = nullptr;
-  try {
-    data = new char[length];
+  char *data = nullptr;
+  size_t capacity = length;
+
+  try
+  {
+    data = new char[capacity];
   }
-  catch (...) {
-    throw std::logic_error("Core dump");
+  catch (...)
+  {
+    throw std::logic_error("Memory allocation failed");
   }
+
   bool is_skipws = in.flags() & std::ios_base::skipws;
   if (is_skipws)
   {
     in >> std::noskipws;
   }
-  char tmp = stop;
+  char tmp;
   size_t size = 0;
-  in >> tmp;
-  while (tmp != stop && in)
+  in.clear();
+  in.get(tmp);
+  while (tmp != stop && in && !in.eof())
   {
-    if (size + 1 >= length)
+    if (size + 1 >= capacity)
     {
-      size_t new_length = length * 2 + 1;
-      char * tmx = nullptr;
+      size_t new_capacity = capacity * 2;
+      char *new_data = nullptr;
+
       try
       {
-        tmx = new char[new_length];
+        new_data = new char[new_capacity];
       }
       catch (...)
       {
         delete[] data;
-        throw std::logic_error("lol");
+        throw std::logic_error("Memory allocation failed");
       }
-
       for (size_t i = 0; i < size; ++i)
       {
-        tmx[i] = data[i];
+        new_data[i] = data[i];
       }
       delete[] data;
-      data = tmx;
-      length = new_length;
+      data = new_data;
+      capacity = new_capacity;
     }
     data[size] = tmp;
     size++;
-    in >> tmp;
+    if (in.eof() || in.fail())
+    {
+      break;
+    }
+
+    in.get(tmp);
   }
+
   data[size] = '\0';
   if (is_skipws)
   {
