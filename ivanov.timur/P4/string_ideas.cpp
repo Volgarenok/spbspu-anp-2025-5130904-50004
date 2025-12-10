@@ -22,7 +22,7 @@ char *ivanov::get_line(std::istream &in, size_t &length, char stop)
   {
     in >> std::noskipws;
   }
-  char tmp;
+  char tmp = stop;
   size_t size = 0;
   in.clear();
   in.get(tmp);
