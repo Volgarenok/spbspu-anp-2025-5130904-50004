@@ -32,7 +32,6 @@ int main()
     return 1;
   }
   const char * second = "abc";
-  const size_t second_len = 3;
   size_t length_result = 0;
   alekseev::exc_scd(user_string, second, excluded_second, &length_result);
   std::cout << excluded_second << "\n";
