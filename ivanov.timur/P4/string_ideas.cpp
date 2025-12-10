@@ -53,22 +53,13 @@ char * ivanov::del_lat(char *content, char *tmpx) {
   {
     if (!std::isalpha(static_cast< unsigned char >(content[c])))
     {
-      content[new_size++] = content[c];
+      tmpx[new_size++] = content[c];
     }
     c++;
   }
-  content[new_size] = '\0';
-  if (*content)
-  {
-    for (size_t i = 0; i <= new_size; ++i)
-    {
-      tmpx[i] = content[i];
-    }
-    delete[] content;
-    content = tmpx;
-  }
+  tmpx[new_size] = '\0';
 
-  return content;
+  return tmpx;
 }
 void ivanov::output(const char *content)
 {
@@ -123,10 +114,8 @@ char * ivanov::merge(char *content1, const char *content2, char * tmp, size_t si
     tmp[c + i] = content2[i];
   }
   tmp[c + size2] = '\0';
-  delete[] content1;
-  content1 = tmp;
 
-  return content1;
+  return tmp;
 }
 char * ivanov::get_find(char *content, char *tmp)
 {
@@ -159,10 +148,8 @@ char * ivanov::get_find(char *content, char *tmp)
     }
   }
   tmp[found_count] = '\0';
-  delete[] content;
-  content = tmp;
 
-  return content;
+  return tmp;
 }
 bool ivanov::find(char symbol, const char *content)
 {
@@ -177,7 +164,7 @@ bool ivanov::find(char symbol, const char *content)
   }
   return false;
 }
-size_t ivanov::count(char *content, char symbol) {
+size_t ivanov::count(const char *content, char symbol) {
   size_t ans = 0;
   size_t i = 0;
   while (content[i] != '\0')

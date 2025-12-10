@@ -21,6 +21,9 @@ int main()
   content = ivanov::get_find(content, tmpx);
   ivanov::output(content);
   std::cout << "\n";
-  delete[] content;
+  try {
+    delete[] content;
+  }
+  catch (...) {}
   return 0;
 }
