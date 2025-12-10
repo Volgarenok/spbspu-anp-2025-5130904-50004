@@ -12,7 +12,7 @@ int main()
   }
   char * tmpx = new char[10000];
   content = ivanov::del_lat(content, tmpx);
-  content = ivanov::spc_rmv(content, tmpx);
+  content = ivanov::spc_rmv(content);
   ivanov::output(content);
   std::cout << "\n";
   const char add_content[] = "And I think to myself - what a wonderful world!0";

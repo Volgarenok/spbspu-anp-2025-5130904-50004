@@ -79,7 +79,7 @@ void ivanov::output(const char *content)
     if (content[i] != '\0') std::cout << " ";
   }
 }
-char * ivanov::spc_rmv(char *content, char *tmp)
+char * ivanov::spc_rmv(char *content)
 {
   if (!*content)
   {
