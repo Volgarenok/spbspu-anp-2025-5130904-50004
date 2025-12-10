@@ -100,6 +100,7 @@ char * ivanov::spc_rmv(char *content)
       content[new_size++] = ' ';
       last_was_space = true;
     }
+    c++;
   }
   if (new_size > 0 && content[new_size - 1] == ' ')
   {
