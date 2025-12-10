@@ -52,7 +52,7 @@ int main(int argc, char** argv)
     return 2;
   }
 
-  if (readRows < 0 || readCols < 0)
+  if (rows < 0 || cols < 0)
   {
     std::cerr << "Invalid matrix dimensions\n";
     return 2;
