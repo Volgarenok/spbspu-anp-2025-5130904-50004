@@ -12,8 +12,11 @@ void khairullin::fill(int * array, std::ifstream & input, size_t rows, size_t co
 int khairullin::checkZero(const int * array, size_t index1, size_t index2, size_t size)
 {
   bool flag = false;
-  flag = (array[index1 * size + index2] == array[index1 * size + index2 + 1] && array[index1 * size + index2] == 0);
-  return flag;
+  bool left_element = false;
+  left_element = array[index1 * size + index2];
+  bool right_element = false;
+  right_element = array[index1 * size + index2 + 1];
+  return left_element == right_element && left_element == 0;
 }
 int khairullin::findLocalMax(const int * array, size_t rows, size_t cols)
 {
@@ -24,8 +27,12 @@ int khairullin::findLocalMax(const int * array, size_t rows, size_t cols)
     {
       if (i != 0 && j != 0 && i != rows - 1 && j != cols - 1)
       {
-        if (array[i * cols + j] > array[(i - 1) * cols + j] && array[i * cols + j] > array[(i + 1) * cols + j]
-            && array[i * cols + j] > array[i * cols + j - 1] && array[i * cols + j] > array[i * cols + j + 1])
+        bool localmax = false;
+        localmax = array[i * cols + j] > array[(i - 1) * cols + j];
+	localmax = localmax && array[i * cols + j] > array[(i + 1) * cols + j];
+        localmax = localmax && array[i * cols + j] > array[i * cols + j - 1];
+        localmax = localmax && array[i * cols + j] > array[i * cols + j + 1];
+        if (localmax)
         {
           counter_of_max++;
         }
