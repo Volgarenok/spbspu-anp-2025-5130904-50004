@@ -5,7 +5,13 @@
 
 char * ivanov::get_line(std::istream &in, size_t &length, char stop)
 {
-  char * data = new char[length];
+  char * data = nullptr;
+  try {
+    data = new char[length];
+  }
+  catch (...) {
+    throw std::logic_error("Core dump");
+  }
   bool is_skipws = in.flags() & std::ios_base::skipws;
   if (is_skipws)
   {
@@ -19,21 +25,20 @@ char * ivanov::get_line(std::istream &in, size_t &length, char stop)
     if (size + 1 >= length)
     {
       size_t new_length = length * 2;
-      char * tmx = nullptr;
       try {
-        tmx = new char[new_length];
+        char *tmx = new char[new_length];
+        for (size_t i = 0; i < size; ++i)
+        {
+          tmx[i] = data[i];
+        }
+        delete[] data;
+        data = tmx;
+        length = new_length;
       }
       catch (...) {
         delete[] data;
         throw std::logic_error("lol");
       }
-      for (size_t i = 0; i < size; ++i)
-      {
-        tmx[i] = data[i];
-      }
-      delete[] data;
-      data = tmx;
-      length = new_length;
     }
     data[size] = tmp;
     size++;
