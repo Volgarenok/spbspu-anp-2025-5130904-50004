@@ -6,11 +6,10 @@
 int main()
 {
   namespace hal = haliullin;
-  char *arr = nullptr;
   size_t size = 0;
   size_t count = 0;
 
-  arr = hal::getline(std::cin, size);
+  char *arr = hal::getline(std::cin, '\n', size);
 
   if (arr == nullptr)
   {
@@ -29,9 +28,8 @@ int main()
   count = hal::DIF_LAT(arr);
   std::cout << count << "\n";
 
-  char *new_arr = nullptr;
   size_t new_size = hal::sizeWithoutVowels(arr);
-  new_arr = reinterpret_cast< char* >(malloc((new_size + 1) * sizeof(char)));
+  char *new_arr = reinterpret_cast< char* >(malloc((new_size + 1) * sizeof(char)));
   if (new_arr == nullptr)
   {
     std::cerr << "Memory allocation error" << "\n";

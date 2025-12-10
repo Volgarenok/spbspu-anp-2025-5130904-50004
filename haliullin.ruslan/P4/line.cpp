@@ -1,7 +1,7 @@
 #include "line.hpp"
 #include <iostream>
 
-char *haliullin::getline(std::istream &in, size_t &size)
+char *haliullin::getline(std::istream &in, char end, size_t &size)
 {
   bool is_skipws = in.flags() & std::ios_base::skipws;
   if (is_skipws)
@@ -22,7 +22,7 @@ char *haliullin::getline(std::istream &in, size_t &size)
     return nullptr;
   }
 
-  while (in >> symb && symb != '\n')
+  while (in >> symb && symb != end)
   {
     if (s == cap)
     {
