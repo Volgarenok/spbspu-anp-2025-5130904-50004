@@ -1,4 +1,5 @@
-#include "SeqEql.hpp"
+#include "EqlSeq.hpp"
+#include <cstddef>
 
 namespace kuchukbaeva
 {
@@ -23,7 +24,7 @@ namespace kuchukbaeva
     cnt_++;
   }
 
-  size_t EqlSeq::get() const
+  size_t EqlSeq::res() const
   {
     return max_;
   }

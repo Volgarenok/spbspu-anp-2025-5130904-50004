@@ -1,5 +1,6 @@
 #ifndef EQLSEQ_HPP
 #define EQLSEQ_HPP
+#include <cstddef>
 
 namespace kuchukbaeva
 {
@@ -9,7 +10,9 @@ namespace kuchukbaeva
     size_t res() const;
     bool has() const;
   private:
-    size_t max_, cur_, cnt_;
+    size_t max_;
+    size_t cur_;
+    size_t cnt_;
     int last_;
   };
 }
