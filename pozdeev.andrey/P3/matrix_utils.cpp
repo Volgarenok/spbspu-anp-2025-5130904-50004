@@ -1,4 +1,4 @@
-#include "pozdeev.hpp"
+#include "matrix_utils.hpp"
 #include <cctype>
 #include <stdexcept>
 #include <iostream>
@@ -108,7 +108,7 @@ void pozdeev::inputMatrix(std::ifstream & in, int * matrix, size_t size)
 void pozdeev::outputMatrix(std::ofstream & out, const int * matrix, size_t rows, size_t cols)
 {
   out << rows << " " << cols;
-  size_t size = rows * cols;
+  const size_t size = rows * cols;
   for (size_t i = 0; i < size; ++i) {
     out << " " << matrix[i];
   }
