@@ -9,7 +9,7 @@ char* zinovev::setLine(std::istream& in, size_t& size, size_t& number_of_letters
 
   const size_t INITIAL_BUFFER_SIZE = 10;
   size_t number = INITIAL_BUFFER_SIZE;
-  char* buffer = static_cast< char* >(malloc(number * sizeof(char)));
+  char* buffer = reinterpret_cast< char* >(malloc(number * sizeof(char)));
 
   if (buffer == nullptr)
   {
@@ -32,7 +32,7 @@ char* zinovev::setLine(std::istream& in, size_t& size, size_t& number_of_letters
     if (size == number)
     {
       number += number;
-      char* new_buffer = static_cast< char* >(malloc(number * sizeof(char)));
+      char* new_buffer = reinterpret_cast< char* >(malloc(number * sizeof(char)));
 
       if (new_buffer == nullptr)
       {
@@ -53,7 +53,7 @@ char* zinovev::setLine(std::istream& in, size_t& size, size_t& number_of_letters
 
   in.flags(original_flags);
 
-  char* result = static_cast< char* >(malloc((size + 1) * sizeof(char)));
+  char* result = reinterpret_cast< char* >(malloc((size + 1) * sizeof(char)));
 
   if (result == nullptr)
   {
