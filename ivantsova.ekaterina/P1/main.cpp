@@ -55,9 +55,22 @@ namespace ivantsova
 
     void operator()(int a)
     {
-      if (hasPrev_ && prev_ != 0 && a % prev_ == 0)
+      if (hasPrev_ && prev_ != 0)
       {
-        ++count_;
+        if (prev_ > 0)
+        {
+          if (a % prev_ == 0)
+          {
+            ++count_;
+          }
+        }
+        else
+        {
+          if (a % (-prev_) == 0)
+          {
+            ++count_;
+          }
+        }
       }
       prev_ = a;
       hasPrev_ = true;
