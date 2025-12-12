@@ -8,7 +8,6 @@ namespace kuchukbaeva
     EqlSeq();
     void operator()(int v);
     size_t res() const;
-    bool has() const;
   private:
     size_t max_;
     size_t cur_;

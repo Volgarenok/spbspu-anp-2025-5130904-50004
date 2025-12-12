@@ -6,8 +6,8 @@ namespace kuchukbaeva
   EqlSeq::EqlSeq() :
     max_(0),
     cur_(0),
-    last_(0),
-    cnt_(0)
+    cnt_(0),
+    last_(0)
   {}
 
   void EqlSeq::operator()(int val)
