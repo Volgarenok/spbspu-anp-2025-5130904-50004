@@ -72,11 +72,12 @@ char* zinovev::setLine(std::istream& in, size_t& size, size_t& number_of_letters
   return result;
 }
 
-char* zinovev::cutLetters(const char* arr, char* arr_ptr, size_t& size, size_t& size_ptr)
+char* zinovev::cutLetters(const char* arr, char* arr_ptr, size_t& size_ptr)
 {
   size_t skip = 0;
+  size_t i = 0;
 
-  for (size_t i = 0; i < size; ++i)
+  while (arr[i] != '\0')
   {
     if (std::isalpha(arr[i]))
     {
@@ -86,26 +87,31 @@ char* zinovev::cutLetters(const char* arr, char* arr_ptr, size_t& size, size_t& 
     {
       arr_ptr[i - skip] = arr[i];
     }
+    ++i;
   }
 
-  size_ptr = size - skip;
+  size_ptr = i - skip;
   return arr_ptr;
 }
 
-int zinovev::getRepetitions(const char* arr, size_t size)
+int zinovev::getRepetitions(const char* arr)
 {
   int counter = 0;
+  size_t i = 0;
 
-  for (size_t i = 0; i < size; ++i)
+  while (arr[i] != '\0')
   {
-    for (size_t k = i + 1; k < size; ++k)
+    size_t k = i + 1;
+    while (arr[k] != '\0')
     {
       if (arr[i] == arr[k])
       {
         ++counter;
         break;
       }
+      ++k;
     }
+    ++i;
   }
 
   return counter;

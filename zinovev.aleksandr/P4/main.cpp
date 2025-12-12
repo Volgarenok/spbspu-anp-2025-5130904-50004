@@ -31,10 +31,10 @@ int main()
     return 1;
   }
 
-  zinovev::cutLetters(arr, arr_ptr, size, size_ptr);
+  zinovev::cutLetters(arr, arr_ptr, size_ptr);
   arr_ptr[size_ptr] = '\0';
   std::cout << arr_ptr << "\n";
-  std::cout << zinovev::getRepetitions(arr, size) << "\n";
+  std::cout << zinovev::getRepetitions(arr) << "\n";
 
   free(arr);
   free(arr_ptr);
