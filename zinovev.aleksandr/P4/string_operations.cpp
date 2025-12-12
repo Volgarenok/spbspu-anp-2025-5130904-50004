@@ -4,10 +4,8 @@
 
 char* zinovev::setLine(std::istream& in, size_t& size, size_t& number_of_letters)
 {
-  if (in >> std::skipws)
-  {
-    in >> std::noskipws;
-  }
+  std::ios_base::fmtflags original_flags = in.flags();
+  in >> std::noskipws;
 
   const size_t INITIAL_BUFFER_SIZE = 10;
   size_t number = INITIAL_BUFFER_SIZE;
@@ -15,6 +13,7 @@ char* zinovev::setLine(std::istream& in, size_t& size, size_t& number_of_letters
 
   if (buffer == nullptr)
   {
+    in.flags(original_flags);
     return buffer;
   }
 
@@ -37,6 +36,7 @@ char* zinovev::setLine(std::istream& in, size_t& size, size_t& number_of_letters
 
       if (new_buffer == nullptr)
       {
+        in.flags(original_flags);
         free(buffer);
         return new_buffer;
       }
@@ -47,13 +47,11 @@ char* zinovev::setLine(std::istream& in, size_t& size, size_t& number_of_letters
       }
 
       free(buffer);
-
       buffer = new_buffer;
-      new_buffer = nullptr;
     }
   }
 
-  in >> std::skipws;
+  in.flags(original_flags);
 
   char* result = static_cast< char* >(malloc((size + 1) * sizeof(char)));
 
@@ -69,7 +67,6 @@ char* zinovev::setLine(std::istream& in, size_t& size, size_t& number_of_letters
   }
 
   result[size] = '\0';
-
   free(buffer);
 
   return result;
@@ -79,7 +76,7 @@ char* zinovev::cutLetters(const char* arr, char* arr_ptr, size_t& size, size_t& 
 {
   size_t skip = 0;
 
-  for (size_t i = 0; arr[i] != '\0'; ++i)
+  for (size_t i = 0; i < size; ++i)
   {
     if (std::isalpha(arr[i]))
     {
@@ -93,19 +90,6 @@ char* zinovev::cutLetters(const char* arr, char* arr_ptr, size_t& size, size_t& 
 
   size_ptr = size - skip;
   return arr_ptr;
-}
-
-void zinovev::printLine(std::ostream& out, const char* array, size_t size)
-{
-  if (array == nullptr)
-  {
-    return;
-  }
-
-  for (size_t i = 0; i < size; ++i)
-  {
-    out << array[i];
-  }
 }
 
 int zinovev::getRepetitions(const char* arr, size_t size)

@@ -20,11 +20,10 @@ int main()
     return 1;
   }
 
-  zinovev::printLine(std::cout, arr, size);
-  std::cout << "\n";
+  std::cout << arr << "\n";
 
   size_t size_ptr = 0;
-  char* arr_ptr = static_cast< char* >(malloc((size - number_of_letters) * sizeof(char)));
+  char* arr_ptr = static_cast< char* >(malloc((size - number_of_letters + 1) * sizeof(char)));
 
   if (arr_ptr == nullptr)
   {
@@ -33,8 +32,9 @@ int main()
   }
 
   zinovev::cutLetters(arr, arr_ptr, size, size_ptr);
-  zinovev::printLine(std::cout, arr_ptr, size_ptr);
-  std::cout << "\n" << zinovev::getRepetitions(arr, size) << "\n";
+  arr_ptr[size_ptr] = '\0';
+  std::cout << arr_ptr << "\n";
+  std::cout << zinovev::getRepetitions(arr, size) << "\n";
 
   free(arr);
   free(arr_ptr);
