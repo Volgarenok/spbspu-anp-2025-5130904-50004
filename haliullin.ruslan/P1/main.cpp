@@ -11,19 +11,15 @@ int main()
 
   while (std::cin >> num && num != 0)
   {
-    if (std::cin.fail() || std::cin.eof())
+    if (std::cin.fail() && !std::cin.eof())
     {
-      break;
+      std::cerr << "Input error" << "\n";
+      return 1;
     }
+
     count_pth(num);
     count_div_rem(num);
     ++count;
-  }
-
-  if (std::cin.fail() || std::cin.eof())
-  {
-    std::cerr << "Input error" << "\n";
-    return 1;
   }
 
   if (count < 2)
