@@ -9,7 +9,7 @@ int main()
   {
     content = ivanov::get_line(std::cin, BASE, '\n');
   }
-  catch (std::bad_alloc)
+  catch (const std::bad_alloc& m)
   {
     std::cerr << "Failed to allocate memory\n";
     return 1;
@@ -23,7 +23,7 @@ int main()
   {
     tmpx = new char[10000];
   }
-  catch (std::bad_alloc)
+  catch (const std::bad_alloc& s)
   {
     delete[] content;
     std::cerr << "Failed to allocate memory\n";
