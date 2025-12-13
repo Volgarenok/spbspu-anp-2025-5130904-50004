@@ -3,13 +3,32 @@
 int main()
 {
   size_t BASE = 10;
-  char *content = ivanov::get_line(std::cin, BASE, '\n');
+  char * content = nullptr;
+  char * tmpx = nullptr;
+  try
+  {
+    content = ivanov::get_line(std::cin, BASE, '\n');
+  }
+  catch (std::bad_alloc)
+  {
+    std::cerr << "Failed to allocate memory\n";
+    return 1;
+  }
   if (content[0] == '\0') {
     delete[] content;
     std::cerr << "No data provided\n";
     return 2;
   }
-  char *tmpx = new char[10000];
+  try
+  {
+    tmpx = new char[10000];
+  }
+  catch (std::bad_alloc)
+  {
+    delete[] content;
+    std::cerr << "Failed to allocate memory\n";
+    return 1;
+  }
   char *result1 = ivanov::del_lat(content, tmpx);
   delete[] content;
 
