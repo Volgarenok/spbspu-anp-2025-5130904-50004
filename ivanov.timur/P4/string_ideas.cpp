@@ -12,9 +12,9 @@ char *ivanov::get_line(std::istream &in, size_t &length, char stop)
   {
     data = new char[capacity];
   }
-  catch (...)
+  catch (std::bad_alloc)
   {
-    throw std::logic_error("Memory allocation failed");
+    throw std::bad_alloc();
   }
 
   bool is_skipws = in.flags() & std::ios_base::skipws;
@@ -37,10 +37,10 @@ char *ivanov::get_line(std::istream &in, size_t &length, char stop)
       {
         new_data = new char[new_capacity];
       }
-      catch (...)
+      catch (std::bad_alloc)
       {
         delete[] data;
-        throw std::logic_error("Memory allocation failed");
+        throw std::bad_alloc();
       }
       for (size_t i = 0; i < size; ++i)
       {
@@ -56,16 +56,13 @@ char *ivanov::get_line(std::istream &in, size_t &length, char stop)
     {
       break;
     }
-
     in.get(tmp);
   }
-
   data[size] = '\0';
   if (is_skipws)
   {
     in >> std::skipws;
   }
-
   return data;
 }
 
@@ -74,7 +71,6 @@ char * ivanov::del_lat(char *content, char *tmpx) {
   {
     return content;
   }
-
   size_t new_size = 0;
   size_t c = 0;
   while (*(content + c))
@@ -86,7 +82,6 @@ char * ivanov::del_lat(char *content, char *tmpx) {
     c++;
   }
   tmpx[new_size] = '\0';
-
   return tmpx;
 }
 void ivanov::output(const char *content)
@@ -95,7 +90,10 @@ void ivanov::output(const char *content)
   while (content[i] != '\0')
   {
     std::cout << content[i++];
-    if (content[i] != '\0') std::cout << " ";
+    if (content[i] != '\0')
+    {
+      std::cout << " ";
+    }
   }
 }
 char * ivanov::spc_rmv(char *content)
@@ -142,7 +140,6 @@ char * ivanov::merge(char *content1, const char *content2, char * tmp, size_t si
     tmp[c + i] = content2[i];
   }
   tmp[c + size2] = '\0';
-
   return tmp;
 }
 char * ivanov::get_find(char *content, char *tmp)
@@ -165,7 +162,10 @@ char * ivanov::get_find(char *content, char *tmp)
   size_t found_count = 0;
   for (bool f : found)
   {
-    if (f) found_count++;
+    if (f)
+    {
+      found_count++;
+    }
   }
   size_t index = 0;
   for (char c = 'a'; c <= 'z'; ++c)
@@ -176,7 +176,6 @@ char * ivanov::get_find(char *content, char *tmp)
     }
   }
   tmp[found_count] = '\0';
-
   return tmp;
 }
 bool ivanov::find(char symbol, const char *content)
