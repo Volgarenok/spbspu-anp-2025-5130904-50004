@@ -12,9 +12,9 @@ char *ivanov::get_line(std::istream &in, size_t &length, char stop)
   {
     data = new char[capacity];
   }
-  catch (std::bad_alloc)
+  catch (const std::bad_alloc &z)
   {
-    throw std::bad_alloc();
+    throw std::bad_alloc(z);
   }
 
   bool is_skipws = in.flags() & std::ios_base::skipws;
@@ -37,10 +37,10 @@ char *ivanov::get_line(std::istream &in, size_t &length, char stop)
       {
         new_data = new char[new_capacity];
       }
-      catch (std::bad_alloc)
+      catch (const std::bad_alloc &k)
       {
         delete[] data;
-        throw std::bad_alloc();
+        throw std::bad_alloc(k);
       }
       for (size_t i = 0; i < size; ++i)
       {
