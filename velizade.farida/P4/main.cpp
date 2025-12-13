@@ -21,7 +21,7 @@ int main()
   size_t len = strlen(input);
   char* buf1 = static_cast<char*>(malloc(len + 1));
   char* buf2 = static_cast<char*>(malloc(len + 10));
-  if (!buf1 || buf2)
+  if (!buf1 || !buf2)
   {
     std::cerr << "Memory error" << "\n";
     free(input);
