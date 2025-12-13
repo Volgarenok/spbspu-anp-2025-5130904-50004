@@ -12,13 +12,17 @@ namespace kuchukbaeva
 
   void EqlSeq::operator()(int val)
   {
-    if (cnt_ == 0 || val != last_) {
+    if (cnt_ == 0 || val != last_)
+    {
       cur_ = 1;
       last_ = val;
-    } else {
+    }
+    else
+    {
       cur_++;
     }
-    if (cur_ > max_) {
+    if (cur_ > max_)
+    {
       max_ = cur_;
     }
     cnt_++;

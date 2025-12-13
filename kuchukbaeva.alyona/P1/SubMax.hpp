@@ -2,8 +2,10 @@
 #define SUBMAX_HPP
 #include <cstddef>
 
-namespace kuchukbaeva {
-  struct SubMax {
+namespace kuchukbaeva
+{
+  struct SubMax
+  {
     SubMax();
     void operator()(int v);
     int res() const;

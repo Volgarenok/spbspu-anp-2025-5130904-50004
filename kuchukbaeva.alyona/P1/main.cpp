@@ -8,21 +8,26 @@ int main()
   kuchukbaeva::EqlSeq eql_seq;
 
   int val = 0;
-  while (std::cin >> val && val != 0) {
+  while (std::cin >> val && val != 0)
+  {
     sub_max(val);
     eql_seq(val);
   }
 
-  if (std::cin.fail() && !std::cin.eof()) {
+  if (std::cin.fail() && !std::cin.eof())
+  {
     std::cerr << "Input error" << "\n";
     return 1;
   }
 
   int ret = 0;
 
-  if (sub_max.has()) {
+  if (sub_max.has())
+  {
     std::cout << sub_max.res() << "\n";
-  } else {
+  }
+  else
+  {
     std::cerr << "Error: not enough elements for SUB-MAX" << "\n";
     ret = 2;
   }
@@ -30,5 +35,4 @@ int main()
   std::cout << eql_seq.res() << "\n";
   return ret;
 }
-
 

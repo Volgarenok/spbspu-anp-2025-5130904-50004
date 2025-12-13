@@ -5,8 +5,8 @@
 namespace kuchukbaeva
 {
   SubMax::SubMax() :
-    max_(std::numeric_limits<int>::min()),
-    sec_(std::numeric_limits<int>::min()),
+    max_(std::numeric_limits< int >::min()),
+    sec_(std::numeric_limits< int >::min()),
     cnt_(0)
   {}
 

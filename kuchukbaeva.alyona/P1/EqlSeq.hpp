@@ -4,7 +4,8 @@
 
 namespace kuchukbaeva
 {
-  struct EqlSeq {
+  struct EqlSeq
+  {
     EqlSeq();
     void operator()(int v);
     size_t res() const;
