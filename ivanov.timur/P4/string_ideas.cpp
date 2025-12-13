@@ -66,7 +66,7 @@ char *ivanov::get_line(std::istream &in, size_t &length, char stop)
   return data;
 }
 
-char * ivanov::del_lat(char *content, char *tmpx) {
+char *ivanov::del_lat(char *content, char *tmpx) {
   if (content[0] == '\0')
   {
     return content;
@@ -96,7 +96,7 @@ void ivanov::output(const char *content)
     }
   }
 }
-char * ivanov::spc_rmv(char *content)
+char *ivanov::spc_rmv(char *content)
 {
   if (!*content)
   {
@@ -127,7 +127,7 @@ char * ivanov::spc_rmv(char *content)
   return content;
 }
 
-char * ivanov::merge(char *content1, const char *content2, char * tmp, size_t size2)
+char *ivanov::merge(char *content1, const char *content2, char *tmp, size_t size2)
 {
   size_t c = 0;
   while (*(content1 + c))
@@ -142,7 +142,7 @@ char * ivanov::merge(char *content1, const char *content2, char * tmp, size_t si
   tmp[c + size2] = '\0';
   return tmp;
 }
-char * ivanov::get_find(char *content, char *tmp)
+char *ivanov::get_find(char *content, char *tmp)
 {
   bool found[26] = {false};
   size_t e = 0;

@@ -3,13 +3,13 @@
 int main()
 {
   size_t BASE = 10;
-  char * content = nullptr;
-  char * tmpx = nullptr;
+  char *content = nullptr;
+  char *tmpx = nullptr;
   try
   {
     content = ivanov::get_line(std::cin, BASE, '\n');
   }
-  catch (const std::bad_alloc& m)
+  catch (const std::bad_alloc &m)
   {
     std::cerr << "Failed to allocate memory\n";
     return 1;
@@ -23,7 +23,7 @@ int main()
   {
     tmpx = new char[10000];
   }
-  catch (const std::bad_alloc& s)
+  catch (const std::bad_alloc &s)
   {
     delete[] content;
     std::cerr << "Failed to allocate memory\n";
