@@ -37,9 +37,29 @@ int main()
   std::cout << "\n";
   const char add_content[] = "And I think to myself - what a wonderful world!0";
   size_t add_size = 47;
-  char *merged = new char[10000];
+  char *merged = nullptr;
+  char *found = nullptr;
+  try
+  {
+    merged = new char[BASE + add_size];
+  }
+  catch (const std::bad_alloc &z)
+  {
+    delete[] content;
+    delete[] tmpx;
+    return 1;
+  }
+  try
+  {
+    found = new char[27];
+  }
+  catch (const std::bad_alloc &z) {
+    delete[] content;
+    delete[] tmpx;
+    delete[] merged;
+    return 1;
+  }
   char *result3 = ivanov::merge(result2, add_content, merged, add_size);
-  char *found = new char[27];
   char *result4 = ivanov::get_find(result3, found);
   ivanov::output(result4);
   std::cout << "\n";
