@@ -12,6 +12,6 @@ namespace ivanov {
   size_t count(const char *content, char symbol);
   char *get_line(std::istream &in, size_t &length, char stop);
 
-  char *dataGen(char tmp, char stop, std::istream &in, size_t size&, size_t &capacity);
+  char *dataGen(char tmp, char stop, std::istream &in, size_t &size, size_t &capacity);
 }
 #endif
