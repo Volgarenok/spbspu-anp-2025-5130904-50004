@@ -17,10 +17,10 @@ int main()
   }
 
   if (std::cin.fail() && !std::cin.eof())
-    {
-      std::cerr << "Input error" << "\n";
-      return 1;
-    }
+  {
+    std::cerr << "Input error" << "\n";
+    return 1;
+  }
 
   if (count < 2)
   {
