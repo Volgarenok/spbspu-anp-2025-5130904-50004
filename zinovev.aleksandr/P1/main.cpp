@@ -2,7 +2,18 @@
 
 namespace zinovev
 {
-  void process_rth_trp(int& a, int& b, int& c, size_t& pth_trp, bool& few_numbers, int x)
+
+class RTH_TRP
+{
+public:
+  RTH_TRP() :
+    a(0),
+    b(0),
+    c(0),
+    pth_trp(0)
+  {}
+
+  void process(int x)
   {
     a = b;
     b = c;
@@ -10,17 +21,44 @@ namespace zinovev
 
     if (a != 0 && b != 0 && c != 0)
     {
-      few_numbers = false;
-      if (a * a + b * b == c * c ||
-          a * a + c * c == b * b ||
-          b * b + c * c == a * a)
+      if (a * a + b * b == c * c || a * a + c * c == b * b || b * b + c * c == a * a)
       {
         ++pth_trp;
       }
     }
   }
 
-  void process_eql_seq(int& max, size_t& eql_seq, int x)
+  void print_result() const
+  {
+    if (few_numbers())
+    {
+      std::cerr << "ERROR: few numbers for RTH_TRP\n";
+    }
+    else
+    {
+      std::cout << "RTH_TRP: " << pth_trp << "\n";
+    }
+  }
+
+  bool few_numbers() const
+  {
+    return a == 0;
+  }
+
+private:
+  int a, b, c;
+  size_t pth_trp;
+};
+
+class EQL_SEQ
+{
+public:
+  EQL_SEQ() :
+    max(0),
+    eql_seq(0)
+  {}
+
+  void process(int x)
   {
     if (max < x)
     {
@@ -33,39 +71,29 @@ namespace zinovev
     }
   }
 
-  void print_rth_trp_result(bool few_numbers, size_t pth_trp)
-  {
-    if (few_numbers)
-    {
-      std::cerr << "ERROR: few numbers for RTH_TRP\n";
-    }
-    else
-    {
-      std::cout << "RTH_TRP: " << pth_trp << "\n";
-    }
-  }
-
-  void print_eql_seq_result(size_t eql_seq)
+  void print_result() const
   {
     std::cout << "EQL_SEQ: " << eql_seq << "\n";
   }
+
+private:
+  int max;
+  size_t eql_seq;
+};
+
 }
 
 int main()
 {
-  int a = 0, b = 0, c = 0;
-  size_t pth_trp = 0;
-  bool few_numbers = true;
-
-  int max = 0;
-  size_t eql_seq = 0;
+  zinovev::RTH_TRP r;
+  zinovev::EQL_SEQ e;
 
   int x = 0;
 
   while (std::cin >> x && x != 0)
   {
-    zinovev::process_rth_trp(a, b, c, pth_trp, few_numbers, x);
-    zinovev::process_eql_seq(max, eql_seq, x);
+    r.process(x);
+    e.process(x);
   }
 
   if (std::cin.fail())
@@ -74,10 +102,10 @@ int main()
     return 1;
   }
 
-  zinovev::print_rth_trp_result(few_numbers, pth_trp);
-  zinovev::print_eql_seq_result(eql_seq);
+  r.print_result();
+  e.print_result();
 
-  if (few_numbers)
+  if (r.few_numbers())
   {
     return 2;
   }
