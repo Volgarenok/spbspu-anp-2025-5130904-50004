@@ -67,7 +67,7 @@ char *ivanov::resize(size_t &capacity, size_t size, char *data) {
   catch (const std::bad_alloc &k)
   {
     delete[] data;
-    throw std::bad_alloc(k);
+    throw std::bad_alloc();
   }
   for (size_t i = 0; i < size; ++i)
   {
