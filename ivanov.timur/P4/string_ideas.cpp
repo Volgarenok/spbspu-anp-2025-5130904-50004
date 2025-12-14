@@ -22,6 +22,10 @@ char *ivanov::get_line(std::istream &in, size_t &length, char stop)
   }
   catch (const std::bad_alloc &z)
   {
+    if (is_skipws)
+    {
+      in >> std::skipws;
+    }
     delete[] data;
     throw std::bad_alloc();
   }
