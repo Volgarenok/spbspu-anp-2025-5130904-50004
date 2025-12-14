@@ -31,7 +31,7 @@ char* kuchukbaeva::readStr(std::istream& input, size_t& read_size)
 {
   size_t capacity = 16;
   size_t size = 0;
-  char* buffer = new char[capacity];
+  char* buffer = nullptr;
   try
   {
     buffer = new char[capacity];
