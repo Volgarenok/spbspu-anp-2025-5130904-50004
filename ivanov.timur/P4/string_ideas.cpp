@@ -17,8 +17,7 @@ char *ivanov::get_line(std::istream &in, size_t &length, char stop)
   }
   char tmp = stop;
   size_t size = 0;
-  in.clear();
-  in.get(tmp);
+  std::cin >> tmp;
   while (tmp != stop && in && !in.eof())
   {
     if (size + 1 >= capacity)
@@ -49,7 +48,7 @@ char *ivanov::get_line(std::istream &in, size_t &length, char stop)
     {
       break;
     }
-    in.get(tmp);
+    std::cin >> tmp;
   }
   data[size] = '\0';
   if (is_skipws)
