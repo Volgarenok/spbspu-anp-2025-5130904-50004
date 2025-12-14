@@ -19,9 +19,13 @@ int main()
     std::cerr << "No data provided\n";
     return 2;
   }
+  size_t content_len = 0;
+  while (content[content_len] != '\0') {
+    content_len++;
+  }
   try
   {
-    tmpx = new char[BASE * 5];
+    tmpx = new char[content_len];
   }
   catch (const std::bad_alloc &s)
   {
