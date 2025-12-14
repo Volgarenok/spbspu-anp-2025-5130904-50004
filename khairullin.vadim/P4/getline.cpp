@@ -9,12 +9,10 @@ char * khairullin::getline(std::istream & input, char * data)
   {
     input >> std::noskipws;
   }
-  size_t size = 1;
+  size_t size = 0;
   size_t capacity = 10;
   char symbol = 0;
   data = new char[capacity];
-  input >> symbol;
-  data[0] = symbol;
   try
   {
     while (input >> symbol && symbol != '\n')
