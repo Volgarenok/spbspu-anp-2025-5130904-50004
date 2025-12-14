@@ -42,7 +42,7 @@ int main()
   char *found = nullptr;
   try
   {
-    merged = new char[BASE + add_size];
+    merged = new char[BASE * 5 + add_size];
   }
   catch (const std::bad_alloc &z)
   {

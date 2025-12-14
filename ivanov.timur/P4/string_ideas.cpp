@@ -106,25 +106,18 @@ void ivanov::output(const char *content)
     std::cout << " " << content[i++];
   }
 }
-char *ivanov::spc_rmv(char *content)
-{
+char *ivanov::spc_rmv(char *content) {
   if (!*content)
   {
     return content;
   }
   size_t new_size = 0;
-  size_t c = 0;
-  while (*(content + c))
+  for (size_t c = 0; content[c] != '\0'; ++c)
   {
-    if (content[c] != ' ')
+    if (content[c] != ' ' || (new_size > 0 && content[new_size - 1] != ' '))
     {
       content[new_size++] = content[c];
     }
-    else if (content[new_size] == ' ' && content[c] == ' ')
-    {
-      content[new_size++] = ' ';
-    }
-    c++;
   }
   if (new_size > 0 && content[new_size - 1] == ' ')
   {
