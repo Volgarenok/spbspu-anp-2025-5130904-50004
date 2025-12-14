@@ -2,7 +2,6 @@
 #include <cstddef>
 
 After::After() {}
-
 void After::operator()(int e)
 {
   if (e > elem)
@@ -15,7 +14,6 @@ void After::operator()(int e)
     count++;
   }
 }
-
 size_t After::operator()() const
 {
   return count;
