@@ -1,19 +1,22 @@
 #include <iostream>
 #include <iomanip>
-#include "functions.hpp"
+#include "strings.hpp"
 
-char * khairullin::getline(std::istream & input, char * data, size_t & size)
+char * khairullin::getline(std::istream & input, char * data)
 {
   bool is_skipws = input.flags() & std::ios_base::skipws;
   if (is_skipws)
   {
     input >> std::noskipws;
   }
+  size_t size = 1;
+  size_t capacity = 10;
+  char symbol = 0;
+  data = new char[capacity];
+  input >> symbol;
+  data[0] = symbol;
   try
   {
-    size_t capacity = 10;
-    char symbol = 0;
-    data = new char[capacity];
     while (input >> symbol && symbol != '\n')
     {
       if (size >= capacity - 1)

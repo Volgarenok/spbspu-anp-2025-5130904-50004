@@ -1,28 +1,34 @@
 #include <iostream>
-#include "functions.hpp"
+#include "strings.hpp"
 
-char * khairullin::delete_vowels(char * str, size_t size, char * str_without_vowels)
+char * khairullin::delete_vowels(char * str, char * str_without_vowels)
 {
   bool flag = false;
   size_t counter = 0;
-  const size_t count_vowels = 12;
-  char vowels[] = "AaoOiIuUeEyY";
-  for (size_t i = 0; i < size; ++i)
+  size_t size = 0;
+  const char * vowels = "AaoOiIuUeEyY";
+  while (*str != '\0')
   {
-    for (size_t j = 0; j < count_vowels; ++j)
+    size_t c = 0;
+    while (*vowels != '\0')
     {
-      if (str[i] == vowels[j])
+      if (*str == *vowels)
       {
         flag = true;
       }
+      vowels++;
+      c++;
     }
     if (!flag)
     {
-      str_without_vowels[counter] = str[i];
+      str_without_vowels[counter] = *str;
       counter++;
     }
     flag = false;
+    str++;
+    vowels = vowels - c;
   }
-  str_without_vowels[counter++] = '\0';
+  str_without_vowels[++counter] = '\0';
+  str = str - size;
   return str_without_vowels;
 }
