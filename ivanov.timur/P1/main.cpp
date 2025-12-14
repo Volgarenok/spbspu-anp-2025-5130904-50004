@@ -14,24 +14,20 @@ int main() {
     if (std::cin.fail() || std::cin.eof()) {
       break;
     }
-
-    ans1()(tmp);
-    ans2()(tmp);
+    ans1(tmp);
+    ans2(tmp);
     if (++cnt >= 3)
     {
       ans2.take();
     }
-
     std::cin >> tmp;
   }
-
   if (std::cin.fail() ||std::cin.eof()) {
     return 1;
   }
   if (!init) {
     return 2;
   }
-
   std::cout << ans1() << "\n" << ans2() << "\n";
   return 0;
 }

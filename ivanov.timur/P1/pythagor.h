@@ -1,5 +1,6 @@
 #ifndef PYTHAGOR_H
 #define PYTHAGOR_H
+#include <cstddef>
 struct Pythagor {
   Pythagor();
 

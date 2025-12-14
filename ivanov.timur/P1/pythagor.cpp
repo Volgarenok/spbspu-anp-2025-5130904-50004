@@ -1,4 +1,5 @@
 #include "pythagor.h"
+#include <cstddef>
 
 Pythagor::Pythagor() {}
 
