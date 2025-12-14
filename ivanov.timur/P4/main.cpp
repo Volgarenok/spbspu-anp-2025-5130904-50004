@@ -14,18 +14,20 @@ int main()
     std::cerr << "Failed to allocate memory\n";
     return 1;
   }
-  if (content[0] == '\0') {
+  if (content[0] == '\0')
+  {
     delete[] content;
     std::cerr << "No data provided\n";
     return 2;
   }
   size_t content_len = 0;
-  while (content[content_len] != '\0') {
+  while (content[content_len] != '\0')
+  {
     content_len++;
   }
   try
   {
-    tmpx = new char[content_len];
+    tmpx = new char[content_len + 1];
   }
   catch (const std::bad_alloc &s)
   {
