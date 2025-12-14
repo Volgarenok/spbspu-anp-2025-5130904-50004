@@ -21,7 +21,7 @@ int main()
   }
   try
   {
-    tmpx = new char[BASE * 2];
+    tmpx = new char[BASE * 5];
   }
   catch (const std::bad_alloc &s)
   {
