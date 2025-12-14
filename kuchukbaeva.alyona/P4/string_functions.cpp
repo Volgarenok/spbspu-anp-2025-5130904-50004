@@ -60,7 +60,7 @@ char* kuchukbaeva::readStr(std::istream& input, size_t& read_size)
     size++;
   }
   input.flags(origin_flags);
-  if (size == 0 && !input.eof() && !input.good())
+  if (size == 0 && !input.eof())
   {
     delete[] buffer;
     return nullptr;
