@@ -8,8 +8,6 @@ char *ivanov::get_line(std::istream &in, size_t &length, char stop)
   char *data = nullptr;
   size_t capacity = length;
 
-    data = new char[capacity];
-
   bool is_skipws = in.flags() & std::ios_base::skipws;
   if (is_skipws)
   {
@@ -18,6 +16,25 @@ char *ivanov::get_line(std::istream &in, size_t &length, char stop)
   char tmp = stop;
   size_t size = 0;
   std::cin >> tmp;
+  try
+  {
+    data = ivanov::dataGen(tmp, stop, in, size, capacity);
+  }
+  catch (const std::bad_alloc &z)
+  {
+    delete[] data;
+    throw std::bad_alloc();
+  }
+  data[size] = '\0';
+  if (is_skipws)
+  {
+    in >> std::skipws;
+  }
+  return data;
+}
+
+char *ivanov::dataGen(char tmp, char stop, std::istream &in, size_t &size, size_t &capacity) {
+  char *data = new char[capacity];
   while (tmp != stop && in && !in.eof())
   {
     if (size + 1 >= capacity)
@@ -50,13 +67,9 @@ char *ivanov::get_line(std::istream &in, size_t &length, char stop)
     }
     std::cin >> tmp;
   }
-  data[size] = '\0';
-  if (is_skipws)
-  {
-    in >> std::skipws;
-  }
   return data;
 }
+
 
 char *ivanov::del_lat(char *content, char *tmpx) {
   if (content[0] == '\0')
