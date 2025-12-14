@@ -5,7 +5,6 @@ char * khairullin::delete_vowels(char * str, char * str_without_vowels)
 {
   bool flag = false;
   size_t counter = 0;
-  size_t size = 0;
   const char * vowels = "AaoOiIuUeEyY";
   while (*str != '\0')
   {
@@ -28,7 +27,6 @@ char * khairullin::delete_vowels(char * str, char * str_without_vowels)
     str++;
     vowels = vowels - c;
   }
-  str_without_vowels[++counter] = '\0';
-  str = str - size;
+  str_without_vowels[counter++] = '\0';
   return str_without_vowels;
 }
