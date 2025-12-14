@@ -3,43 +3,77 @@
 #include <new>
 #include <istream>
 
+namespace
+{
+  char* reSize(char* buffer, size_t& capacity)
+  {
+    size_t new_capacity = capacity * 2;
+    char* new_buffer = nullptr;
+    try
+    {
+      new_buffer = new char[new_capacity];
+    }
+    catch (const std::bad_alloc&)
+    {
+      return nullptr;
+    }
+    for (size_t i = 0; i < capacity; ++i)
+    {
+      new_buffer[i] = buffer[i];
+    }
+    delete[] buffer;
+    capacity = new_capacity;
+    return new_buffer;
+  }
+}
+
 char* kuchukbaeva::readStr(std::istream& input, size_t& read_size)
 {
   size_t capacity = 16;
   size_t size = 0;
   char* buffer = new char[capacity];
-  char c = 0;
+  try
+  {
+    buffer = new char[capacity];
+  }
+  catch (const std::bad_alloc&)
+  {
+    return nullptr;
+  }
+  std::ios_base::fmtflags origin_flags = input.flags();
   input >> std::noskipws;
-  while (input.get(c) && c != '\n')
+  char c = 0;
+  while ((input >> c) && c != '\n')
   {
     if (size + 1 >= capacity)
     {
-      size_t new_capacity = capacity * 2;
-      char* new_buffer = nullptr;
-      try
-      {
-        new_buffer = new char[new_capacity];
-      }
-      catch (...)
+      char* new_buffer = reSize(buffer, capacity);
+      if (!new_buffer)
       {
         delete[] buffer;
-        throw;
+        input.flags(origin_flags);
+        return nullptr;
       }
-      for (size_t i = 0; i < size; ++i)
-      {
-        new_buffer[i] = buffer[i];
-      }
-      delete[] buffer;
       buffer = new_buffer;
-      capacity = new_capacity;
     }
     buffer[size] = c;
     size++;
   }
-  if (size == 0 && !input)
+  input.flags(origin_flags);
+  if (size == 0 && !input.eof() && !input.good())
   {
     delete[] buffer;
     return nullptr;
+  }
+  if (size >= capacity)
+  {
+    char* new_buffer = reSize(buffer, capacity);
+    if (!new_buffer)
+    {
+      delete[] buffer;
+      return nullptr;
+    }
+    buffer = new_buffer;
   }
   buffer[size] = '\0';
   read_size = size;
@@ -53,6 +87,10 @@ int kuchukbaeva::isVowel(char c)
 
 char* kuchukbaeva::rmvVow(const char* src, char* dest) noexcept
 {
+  if (!src || !dest)
+  {
+    return nullptr;
+  }
   size_t destindex = 0;
   for (size_t i = 0; src[i] != '\0'; ++i)
   {
@@ -67,6 +105,10 @@ char* kuchukbaeva::rmvVow(const char* src, char* dest) noexcept
 }
 int kuchukbaeva::repDgt(const char* str) noexcept
 {
+  if (!str)
+  {
+    return 0;
+  }
   int counts[10] = {0};
   for (size_t i = 0; str[i] != '\0'; ++i)
   {
@@ -82,4 +124,3 @@ int kuchukbaeva::repDgt(const char* str) noexcept
   }
   return 0;
 }
-

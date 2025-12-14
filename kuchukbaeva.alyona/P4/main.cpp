@@ -18,8 +18,8 @@ int main()
   }
   catch (const std::bad_alloc& e)
   {
-    delete[] input_str;
     std::cerr << "Troubles with memory: " << e.what() << "\n";
+    delete[] input_str;
     return 1;
   }
   kuchukbaeva::rmvVow(input_str, res_str);
