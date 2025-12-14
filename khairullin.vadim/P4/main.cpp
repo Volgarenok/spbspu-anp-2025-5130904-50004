@@ -10,7 +10,7 @@ int main()
   try
   {
     str1  = khairullin::getline(std::cin, str1);
-    if (!str1)
+    if (*str1 == '\0')
     {
       std::cerr << "No string\n";
       delete [] str1;
