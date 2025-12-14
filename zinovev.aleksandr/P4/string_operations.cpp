@@ -2,14 +2,34 @@
 #include <cstdlib>
 #include <iomanip>
 
+char* zinovev::resizeBuffer(char* buffer, size_t old_capacity, size_t& new_capacity)
+{
+  new_capacity = old_capacity * 2;
+  char* new_buffer = reinterpret_cast< char* >(malloc(new_capacity * sizeof(char)));
+
+  if (new_buffer == nullptr)
+  {
+    free(buffer);
+    return nullptr;
+  }
+
+  for (size_t k = 0; k < old_capacity; ++k)
+  {
+    new_buffer[k] = buffer[k];
+  }
+
+  free(buffer);
+  return new_buffer;
+}
+
 char* zinovev::setLine(std::istream& in, size_t& size, size_t& number_of_letters)
 {
   std::ios_base::fmtflags original_flags = in.flags();
   in >> std::noskipws;
 
   const size_t INITIAL_BUFFER_SIZE = 10;
-  size_t number = INITIAL_BUFFER_SIZE;
-  char* buffer = reinterpret_cast< char* >(malloc(number * sizeof(char)));
+  size_t capacity = INITIAL_BUFFER_SIZE;
+  char* buffer = reinterpret_cast< char* >(malloc(capacity * sizeof(char)));
 
   if (buffer == nullptr)
   {
@@ -19,9 +39,11 @@ char* zinovev::setLine(std::istream& in, size_t& size, size_t& number_of_letters
 
   size = 0;
   number_of_letters = 0;
+  char current_char = '\0';
 
-  while (in >> buffer[size] && buffer[size] != '\n')
+  while (in >> current_char && current_char != '\n')
   {
+    buffer[size] = current_char;
     ++size;
 
     if (std::isalpha(buffer[size - 1]))
@@ -29,29 +51,25 @@ char* zinovev::setLine(std::istream& in, size_t& size, size_t& number_of_letters
       number_of_letters++;
     }
 
-    if (size == number)
+    if (size == capacity)
     {
-      number += number;
-      char* new_buffer = reinterpret_cast< char* >(malloc(number * sizeof(char)));
-
+      char* new_buffer = resizeBuffer(buffer, capacity, capacity);
       if (new_buffer == nullptr)
       {
         in.flags(original_flags);
-        free(buffer);
-        return new_buffer;
+        return nullptr;
       }
-
-      for (size_t k = 0; k < size; ++k)
-      {
-        new_buffer[k] = buffer[k];
-      }
-
-      free(buffer);
       buffer = new_buffer;
     }
   }
 
   in.flags(original_flags);
+
+  if (size == 0 && in.eof())
+  {
+    free(buffer);
+    return nullptr;
+  }
 
   char* result = reinterpret_cast< char* >(malloc((size + 1) * sizeof(char)));
 
