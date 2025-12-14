@@ -33,6 +33,7 @@ int main()
   delete[] content;
 
   char *result2 = ivanov::spc_rmv(result1);
+  std::cout << result2[0];
   ivanov::output(result2);
   std::cout << "\n";
   const char add_content[] = "And I think to myself - what a wonderful world!0";
@@ -61,6 +62,7 @@ int main()
   }
   char *result3 = ivanov::merge(result2, add_content, merged, add_size);
   char *result4 = ivanov::get_find(result3, found);
+  std::cout << result4[0];
   ivanov::output(result4);
   std::cout << "\n";
   delete[] merged;

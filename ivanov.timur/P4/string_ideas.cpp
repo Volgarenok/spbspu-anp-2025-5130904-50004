@@ -89,7 +89,7 @@ void ivanov::output(const char *content)
   size_t i = 0;
   while (content[i] != '\0')
   {
-    std::cout << content[i++] << " ";
+    std::cout << " " << content[i++];
   }
 }
 char *ivanov::spc_rmv(char *content)
