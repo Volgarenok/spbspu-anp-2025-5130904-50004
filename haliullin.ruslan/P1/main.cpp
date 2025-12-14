@@ -30,10 +30,11 @@ int main()
   else if (count < 3)
   {
     std::cerr << "Too short a sequence for pyfagor" << "\n";
-    std::cout << count_div_rem() << "\n";
+    std::cout << "DIV_REM: " << count_div_rem() << "\n";
     return 2;
   }
 
-  std::cout << count_pth() << "\n" << count_div_rem() << "\n";
+  std::cout << "PTH_TRP: " << count_pth() << "\n";
+  std::cout << "DIV_REM: " << count_div_rem() << "\n";
   return 0;
 }
