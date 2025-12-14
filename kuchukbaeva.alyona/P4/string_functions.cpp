@@ -87,10 +87,6 @@ int kuchukbaeva::isVowel(char c)
 
 char* kuchukbaeva::rmvVow(const char* src, char* dest) noexcept
 {
-  if (!src || !dest)
-  {
-    return nullptr;
-  }
   size_t destindex = 0;
   for (size_t i = 0; src[i] != '\0'; ++i)
   {
@@ -105,10 +101,6 @@ char* kuchukbaeva::rmvVow(const char* src, char* dest) noexcept
 }
 int kuchukbaeva::repDgt(const char* str) noexcept
 {
-  if (!str)
-  {
-    return 0;
-  }
   int counts[10] = {0};
   for (size_t i = 0; str[i] != '\0'; ++i)
   {
