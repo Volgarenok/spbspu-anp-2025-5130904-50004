@@ -8,14 +8,7 @@ char *ivanov::get_line(std::istream &in, size_t &length, char stop)
   char *data = nullptr;
   size_t capacity = length;
 
-  try
-  {
     data = new char[capacity];
-  }
-  catch (const std::bad_alloc &z)
-  {
-    throw std::bad_alloc(z);
-  }
 
   bool is_skipws = in.flags() & std::ios_base::skipws;
   if (is_skipws)
