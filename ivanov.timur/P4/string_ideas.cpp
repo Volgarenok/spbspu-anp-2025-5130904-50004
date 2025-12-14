@@ -105,18 +105,15 @@ char *ivanov::spc_rmv(char *content)
   }
   size_t new_size = 0;
   size_t c = 0;
-  bool last_was_space = false;
   while (*(content + c))
   {
     if (content[c] != ' ')
     {
       content[new_size++] = content[c];
-      last_was_space = false;
     }
-    else if (!last_was_space)
+    else if (content[new_size] == ' ' && content[c] == ' ')
     {
       content[new_size++] = ' ';
-      last_was_space = true;
     }
     c++;
   }
