@@ -6,6 +6,7 @@
 namespace alekseev {
   Property * make(int n);
   Property ** make_multiple(size_t k);
+  void delete_multiple(size_t k, Property ** massive);
 }
 
 int main()
@@ -15,7 +16,7 @@ int main()
   int a = 0;
   std::cin >> a;
   while (a && std::cin) {
-    for (size_t i = 0; i < NUM_OF_PROPS; i++) {
+    for (size_t i = 0; i < NUM_OF_PROPS; ++i) {
       (*properties[i])(a);
     }
     std::cin >> a;
@@ -35,4 +36,28 @@ alekseev::Property * alekseev::make(int n)
   //   return new Sum_dup();
   // }
   return nullptr;
+}
+
+
+alekseev::Property ** alekseev::make_multiple(size_t k)
+{
+  Property ** result = new Property * [k];
+  for (size_t i = 0; i < k; ++i) {
+    try {
+      result[i] = make(i);
+    } catch (...) {
+      delete_multiple(i, result);
+      throw;
+    }
+  }
+  return result;
+}
+
+
+void alekseev::delete_multiple(size_t k, Property ** massive)
+{
+  for (size_t i = 0; i < k; ++i) {
+    delete massive[i];
+  }
+  delete[] massive;
 }
