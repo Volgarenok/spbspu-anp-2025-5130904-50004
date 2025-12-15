@@ -11,6 +11,12 @@ int main()
     std::cerr << "Empty input" << "\n";
     return 1;
   }
+  if (len == 0)
+  {
+    std::cerr << "Empty input" << "\n";
+    delete[] input_str;
+    return 0;
+  }
   char* res_str = nullptr;
   try
   {
