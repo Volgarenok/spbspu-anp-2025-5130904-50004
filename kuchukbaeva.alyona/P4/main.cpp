@@ -9,13 +9,13 @@ int main()
   if (input_str == nullptr)
   {
     std::cerr << "Empty input" << "\n";
-    return 0;
+    return 1;
   }
   if (len == 0)
   {
     std::cerr << "Empty input" << "\n";
     delete[] input_str;
-    return 0;
+    return 1;
   }
   char* res_str = nullptr;
   try
