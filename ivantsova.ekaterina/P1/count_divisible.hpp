@@ -7,7 +7,7 @@ namespace ivantsova
   struct CountDivisible
   {
     CountDivisible();
-    
+
     void operator()(int a);
     size_t operator()()const;
     bool isValid()const;
