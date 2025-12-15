@@ -1,7 +1,7 @@
 #include "Pth_trp.h"
 
 
-alekseev::Pth_trp::Pth_trp() : Property(), k(0), data(new int[3]{0})
+alekseev::Pth_trp::Pth_trp(): Property(), k(0), data(new int[3]{0})
 {
 }
 

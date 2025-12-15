@@ -2,6 +2,7 @@
 #define PROPERTY_H
 #include <cstddef>
 
+
 namespace alekseev {
   struct Property {
     void operator()(int a);

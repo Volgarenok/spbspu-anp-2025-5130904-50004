@@ -8,9 +8,9 @@ namespace alekseev {
     explicit Sum_dup();
     ~Sum_dup() override;
 
-     void update(int a) override;
-     size_t value() const override;
-     const char * my_name() const override;
+    void update(int a) override;
+    size_t value() const override;
+    const char * my_name() const override;
     bool cnted() const override;
 
     private:

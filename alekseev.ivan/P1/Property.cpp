@@ -23,7 +23,3 @@ bool alekseev::Property::countered() const
 {
   return cnted();
 }
-
-
-
-
