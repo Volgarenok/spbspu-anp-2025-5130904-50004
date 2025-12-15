@@ -9,7 +9,7 @@ namespace {
     const size_t initialSize = 64;
     size_t capacity = initialSize;
     size_t length = 0;
-    char* buffer = (char*)std::malloc(capacity);
+    char* buffer = static_cast< char* >( std::malloc( capacity ) );
     if (buffer == nullptr)
     {
       return nullptr;
@@ -21,7 +21,7 @@ namespace {
       if (length + 1 >= capacity)
       {
         capacity *= 2;
-        char* newBuffer = (char*)std::malloc(capacity);
+        char* newBuffer = static_cast< char* >( std::malloc( capacity ) );
         if (newBuffer == nullptr)
         {
           std::free(buffer);
@@ -34,7 +34,7 @@ namespace {
         std::free(buffer);
         buffer = newBuffer;
       }
-      buffer[length++] = (char)ch;
+      buffer[length++] = static_cast< char >( ch );
     }
 
     if (ch == EOF && length == 0)
@@ -59,7 +59,7 @@ int main()
     char* line2 = readLine(std::cin);
     if (line2 == nullptr)
     {
-      line2 = (char*)std::malloc(1);
+      line2 = static_cast< char* >( std::malloc( 1 ) );
       if (line2 == nullptr)
       {
         std::free(line1);
@@ -90,7 +90,7 @@ int main()
     }
 
     size_t resultSize = len1 + digits2 + 1;
-    char* result = (char*)std::malloc(resultSize);
+    char* result = static_cast< char* >( std::malloc( resultSize ) );
     if (result == nullptr)
     {
       std::free(line1);
