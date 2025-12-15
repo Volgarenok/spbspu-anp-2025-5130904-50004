@@ -6,7 +6,7 @@ alekseev::Counter::Counter(): k(0)
 }
 
 
-void alekseev::Counter::update(int a)
+void alekseev::Counter::update(int)
 {
   ++k;
 }
