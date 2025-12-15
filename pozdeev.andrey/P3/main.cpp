@@ -49,10 +49,6 @@ int main(int argc, char * argv[])
   int * matrixToProcess = nullptr;
 
   if (taskNum == 1) {
-    if (numElements > static_cast< size_t >(pozdeev::MAX_STATIC_SIZE)) {
-      std::cerr << "ERROR: Matrix too large for static array" << std::endl;
-      return 2;
-    }
     matrixToProcess = staticMatrix;
   } else {
     try {
