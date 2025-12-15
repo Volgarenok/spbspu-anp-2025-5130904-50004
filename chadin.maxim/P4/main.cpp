@@ -4,66 +4,62 @@
 
 namespace {
 
-char* readLine()
+  char* readLine(std::istream& input)
   {
-  const size_t initialSize = 64;
-  size_t capacity = initialSize;
-  size_t length = 0;
-  char* buffer = static_cast<char*>(std::malloc(capacity));
-  if (buffer == nullptr)
-  {
-    return nullptr;
-  }
-
-  int ch;
-  while ((ch = std::getchar()) != '\n' && ch != EOF)
-  {
-    if (length + 1 >= capacity)
+    const size_t initialSize = 64;
+    size_t capacity = initialSize;
+    size_t length = 0;
+    char* buffer = (char*)std::malloc(capacity);
+    if (buffer == nullptr)
     {
-      capacity *= 2;
-      char* newBuffer = static_cast<char*>(std::realloc(buffer, capacity));
-      if (newBuffer == nullptr)
-      {
-        std::free(buffer);
-        return nullptr;
-      }
-      buffer = newBuffer;
+      return nullptr;
     }
-    buffer[length++] = static_cast<char>(ch);
+
+    int ch;
+    while ((ch = input.get()) != '\n' && ch != EOF)
+    {
+      if (length + 1 >= capacity)
+      {
+        capacity *= 2;
+        char* newBuffer = (char*)std::malloc(capacity);
+        if (newBuffer == nullptr)
+        {
+          std::free(buffer);
+          return nullptr;
+        }
+        for (size_t i = 0; i < length; ++i)
+        {
+          newBuffer[i] = buffer[i];
+        }
+        std::free(buffer);
+        buffer = newBuffer;
+      }
+      buffer[length++] = (char)ch;
+    }
+
+    if (ch == EOF && length == 0)
+    {
+      std::free(buffer);
+      return nullptr;
+    }
+
+    buffer[length] = '\0';
+    return buffer;
   }
 
-  if (ch == EOF && length == 0)
-  {
-    std::free(buffer);
-    return nullptr;
-  }
-
-  buffer[length] = '\0';
-  return buffer;
 }
 
-}
-
-int main() {
+int main()
+{
   bool processedAtLeastOnePair = false;
 
-  while (true)
+  char* line1 = readLine(std::cin);
+  while (line1 != nullptr)
   {
-    char* line1 = readLine();
-    if (line1 == nullptr)
-    {
-      if (!processedAtLeastOnePair)
-      {
-        std::cerr << "Error: No input provided." << std::endl;
-        return 1;
-      }
-      break;
-    }
-
-    char* line2 = readLine();
+    char* line2 = readLine(std::cin);
     if (line2 == nullptr)
     {
-      line2 = static_cast<char*>(std::malloc(1));
+      line2 = (char*)std::malloc(1);
       if (line2 == nullptr)
       {
         std::free(line1);
@@ -94,7 +90,7 @@ int main() {
     }
 
     size_t resultSize = len1 + digits2 + 1;
-    char* result = static_cast<char*>(std::malloc(resultSize));
+    char* result = (char*)std::malloc(resultSize);
     if (result == nullptr)
     {
       std::free(line1);
@@ -118,6 +114,14 @@ int main() {
     std::free(line1);
     std::free(line2);
     std::free(result);
+
+    line1 = readLine(std::cin);
+  }
+
+  if (!processedAtLeastOnePair)
+  {
+    std::cerr << "Error: No input provided." << std::endl;
+    return 1;
   }
 
   return 0;
