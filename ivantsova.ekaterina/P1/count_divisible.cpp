@@ -4,13 +4,13 @@ namespace ivantsova
 {
   struct CountDivisible
   {
-    CountDivisible():
+    CountDivisible::CountDivisible():
     prev_(0),
     count_(0),
     hasPrev_(false)
     {}
 
-    void operator()(int a)
+    void CountDivisible::operator()(int a)
     {
       if (hasPrev_ && prev_ != 0)
       {
@@ -33,12 +33,12 @@ namespace ivantsova
       hasPrev_ = true;
     }
 
-    size_t operator()()const
+    size_t CountDivisible::operator()()const
     {
       return count_;
     }
 
-    bool isValid()const
+    bool CountDivisible::isValid()const
     {
       return hasPrev_;
     }

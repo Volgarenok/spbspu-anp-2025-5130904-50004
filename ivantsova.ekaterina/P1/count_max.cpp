@@ -4,13 +4,13 @@ namespace ivantsova
 {
   struct CountMax
   {
-    CountMax():
+    CountMax::CountMax():
     maxInit_(false),
     max_(0),
     count_(0)
     {}
 
-    void operator()(int a)
+    void CountMax::operator()(int a)
     {
       if (!maxInit_)
       {
@@ -29,12 +29,12 @@ namespace ivantsova
       }
     }
 
-    size_t operator()()const
+    size_t CountMax::operator()()const
     {
       return count_;
     }
 
-    bool isValid()const
+    bool CountMax::isValid()const
     {
       return maxInit_;
     }
