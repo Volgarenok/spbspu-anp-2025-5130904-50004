@@ -11,7 +11,7 @@ namespace alekseev {
 
 int main()
 {
-  constexpr size_t NUM_OF_PROPS = 2;
+  constexpr size_t NUM_OF_PROPS = 3;
   alekseev::Property ** properties = alekseev::make_multiple(NUM_OF_PROPS);
   int a = 0;
   std::cin >> a;
@@ -21,7 +21,17 @@ int main()
     }
     std::cin >> a;
   }
-  for (size_t i = 0; i < NUM_OF_PROPS; i++) {
+  if (!std::cin) {
+    std::cout << "Bad input." << "\n";
+    alekseev::delete_multiple(NUM_OF_PROPS, properties);
+    return 1;
+  }
+  if ((*properties[0])() < 3) {
+    std::cout << "Not enough numbers" << "\n";
+    alekseev::delete_multiple(NUM_OF_PROPS, properties);
+    return 2;
+  }
+  for (size_t i = 1; i < NUM_OF_PROPS; i++) {
     std::cout << properties[i]->name() << ": " << (*properties[i])() << "\n";
   }
 }
@@ -29,10 +39,13 @@ int main()
 
 alekseev::Property * alekseev::make(int n)
 {
-  if (n == 0) {
+  // if (n == 0) {
+  //   return new Counter();
+  // }
+  if (n == 1) {
     return new Pth_trp();
   }
-  // if (n == 1) {
+  // if (n == 2) {
   //   return new Sum_dup();
   // }
   return nullptr;
@@ -44,7 +57,7 @@ alekseev::Property ** alekseev::make_multiple(size_t k)
   Property ** result = new Property * [k];
   for (size_t i = 0; i < k; ++i) {
     try {
-      result[i] = make(i);
+      result[i] = make(1);
     } catch (...) {
       delete_multiple(i, result);
       throw;
