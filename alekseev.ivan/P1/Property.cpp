@@ -13,7 +13,7 @@ size_t alekseev::Property::operator()() const
 }
 
 
-char * alekseev::Property::name()
+const char * alekseev::Property::name() const
 {
   return my_name();
 }

@@ -1,7 +1,7 @@
 #include "Pth_trp.h"
 
 
-alekseev::Pth_trp::Pth_trp() : Property(), k(0), data(new int[3])
+alekseev::Pth_trp::Pth_trp() : Property(), k(0), data(new int[3]{0})
 {
 }
 
@@ -32,7 +32,7 @@ size_t alekseev::Pth_trp::value() const
 }
 
 
-char * alekseev::Pth_trp::my_name()
+const char * alekseev::Pth_trp::my_name() const
 {
-  return new char[8]{'P', 't', 'h', '_', 't', 'r', 'p', 0};
+  return "Pth_trp";
 }

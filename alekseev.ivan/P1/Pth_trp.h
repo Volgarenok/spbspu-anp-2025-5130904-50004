@@ -7,9 +7,9 @@ namespace alekseev {
   struct Pth_trp: Property {
     explicit Pth_trp();
 
-    void update(int a);
-    size_t value() const;
-    char * my_name();
+    void update(int a) override;
+    size_t value() const override;
+    const char * my_name() const override;
 
     private:
       size_t k;
