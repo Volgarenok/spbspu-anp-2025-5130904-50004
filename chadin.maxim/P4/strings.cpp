@@ -1,4 +1,5 @@
 #include "strings.h"
+#include <cctype>
 
 namespace chadin
 {
@@ -28,7 +29,9 @@ namespace chadin
     {
       return 1;
     }
+
     size_t pos = 0;
+
     for (size_t i = 0; str1[i] != '\0'; ++i)
     {
       if (pos >= bufferSize - 1)
@@ -40,14 +43,13 @@ namespace chadin
 
     for (size_t i = 0; str2[i] != '\0'; ++i)
     {
-      char c = str2[i];
-      if (c >= '0' && c <= '9')
+      if (std::isdigit(static_cast<unsigned char>(str2[i])))
       {
         if (pos >= bufferSize - 1)
         {
           return 1;
         }
-        result[pos++] = c;
+        result[pos++] = str2[i];
       }
     }
 

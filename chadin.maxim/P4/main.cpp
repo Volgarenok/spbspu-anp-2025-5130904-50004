@@ -1,10 +1,11 @@
 #include "strings.h"
 #include <iostream>
 #include <cstdlib>
+#include <cctype>
 
 namespace {
 
-  char* readLine(std::istream& input)
+  char* readLine(std::istream& input, size_t& outLength)
   {
     const size_t initialSize = 64;
     size_t capacity = initialSize;
@@ -12,6 +13,7 @@ namespace {
     char* buffer = static_cast< char* >( std::malloc( capacity ) );
     if (buffer == nullptr)
     {
+      outLength = 0;
       return nullptr;
     }
 
@@ -25,6 +27,7 @@ namespace {
         if (newBuffer == nullptr)
         {
           std::free(buffer);
+          outLength = 0;
           return nullptr;
         }
         for (size_t i = 0; i < length; ++i)
@@ -40,10 +43,12 @@ namespace {
     if (ch == EOF && length == 0)
     {
       std::free(buffer);
+      outLength = 0;
       return nullptr;
     }
 
     buffer[length] = '\0';
+    outLength = length;
     return buffer;
   }
 
@@ -53,10 +58,12 @@ int main()
 {
   bool processedAtLeastOnePair = false;
 
-  char* line1 = readLine(std::cin);
+  size_t len1 = 0;
+  char* line1 = readLine(std::cin, len1);
   while (line1 != nullptr)
   {
-    char* line2 = readLine(std::cin);
+    size_t len2 = 0;
+    char* line2 = readLine(std::cin, len2);
     if (line2 == nullptr)
     {
       line2 = static_cast< char* >( std::malloc( 1 ) );
@@ -67,6 +74,7 @@ int main()
         return 2;
       }
       line2[0] = '\0';
+      len2 = 0;
     }
 
     processedAtLeastOnePair = true;
@@ -74,16 +82,10 @@ int main()
     int hasSame = chadin::hasSameSymbols(line1, line2);
     std::cout << hasSame << '\n';
 
-    size_t len1 = 0;
-    while (line1[len1] != '\0')
-    {
-      ++len1;
-    }
-
     size_t digits2 = 0;
-    for (size_t i = 0; line2[i] != '\0'; ++i)
+    for (size_t i = 0; i < len2; ++i)
     {
-      if (line2[i] >= '0' && line2[i] <= '9')
+      if (std::isdigit(static_cast<unsigned char>(line2[i])))
       {
         ++digits2;
       }
@@ -115,7 +117,7 @@ int main()
     std::free(line2);
     std::free(result);
 
-    line1 = readLine(std::cin);
+    line1 = readLine(std::cin, len1);
   }
 
   if (!processedAtLeastOnePair)
