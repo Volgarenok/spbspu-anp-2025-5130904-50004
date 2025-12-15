@@ -34,6 +34,7 @@ char *ivanov::get_line(std::istream &in, size_t &length, char stop)
   {
     in >> std::skipws;
   }
+  length = capacity;
   return data;
 }
 
