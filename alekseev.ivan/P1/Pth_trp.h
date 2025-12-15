@@ -6,6 +6,7 @@
 namespace alekseev {
   struct Pth_trp: Property {
     explicit Pth_trp();
+    ~Pth_trp() override;
 
     void update(int a) override;
     size_t value() const override;

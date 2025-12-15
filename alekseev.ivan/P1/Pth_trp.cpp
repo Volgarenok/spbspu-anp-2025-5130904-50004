@@ -36,3 +36,9 @@ const char * alekseev::Pth_trp::my_name() const
 {
   return "Pth_trp";
 }
+
+
+alekseev::Pth_trp::~Pth_trp()
+{
+  delete[] data;
+}

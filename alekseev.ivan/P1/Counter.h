@@ -6,6 +6,7 @@
 namespace alekseev {
   struct Counter: Property {
     explicit Counter();
+    ~Counter() override = default;
 
     void update(int a) override;
     size_t value() const override;

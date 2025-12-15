@@ -1,6 +1,11 @@
 #include "Counter.h"
 
 
+alekseev::Counter::Counter(): k(0)
+{
+}
+
+
 void alekseev::Counter::update(int a)
 {
   ++k;

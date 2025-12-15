@@ -1,6 +1,8 @@
 #include <iostream>
 #include "Property.h"
+#include "Counter.h"
 #include "Pth_trp.h"
+#include "Sum_dup.h"
 
 
 namespace alekseev {
@@ -8,6 +10,7 @@ namespace alekseev {
   Property ** make_multiple(size_t k);
   void delete_multiple(size_t k, Property ** massive);
 }
+
 
 int main()
 {
@@ -39,22 +42,22 @@ int main()
 
 alekseev::Property * alekseev::make(int n)
 {
-  // if (n == 0) {
-  //   return new Counter();
-  // }
+  if (n == 0) {
+    return new Counter();
+  }
   if (n == 1) {
     return new Pth_trp();
   }
-  // if (n == 2) {
-  //   return new Sum_dup();
-  // }
+  if (n == 2) {
+    return new Sum_dup();
+  }
   return nullptr;
 }
 
 
 alekseev::Property ** alekseev::make_multiple(size_t k)
 {
-  Property ** result = new Property * [k];
+  Property ** result = new Property *[k];
   for (size_t i = 0; i < k; ++i) {
     try {
       result[i] = make(1);
