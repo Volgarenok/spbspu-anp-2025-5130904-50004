@@ -5,6 +5,7 @@
 
 namespace kuchukbaeva
 {
+  char* kuchukbaeva::reSize(char* buffer, size_t& capacity);
   int isVowel(char c);
   char* rmvVow(const char* src, char* dest) noexcept;
   int repDgt(const char* str) noexcept;

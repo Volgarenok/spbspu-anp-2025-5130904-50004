@@ -9,7 +9,7 @@ int main()
   if (input_str == nullptr)
   {
     std::cerr << "Empty input" << "\n";
-    return 1;
+    return 0;
   }
   if (len == 0)
   {

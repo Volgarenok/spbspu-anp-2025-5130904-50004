@@ -3,29 +3,27 @@
 #include <new>
 #include <istream>
 
-namespace
+char* kuchukbaeva::reSize(char* buffer, size_t& capacity)
 {
-  char* reSize(char* buffer, size_t& capacity)
+  size_t new_capacity = capacity * 2;
+  char* new_buffer = nullptr;
+  try
   {
-    size_t new_capacity = capacity * 2;
-    char* new_buffer = nullptr;
-    try
-    {
-      new_buffer = new char[new_capacity];
-    }
-    catch (const std::bad_alloc&)
-    {
-      return nullptr;
-    }
-    for (size_t i = 0; i < capacity; ++i)
-    {
-      new_buffer[i] = buffer[i];
-    }
-    delete[] buffer;
-    capacity = new_capacity;
-    return new_buffer;
+    new_buffer = new char[new_capacity];
   }
+  catch (const std::bad_alloc&)
+  {
+    return nullptr;
+  }
+  for (size_t i = 0; i < capacity; ++i)
+  {
+    new_buffer[i] = buffer[i];
+  }
+  delete[] buffer;
+  capacity = new_capacity;
+  return new_buffer;
 }
+
 
 char* kuchukbaeva::readStr(std::istream& input, size_t& read_size)
 {
