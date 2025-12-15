@@ -7,18 +7,11 @@ namespace chadin
 
 std::istream& readArr(std::istream& input, int* arr, std::size_t rows, std::size_t cols)
 {
-  std::size_t number = 0;
-  for (std::size_t i = 0; i < rows * cols && input >> arr[i]; ++i)
+  std::size_t i = 0;
+  std::size_t total = rows * cols;
+  while (i < total && input >> arr[i])
   {
-    ++number;
-  }
-  if (!input)
-  {
-    std::cerr << "Incorrect input" << "\n";
-  }
-  else if (rows * cols > number)
-  {
-    std::cerr << "Not enough elements" << "\n";
+    ++i;
   }
   return input;
 }

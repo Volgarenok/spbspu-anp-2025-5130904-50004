@@ -52,6 +52,7 @@ int main(int argc, char** argv)
     chadin::readArr(input, arr, rows, cols);
     if (!input)
     {
+      std::cerr << "Incorrect input" << "\n";
       return 2;
     }
     input.close();
@@ -83,9 +84,10 @@ int main(int argc, char** argv)
       }
     }
 
-     chadin::readArr(input, arr, rows, cols);
+    chadin::readArr(input, arr, rows, cols);
     if (!input)
     {
+      std::cerr << "Incorrect input" << "\n";
       delete[] arr;
       return 2;
     }
