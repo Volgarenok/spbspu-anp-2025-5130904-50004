@@ -11,18 +11,7 @@ void alekseev::Pth_trp::update(int a)
   data[0] = data[1];
   data[1] = data[2];
   data[2] = a;
-  int cat1 = data[0], cat2 = data[1], hyp = data[2];
-  if (cat1 > hyp) {
-    int t = cat1;
-    cat1 = hyp;
-    hyp = t;
-  }
-  if (cat2 > hyp) {
-    int t = cat2;
-    cat2 = hyp;
-    hyp = t;
-  }
-  k += (cat1 * cat1 + cat2 * cat2 == hyp * hyp);
+  k += (data[0] * data[0] + data[1] * data[1] == data[2] * data[2]);
 }
 
 
@@ -35,6 +24,12 @@ size_t alekseev::Pth_trp::value() const
 const char * alekseev::Pth_trp::my_name() const
 {
   return "Pth_trp";
+}
+
+
+bool alekseev::Pth_trp::cnted() const
+{
+  return data[0] && data[1] && data[2];
 }
 
 

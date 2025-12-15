@@ -7,6 +7,7 @@ namespace alekseev {
     void operator()(int a);
     size_t operator()() const;
     const char * name() const;
+    bool countered() const;
 
     virtual ~Property() = default;
 
@@ -14,6 +15,7 @@ namespace alekseev {
       virtual void update(int a) = 0;
       virtual size_t value() const = 0;
       virtual const char * my_name() const = 0;
+      virtual bool cnted() const = 0;
   };
 }
 #endif

@@ -31,3 +31,9 @@ const char * alekseev::Sum_dup::my_name() const
 {
   return "Sum_dup";
 }
+
+
+bool alekseev::Sum_dup::cnted() const
+{
+  return data[0] && data[1] && data[2];
+}

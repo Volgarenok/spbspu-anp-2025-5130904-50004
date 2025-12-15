@@ -22,3 +22,9 @@ const char * alekseev::Counter::my_name() const
 {
   return "Counter";
 }
+
+
+bool alekseev::Counter::cnted() const
+{
+  return true;
+}

@@ -25,17 +25,22 @@ int main()
     std::cin >> a;
   }
   if (!std::cin) {
-    std::cout << "Bad input." << "\n";
+    std::cout << "Not a sequence of numbers" << "\n";
     alekseev::delete_multiple(NUM_OF_PROPS, properties);
     return 1;
   }
-  if ((*properties[0])() < 3) {
-    std::cout << "Not enough numbers" << "\n";
-    alekseev::delete_multiple(NUM_OF_PROPS, properties);
-    return 2;
-  }
+
+  bool flag = true;
   for (size_t i = 1; i < NUM_OF_PROPS; i++) {
-    std::cout << properties[i]->name() << ": " << (*properties[i])() << "\n";
+    if (properties[i]->countered()) {
+      std::cout << properties[i]->name() << ": " << (*properties[i])() << "\n";
+    } else {
+      std::cout << "Cannot counter " << properties[i]->name() << "\n";
+      flag = false;
+    }
+  }
+  if (!flag) {
+    return 2;
   }
 }
 
@@ -60,7 +65,7 @@ alekseev::Property ** alekseev::make_multiple(size_t k)
   Property ** result = new Property *[k];
   for (size_t i = 0; i < k; ++i) {
     try {
-      result[i] = make(1);
+      result[i] = make(i);
     } catch (...) {
       delete_multiple(i, result);
       throw;

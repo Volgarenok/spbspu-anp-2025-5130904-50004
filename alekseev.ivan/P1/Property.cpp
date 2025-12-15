@@ -19,5 +19,11 @@ const char * alekseev::Property::name() const
 }
 
 
+bool alekseev::Property::countered() const
+{
+  return cnted();
+}
+
+
 
 
