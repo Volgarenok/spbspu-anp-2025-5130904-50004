@@ -127,7 +127,7 @@ int main()
 
   if (countMax.isValid())
   {
-    std::cerr << countMax() << "\n";
+    std::cout << countMax() << "\n";
   }
 
   else
