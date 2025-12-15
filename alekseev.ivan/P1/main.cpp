@@ -39,6 +39,7 @@ int main()
       flag = false;
     }
   }
+  delete_multiple(NUM_OF_PROPS, properties);
   if (!flag) {
     return 2;
   }
