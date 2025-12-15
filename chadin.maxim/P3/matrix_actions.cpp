@@ -7,11 +7,8 @@ namespace chadin
 
 std::istream& readArr(std::istream& input, int* arr, std::size_t rows, std::size_t cols)
 {
-  std::size_t i = 0;
-  std::size_t total = rows * cols;
-  while (i < total && input >> arr[i])
+  for (std::size_t i = 0; (i < rows * cols) && (input >> arr[i]); ++i)
   {
-    ++i;
   }
   return input;
 }
@@ -21,13 +18,13 @@ std::ostream& writeArr(std::ostream& output, const int* arr, std::size_t rows, s
   output << result << "\n";
   for (std::size_t i = 0; i < rows; ++i)
   {
-    for (std::size_t j = 0; j < cols; ++j)
+    if (cols > 0)
     {
-      output << arr[i * cols + j];
-      if (j + 1 < cols)
-      {
-        output << " ";
-      }
+      output << arr[i * cols];
+    }
+    for (std::size_t j = 1; j < cols; ++j)
+    {
+      output << " " << arr[i * cols + j];
     }
     output << "\n";
   }
@@ -41,13 +38,6 @@ void increaseElements(int* arr, std::size_t rows, std::size_t cols)
     return;
   }
 
-  std::size_t total = rows * cols;
-  int* temp = new int[total];
-  for (std::size_t i = 0; i < total; ++i)
-  {
-    temp[i] = arr[i];
-  }
-
   int left = 0;
   int right = static_cast<int>(cols) - 1;
   int top = 0;
@@ -58,7 +48,7 @@ void increaseElements(int* arr, std::size_t rows, std::size_t cols)
   {
     for (int i = bottom; i >= top; --i)
     {
-      temp[i * cols + left] += step++;
+      arr[i * cols + left] += step++;
     }
     ++left;
     if (left > right)
@@ -68,7 +58,7 @@ void increaseElements(int* arr, std::size_t rows, std::size_t cols)
 
     for (int j = left; j <= right; ++j)
     {
-      temp[bottom * cols + j] += step++;
+      arr[bottom * cols + j] += step++;
     }
     --bottom;
     if (top > bottom)
@@ -78,7 +68,7 @@ void increaseElements(int* arr, std::size_t rows, std::size_t cols)
 
     for (int j = right; j >= left; --j)
     {
-      temp[top * cols + j] += step++;
+      arr[top * cols + j] += step++;
     }
     ++top;
     if (top > bottom)
@@ -88,17 +78,10 @@ void increaseElements(int* arr, std::size_t rows, std::size_t cols)
 
     for (int i = top; i <= bottom; ++i)
     {
-      temp[i * cols + right] += step++;
+      arr[i * cols + right] += step++;
     }
     --right;
   }
-
-  for (std::size_t i = 0; i < total; ++i)
-  {
-    arr[i] = temp[i];
-  }
-
-  delete[] temp;
 }
 
 int countDiagonals(const int* arr, std::size_t rows, std::size_t cols)
