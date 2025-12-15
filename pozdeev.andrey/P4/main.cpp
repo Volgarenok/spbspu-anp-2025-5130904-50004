@@ -25,7 +25,7 @@ int main()
     return 1;
   }
 
-  if (!pozdeev::checkStream(std::cin)) {
+  if (!std::cin.eof() && std::cin.fail()) {
     std::free(inputString);
     std::cerr << "Error: Input stream error\n";
     return 1;

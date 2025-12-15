@@ -24,7 +24,7 @@ char* pozdeev::readString(std::istream& in, size_t& size, size_t initialCapacity
   while (in.get(inputChar) && inputChar != '\n') {
     if (currentSize + 1 >= currentCapacity) {
       size_t newCapacity = currentCapacity * kResizeFactor;
-      char* newBuffer = reinterpret_cast < char* > (std::realloc(buffer, newCapacity * sizeof(char)));
+      char* newBuffer = reinterpret_cast < char* > (std::malloc(newCapacity * sizeof(char)));
 
       if (newBuffer == nullptr) {
         std::free(buffer);
@@ -32,6 +32,11 @@ char* pozdeev::readString(std::istream& in, size_t& size, size_t initialCapacity
         return nullptr;
       }
 
+      for (size_t i = 0; i < currentSize; ++i) {
+        newBuffer[i] = buffer[i];
+      }
+
+      std::free(buffer);
       buffer = newBuffer;
       currentCapacity = newCapacity;
     }
@@ -50,17 +55,6 @@ char* pozdeev::readString(std::istream& in, size_t& size, size_t initialCapacity
   buffer[currentSize] = '\0';
   size = currentSize;
   return buffer;
-}
-
-bool pozdeev::checkStream(std::istream& stream)
-{
-  if (!stream.fail()) {
-    return true;
-  }
-  if (stream.eof()) {
-    return true;
-  }
-  return false;
 }
 
 char* pozdeev::removeExtraSpaces(char* destination, const char* source)
