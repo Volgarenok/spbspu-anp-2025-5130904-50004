@@ -20,7 +20,7 @@ namespace oztas
         }
 
         hasElement = true;
-        if (matrix[i][j] == 0) {
+        if (matrix[i * cols + j] == 0) {
           allNonZero = false;
           break;
         }
