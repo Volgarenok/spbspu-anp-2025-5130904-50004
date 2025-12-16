@@ -2,7 +2,7 @@
 
 namespace oztas
 {
-  int countNonZeroDiagonals(const int matrix[][MAX], int rows, int cols)
+  int countNonZeroDiagonals(const int* matrix, int rows, int cols)
   {
     int result = 0;
 
