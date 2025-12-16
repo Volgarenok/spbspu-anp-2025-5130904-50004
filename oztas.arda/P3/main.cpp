@@ -52,11 +52,11 @@ int main(int argc, char* argv[])
   }
 
   if (taskNum == 1) {
-    int result = oztas::countNonZeroDiagonals(matrix, rows, cols);
+    int result = oztas::countNonZeroDiagonals(&matrix[0][0], rows, cols);
     output << result;
   }
   else if (taskNum == 2) {
-    oztas::applyFillIncreasingWave(matrix, rows, cols);
+    oztas::applyFillIncreasingWave(&matrix[0][0], rows, cols);
     oztas::writeMatrix(output, matrix, rows, cols);
   }
 
