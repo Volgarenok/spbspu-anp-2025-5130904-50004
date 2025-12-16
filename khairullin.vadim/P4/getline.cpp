@@ -1,7 +1,6 @@
+#include "strings.hpp"
 #include <iostream>
 #include <iomanip>
-#include "strings.hpp"
-
 char * khairullin::getline(std::istream & input, char * data)
 {
   bool is_skipws = input.flags() & std::ios_base::skipws;
