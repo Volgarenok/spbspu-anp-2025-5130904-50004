@@ -121,4 +121,4 @@ void processDynamicArray(std::ifstream& input, std::ofstream& output) {
   output << result << "\n";
 }
 
-} 
+}
