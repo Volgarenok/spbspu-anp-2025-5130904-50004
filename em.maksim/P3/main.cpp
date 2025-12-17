@@ -1,5 +1,6 @@
 #include "matrix_operations.hpp"
 #include <iostream>
+#include <cstdlib>
 
 int main(int argc, char* argv[])
 {
@@ -17,40 +18,18 @@ int main(int argc, char* argv[])
   {
     const int MAX_SIZE = 10000;
     int matrix[MAX_SIZE] = {};
-
-    if (!em::read_matrix(argv[2], matrix, rows, cols, MAX_SIZE))
-    {
-      std::cerr << "Failed to read matrix from file";
-      return 2;
-    }
-
+    em::read_matrix(argv[2], matrix, rows, cols, MAX_SIZE);
     em::process_left_bottom_clockwise(matrix, rows, cols);
-    if (!em::write_matrix(argv[3], matrix, rows, cols, false))
-    {
-      std::cerr << "Failed to write matrix to file";
-      return 2;
-    }
+    em::write_matrix(argv[3], matrix, rows, cols, false);
     return 0;
   }
   else if (num == 2)
   {
     int* matrix = nullptr;
-
-    if (!em::read_matrix(argv[2], &matrix, rows, cols))
-    {
-      std::cerr << "Failed to read matrix from file";
-      return 2;
-    }
-
+    em::read_matrix(argv[2], &matrix, rows, cols);
     em::build_smooth_matrix(matrix, rows, cols);
-    bool success = em::write_matrix(argv[3], matrix, rows, cols, true);
+    em::write_matrix(argv[3], matrix, rows, cols, true);
     delete[] matrix;
-
-    if (!success)
-    {
-      std::cerr << "Failed to write matrix to file";
-      return 2;
-    }
     return 0;
   }
 
