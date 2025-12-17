@@ -91,5 +91,4 @@ int main(int argc, char* argv[])
 
     output.close();
     delete[] dynMatrix;
-    return 0;
 }
