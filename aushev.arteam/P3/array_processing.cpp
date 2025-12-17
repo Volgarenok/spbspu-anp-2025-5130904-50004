@@ -5,78 +5,54 @@
 
 namespace aushev {
 
-int findLongestSeriesColumn(int* matrix, int rows, int cols) {
-  if (rows == 0 || cols == 0) {
-    return 0;
-  }
-
-  int maxLen = 0;
-  int colNum = 0;
-
-  for (int j = 0; j < cols; j++) {
-    int currentLen = 1;
-    int maxCurrent = 1;
-
-    for (int i = 1; i < rows; i++) {
-      if (matrix[i * cols + j] == matrix[(i - 1) * cols + j]) {
-        currentLen++;
-        if (currentLen > maxCurrent) {
-          maxCurrent = currentLen;
-        }
-      } else {
-        currentLen = 1;
+int isLowerTriangularMatrix(const int* matrix, int rows, int cols) {
+  for (size_t i = 0; i < static_cast<size_t>(rows); ++i) {
+    for (size_t j = i + 1; j < static_cast<size_t>(cols); ++j) {
+      if (matrix[i * cols + j] != 0) {
+        return 0;
       }
     }
-
-    if (maxCurrent > maxLen) {
-      maxLen = maxCurrent;
-      colNum = j + 1;
-    }
   }
-
-  return colNum;
+  return 1;
 }
 
-int findMinSumAntiDiagonals(int* matrix, int rows, int cols) {
-  if (rows == 0 || cols == 0) {
+int countLocalMaxima(const int* matrix, int rows, int cols) {
+  if (rows < 3 || cols < 3) {
     return 0;
   }
 
-  int numDiags = rows + cols - 1;
-  int* sums = static_cast<int*>(malloc(numDiags * sizeof(int)));
-  if (!sums) {
-    return 0;
-  }
+  int count = 0;
+  for (size_t i = 1; i < static_cast<size_t>(rows) - 1; ++i) {
+    for (size_t j = 1; j < static_cast<size_t>(cols) - 1; ++j) {
+      int current = matrix[i * cols + j];
+      int isMax = 1;
 
-  for (int k = 0; k < numDiags; k++) {
-    sums[k] = 0;
-  }
+      for (int di = -1; di <= 1; ++di) {
+        for (int dj = -1; dj <= 1; ++dj) {
+          if (di == 0 && dj == 0) continue;
+          size_t ni = i + static_cast<size_t>(di);
+          size_t nj = j + static_cast<size_t>(dj);
+          if (matrix[ni * cols + nj] >= current) {
+            isMax = 0;
+            break;
+          }
+        }
+        if (!isMax) break;
+      }
 
-  for (int i = 0; i < rows; i++) {
-    for (int j = 0; j < cols; j++) {
-      int diagIdx = i + j;
-      sums[diagIdx] += matrix[i * cols + j];
+      if (isMax) {
+        ++count;
+      }
     }
   }
-
-  int minSum = sums[0];
-  for (int k = 1; k < numDiags; k++) {
-    if (sums[k] < minSum) {
-      minSum = sums[k];
-    }
-  }
-
-  free(sums);
-  return minSum;
+  return count;
 }
 
 void processFixedArray(std::ifstream& input, std::ofstream& output) {
-  int rows = 0;
-  int cols = 0;
+  int rows = 0, cols = 0;
   if (!(input >> rows >> cols)) {
     throw "Invalid matrix dimensions";
   }
-
   if (rows < 0 || cols < 0) {
     throw "Invalid matrix dimensions";
   }
@@ -84,49 +60,37 @@ void processFixedArray(std::ifstream& input, std::ofstream& output) {
     throw "Invalid matrix dimensions";
   }
   if (rows == 0 && cols == 0) {
-    output << "0\n";
+    output << "true\n";
     return;
   }
 
-  const int maxSize = 10000;
-  if (static_cast<long long>(rows) * cols > maxSize) {
+  const int MAX_SIZE = 10000;
+  if (static_cast<long long>(rows) * cols > MAX_SIZE) {
     throw "Matrix size exceeds maximum allowed";
   }
-
-  const int maxDim = 100;
-  if (rows > maxDim || cols > maxDim) {
+  const int MAX_DIM = 100;
+  if (rows > MAX_DIM || cols > MAX_DIM) {
     throw "Matrix dimensions exceed fixed array limits";
   }
 
-  int fixedMatrix[maxDim][maxDim] = {};
-
-  for (int i = 0; i < rows; i++) {
-    for (int j = 0; j < cols; j++) {
+  int fixedMatrix[MAX_DIM][MAX_DIM] = {};
+  for (size_t i = 0; i < static_cast<size_t>(rows); ++i) {
+    for (size_t j = 0; j < static_cast<size_t>(cols); ++j) {
       if (!(input >> fixedMatrix[i][j])) {
         throw "Invalid matrix element";
       }
     }
   }
 
-  int* matrix = new int[rows * cols];
-  for (int i = 0; i < rows; i++) {
-    for (int j = 0; j < cols; j++) {
-      matrix[i * cols + j] = fixedMatrix[i][j];
-    }
-  }
-
-  int result = findLongestSeriesColumn(matrix, rows, cols);
-  delete[] matrix;
-  output << result << "\n";
+  int result = isLowerTriangularMatrix(&fixedMatrix[0][0], rows, cols);
+  output << (result ? "true" : "false") << "\n";
 }
 
 void processDynamicArray(std::ifstream& input, std::ofstream& output) {
-  int rows = 0;
-  int cols = 0;
+  int rows = 0, cols = 0;
   if (!(input >> rows >> cols)) {
     throw "Invalid matrix dimensions";
   }
-
   if (rows < 0 || cols < 0) {
     throw "Invalid matrix dimensions";
   }
@@ -143,8 +107,8 @@ void processDynamicArray(std::ifstream& input, std::ofstream& output) {
     throw "Memory allocation failed";
   }
 
-  for (int i = 0; i < rows; i++) {
-    for (int j = 0; j < cols; j++) {
+  for (size_t i = 0; i < static_cast<size_t>(rows); ++i) {
+    for (size_t j = 0; j < static_cast<size_t>(cols); ++j) {
       if (!(input >> matrix[i * cols + j])) {
         free(matrix);
         throw "Invalid matrix element";
@@ -152,9 +116,9 @@ void processDynamicArray(std::ifstream& input, std::ofstream& output) {
     }
   }
 
-  int result = findMinSumAntiDiagonals(matrix, rows, cols);
+  int result = countLocalMaxima(matrix, rows, cols);
   free(matrix);
   output << result << "\n";
 }
 
-}
+} 

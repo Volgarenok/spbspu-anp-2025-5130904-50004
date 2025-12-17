@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
 #include "array_processing.hpp"
 
 int main(int argc, char* argv[]) {
