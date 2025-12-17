@@ -35,12 +35,6 @@ void read_matrix(const char* filename, int* matrix, int& rows, int& cols, int ma
     std::exit(2);
   }
 
-  if (file.peek() == std::ifstream::traits_type::eof())
-  {
-    std::cerr << "Failed to read matrix from file";
-    std::exit(2);
-  }
-
   file >> rows >> cols;
 
   if (file.fail() || rows < 0 || cols < 0)
@@ -83,12 +77,6 @@ void read_matrix(const char* filename, int** matrix, int& rows, int& cols)
 
   std::ifstream file(filename);
   if (!file.is_open())
-  {
-    std::cerr << "Failed to read matrix from file";
-    std::exit(2);
-  }
-
-  if (file.peek() == std::ifstream::traits_type::eof())
   {
     std::cerr << "Failed to read matrix from file";
     std::exit(2);
