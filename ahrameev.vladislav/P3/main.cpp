@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <cstring>
 #include "matrix.h"
 
 int main(int argc, char* argv[])
@@ -41,14 +42,20 @@ int main(int argc, char* argv[])
     int* dynMatrix = nullptr;
     int* matrix = nullptr;
 
-    if (std::strcmp(numArg, "1") == 0)
+    if (strcmp(numArg, "1") == 0)
     {
         matrix = &fixedMatrix[0][0];
     }
-    else
+    else if (strcmp(numArg, "2") == 0)
     {
         dynMatrix = new int[rows * cols]();
         matrix = dynMatrix;
+    }
+    else
+    {
+        std::cerr << "Error: Invalid mode\n";
+        input.close();
+        return 1;
     }
 
     if (rows > 0 && cols > 0)
@@ -84,4 +91,5 @@ int main(int argc, char* argv[])
 
     output.close();
     delete[] dynMatrix;
+    return 0;
 }
