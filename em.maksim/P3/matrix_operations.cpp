@@ -68,7 +68,7 @@ void read_matrix(const char* filename, int* matrix, int& rows, int& cols, int ma
     }
   }
 
-  if (file.fail() && !file.eof())
+  if (file.fail())
   {
     std::cerr << "Failed to read matrix from file";
     std::exit(2);
@@ -122,7 +122,7 @@ void read_matrix(const char* filename, int** matrix, int& rows, int& cols)
     }
   }
 
-  if (file.fail() && !file.eof())
+  if (file.fail())
   {
     delete[] *matrix;
     *matrix = nullptr;
