@@ -1,6 +1,7 @@
 #include "matrix_operations.hpp"
 #include <fstream>
 #include <iostream>
+#include <cstdlib>
 
 namespace em {
 
@@ -30,22 +31,16 @@ void read_matrix(const char* filename, int* matrix, int& rows, int& cols, int ma
   std::ifstream file(filename);
   if (!file.is_open())
   {
-    std::cerr << "Cannot open input file: " << filename;
-    return;
+    std::cerr << "Failed to read matrix from file";
+    std::exit(2);
   }
 
   file >> rows >> cols;
 
-  if (file.fail())
+  if (file.fail() || rows < 0 || cols < 0)
   {
     std::cerr << "Failed to read matrix from file";
-    return;
-  }
-
-  if (rows < 0 || cols < 0)
-  {
-    std::cerr << "Failed to read matrix from file";
-    return;
+    std::exit(2);
   }
 
   if (rows == 0 && cols == 0)
@@ -56,19 +51,21 @@ void read_matrix(const char* filename, int* matrix, int& rows, int& cols, int ma
   if (rows * cols > max_size)
   {
     std::cerr << "Failed to read matrix from file";
-    return;
+    std::exit(2);
   }
 
   for (size_t i = 0; i < static_cast<size_t>(rows); ++i)
   {
     for (size_t j = 0; j < static_cast<size_t>(cols); ++j)
     {
-      if (!(file >> matrix[i * cols + j]))
-      {
-        std::cerr << "Failed to read matrix from file";
-        return;
-      }
+      file >> matrix[i * cols + j];
     }
+  }
+
+  if (file.fail())
+  {
+    std::cerr << "Failed to read matrix from file";
+    std::exit(2);
   }
 }
 
@@ -81,22 +78,16 @@ void read_matrix(const char* filename, int** matrix, int& rows, int& cols)
   std::ifstream file(filename);
   if (!file.is_open())
   {
-    std::cerr << "Cannot open input file: " << filename;
-    return;
+    std::cerr << "Failed to read matrix from file";
+    std::exit(2);
   }
 
   file >> rows >> cols;
 
-  if (file.fail())
+  if (file.fail() || rows < 0 || cols < 0)
   {
     std::cerr << "Failed to read matrix from file";
-    return;
-  }
-
-  if (rows < 0 || cols < 0)
-  {
-    std::cerr << "Failed to read matrix from file";
-    return;
+    std::exit(2);
   }
 
   if (rows == 0 && cols == 0)
@@ -108,21 +99,23 @@ void read_matrix(const char* filename, int** matrix, int& rows, int& cols)
   if (!*matrix)
   {
     std::cerr << "Failed to read matrix from file";
-    return;
+    std::exit(2);
   }
 
   for (size_t i = 0; i < static_cast<size_t>(rows); ++i)
   {
     for (size_t j = 0; j < static_cast<size_t>(cols); ++j)
     {
-      if (!(file >> (*matrix)[i * cols + j]))
-      {
-        delete[] *matrix;
-        *matrix = nullptr;
-        std::cerr << "Failed to read matrix from file";
-        return;
-      }
+      file >> (*matrix)[i * cols + j];
     }
+  }
+
+  if (file.fail())
+  {
+    delete[] *matrix;
+    *matrix = nullptr;
+    std::cerr << "Failed to read matrix from file";
+    std::exit(2);
   }
 }
 
@@ -132,7 +125,7 @@ void write_matrix(const char* filename, const int* matrix, int rows, int cols, b
   if (!file.is_open())
   {
     std::cerr << "Failed to write matrix to file";
-    return;
+    std::exit(2);
   }
 
   file << rows << " " << cols;
@@ -160,7 +153,7 @@ void write_matrix(const char* filename, const int* matrix, int rows, int cols, b
   if (!file.good())
   {
     std::cerr << "Failed to write matrix to file";
-    return;
+    std::exit(2);
   }
 }
 
@@ -232,7 +225,7 @@ void build_smooth_matrix(int* matrix, int rows, int cols)
   if (!temp)
   {
     std::cerr << "Failed to allocate memory";
-    return;
+    std::exit(2);
   }
 
   for (size_t i = 0; i < static_cast<size_t>(rows); ++i)
@@ -251,8 +244,8 @@ void build_smooth_matrix(int* matrix, int rows, int cols)
             continue;
           }
 
-          int ni = i + di;
-          int nj = j + dj;
+          int ni = static_cast<int>(i) + di;
+          int nj = static_cast<int>(j) + dj;
           if (ni >= 0 && ni < rows && nj >= 0 && nj < cols)
           {
             sum += matrix[ni * cols + nj];

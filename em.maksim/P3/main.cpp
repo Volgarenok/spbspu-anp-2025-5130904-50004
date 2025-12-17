@@ -1,5 +1,6 @@
 #include "matrix_operations.hpp"
 #include <iostream>
+#include <cstdlib>
 
 int main(int argc, char* argv[])
 {
@@ -16,7 +17,7 @@ int main(int argc, char* argv[])
   if (num == 1)
   {
     const int MAX_SIZE = 10000;
-    int matrix[MAX_SIZE];
+    int matrix[MAX_SIZE] = {};
     em::read_matrix(argv[2], matrix, rows, cols, MAX_SIZE);
     em::process_left_bottom_clockwise(matrix, rows, cols);
     em::write_matrix(argv[3], matrix, rows, cols, false);
