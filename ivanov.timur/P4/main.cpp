@@ -63,8 +63,7 @@ int main()
   }
   char *result3 = ivanov::merge(result2, add_content, merged, add_size);
   char *result4 = ivanov::get_find(result3, found);
-  std::cout << result4[0];
-  ivanov::output(result4);
+  std::cout << result4;
   std::cout << "\n";
   delete[] merged;
   delete[] found;

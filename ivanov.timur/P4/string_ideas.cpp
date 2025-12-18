@@ -99,15 +99,8 @@ char *ivanov::del_lat(char *content, char *tmpx)
   tmpx[new_size] = '\0';
   return tmpx;
 }
-void ivanov::output(const char *content)
+char *ivanov::spc_rmv(char *content)
 {
-  size_t i = 0;
-  while (content[i] != '\0')
-  {
-    std::cout << " " << content[i++];
-  }
-}
-char *ivanov::spc_rmv(char *content) {
   if (!*content)
   {
     return content;
@@ -161,7 +154,7 @@ char *ivanov::get_find(char *content, char *tmp)
     e++;
   }
   size_t found_count = 0;
-  for (bool f : found)
+  for (bool f: found)
   {
     if (f)
     {

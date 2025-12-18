@@ -5,7 +5,6 @@
 namespace ivanov {
   char *spc_rmv(char *content);
   char *del_lat(char *content, char *tmpx);
-  void output(const char *content);
   char *merge(char *content1, const char *content2, char *tmp, size_t size2);
   char *get_find(char *content, char *tmp);
   bool find(char symbol, const char *content);
