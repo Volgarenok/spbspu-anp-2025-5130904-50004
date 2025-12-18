@@ -1,4 +1,4 @@
-#include "Property.h"
+#include "iProperty.h"
 
 #include "Pth_trp.h"
 #include "Sum_dup.h"

@@ -1,11 +1,12 @@
 #ifndef PTH_TRP_H
 #define PTH_TRP_H
-#include "Property.h"
+#include "iProperty.h"
+#include "Int_array.h"
 
 namespace alekseev {
   struct Pth_trp: iProperty {
     Pth_trp();
-    ~Pth_trp() override;
+    virtual ~Pth_trp() = default;
 
     void update(int a) override;
     size_t value() const override;
@@ -14,7 +15,7 @@ namespace alekseev {
 
     private:
       size_t k_;
-      int * data_;
+      Int_array data_;
   };
 }
 

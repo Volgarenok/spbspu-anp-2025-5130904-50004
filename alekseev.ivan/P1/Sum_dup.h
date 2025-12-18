@@ -1,11 +1,12 @@
 #ifndef SUM_DUP_H
 #define SUM_DUP_H
-#include "Property.h"
+#include "iProperty.h"
+#include "Int_array.h"
 
 namespace alekseev {
   struct Sum_dup: iProperty {
     Sum_dup();
-    ~Sum_dup() override;
+    virtual ~Sum_dup() = default;
 
     void update(int a) override;
     size_t value() const override;
@@ -14,7 +15,7 @@ namespace alekseev {
 
     private:
       size_t k_;
-      int * data_;
+      Int_array data_;
   };
 }
 

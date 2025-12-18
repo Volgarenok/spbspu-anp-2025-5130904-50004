@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Property.h"
+#include "iProperty.h"
 
 int main()
 {

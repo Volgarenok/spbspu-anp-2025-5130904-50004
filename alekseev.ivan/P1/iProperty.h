@@ -1,5 +1,5 @@
-#ifndef PROPERTY_H
-#define PROPERTY_H
+#ifndef IPROPERTY_H
+#define IPROPERTY_H
 #include <cstddef>
 #include <iostream>
 
