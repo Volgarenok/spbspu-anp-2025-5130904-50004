@@ -136,7 +136,7 @@ char *ivanov::merge(char *content1, const char *content2, char *tmp, size_t size
   tmp[c + size2] = '\0';
   return tmp;
 }
-char *ivanov::get_find(char *content, char *tmp)
+char *ivanov::get_find(const char *content, char *tmp)
 {
   bool found[26] = {false};
   size_t e = 0;
