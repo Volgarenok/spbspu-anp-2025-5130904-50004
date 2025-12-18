@@ -3,13 +3,10 @@
 #include <cstddef>
 struct Pythagor {
   Pythagor();
-
   void operator()(int e);
   size_t operator()() const;
-
   bool get() const;
   void take();
-
 private:
   int a = 0;
   int b = 0;
