@@ -25,7 +25,7 @@ char *ivanov::get_line(std::istream &in, size_t &length, char stop)
       in >> std::skipws;
     }
     delete[] data;
-    throw ;
+    throw;
   }
   data[size] = '\0';
   if (is_skipws)
