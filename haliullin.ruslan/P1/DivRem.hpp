@@ -1,6 +1,6 @@
-#include <iostream>
 #ifndef DIVREM_HPP
 #define DIVREM_HPP
+#include <cstddef>
 
 namespace haliullin
 {
@@ -9,7 +9,7 @@ namespace haliullin
     DivRem();
     void operator()(int n);
     size_t operator()() const;
-    private:
+     private:
       size_t k_;
       int prev, cur;
   };

@@ -1,6 +1,6 @@
-#include <iostream>
 #ifndef PYTHAGORTRIPLE_HPP
 #define PYTHAGORTTIPLE_CPP
+#include <cstddef>
 
 namespace haliullin
 {
@@ -9,7 +9,7 @@ namespace haliullin
     PythagorTriple();
     void operator()(int n);
     size_t operator()() const;
-    private:
+     private:
       size_t k_;
       int a, b, c;
   };
