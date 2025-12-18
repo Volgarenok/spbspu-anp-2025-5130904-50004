@@ -1,5 +1,5 @@
 #ifndef PYTHAGORTRIPLE_HPP
-#define PYTHAGORTTIPLE_CPP
+#define PYTHAGORTRIPLE_HPP
 #include <cstddef>
 
 namespace haliullin
