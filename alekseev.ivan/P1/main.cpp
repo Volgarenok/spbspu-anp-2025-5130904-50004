@@ -1,81 +1,29 @@
 #include <iostream>
 #include "Property.h"
-#include "Pth_trp.h"
-#include "Sum_dup.h"
-
-
-namespace alekseev {
-  Property * make(int n);
-  Property ** make_multiple(size_t k);
-  void delete_multiple(size_t k, Property ** massive);
-}
-
 
 int main()
 {
-  constexpr size_t NUM_OF_PROPS = 2;
-  alekseev::Property ** properties = alekseev::make_multiple(NUM_OF_PROPS);
+  alekseev::iProperty * pth_trp_counter = alekseev::make(alekseev::pth_trp_id);
+  alekseev::iProperty * sum_dup_counter = alekseev::make(alekseev::sum_dup_id);
   int a = 0;
   std::cin >> a;
   while (a && std::cin) {
-    for (size_t i = 0; i < NUM_OF_PROPS; ++i) {
-      (*properties[i])(a);
-    }
+    (*pth_trp_counter)(a);
+    (*sum_dup_counter)(a);
     std::cin >> a;
   }
   if (!std::cin) {
-    std::cout << "Not a sequence of numbers" << "\n";
-    alekseev::delete_multiple(NUM_OF_PROPS, properties);
+    std::cerr << "Bad input" << "\n";
     return 1;
   }
 
-  bool flag = true;
-  for (size_t i = 0; i < NUM_OF_PROPS; i++) {
-    if (properties[i]->countered()) {
-      std::cout << properties[i]->name() << ": " << (*properties[i])() << "\n";
-    } else {
-      std::cout << "Cannot counter " << properties[i]->name() << "\n";
-      flag = false;
-    }
+  pth_trp_counter->print(std::cout);
+  sum_dup_counter->print(std::cout);
+  int ret = 0;
+  if (!pth_trp_counter->countered() || !sum_dup_counter->countered()) {
+    ret = 2;
   }
-  delete_multiple(NUM_OF_PROPS, properties);
-  if (!flag) {
-    return 2;
-  }
-}
-
-
-alekseev::Property * alekseev::make(int n)
-{
-  if (n == 0) {
-    return new Pth_trp();
-  }
-  if (n == 1) {
-    return new Sum_dup();
-  }
-  return nullptr;
-}
-
-
-alekseev::Property ** alekseev::make_multiple(size_t k)
-{
-  Property ** result = new Property *[k];
-  for (size_t i = 0; i < k; ++i) {
-    try {
-      result[i] = make(i);
-    } catch (...) {
-      delete_multiple(i, result);
-      throw;
-    }
-  }
-  return result;
-}
-
-
-void alekseev::delete_multiple(size_t k, Property ** massive)
-{
-  for (size_t i = 0; i < k; ++i) {
-    delete massive[i];
-  }
-  delete[] massive;
+  delete pth_trp_counter;
+  delete sum_dup_counter;
+  return ret;
 }
