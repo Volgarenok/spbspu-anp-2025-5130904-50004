@@ -191,7 +191,11 @@ size_t ivanov::count(const char *content, char symbol)
   size_t i = 0;
   while (content[i] != '\0')
   {
-    if (content[i] == symbol) ans++;
+    if (content[i] == symbol)
+    {
+      ans++;
+    }
+
     i++;
   }
   return ans;
