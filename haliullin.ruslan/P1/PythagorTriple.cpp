@@ -2,23 +2,23 @@
 
 haliullin::PythagorTriple::PythagorTriple():
   k_(0),
-  a(0),
-  b(0),
-  c(0)
+  a_(0),
+  b_(0),
+  c_(0)
 {
 }
 
 void haliullin::PythagorTriple::operator()(int n)
 {
-  a = b;
-  b = c;
-  c = n;
+  a_ = b_;
+  b_ = c_;
+  c_ = n;
 
-  if (a > 0 && b > 0 && c > 0)
+  if (a_ > 0 && b_ > 0 && c_ > 0)
   {
-    int a2 = a * a;
-    int b2 = b * b;
-    int c2 = c * c;
+    int a2 = a_ * a_;
+    int b2 = b_ * b_;
+    int c2 = c_ * c_;
 
     if ((a2 + b2 == c2) || (a2 + c2 == b2) || (b2 + c2 == a2))
     {

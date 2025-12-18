@@ -2,16 +2,16 @@
 
 haliullin::DivRem::DivRem():
   k_(0),
-  prev(0),
-  cur(0)
+  prev_(0),
+  cur_(0)
 {
 }
 
 void haliullin::DivRem::operator()(int n)
 {
-  prev = cur;
-  cur = n;
-  if ((prev != 0) && (cur % prev == 0))
+  prev_ = cur_;
+  cur_ = n;
+  if ((prev_ != 0) && (cur_ % prev_ == 0))
   {
     ++k_;
   }

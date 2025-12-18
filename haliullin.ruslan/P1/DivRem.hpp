@@ -9,9 +9,9 @@ namespace haliullin
     DivRem();
     void operator()(int n);
     size_t operator()() const;
-     private:
-      size_t k_;
-      int prev, cur;
+   private:
+    size_t k_;
+    int prev_, cur_;
   };
 }
 #endif

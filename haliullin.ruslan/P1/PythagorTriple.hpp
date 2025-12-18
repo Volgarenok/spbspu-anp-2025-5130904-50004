@@ -9,9 +9,9 @@ namespace haliullin
     PythagorTriple();
     void operator()(int n);
     size_t operator()() const;
-     private:
-      size_t k_;
-      int a, b, c;
+   private:
+    size_t k_;
+    int a_, b_, c_;
   };
 }
 #endif
