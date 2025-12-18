@@ -1,0 +1,15 @@
+#ifndef DECREASE_HPP
+#define DECREASE_HPP
+#include <cstddef>
+namespace khairullin
+{
+  struct Decrease
+  {
+    Decrease();
+    void operator()(int a);
+    size_t operator()();
+    size_t k;
+    int temp;
+  };
+}
+#endif
