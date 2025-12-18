@@ -4,6 +4,11 @@ alekseev::Pth_trp::Pth_trp(): iProperty(), k(0), data(new int[3]{0})
 {
 }
 
+alekseev::Pth_trp::~Pth_trp()
+{
+  delete[] data;
+}
+
 void alekseev::Pth_trp::update(int a)
 {
   data[0] = data[1];
@@ -25,9 +30,4 @@ const char * alekseev::Pth_trp::my_name() const
 bool alekseev::Pth_trp::cnted() const noexcept
 {
   return data[0] && data[1] && data[2];
-}
-
-alekseev::Pth_trp::~Pth_trp()
-{
-  delete[] data;
 }

@@ -3,8 +3,15 @@
 
 int main()
 {
-  alekseev::iProperty * pth_trp_counter = alekseev::make(alekseev::pth_trp_id);
-  alekseev::iProperty * sum_dup_counter = alekseev::make(alekseev::sum_dup_id);
+  alekseev::iProperty * pth_trp_counter = nullptr;
+  alekseev::iProperty * sum_dup_counter = nullptr;
+  try {
+    pth_trp_counter = alekseev::make(alekseev::pth_trp_id);
+    sum_dup_counter = alekseev::make(alekseev::sum_dup_id);
+  } catch (const std::bad_alloc & e) {
+    delete pth_trp_counter;
+    return 3;
+  }
   int a = 0;
   std::cin >> a;
   while (a && std::cin) {
