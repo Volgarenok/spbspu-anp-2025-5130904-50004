@@ -32,5 +32,6 @@ int main()
   }
   delete pth_trp_counter;
   delete sum_dup_counter;
+  std::cout << alekseev::pth_trp_id;
   return ret;
 }

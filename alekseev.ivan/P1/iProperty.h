@@ -10,13 +10,13 @@ namespace alekseev {
   };
 
   struct iProperty {
+    virtual ~iProperty() = default;
+
     void operator()(int a);
     size_t operator()() const;
     const char * name() const;
     bool countered() const noexcept;
     std::ostream & print(std::ostream & out) const noexcept;
-
-    virtual ~iProperty() = default;
 
     private:
       virtual void update(int a) = 0;
