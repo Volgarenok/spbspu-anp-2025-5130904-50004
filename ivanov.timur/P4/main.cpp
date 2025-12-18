@@ -37,7 +37,7 @@ int main()
   std::cout << result2[0];
   ivanov::output(result2);
   std::cout << "\n";
-  const char add_content[] = "And I think to myself - what a wonderful world!0";
+  const char add_content[] = "And I think to myself - what a wonderful world!";
   size_t add_size = 47;
   char *merged = nullptr;
   char *found = nullptr;
