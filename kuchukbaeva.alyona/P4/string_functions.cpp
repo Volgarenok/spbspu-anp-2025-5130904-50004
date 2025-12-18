@@ -6,15 +6,7 @@
 char* kuchukbaeva::reSize(char* buffer, size_t& capacity)
 {
   size_t new_capacity = capacity * 2;
-  char* new_buffer = nullptr;
-  try
-  {
-    new_buffer = new char[new_capacity];
-  }
-  catch (const std::bad_alloc&)
-  {
-    return nullptr;
-  }
+  char* new_buffer = new char[new_capacity];
   for (size_t i = 0; i < capacity; ++i)
   {
     new_buffer[i] = buffer[i];
@@ -29,52 +21,29 @@ char* kuchukbaeva::readStr(std::istream& input, size_t& read_size)
 {
   size_t capacity = 16;
   size_t size = 0;
-  char* buffer = nullptr;
+  char* buffer = new char[capacity];
   try
   {
-    buffer = new char[capacity];
-  }
-  catch (const std::bad_alloc&)
-  {
-    return nullptr;
-  }
-  std::ios_base::fmtflags origin_flags = input.flags();
-  input >> std::noskipws;
-  char c = 0;
-  while ((input >> c) && c != '\n')
-  {
-    if (size + 1 >= capacity)
+    std::ios_base::fmtflags origin_flags = input.flags();
+    input >> std::noskipws;
+    char c = 0;
+    while ((input >> c) && c != '\n')
     {
-      char* new_buffer = reSize(buffer, capacity);
-      if (!new_buffer)
+      if (size + 1 >= capacity)
       {
-        delete[] buffer;
-        input.flags(origin_flags);
-        return nullptr;
+        buffer = reSize(buffer, capacity);
       }
-      buffer = new_buffer;
+      buffer[size++] = c;
     }
-    buffer[size] = c;
-    size++;
+    input.flags(origin_flags);
+    buffer[size] = '\0';
+    read_size = size;
   }
-  input.flags(origin_flags);
-  if (size == 0 && !input.eof())
+  catch (const std::bad_alloc& e)
   {
     delete[] buffer;
-    return nullptr;
+    throw;
   }
-  if (size >= capacity)
-  {
-    char* new_buffer = reSize(buffer, capacity);
-    if (!new_buffer)
-    {
-      delete[] buffer;
-      return nullptr;
-    }
-    buffer = new_buffer;
-  }
-  buffer[size] = '\0';
-  read_size = size;
   return buffer;
 }
 int kuchukbaeva::isVowel(char c) noexcept
