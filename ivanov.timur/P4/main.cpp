@@ -34,8 +34,7 @@ int main()
   delete[] content;
 
   char *result2 = ivanov::spc_rmv(result1);
-  std::cout << result2[0];
-  ivanov::output(result2);
+  std::cout << result2;
   std::cout << "\n";
   const char add_content[] = "And I think to myself - what a wonderful world!";
   size_t add_size = 47;
@@ -44,18 +43,10 @@ int main()
   try
   {
     merged = new char[BASE + add_size + 2];
+    found = new char[27];
   }
   catch (const std::bad_alloc &z)
   {
-    delete[] content;
-    delete[] tmpx;
-    return 1;
-  }
-  try
-  {
-    found = new char[27];
-  }
-  catch (const std::bad_alloc &z) {
     delete[] content;
     delete[] tmpx;
     delete[] merged;
