@@ -1,7 +1,6 @@
+#include "strings.hpp"
 #include <iostream>
 #include <iomanip>
-#include "strings.hpp"
-
 char * khairullin::getline(std::istream & input, char * data)
 {
   bool is_skipws = input.flags() & std::ios_base::skipws;
@@ -38,9 +37,13 @@ char * khairullin::getline(std::istream & input, char * data)
     }
     return data;
   }
-  catch (std::bad_alloc & error)
+  catch (const std::bad_alloc & error)
   {
     delete [] data;
+    if (is_skipws)
+    {
+      input >> std::skipws;
+    }
     throw;
   }
 }

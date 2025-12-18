@@ -1,54 +1,40 @@
-#include <iostream>
 #include "strings.hpp"
+#include <iostream>
 
-char * khairullin::unique_str(char * str1, const char * str2, char * str_unique)
+char * khairullin::unique_str(const char * str1, const char * str2, char * str_unique)
 {
   size_t counter = 0;
-  size_t size1 = 0;
-  bool flag = false;
-  while (*str1 != '\0')
+  for (const char * copy1 = str1; *copy1 != '\0'; copy1++)
   {
-    size_t size2 = 0;
-    while (*str2 != '\0')
+    const char * copy2 = str2;
+    for (; *copy2 != '\0'; copy2++)
     {
-      if (*str2 == *str1)
+      if (*copy1 == *copy2)
       {
-        flag = true;
+        break;
       }
-      str2++;
-      size2++;
     }
-    if (!flag and *str1 != ' ')
+    if (*copy2 == '\0' && *copy1 != ' ')
     {
-      str_unique[counter] = *str1;
+      str_unique[counter] = *copy1;
       counter++;
     }
-    flag = false;
-    str1++;
-    size1++;
-    str2 = str2 - size2;
   }
-  str1 = str1 - size1;
-  while (*str2 != '\0')
+  for (const char * copy2 = str2; *copy2 != '\0'; copy2++)
   {
-    size_t c = 0;
-    while (*str1 != '\0')
+    const char * copy1 = str1;
+    for (; *copy1 != '\0'; copy1++)
     {
-      if (*str1 == *str2)
+      if (*copy2 == *copy1)
       {
-        flag = true;
+        break;
       }
-      str1++;
-      c++;
     }
-    if (!flag and *str2 != ' ')
+    if (*copy1 == '\0' && *copy2 != ' ')
     {
-      str_unique[counter] = *str2;
+      str_unique[counter] = *copy2;
       counter++;
     }
-    flag = false;
-    str2++;
-    str1 = str1 - c;
   }
   str_unique[counter++] = '\0';
   return str_unique;
