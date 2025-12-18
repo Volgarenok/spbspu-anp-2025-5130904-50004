@@ -77,7 +77,7 @@ char* kuchukbaeva::readStr(std::istream& input, size_t& read_size)
   read_size = size;
   return buffer;
 }
-int kuchukbaeva::isVowel(char c)
+int kuchukbaeva::isVowel(char c) noexcept
 {
   const char lower = std::tolower(c);
   return (lower == 'a' || lower == 'e' || lower == 'i' || lower == 'o' || lower == 'u' || lower == 'y');

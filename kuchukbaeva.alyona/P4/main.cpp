@@ -21,6 +21,12 @@ int main()
   try
   {
     res_str = new char[len + 1];
+    kuchukbaeva::rmvVow(input_str, res_str);
+    std::cout << res_str << "\n";
+    int repeat_digit = kuchukbaeva::repDgt(input_str);
+    std::cout << repeat_digit << "\n";
+    delete[] res_str;
+    delete[] input_str;
   }
   catch (const std::bad_alloc& e)
   {
@@ -28,12 +34,6 @@ int main()
     std::cerr << "Troubles with memory: " << e.what() << "\n";
     return 1;
   }
-  kuchukbaeva::rmvVow(input_str, res_str);
-  std::cout << res_str << "\n";
-  int repeatdig = kuchukbaeva::repDgt(input_str);
-  std::cout << repeatdig << "\n";
-  delete[] input_str;
-  delete[] res_str;
   return 0;
 }
 
