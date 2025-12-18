@@ -77,11 +77,12 @@ char *ivanov::resize(size_t &capacity, size_t size, char *data)
 }
 
 
-char *ivanov::del_lat(char *content, char *tmpx)
+char *ivanov::del_lat(const char *content, char *tmpx)
 {
   if (content[0] == '\0')
   {
-    return content;
+    tmpx[0] = content[0];
+    return tmpx;
   }
   size_t new_size = 0;
   size_t c = 0;

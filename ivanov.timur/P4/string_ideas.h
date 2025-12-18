@@ -4,7 +4,7 @@
 #include <iosfwd>
 namespace ivanov {
   char *spc_rmv(char *content);
-  char *del_lat(char *content, char *tmpx);
+  char *del_lat(const char *content, char *tmpx);
   char *merge(char *content1, const char *content2, char *tmp, size_t size2);
   char *get_find(const char *content, char *tmp);
   bool find(char symbol, const char *content);
