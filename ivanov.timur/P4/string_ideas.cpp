@@ -42,7 +42,15 @@ char *ivanov::dataGen(char tmp, char stop, std::istream &in, size_t &size, size_
   {
     if (size + 1 >= capacity)
     {
-      data = resize(capacity, size, data);
+      try
+      {
+        data = resize(capacity, size, data);
+      }
+      catch (const std::bad_alloc &k)
+      {
+        delete[] data;
+        throw;
+      }
     }
     data[size] = tmp;
     size++;
@@ -59,16 +67,7 @@ char *ivanov::resize(size_t &capacity, size_t size, char *data)
 {
   size_t new_capacity = capacity * 2;
   char *new_data = nullptr;
-
-  try
-  {
-    new_data = new char[new_capacity];
-  }
-  catch (const std::bad_alloc &k)
-  {
-    delete[] data;
-    throw;
-  }
+  new_data = new char[new_capacity];
   for (size_t i = 0; i < size; ++i)
   {
     new_data[i] = data[i];
