@@ -1,14 +1,14 @@
 #include <iostream>
-
-#include "ivanov.h"
+#include "pythagor.h"
+#include "after.h"
 
 int main() {
   int tmp = 0;
   bool init = false;
   size_t cnt = 0;
   std::cin >> tmp;
-  ivanov::Aft ans1 = ivanov::Aft();
-  ivanov::Pyt ans2 = ivanov::Pyt();
+  ivanov::After ans1 = ivanov::After();
+  ivanov::Pythagor ans2 = ivanov::Pythagor();
   while (tmp != 0) {
     init = true;
     if (std::cin.fail() || std::cin.eof()) {
