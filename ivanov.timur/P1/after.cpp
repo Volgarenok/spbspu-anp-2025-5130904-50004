@@ -1,7 +1,8 @@
-#include "after.h"
+#include "After.h"
 
-After::After() {}
-void After::operator()(int e)
+ivanov::After::After() {}
+
+void ivanov::After::operator()(int e)
 {
   if (e > elem)
   {
@@ -13,7 +14,7 @@ void After::operator()(int e)
     count++;
   }
 }
-size_t After::operator()() const
+size_t ivanov::After::operator()() const
 {
   return count;
 }
