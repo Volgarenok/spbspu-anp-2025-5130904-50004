@@ -21,7 +21,7 @@ int main()
     int repeat_digit = kuchukbaeva::repDgt(input_str);
     std::cout << repeat_digit << "\n";
     delete[] res_str;
-    delete[] input_st;
+    delete[] input_str;
   }
   catch (const std::bad_alloc& e)
   {
