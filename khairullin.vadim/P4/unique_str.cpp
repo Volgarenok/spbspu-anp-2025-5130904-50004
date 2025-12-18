@@ -4,7 +4,7 @@
 char * khairullin::unique_str(const char * str1, const char * str2, char * str_unique)
 {
   size_t counter = 0;
-  for (char * copy1 = str1; *copy1 != '\0'; copy1++)
+  for (const char * copy1 = str1; *copy1 != '\0'; copy1++)
   {
     const char * copy2 = str2;
     for (; *copy2 != '\0'; copy2++)
@@ -22,7 +22,7 @@ char * khairullin::unique_str(const char * str1, const char * str2, char * str_u
   }
   for (const char * copy2 = str2; *copy2 != '\0'; copy2++)
   {
-    char * copy1 = str1;
+    const char * copy1 = str1;
     for (; *copy1 != '\0'; copy1++)
     {
       if (*copy2 == *copy1)
