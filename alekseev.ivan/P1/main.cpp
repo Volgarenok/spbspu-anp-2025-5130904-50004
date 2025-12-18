@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Property.h"
-#include "Counter.h"
 #include "Pth_trp.h"
 #include "Sum_dup.h"
 
@@ -14,7 +13,7 @@ namespace alekseev {
 
 int main()
 {
-  constexpr size_t NUM_OF_PROPS = 3;
+  constexpr size_t NUM_OF_PROPS = 2;
   alekseev::Property ** properties = alekseev::make_multiple(NUM_OF_PROPS);
   int a = 0;
   std::cin >> a;
@@ -31,7 +30,7 @@ int main()
   }
 
   bool flag = true;
-  for (size_t i = 1; i < NUM_OF_PROPS; i++) {
+  for (size_t i = 0; i < NUM_OF_PROPS; i++) {
     if (properties[i]->countered()) {
       std::cout << properties[i]->name() << ": " << (*properties[i])() << "\n";
     } else {
@@ -49,12 +48,9 @@ int main()
 alekseev::Property * alekseev::make(int n)
 {
   if (n == 0) {
-    return new Counter();
-  }
-  if (n == 1) {
     return new Pth_trp();
   }
-  if (n == 2) {
+  if (n == 1) {
     return new Sum_dup();
   }
   return nullptr;
