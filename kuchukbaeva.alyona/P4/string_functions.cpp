@@ -3,58 +3,50 @@
 #include <new>
 #include <istream>
 
-size_t kuchukbaeva::strLen(const char* str)
+char* kuchukbaeva::reSize(char* buffer, size_t& capacity)
 {
-  size_t len = 0;
-  while (str[len] != '\0')
+  size_t new_capacity = capacity * 2;
+  char* new_buffer = new char[new_capacity];
+  for (size_t i = 0; i < capacity; ++i)
   {
-    ++len;
+    new_buffer[i] = buffer[i];
   }
-  return len;
+  delete[] buffer;
+  capacity = new_capacity;
+  return new_buffer;
 }
+
+
 char* kuchukbaeva::readStr(std::istream& input, size_t& read_size)
 {
   size_t capacity = 16;
   size_t size = 0;
   char* buffer = new char[capacity];
-  char c = 0;
-  input >> std::noskipws;
-  while (input.get(c) && c != '\n')
+  try
   {
-    if (size + 1 >= capacity)
+    std::ios_base::fmtflags origin_flags = input.flags();
+    input >> std::noskipws;
+    char c = 0;
+    while ((input >> c) && c != '\n')
     {
-      size_t new_capacity = capacity * 2;
-      char* new_buffer = nullptr;
-      try
+      if (size + 1 >= capacity)
       {
-        new_buffer = new char[new_capacity];
+        buffer = reSize(buffer, capacity);
       }
-      catch (...)
-      {
-        delete[] buffer;
-        throw;
-      }
-      for (size_t i = 0; i < size; ++i)
-      {
-        new_buffer[i] = buffer[i];
-      }
-      delete[] buffer;
-      buffer = new_buffer;
-      capacity = new_capacity;
+      buffer[size++] = c;
     }
-    buffer[size] = c;
-    size++;
+    input.flags(origin_flags);
+    buffer[size] = '\0';
+    read_size = size;
   }
-  if (size == 0 && !input)
+  catch (const std::bad_alloc& e)
   {
     delete[] buffer;
-    return nullptr;
+    throw;
   }
-  buffer[size] = '\0';
-  read_size = size;
   return buffer;
 }
-int kuchukbaeva::isVowel(char c)
+int kuchukbaeva::isVowel(char c) noexcept
 {
   const char lower = std::tolower(c);
   return (lower == 'a' || lower == 'e' || lower == 'i' || lower == 'o' || lower == 'u' || lower == 'y');
@@ -91,4 +83,3 @@ int kuchukbaeva::repDgt(const char* str) noexcept
   }
   return 0;
 }
-
