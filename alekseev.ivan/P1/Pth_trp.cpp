@@ -1,25 +1,25 @@
 #include "Pth_trp.h"
 
-alekseev::Pth_trp::Pth_trp(): iProperty(), k(0), data(new int[3]{0})
+alekseev::Pth_trp::Pth_trp(): iProperty(), k_(0), data_(new int[3]{0})
 {
 }
 
 alekseev::Pth_trp::~Pth_trp()
 {
-  delete[] data;
+  delete[] data_;
 }
 
 void alekseev::Pth_trp::update(int a)
 {
-  data[0] = data[1];
-  data[1] = data[2];
-  data[2] = a;
-  k += (data[0] * data[0] + data[1] * data[1] == data[2] * data[2]);
+  data_[0] = data_[1];
+  data_[1] = data_[2];
+  data_[2] = a;
+  k_ += (data_[0] * data_[0] + data_[1] * data_[1] == data_[2] * data_[2]);
 }
 
 size_t alekseev::Pth_trp::value() const
 {
-  return k;
+  return k_;
 }
 
 const char * alekseev::Pth_trp::my_name() const
@@ -29,5 +29,5 @@ const char * alekseev::Pth_trp::my_name() const
 
 bool alekseev::Pth_trp::cnted() const noexcept
 {
-  return data[0] && data[1] && data[2];
+  return data_[0] && data_[1] && data_[2];
 }

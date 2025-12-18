@@ -13,8 +13,8 @@ namespace alekseev {
     bool cnted() const noexcept override;
 
     private:
-      size_t k;
-      int * data;
+      size_t k_;
+      int * data_;
   };
 }
 
