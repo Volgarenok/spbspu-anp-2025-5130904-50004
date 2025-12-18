@@ -1,6 +1,5 @@
-#include "strings.hpp"
 #include <iostream>
-
+#include "strings.hpp"
 int main()
 {
   char * str1 = nullptr;
