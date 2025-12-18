@@ -1,5 +1,4 @@
 #include "after.h"
-#include <cstddef>
 
 After::After() {}
 void After::operator()(int e)
