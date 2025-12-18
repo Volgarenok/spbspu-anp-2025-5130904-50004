@@ -13,7 +13,7 @@ struct RTH_TRP : Base
   void operator()(int const x) override;
   bool few_numbers();
 
-private:
+ private:
   int a = 0, b = 0, c = 0;
   size_t pth_trp;
 };
