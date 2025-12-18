@@ -1,6 +1,6 @@
 #include "strings.hpp"
 #include <iostream>
-char * khairullin::delete_vowels(char * str, char * str_without_vowels)
+char * khairullin::delete_vowels(const char * str, char * str_without_vowels)
 {
   size_t counter = 0;
   const char * vowels = "AaoOiIuUeEyY";

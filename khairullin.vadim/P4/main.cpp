@@ -11,7 +11,7 @@ int main()
   {
     str1  = khairullin::getline(std::cin, str1);
   }
-  catch (std::bad_alloc & error)
+  catch (const std::bad_alloc & error)
   {
     std::cerr << error.what();
     return 1;
@@ -41,7 +41,7 @@ int main()
     str_without_vowels = new char[size1];
     str_unique = new char[size1 + size2];
   }
-  catch (std::exception & msg)
+  catch (const std::exception & msg)
   {
     std::cerr << msg.what();
     delete [] str1;

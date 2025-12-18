@@ -1,7 +1,7 @@
 #include "strings.hpp"
 #include <iostream>
 
-char * khairullin::unique_str(char * str1, const char * str2, char * str_unique)
+char * khairullin::unique_str(const char * str1, const char * str2, char * str_unique)
 {
   size_t counter = 0;
   for (char * copy1 = str1; *copy1 != '\0'; copy1++)
