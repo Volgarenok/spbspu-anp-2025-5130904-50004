@@ -2,24 +2,23 @@
 #include <cstdlib>
 #include <iomanip>
 
-char* zinovev::resizeBuffer(char* buffer, size_t old_capacity, size_t& new_capacity)
+void zinovev::resizeBuffer(char** buffer, size_t old_capacity, size_t& new_capacity)
 {
   new_capacity = old_capacity * 2;
   char* new_buffer = reinterpret_cast< char* >(malloc(new_capacity * sizeof(char)));
 
   if (new_buffer == nullptr)
   {
-    free(buffer);
-    return nullptr;
+    return;
   }
 
   for (size_t k = 0; k < old_capacity; ++k)
   {
-    new_buffer[k] = buffer[k];
+    new_buffer[k] = (*buffer)[k];
   }
 
-  free(buffer);
-  return new_buffer;
+  free(*buffer);
+  *buffer = new_buffer;
 }
 
 char* zinovev::setLine(std::istream& in, size_t& size, size_t& number_of_letters)
@@ -53,13 +52,14 @@ char* zinovev::setLine(std::istream& in, size_t& size, size_t& number_of_letters
 
     if (size == capacity)
     {
-      char* new_buffer = resizeBuffer(buffer, capacity, capacity);
-      if (new_buffer == nullptr)
+      size_t new_capacity = capacity;
+      resizeBuffer(&buffer, capacity, new_capacity);
+      if (buffer == nullptr)
       {
         in.flags(original_flags);
         return nullptr;
       }
-      buffer = new_buffer;
+      capacity = new_capacity;
     }
   }
 
@@ -109,7 +109,8 @@ char* zinovev::cutLetters(const char* arr, char* arr_ptr, size_t& size_ptr)
   }
 
   size_ptr = i - skip;
-  return arr_ptr;
+  arr_ptr[size_ptr] = '\0';
+  return arr_ptr + size_ptr + 1;
 }
 
 int zinovev::getRepetitions(const char* arr)

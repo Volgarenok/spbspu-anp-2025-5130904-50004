@@ -32,7 +32,6 @@ int main()
   }
 
   zinovev::cutLetters(arr, arr_ptr, size_ptr);
-  arr_ptr[size_ptr] = '\0';
   std::cout << arr_ptr << "\n";
   std::cout << zinovev::getRepetitions(arr) << "\n";
 
