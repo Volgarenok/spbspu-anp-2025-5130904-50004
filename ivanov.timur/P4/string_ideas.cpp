@@ -71,6 +71,8 @@ char *ivanov::resize(size_t &capacity, size_t size, const char *data)
     new_data[i] = data[i];
   }
   delete[] data;
+
+
   capacity = new_capacity;
   return new_data;
 }
