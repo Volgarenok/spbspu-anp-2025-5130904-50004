@@ -40,9 +40,9 @@ int main(int argc, char** argv)
       if (argv[1][0] == '2') {
         int* dynamicMatrix = nullptr;
         try {
-          dynamicMatrix = bychkovskaya::create(rows, cols);
-        } catch (const std::runtime_error& e) {
-          std::cerr << e.what() << "\n";
+          dynamicMatrix = new int [rows * cols];
+        } catch (const std::bad_alloc& e) {
+          std::cerr << "Not enough memory" << "\n";
           return 2;
         }
         try {

@@ -18,17 +18,6 @@ bool bychkovskaya::ifNumber(char* m)
   return false;
 }
 
-int* bychkovskaya::create(size_t rows, size_t cols)
-{
-  int* result = nullptr;
-  try {
-    result = new int [rows * cols];
-  } catch (const std::bad_alloc& e) {
-    throw std::runtime_error("Not enough memory");
-  }
-  return result;
-}
-
 std::ifstream& bychkovskaya::inputMatrix(std::ifstream& in, int* m, size_t rows, size_t cols)
 {
   for (size_t i = 0; i < rows; ++i) {
