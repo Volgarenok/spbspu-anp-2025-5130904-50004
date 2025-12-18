@@ -12,8 +12,9 @@ int main()
     input_str = kuchukbaeva::readStr(std::cin, len);
     if (len == 0 && std::cin.eof())
     {
+      std::cerr << "Troubles with input" << "\n";
       delete[] input_str;
-      return 0;
+      return 1;
     }
     res_str = new char[len + 1];
     kuchukbaeva::rmvVow(input_str, res_str);
