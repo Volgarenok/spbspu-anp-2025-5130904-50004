@@ -54,7 +54,7 @@ Int_array & Int_array::operator=(Int_array && rhs) noexcept
   return *this;
 }
 
-Int_array::Int_array(size_t s): data_(new int[s]), counter_(0)
+Int_array::Int_array(size_t s): data_(new int[s]{0}), counter_(0)
 {
   size_ = s;
 }
