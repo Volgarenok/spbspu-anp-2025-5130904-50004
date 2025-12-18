@@ -35,7 +35,8 @@ char *ivanov::get_line(std::istream &in, size_t &length, char stop)
   return data;
 }
 
-char *ivanov::dataGen(char tmp, char stop, std::istream &in, size_t &size, size_t &capacity) {
+char *ivanov::dataGen(char tmp, char stop, std::istream &in, size_t &size, size_t &capacity)
+{
   char *data = new char[capacity];
   while (tmp != stop && in && !in.eof())
   {
@@ -54,7 +55,8 @@ char *ivanov::dataGen(char tmp, char stop, std::istream &in, size_t &size, size_
   return data;
 }
 
-char *ivanov::resize(size_t &capacity, size_t size, char *data) {
+char *ivanov::resize(size_t &capacity, size_t size, char *data)
+{
   size_t new_capacity = capacity * 2;
   char *new_data = nullptr;
 
@@ -78,7 +80,8 @@ char *ivanov::resize(size_t &capacity, size_t size, char *data) {
 }
 
 
-char *ivanov::del_lat(char *content, char *tmpx) {
+char *ivanov::del_lat(char *content, char *tmpx)
+{
   if (content[0] == '\0')
   {
     return content;
@@ -189,7 +192,8 @@ bool ivanov::find(char symbol, const char *content)
   }
   return false;
 }
-size_t ivanov::count(const char *content, char symbol) {
+size_t ivanov::count(const char *content, char symbol)
+{
   size_t ans = 0;
   size_t i = 0;
   while (content[i] != '\0')
