@@ -1,7 +1,5 @@
 #include "pythagor.h"
 
-ivanov::Pythagor::Pythagor() {}
-
 void ivanov::Pythagor::operator()(int e)
 {
   a = b;

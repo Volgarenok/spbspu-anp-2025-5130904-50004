@@ -4,7 +4,7 @@
 namespace ivanov
 {
   struct Pythagor {
-    Pythagor();
+    Pythagor() = default;
     void operator()(int e);
     size_t operator()() const;
     bool get() const;

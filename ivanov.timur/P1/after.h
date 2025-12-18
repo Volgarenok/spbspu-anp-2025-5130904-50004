@@ -4,7 +4,7 @@
 namespace ivanov
 {
   struct After {
-    After();
+    After() = default;
     void operator()(int e);
     size_t operator()() const;
   private:

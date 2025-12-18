@@ -1,7 +1,5 @@
 #include "after.h"
 
-ivanov::After::After() {}
-
 void ivanov::After::operator()(int e)
 {
   if (e > elem)
