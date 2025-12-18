@@ -25,7 +25,7 @@ char *ivanov::get_line(std::istream &in, size_t &length, char stop)
       in >> std::skipws;
     }
     delete[] data;
-    throw std::bad_alloc();
+    throw ;
   }
   data[size] = '\0';
   if (is_skipws)
@@ -67,7 +67,7 @@ char *ivanov::resize(size_t &capacity, size_t size, char *data)
   catch (const std::bad_alloc &k)
   {
     delete[] data;
-    throw std::bad_alloc();
+    throw;
   }
   for (size_t i = 0; i < size; ++i)
   {
