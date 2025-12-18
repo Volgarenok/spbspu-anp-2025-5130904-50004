@@ -52,11 +52,13 @@ char* zinovev::setLine(std::istream& in, size_t& size, size_t& number_of_letters
 
     if (size == capacity)
     {
+      char* old_buffer = buffer;
       size_t new_capacity = capacity;
       resizeBuffer(&buffer, capacity, new_capacity);
-      if (buffer == nullptr)
+      if (old_buffer == buffer)
       {
         in.flags(original_flags);
+        free(buffer);
         return nullptr;
       }
       capacity = new_capacity;
