@@ -14,8 +14,8 @@ struct RTH_TRP : Base
   bool few_numbers();
 
  private:
-  int a = 0, b = 0, c = 0;
-  size_t pth_trp;
+  int a_ = 0, b_ = 0, c_ = 0;
+  size_t pth_trp_;
 };
 }
 

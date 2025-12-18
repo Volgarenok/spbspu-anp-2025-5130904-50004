@@ -13,8 +13,8 @@ struct EQL_SEQ : Base
   void operator()(int const x) override;
 
  private:
-  int max;
-  size_t eql_seq;
+  int max_;
+  size_t eql_seq_;
 };
 }
 

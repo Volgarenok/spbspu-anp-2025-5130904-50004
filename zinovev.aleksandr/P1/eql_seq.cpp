@@ -3,24 +3,24 @@
 
 zinovev::EQL_SEQ::EQL_SEQ() :
   Base(),
-  max(0),
-  eql_seq(0)
+  max_(0),
+  eql_seq_(0)
 {}
 
 void zinovev::EQL_SEQ::operator()() const
 {
-  std::cout << "EQL_SEQ: " << eql_seq << "\n";
+  std::cout << "EQL_SEQ: " << eql_seq_ << "\n";
 }
 
 void zinovev::EQL_SEQ::operator()(int const x)
 {
-  if (max < x)
+  if (max_ < x)
   {
-    max = x;
-    eql_seq = 1;
+    max_ = x;
+    eql_seq_ = 1;
   }
-  else if (max == x)
+  else if (max_ == x)
   {
-    ++eql_seq;
+    ++eql_seq_;
   }
 }
