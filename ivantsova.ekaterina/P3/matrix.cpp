@@ -10,13 +10,6 @@ std::istream & ivantsova::readArr(std::istream & input, int * arr, size_t rows, 
   {
     ++number;
   }
-<<<<<<<< HEAD:ivantsova.ekaterina/P3/functions_for_matrix.cpp
-  if (!input)
-  {
-    return input;
-  }
-========
->>>>>>>> master:ivantsova.ekaterina/P3/matrix.cpp
   return input;
 }
 
@@ -45,11 +38,6 @@ void ivantsova::reduceElements(int * arr, size_t rows, size_t cols)
   int step = 1;
   while (up < rows && left < cols)
   {
-<<<<<<<< HEAD:ivantsova.ekaterina/P3/functions_for_matrix.cpp
-    for (size_t i = rows - 1; i >= up; i--)
-    {
-      arr[i * original_cols + left] -= step++;
-========
     for (size_t i = rows - 1; i >= up && i < rows; i--)
     {
       arr[i * original_cols + left] -= step++;
@@ -57,7 +45,6 @@ void ivantsova::reduceElements(int * arr, size_t rows, size_t cols)
       {
         break;
       }
->>>>>>>> master:ivantsova.ekaterina/P3/matrix.cpp
     }
     left++;
     if (left >= cols)
@@ -85,13 +72,10 @@ void ivantsova::reduceElements(int * arr, size_t rows, size_t cols)
     for (size_t i = cols - 1; i >= left; i--)
     {
       arr[(rows - 1) * original_cols + i] -= step++;
-<<<<<<<< HEAD:ivantsova.ekaterina/P3/functions_for_matrix.cpp
-========
       if (i == 0)
       {
         break;
       }
->>>>>>>> master:ivantsova.ekaterina/P3/matrix.cpp
     }
     rows--;
   }
@@ -131,12 +115,7 @@ void ivantsova::workWithArray(std::istream & input, std::ostream & output, int *
     return;
   }
   int result = countColumns(arr, rows, cols);
-<<<<<<<< HEAD:ivantsova.ekaterina/P3/functions_for_matrix.cpp
-  reduceElements(arr, rows, cols);
-  writeArr(output, arr, rows, cols, result);
-========
   output << result << "\n";
   reduceElements(arr, rows, cols);
   writeArr(output, arr, rows, cols);
->>>>>>>> master:ivantsova.ekaterina/P3/matrix.cpp
 }
