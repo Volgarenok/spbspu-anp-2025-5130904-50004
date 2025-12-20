@@ -8,7 +8,6 @@ include_directories(.)
 add_executable(P3
         io.cpp
         io.h
-        lab3.cpp
+        main.cpp
         process.cpp
-        process.h
 )
