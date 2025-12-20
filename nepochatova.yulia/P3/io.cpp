@@ -83,7 +83,6 @@ void nepochatova::writeMatrix(std::ofstream& out, const int* const* arr, size_t 
     out << "0 0\n";
     return;
   }
-
   for (size_t i = 0; i < n; ++i) {
     for (size_t j = 0; j < m; ++j) {
       out << arr[i][j];
