@@ -20,6 +20,7 @@ int main(int argc, char **argv)
     int** arr = nepochatova::readMatrix(argv[2], n, m, useDynamic);
 
     nepochatova::transformMatrixSpiral(arr, n, m);
+
     std::ofstream out("output.txt");
     nepochatova::writeMatrix(out, arr, n, m);
 
