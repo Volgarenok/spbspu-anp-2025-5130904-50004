@@ -22,7 +22,6 @@ int main(int argc, char **argv)
     nepochatova::transformMatrixSpiral(arr, n, m);
 
     std::ofstream out("output.txt");
-
     nepochatova::writeMatrix(out, arr, n, m);
 
     if (useDynamic) {
