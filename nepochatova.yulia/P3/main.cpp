@@ -17,7 +17,7 @@ int main(int argc, char **argv)
     else
       throw std::invalid_argument("Invalid memory choice");
 
-    int** arr = nepochatova::readMatrix(argv[2], n, m);
+    int** arr = nepochatova::readMatrix(argv[2], n, m, useDynamic);
 
     nepochatova::transformMatrixSpiral(arr, n, m);
 
