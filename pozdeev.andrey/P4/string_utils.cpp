@@ -7,12 +7,32 @@ namespace {
   constexpr size_t kResizeFactor = 2;
 }
 
-char* pozdeev::readString(std::istream& in, size_t& size, size_t initialCapacity)
+char* pozdeev::increaseCapacity(char* buffer, size_t& currentCapacity)
+{
+  size_t newCapacity = currentCapacity * kResizeFactor;
+  char* newBuffer = reinterpret_cast < char* > (std::malloc(newCapacity * sizeof(char)));
+
+  if (newBuffer == nullptr) {
+    return nullptr;
+  }
+
+  for (size_t i = 0; i < currentCapacity; ++i) {
+    newBuffer[i] = buffer[i];
+  }
+
+  std::free(buffer);
+  currentCapacity = newCapacity;
+  return newBuffer;
+}
+
+char* pozdeev::readString(std::istream& in, size_t& size, char delimiter, size_t initialCapacity)
 {
   size_t currentCapacity = initialCapacity;
   size_t currentSize = 0;
   char* buffer = reinterpret_cast < char* > (std::malloc(currentCapacity * sizeof(char)));
+
   if (buffer == nullptr) {
+    size = 0;
     return nullptr;
   }
 
@@ -21,24 +41,18 @@ char* pozdeev::readString(std::istream& in, size_t& size, size_t initialCapacity
 
   char inputChar = 0;
 
-  while (in.get(inputChar) && inputChar != '\n') {
+  while ((in >> inputChar) && inputChar != delimiter) {
     if (currentSize + 1 >= currentCapacity) {
-      size_t newCapacity = currentCapacity * kResizeFactor;
-      char* newBuffer = reinterpret_cast < char* > (std::malloc(newCapacity * sizeof(char)));
+      char* newBuffer = pozdeev::increaseCapacity(buffer, currentCapacity);
 
       if (newBuffer == nullptr) {
         std::free(buffer);
+        size = 0;
         in.flags(originalFlags);
         return nullptr;
       }
 
-      for (size_t i = 0; i < currentSize; ++i) {
-        newBuffer[i] = buffer[i];
-      }
-
-      std::free(buffer);
       buffer = newBuffer;
-      currentCapacity = newCapacity;
     }
 
     buffer[currentSize] = inputChar;
@@ -49,6 +63,7 @@ char* pozdeev::readString(std::istream& in, size_t& size, size_t initialCapacity
 
   if (currentSize == 0 && in.fail() && !in.eof()) {
     std::free(buffer);
+    size = 0;
     return nullptr;
   }
 
@@ -61,23 +76,18 @@ char* pozdeev::removeExtraSpaces(char* destination, const char* source)
 {
   size_t readIndex = 0;
   size_t writeIndex = 0;
-  bool isSpaceFound = false;
 
   while (source[readIndex] != '\0' && std::isspace(source[readIndex])) {
     ++readIndex;
   }
 
   while (source[readIndex] != '\0') {
-    if (std::isspace(source[readIndex])) {
-      if (writeIndex > 0 && !isSpaceFound) {
-        destination[writeIndex] = ' ';
-        ++writeIndex;
-        isSpaceFound = true;
-      }
-    } else {
+    if (!std::isspace(source[readIndex])) {
       destination[writeIndex] = source[readIndex];
       ++writeIndex;
-      isSpaceFound = false;
+    } else if (writeIndex > 0 && destination[writeIndex - 1] != ' ') {
+      destination[writeIndex] = ' ';
+      ++writeIndex;
     }
     ++readIndex;
   }

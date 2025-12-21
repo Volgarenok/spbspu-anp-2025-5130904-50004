@@ -12,7 +12,7 @@ int main()
 {
   size_t inputSize = 0;
 
-  char* inputString = pozdeev::readString(std::cin, inputSize, kInitialBufferSize);
+  char* inputString = pozdeev::readString(std::cin, inputSize, '\n', kInitialBufferSize);
 
   if (inputString == nullptr) {
     std::cerr << "Error: Failed to read input or allocate memory\n";
@@ -44,11 +44,8 @@ int main()
     return 1;
   }
 
-  pozdeev::removeExtraSpaces(spaceRemovedResult, inputString);
-  std::cout << spaceRemovedResult << '\n';
-
-  pozdeev::removeLatin(latinRemovedResult, inputString);
-  std::cout << latinRemovedResult << '\n';
+  std::cout << pozdeev::removeExtraSpaces(spaceRemovedResult, inputString) << '\n';
+  std::cout << pozdeev::removeLatin(latinRemovedResult, inputString) << '\n';
 
   std::free(inputString);
   std::free(spaceRemovedResult);
