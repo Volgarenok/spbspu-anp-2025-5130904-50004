@@ -2,7 +2,6 @@
 #include <cctype>
 #include <cstdlib>
 #include <istream>
-#include <ios>
 
 namespace
 {
