@@ -8,8 +8,7 @@ namespace
 {
   bool isLatinVowel(char c) noexcept
   {
-    return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y' 
-         || c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U' || c == 'Y';
+    return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y' || c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U' || c == 'Y';
   }
 }
 
