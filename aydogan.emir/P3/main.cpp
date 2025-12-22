@@ -81,7 +81,6 @@ int main(int argc, char** argv)
     if (variant == 1)
     {
       constexpr size_t MAX = 10000;
-      
       int a[MAX];
 
       aydogan::readMatrix(in, a, static_cast< int >(count));
