@@ -7,7 +7,8 @@ namespace
 {
   bool isLatinVowel(char c) noexcept
   {
-    return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y' || c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U' || c == 'Y';
+return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y'
+|| c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U' || c == 'Y';
   }
 }
 
@@ -40,7 +41,8 @@ char* aydogan::readString(std::istream& in)
     if (length + 1 >= capacity)
     {
       size_t new_capacity = capacity * 2;
-      char* new_buffer = reinterpret_cast< char* >(realloc(buffer, new_capacity));
+      char* new_buffer =
+      reinterpret_cast< char* >(realloc(buffer, new_capacity));
       if (!new_buffer)
       {
         free(buffer);
