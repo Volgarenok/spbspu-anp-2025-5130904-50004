@@ -8,7 +8,6 @@ namespace aydogan
   char * readString(std::istream & in);
   char * removeVowels(const char * src, char * dest) noexcept;
   char * appendDigits(const char * first, const char * second, char * dest) noexcept;
-  void writeString(const char * str);
 }
 
 #endif

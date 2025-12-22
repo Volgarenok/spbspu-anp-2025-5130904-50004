@@ -1,149 +1,118 @@
 #include "string.hpp"
-#include <iostream>
 #include <cctype>
 #include <cstdlib>
+#include <istream>
+#include <ios>
 
 namespace
 {
   bool isLatinVowel(char c) noexcept
   {
-    unsigned char uc = static_cast<unsigned char>(c);
-    char lower = static_cast<char>(std::tolower(uc));
-    return lower == 'a' || lower == 'e' || lower == 'i' ||
-           lower == 'o' || lower == 'u' || lower == 'y';
+    return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y' 
+         || c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U' || c == 'Y';
   }
 }
 
-namespace aydogan
+char* aydogan::readString(std::istream& in)
 {
-  char * readString(std::istream & in)
+  if (!in)
   {
-    if (!in.good())
-    {
-      return nullptr;
-    }
+    return nullptr;
+  }
 
-    int peek_char = in.peek();
-    if (peek_char == std::char_traits<char>::eof())
-    {
-      return nullptr;
-    }
+  size_t capacity = 16;
+  char* buffer = reinterpret_cast< char* >(malloc(capacity));
+  if (!buffer)
+  {
+    return nullptr;
+  }
 
-    std::size_t capacity = 16;
-    char * buffer = static_cast<char *>(std::malloc(capacity));
-    if (buffer == nullptr)
-    {
-      return nullptr;
-    }
+  in >> std::noskipws;
 
-    std::size_t length = 0;
-    char c = '\0';
-    while (in.get(c) && c != '\n')
-    {
-      if (length + 1 >= capacity)
-      {
-        std::size_t new_capacity = capacity * 2;
-        char * new_buffer = static_cast<char *>(std::malloc(new_capacity));
-        if (new_buffer == nullptr)
-        {
-          std::free(buffer);
-          return nullptr;
-        }
-        for (std::size_t i = 0; i < length; ++i)
-        {
-          new_buffer[i] = buffer[i];
-        }
-        std::free(buffer);
-        buffer = new_buffer;
-        capacity = new_capacity;
-      }
-      buffer[length] = c;
-      ++length;
-    }
+  size_t length = 0;
+  char c = '\0';
 
-    if (length == 0 && !in.good() && c != '\n')
+  while (in >> c)
+  {
+    if (c == '\n')
     {
-      std::free(buffer);
-      return nullptr;
+      break;
     }
 
     if (length + 1 >= capacity)
     {
-      char * new_buffer = static_cast<char *>(std::malloc(length + 1));
-      if (new_buffer == nullptr)
+      size_t new_capacity = capacity * 2;
+      char* new_buffer = reinterpret_cast< char* >(realloc(buffer, new_capacity));
+      if (!new_buffer)
       {
-        std::free(buffer);
+        free(buffer);
         return nullptr;
       }
-      for (std::size_t i = 0; i < length; ++i)
-      {
-        new_buffer[i] = buffer[i];
-      }
-      std::free(buffer);
       buffer = new_buffer;
+      capacity = new_capacity;
     }
 
-    buffer[length] = '\0';
-    return buffer;
+    buffer[length] = c;
+    ++length;
   }
 
-  void removeVowels(const char * src, char * dest) noexcept
+  if (!in && length == 0)
   {
-    std::size_t dest_index = 0;
-    if (src == nullptr || dest == nullptr)
-    {
-      return;
-    }
-    for (std::size_t i = 0; src[i] != '\0'; ++i)
-    {
-      char c = src[i];
-      if (std::isalpha(static_cast<unsigned char>(c)) && isLatinVowel(c))
-      {
-        continue;
-      }
-      dest[dest_index] = c;
-      ++dest_index;
-    }
-    dest[dest_index] = '\0';
+    free(buffer);
+    return nullptr;
   }
 
-  void appendDigits(const char * first, const char * second, char * dest) noexcept
+  buffer[length] = '\0';
+  return buffer;
+}
+
+char* aydogan::removeVowels(const char* src, char* dest) noexcept
+{
+  if (!src || !dest)
   {
-    if (first == nullptr || second == nullptr || dest == nullptr)
-    {
-      return;
-    }
-
-    std::size_t dest_index = 0;
-    for (std::size_t i = 0; first[i] != '\0'; ++i)
-    {
-      dest[dest_index] = first[i];
-      ++dest_index;
-    }
-
-    for (std::size_t i = 0; second[i] != '\0'; ++i)
-    {
-      unsigned char uc = static_cast<unsigned char>(second[i]);
-      if (std::isdigit(uc))
-      {
-        dest[dest_index] = second[i];
-        ++dest_index;
-      }
-    }
-
-    dest[dest_index] = '\0';
+    return nullptr;
   }
 
-  void writeString(const char * str)
+  size_t j = 0;
+  for (size_t i = 0; src[i] != '\0'; ++i)
   {
-    if (str == nullptr)
+    if (isLatinVowel(src[i]))
     {
-      return;
+      continue;
     }
-    for (std::size_t i = 0; str[i] != '\0'; ++i)
-    {
-      std::cout << str[i];
-    }
-    std::cout << '\n';
+    dest[j] = src[i];
+    ++j;
   }
+
+  dest[j] = '\0';
+  return dest;
+}
+
+char* aydogan::appendDigits(const char* first, const char* second, char* dest) noexcept
+{
+  if (!first || !second || !dest)
+  {
+    return nullptr;
+  }
+
+  size_t j = 0;
+
+  for (size_t i = 0; first[i] != '\0'; ++i)
+  {
+    dest[j] = first[i];
+    ++j;
+  }
+
+  for (size_t i = 0; second[i] != '\0'; ++i)
+  {
+    unsigned char uc = static_cast< unsigned char >(second[i]);
+    if (std::isdigit(uc))
+    {
+      dest[j] = second[i];
+      ++j;
+    }
+  }
+
+  dest[j] = '\0';
+  return dest;
 }
