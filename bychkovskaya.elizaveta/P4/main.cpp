@@ -5,8 +5,7 @@
 
 char * create(size_t size) 
 {
-  char * array = nullptr;
-  array = reinterpret_cast< char * >(malloc(sizeof(char) * size));
+  char * array = reinterpret_cast< char * >(malloc(sizeof(char) * size));
   return array;
 }
 
@@ -18,22 +17,27 @@ char * getline(std::istream & in, size_t & size)
   if (is_skipws) {
     in >> std::noskipws;
   }
-  char * data = create(size + 1);
-  if (in >> elem && elem != '\n') {
-    data[0] = elem;
+  char * data = create(1);
+  if (data == nullptr) {
+    throw std::runtime_error("Not enough memory");
   }
-  ++size; 
   while (in >> elem && elem != '\n') {
     char * tmp = create(size + 1); 
+    if (tmp == nullptr) {
+      free(data);
+      throw std::runtime_error("Not enough memory");
+    }
     for (size_t i = 0; i < size - 1; ++i) {    
       tmp[i] = data[i]; 
     }
-    tmp[size - 1] = elem;
-    // if (in >> elem && elem != '\0' && elem != '\n')  {   
-      free(data);
-      data = tmp;
-      ++size;
-    // }  
+    tmp[size - 1] = elem;  
+    free(data);
+    data = tmp;
+    ++size;
+  }
+  if (in.eof() || in.bad()) {
+    free(data);
+    throw std::invalid_argument("Input failed");
   }
   data[size-1] = '\0';  
   if (is_skipws) {
@@ -62,7 +66,7 @@ void excsnd(const char * str1, const char * str2, char * result)
   for (size_t i = 0; str1[i] != '\0'; ++i) {
     countRepeat = 0;
     for (size_t j = 0; str2[j] != '\0'; ++j) {
-      if (str1[i] == str2[j]) {
+      if (str1[i] == str2[j] && str1[i] != ' ') {
         ++countRepeat;
       }
     }
@@ -76,26 +80,51 @@ void excsnd(const char * str1, const char * str2, char * result)
 
 int main()
 {
-  size_t size = 0;
-  size_t size1 = 0;
-  size_t size2 = 0;
-  std::cout << "\n" << "Удалить латинкские буквы" << "\n";
-  std::cout << "Введите строку" << "\n";
-  char * str = getline(std::cin, size);
+  size_t size = 0, size1 = 0, size2 = 0;
+  char * str = nullptr, * str1 = nullptr, * str2 = nullptr;
+  std::cout << "Remove Latin letters" << "\n" << "Enter the line" << "\n";
+  try {
+    str = getline(std::cin, size);
+  } catch (const std::exception& e) {
+    std::cerr << e.what() << "\n";
+    return 1;
+  }
   char * result = create(size);
+  if (result == nullptr) {
+    std::cerr << "Not enough memory";
+    free(str);
+    return 1;
+  }
   latrmv(str, result);
-  std::cout << "\n" << result;
-  std::cout << "\n" << "Удалить повторяющиеся в двух строках символы" << "\n";
-  std::cout << "\n" << "Введите первую строку" << "\n";
-  char * str1 = getline(std::cin, size1);
-  std::cout << "\n" << size1 << "\n";
-  std::cout << "\n" << "Введите вторую строку" << "\n";
-  char * str2 = getline(std::cin, size2);
-  std::cout << "\n" << size2 << "\n";
+  std::cout << "result:" << result << "\n"; 
+  free(str);
+  free(result);
+  std::cout << "Remove duplicate symbols" << "\n";
+  std::cout << "Enter the first line" << "\n";
+  try {
+    str1 = getline(std::cin, size1);
+  } catch (const std::exception& e) {
+    std::cerr << e.what() << "\n";
+    return 1;
+  }
+  std::cout << "Enter the second line" << "\n";
+  try {
+    str2 = getline(std::cin, size2);
+  } catch (const std::exception& e) {
+    free(str1);
+    std::cerr << e.what() << "\n";
+    return 1;
+  }
   char * result12 = create(size1);
+  if (result12 == nullptr) {
+    std::cerr << "Not enough memory";
+    free(str1);
+    free(str2);
+    return 1;
+  }
   excsnd(str1, str2, result12);
-  std::cout << "\n";
-  std::cout << result12 << "\n";
+  std::cout << "result:" << result12 << "\n";
   free(str1);
   free(str2);
+  free(result12);
 }
