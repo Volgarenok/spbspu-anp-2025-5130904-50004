@@ -80,8 +80,9 @@ void excsnd(const char * str1, const char * str2, char * result)
 
 int main()
 {
-  size_t size = 0, size1 = 0, size2 = 0;
-  char * str = nullptr, * str1 = nullptr, * str2 = nullptr;
+  size_t size = 0, size1 = 0;
+  char * str = nullptr, * str1 = nullptr;
+  const char * str2 = "abc";
   std::cout << "Remove Latin letters" << "\n" << "Enter the line" << "\n";
   try {
     str = getline(std::cin, size);
@@ -107,24 +108,14 @@ int main()
     std::cerr << e.what() << "\n";
     return 1;
   }
-  std::cout << "Enter the second line" << "\n";
-  try {
-    str2 = getline(std::cin, size2);
-  } catch (const std::exception& e) {
-    free(str1);
-    std::cerr << e.what() << "\n";
-    return 1;
-  }
   char * result12 = create(size1);
   if (result12 == nullptr) {
     std::cerr << "Not enough memory";
     free(str1);
-    free(str2);
     return 1;
   }
   excsnd(str1, str2, result12);
   std::cout << "result:" << result12 << "\n";
   free(str1);
-  free(str2);
   free(result12);
 }
