@@ -1,6 +1,9 @@
 #include "Pth_trp.h"
 
-alekseev::Pth_trp::Pth_trp(): iProperty(), k_(0), data_(Int_array(3))
+alekseev::Pth_trp::Pth_trp():
+  iProperty(),
+  k_(0),
+  data_(Int_array(3))
 {
 }
 

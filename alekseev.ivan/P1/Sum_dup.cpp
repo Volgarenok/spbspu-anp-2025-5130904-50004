@@ -1,6 +1,9 @@
 #include "Sum_dup.h"
 
-alekseev::Sum_dup::Sum_dup(): iProperty(), k_(0), data_(Int_array(3))
+alekseev::Sum_dup::Sum_dup():
+  iProperty(),
+  k_(0),
+  data_(Int_array(3))
 {
 }
 

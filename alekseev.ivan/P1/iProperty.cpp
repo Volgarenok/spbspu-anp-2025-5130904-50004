@@ -38,6 +38,6 @@ alekseev::iProperty * alekseev::make(IDS id)
   switch (id) {
     case pth_trp_id: return new Pth_trp();
     case sum_dup_id: return new Sum_dup();
-    default: return nullptr;
+    default: throw std::invalid_argument("Unknown id");
   }
 }
