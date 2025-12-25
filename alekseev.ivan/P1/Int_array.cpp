@@ -2,7 +2,9 @@
 #include <memory>
 
 Int_array::Int_array():
-  data_(nullptr), counter_(0), size_(0)
+  data_(nullptr),
+  counter_(0),
+  size_(0)
 {
 }
 
