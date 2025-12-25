@@ -1,62 +1,65 @@
 #include "Int_array.h"
+#include <memory>
 
-Int_array::Int_array(): data_(nullptr), counter_(0), size_(0)
+Int_array::Int_array():
+  data_(nullptr), counter_(0), size_(0)
 {
 }
 
 Int_array::Int_array(const Int_array & rhs)
 {
-  if (this != &rhs) {
-    int * temp = new int[rhs.size()];
-    for (size_t i = 0; i < rhs.size(); ++i) {
-      temp[i] = rhs.get(i);
-    }
-    delete[] data_;
-    data_ = temp;
-    counter_ = rhs.counter_;
-    size_ = rhs.size_;
+  int * temp = new int[rhs.size()];
+  for (size_t i = 0; i < rhs.size(); ++i) {
+    temp[i] = rhs.get(i);
   }
+  delete[] data_;
+  data_ = temp;
+  counter_ = rhs.counter_;
+  size_ = rhs.size_;
 }
 
 Int_array & Int_array::operator=(const Int_array & rhs)
 {
-  if (this != &rhs) {
-    int * temp = new int[rhs.size()];
-    for (size_t i = 0; i < rhs.size(); ++i) {
-      temp[i] = rhs.get(i);
-    }
-    delete[] data_;
-    data_ = temp;
-    counter_ = rhs.counter_;
-    size_ = rhs.size_;
+  if (this == std::addressof(rhs)) {
+    return *this;
   }
+  int * temp = new int[rhs.size()];
+  for (size_t i = 0; i < rhs.size(); ++i) {
+    temp[i] = rhs.get(i);
+  }
+  delete[] data_;
+  data_ = temp;
+  counter_ = rhs.counter_;
+  size_ = rhs.size_;
+
   return *this;
 }
 
 Int_array::Int_array(Int_array && rhs) noexcept
 {
-  if (this != &rhs) {
-    data_ = rhs.data_;
-    counter_ = rhs.counter_;
-    size_ = rhs.size_;
-    rhs.data_ = nullptr;
-  }
+  data_ = rhs.data_;
+  counter_ = rhs.counter_;
+  size_ = rhs.size_;
+  rhs.data_ = nullptr;
 }
 
 Int_array & Int_array::operator=(Int_array && rhs) noexcept
 {
-  if (this != &rhs) {
-    data_ = rhs.data_;
-    counter_ = rhs.number();
-    size_ = rhs.size();
-    rhs.data_ = nullptr;
+  if (this == std::addressof(rhs)) {
+    return *this;
   }
+  data_ = rhs.data_;
+  counter_ = rhs.number();
+  size_ = rhs.size();
+  rhs.data_ = nullptr;
   return *this;
 }
 
-Int_array::Int_array(size_t s): data_(new int[s]{0}), counter_(0)
+Int_array::Int_array(size_t s):
+  data_(new int[s]{0}),
+  counter_(0),
+  size_(s)
 {
-  size_ = s;
 }
 
 Int_array::~Int_array()
