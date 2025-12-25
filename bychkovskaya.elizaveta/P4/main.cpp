@@ -13,26 +13,32 @@ char * getline(std::istream & in, size_t & size)
 {
   char elem = '\0';
   size = 1; 
+  size_t cap = 1;
+  size_t extendedCap = 0;
   bool is_skipws = in.flags() & std::ios_base::skipws;
   if (is_skipws) {
     in >> std::noskipws;
   }
-  char * data = create(1);
+  char * data = create(cap);
   if (data == nullptr) {
     throw std::runtime_error("Not enough memory");
   }
   while (in >> elem && elem != '\n') {
-    char * tmp = create(size + 1); 
-    if (tmp == nullptr) {
+    if (size == cap) {
+      extendedCap = 2*cap;
+      char * tmp = create(extendedCap); 
+      if (tmp == nullptr) {
+        free(data);
+        throw std::runtime_error("Not enough memory");
+      }
+      cap = extendedCap;
+      for (size_t i = 0; i < size - 1; ++i) {    
+        tmp[i] = data[i]; 
+      }
       free(data);
-      throw std::runtime_error("Not enough memory");
+      data = tmp;
     }
-    for (size_t i = 0; i < size - 1; ++i) {    
-      tmp[i] = data[i]; 
-    }
-    tmp[size - 1] = elem;  
-    free(data);
-    data = tmp;
+    data[size-1] = elem;
     ++size;
   }
   if (in.eof() || in.bad()) {
