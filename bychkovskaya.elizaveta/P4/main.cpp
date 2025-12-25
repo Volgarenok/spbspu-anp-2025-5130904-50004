@@ -80,10 +80,9 @@ void excsnd(const char * str1, const char * str2, char * result)
 
 int main()
 {
-  size_t size = 0, size1 = 0;
-  char * str = nullptr, * str1 = nullptr;
+  size_t size = 0;
+  char * str = nullptr;
   const char * str2 = "abc";
-  std::cout << "Remove Latin letters" << "\n" << "Enter the line" << "\n";
   try {
     str = getline(std::cin, size);
   } catch (const std::exception& e) {
@@ -92,30 +91,21 @@ int main()
   }
   char * result = create(size);
   if (result == nullptr) {
-    std::cerr << "Not enough memory";
+    std::cerr << "Not enough memory" << "\n";
     free(str);
     return 1;
   }
   latrmv(str, result);
-  std::cout << "result:" << result << "\n"; 
-  free(str);
+  std::cout << result << "\n"; 
   free(result);
-  std::cout << "Remove duplicate symbols" << "\n";
-  std::cout << "Enter the first line" << "\n";
-  try {
-    str1 = getline(std::cin, size1);
-  } catch (const std::exception& e) {
-    std::cerr << e.what() << "\n";
-    return 1;
-  }
-  char * result12 = create(size1);
-  if (result12 == nullptr) {
+  char * result2 = create(size);
+  if (result2 == nullptr) {
     std::cerr << "Not enough memory";
-    free(str1);
+    free(str);
     return 1;
   }
-  excsnd(str1, str2, result12);
-  std::cout << "result:" << result12 << "\n";
-  free(str1);
-  free(result12);
+  excsnd(str, str2, result2);
+  std::cout << result2 << "\n";
+  free(str);
+  free(result2);
 }
