@@ -4,7 +4,7 @@
 #include "Int_array.h"
 
 namespace alekseev {
-  struct Pth_trp: iProperty {
+  struct Pth_trp final: iProperty {
     Pth_trp();
 
     void update(int a) override;

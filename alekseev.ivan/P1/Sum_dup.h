@@ -4,9 +4,8 @@
 #include "Int_array.h"
 
 namespace alekseev {
-  struct Sum_dup: iProperty {
+  struct Sum_dup final: iProperty {
     Sum_dup();
-
 
     void update(int a) override;
     size_t value() const override;
