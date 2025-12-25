@@ -6,7 +6,6 @@
 namespace alekseev {
   struct Pth_trp: iProperty {
     Pth_trp();
-    virtual ~Pth_trp() = default;
 
     void update(int a) override;
     size_t value() const override;

@@ -6,7 +6,7 @@
 namespace alekseev {
   struct Sum_dup: iProperty {
     Sum_dup();
-    virtual ~Sum_dup() = default;
+
 
     void update(int a) override;
     size_t value() const override;
