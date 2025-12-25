@@ -3,13 +3,13 @@
 #include <iomanip>
 #include <fstream>
 
-char * create(size_t size) 
+char* create(size_t size)
 {
-  char * array = reinterpret_cast< char * >(malloc(sizeof(char) * size));
+  char* array = reinterpret_cast<char*>(malloc(sizeof(char) * size));
   return array;
 }
 
-char * getline(std::istream & in, size_t & size)
+char* getline(std::istream& in, size_t& size)
 {
   char elem = '\0';
   size = 1; 
@@ -19,40 +19,40 @@ char * getline(std::istream & in, size_t & size)
   if (is_skipws) {
     in >> std::noskipws;
   }
-  char * data = create(cap);
+  char* data = create(cap);
   if (data == nullptr) {
     throw std::runtime_error("Not enough memory");
   }
   while (in >> elem && elem != '\n') {
     if (size == cap) {
-      extendedCap = 2*cap;
-      char * tmp = create(extendedCap); 
+      extendedCap = 2 * cap;
+      char* tmp = create(extendedCap);
       if (tmp == nullptr) {
         free(data);
         throw std::runtime_error("Not enough memory");
       }
       cap = extendedCap;
-      for (size_t i = 0; i < size - 1; ++i) {    
-        tmp[i] = data[i]; 
+      for (size_t i = 0; i < size - 1; ++i) {
+        tmp[i] = data[i];
       }
       free(data);
       data = tmp;
     }
-    data[size-1] = elem;
+    data[size - 1] = elem;
     ++size;
   }
   if (in.eof() || in.bad()) {
     free(data);
     throw std::invalid_argument("Input failed");
   }
-  data[size-1] = '\0';  
+  data[size - 1] = '\0';
   if (is_skipws) {
     in >> std::skipws;
   }
   return data;
 }
 
-void latrmv(const char * str, char * result)
+void latrmv(const char* str, char* result)
 {
   size_t k = 0;
   for (size_t i = 0; str[i] != '\0'; ++i) {
@@ -61,11 +61,11 @@ void latrmv(const char * str, char * result)
       ++k;
     }
   }
-result[k] = '\0';
+  result[k] = '\0';
 }
 
 
-void excsnd(const char * str1, const char * str2, char * result) 
+void excsnd(const char* str1, const char* str2, char* result)
 {
   size_t countRepeat = 0;
   size_t k = 0;
@@ -87,24 +87,24 @@ void excsnd(const char * str1, const char * str2, char * result)
 int main()
 {
   size_t size = 0;
-  char * str = nullptr;
-  const char * str2 = "abc";
+  char* str = nullptr;
+  const char* str2 = "abc";
   try {
     str = getline(std::cin, size);
   } catch (const std::exception& e) {
     std::cerr << e.what() << "\n";
     return 1;
   }
-  char * result = create(size);
+  char* result = create(size);
   if (result == nullptr) {
     std::cerr << "Not enough memory" << "\n";
     free(str);
     return 1;
   }
   latrmv(str, result);
-  std::cout << result << "\n"; 
+  std::cout << result << "\n";
   free(result);
-  char * result2 = create(size);
+  char* result2 = create(size);
   if (result2 == nullptr) {
     std::cerr << "Not enough memory";
     free(str);
@@ -114,4 +114,5 @@ int main()
   std::cout << result2 << "\n";
   free(str);
   free(result2);
+  return 0;
 }
