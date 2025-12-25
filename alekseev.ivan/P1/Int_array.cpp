@@ -6,16 +6,14 @@ Int_array::Int_array():
 {
 }
 
-Int_array::Int_array(const Int_array & rhs)
+Int_array::Int_array(const Int_array & rhs):
+  data_(new int[rhs.size()]),
+  counter_(rhs.counter_),
+  size_(rhs.size_)
 {
-  int * temp = new int[rhs.size()];
   for (size_t i = 0; i < rhs.size(); ++i) {
-    temp[i] = rhs.get(i);
+    data_[i] = rhs.get(i);
   }
-  delete[] data_;
-  data_ = temp;
-  counter_ = rhs.counter_;
-  size_ = rhs.size_;
 }
 
 Int_array & Int_array::operator=(const Int_array & rhs)
@@ -35,11 +33,11 @@ Int_array & Int_array::operator=(const Int_array & rhs)
   return *this;
 }
 
-Int_array::Int_array(Int_array && rhs) noexcept
+Int_array::Int_array(Int_array && rhs) noexcept:
+  data_(rhs.data_),
+  counter_(rhs.counter_),
+  size_(rhs.size_)
 {
-  data_ = rhs.data_;
-  counter_ = rhs.counter_;
-  size_ = rhs.size_;
   rhs.data_ = nullptr;
 }
 
