@@ -12,7 +12,7 @@ char* create(size_t size)
 char* getline(std::istream& in, size_t& size)
 {
   char elem = '\0';
-  size = 1; 
+  size = 1;
   size_t cap = 1;
   size_t extendedCap = 0;
   bool is_skipws = in.flags() & std::ios_base::skipws;
