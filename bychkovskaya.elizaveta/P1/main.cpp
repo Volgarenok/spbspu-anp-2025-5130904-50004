@@ -1,17 +1,5 @@
 #include <iostream>
 
-struct Counter {
-	Counter(): c_(0) {}
-	void operator()(int) {
-		++c_;
-	}
-	size_t operator()() const {
-		return c_;
-	}
-	private:
-	size_t c_;
-};
-
 struct Max {
 	Max();
 	void operator()(int num);
@@ -72,12 +60,12 @@ size_t MoreThanPrevious::operator()() const {
 }
 
 int main() {
-	Counter c;
+	size_t count = 0;
   Max max;
 	MoreThanPrevious prev;
 	int num = 0;
   while (std::cin >> num && num != 0) {
-    c(num);
+    ++count;
 		prev(num);
 		max(num);
   }
@@ -85,7 +73,7 @@ int main() {
     std::cerr << "Wrong input" << "\n";
     return 1;
   }
-	if (num == 0 && c() == 0) {
+	if (num == 0 && count == 0) {
 		std::cout << prev() << "\n";
 		std::cerr << "Not enough elements to count quantity of max" << "\n";
 		return 2;
