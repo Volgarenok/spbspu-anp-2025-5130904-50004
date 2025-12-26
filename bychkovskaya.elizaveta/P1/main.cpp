@@ -1,5 +1,54 @@
 #include <iostream>
 
+struct Counter {
+	Counter(): c_(0) {}
+	void operator()(int a) {
+		++c_;
+	}
+	size_t operator()() const {
+		return c_;
+	}
+	private:
+	size_t c_;
+}
+
+struct Max {
+	Max();
+	void operator()(int num);
+	size_t operator()() const {
+		return c_;
+	}
+	private:
+  int max_;
+  size_t c_;
+  size_t k_;
+};
+
+Max::Max():
+  k_(0),
+	res_(0),
+	max_(0)
+{}
+
+void Max::operator()(int a) {
+	  ++k_;
+		if (k == 1) {
+			max_ = num;
+			c_ = 1;
+		}
+    if (num > max_ && k_ != 1) {
+      c_ = 1;
+    }
+		if (num == max_ && k_ != 1) {
+			++c_;
+		}
+}
+
+size_t operator()() const {
+	return res;
+}
+
+
 // int main() {
 //   int num = 0;
 //   int prevNum = 0;
