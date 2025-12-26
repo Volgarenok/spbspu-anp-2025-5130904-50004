@@ -19,13 +19,12 @@ int main(int argc, char** argv)
     std::ifstream input(argv[2]);
     input >> rows >> cols;
     if (!input) {
-      input.close();
       std::cerr << "Wrong matrix input" << "\n";
       return 2;
     }
     int* matrix = nullptr;
+    int fixedMatrix[10000];
     if (argv[1][0] == '1') {
-      int fixedMatrix[10000];
       matrix = fixedMatrix;
     }
     if (argv[1][0] == '2') {
@@ -42,14 +41,11 @@ int main(int argc, char** argv)
       if (argv[1][0] == '2') {
         delete[] matrix;
       }
-      input.close();
       std::cerr << e.what() << "\n";
       return 2;
     }
-    input.close();
     std::ofstream output(argv[3]);
     bychkovskaya::outputMatrix(output, matrix, rows, cols);
-    output.close();
     if (argv[1][0] == '2') {
         delete[] matrix;
     }
