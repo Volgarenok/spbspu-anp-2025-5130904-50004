@@ -2,7 +2,7 @@
 
 struct Counter {
 	Counter(): c_(0) {}
-	void operator()(int a) {
+	void operator()(int) {
 		++c_;
 	}
 	size_t operator()() const {
@@ -10,18 +10,16 @@ struct Counter {
 	}
 	private:
 	size_t c_;
-}
+};
 
 struct Max {
 	Max();
 	void operator()(int num);
-	size_t operator()() const {
-		return c_;
-	}
+	size_t operator()() const;
 	private:
+	size_t k_;
+	size_t res_;
   int max_;
-  size_t c_;
-  size_t k_;
 };
 
 Max::Max():
@@ -30,22 +28,22 @@ Max::Max():
 	max_(0)
 {}
 
-void Max::operator()(int a) {
+void Max::operator()(int num) {
 	  ++k_;
-		if (k == 1) {
+		if (k_ == 1) {
 			max_ = num;
-			c_ = 1;
+			res_ = 1;
 		}
     if (num > max_ && k_ != 1) {
-      c_ = 1;
+      res_ = 1;
     }
 		if (num == max_ && k_ != 1) {
-			++c_;
+			++res_;
 		}
 }
 
-size_t operator()() const {
-	return res;
+size_t Max::operator()() const {
+	return res_;
 }
 
 
@@ -69,24 +67,14 @@ size_t operator()() const {
 // }
 
 int main() {
-  int num = 0;
-  int max = 0;
-  size_t count = 0;
-  size_t k = 0;
+	Counter c;
+  Max max;
+	int num = 0;
   while (std::cin >> num && num != 0) {
-    ++k;
-		if (k == 1) {
-			max = num;
-			count = 1;
-		}
-    if (num > max && k != 1) {
-      count = 1;
-    }
-		if (num == max && k != 1) {
-			++count;
-		}
+    c(num);
+		max(num);
   }
-	if (num == 0 && k == 0) {
+	if (num == 0 && c() == 0) {
 		std::cerr << "Not enough elements" << "\n";
 		return 2;
 	}
@@ -94,6 +82,5 @@ int main() {
     std::cerr << "Wrong input" << "\n";
     return 1;
   }
-
-  std::cout << count << "\n";
+  std::cout << max() << "\n";
 }
