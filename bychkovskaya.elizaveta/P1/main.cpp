@@ -46,41 +46,54 @@ size_t Max::operator()() const {
 	return res_;
 }
 
+struct MoreThanPrevious {
+	MoreThanPrevious();
+	void operator()(int num);
+	size_t operator()() const;
+	private:
+	int prevNum_;
+	int k_;
+	int res_;
+};
 
-// int main() {
-//   int num = 0;
-//   int prevNum = 0;
-//   size_t count = 0;
-//   size_t k = 0;
-// 	while (std::cin >> num && num != 0) {
-// 		++k;
-// 		if (num > prevNum && k != 1) {
-// 			++count;
-// 		}
-// 		prevNum = num;
-// 	}
-// 	if (!std::cin && !std::cin.eof()) {
-// 		std::cerr << "Wrong input" << "\n";
-// 		return 1;
-// 	}
-// 	std::cout << count << "\n";
-// }
+MoreThanPrevious::MoreThanPrevious():
+  prevNum_(0),
+	k_(0),
+	res_(0)
+{}
+
+void MoreThanPrevious::operator()(int num) {
+		++k_;
+		if (num > prevNum_ && k_ != 1) {
+			++res_;
+		}
+		prevNum_ = num;
+}
+
+size_t MoreThanPrevious::operator()() const {
+	return res_;
+}
 
 int main() {
 	Counter c;
   Max max;
+	MoreThanPrevious prev;
 	int num = 0;
   while (std::cin >> num && num != 0) {
     c(num);
+		prev(num);
 		max(num);
   }
-	if (num == 0 && c() == 0) {
-		std::cerr << "Not enough elements" << "\n";
-		return 2;
-	}
-  if (!std::cin) {
+	if (!std::cin) {
     std::cerr << "Wrong input" << "\n";
     return 1;
   }
+	if (num == 0 && c() == 0) {
+		std::cout << prev() << "\n";
+		std::cerr << "Not enough elements to count quantity of max" << "\n";
+		return 2;
+	}
+	std::cout << prev() << "\n";
   std::cout << max() << "\n";
+	return 0;
 }
