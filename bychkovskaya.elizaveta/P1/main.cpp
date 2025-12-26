@@ -30,14 +30,11 @@ Max::Max():
 
 void Max::operator()(int num) {
 	  ++k_;
-		if (k_ == 1) {
+		if (k_ == 1 || (num > max_ && k_ != 1)) {
 			max_ = num;
 			res_ = 1;
-		}
-    if (num > max_ && k_ != 1) {
-      res_ = 1;
     }
-		if (num == max_ && k_ != 1) {
+		else if (num == max_ && k_ != 1) {
 			++res_;
 		}
 }
