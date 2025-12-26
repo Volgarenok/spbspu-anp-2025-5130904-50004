@@ -10,7 +10,7 @@ namespace {
 char* pozdeev::increaseCapacity(char* buffer, size_t& currentCapacity)
 {
   size_t newCapacity = currentCapacity * kResizeFactor;
-  char* newBuffer = reinterpret_cast < char* > (std::malloc(newCapacity * sizeof(char)));
+  char* newBuffer = reinterpret_cast< char* >(malloc(newCapacity * sizeof(char)));
 
   if (newBuffer == nullptr) {
     return nullptr;
@@ -20,7 +20,7 @@ char* pozdeev::increaseCapacity(char* buffer, size_t& currentCapacity)
     newBuffer[i] = buffer[i];
   }
 
-  std::free(buffer);
+  free(buffer);
   currentCapacity = newCapacity;
   return newBuffer;
 }
@@ -29,7 +29,7 @@ char* pozdeev::readString(std::istream& in, size_t& size, char delimiter, size_t
 {
   size_t currentCapacity = initialCapacity;
   size_t currentSize = 0;
-  char* buffer = reinterpret_cast < char* > (std::malloc(currentCapacity * sizeof(char)));
+  char* buffer = reinterpret_cast< char* >(malloc(currentCapacity * sizeof(char)));
 
   if (buffer == nullptr) {
     size = 0;
@@ -46,7 +46,7 @@ char* pozdeev::readString(std::istream& in, size_t& size, char delimiter, size_t
       char* newBuffer = pozdeev::increaseCapacity(buffer, currentCapacity);
 
       if (newBuffer == nullptr) {
-        std::free(buffer);
+        free(buffer);
         size = 0;
         in.flags(originalFlags);
         return nullptr;
@@ -62,7 +62,7 @@ char* pozdeev::readString(std::istream& in, size_t& size, char delimiter, size_t
   in.flags(originalFlags);
 
   if (currentSize == 0 && in.fail() && !in.eof()) {
-    std::free(buffer);
+    free(buffer);
     size = 0;
     return nullptr;
   }

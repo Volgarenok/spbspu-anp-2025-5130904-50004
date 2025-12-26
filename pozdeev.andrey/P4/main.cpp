@@ -20,26 +20,26 @@ int main()
   }
 
   if (inputSize == 0) {
-    std::free(inputString);
+    free(inputString);
     std::cerr << "Error: Empty input\n";
     return 1;
   }
 
   if (!std::cin.eof() && std::cin.fail()) {
-    std::free(inputString);
+    free(inputString);
     std::cerr << "Error: Input stream error\n";
     return 1;
   }
 
   const size_t result = inputSize + 1;
 
-  char* spaceRemovedResult = reinterpret_cast < char* > (std::malloc(result * sizeof(char)));
-  char* latinRemovedResult = reinterpret_cast < char* > (std::malloc(result * sizeof(char)));
+  char* spaceRemovedResult = reinterpret_cast< char* >(malloc(result * sizeof(char)));
+  char* latinRemovedResult = reinterpret_cast< char* >(malloc(result * sizeof(char)));
 
   if (spaceRemovedResult == nullptr || latinRemovedResult == nullptr) {
-    std::free(inputString);
-    std::free(spaceRemovedResult);
-    std::free(latinRemovedResult);
+    free(inputString);
+    free(spaceRemovedResult);
+    free(latinRemovedResult);
     std::cerr << "Error: Memory allocation failed\n";
     return 1;
   }
@@ -47,9 +47,9 @@ int main()
   std::cout << pozdeev::removeExtraSpaces(spaceRemovedResult, inputString) << '\n';
   std::cout << pozdeev::removeLatin(latinRemovedResult, inputString) << '\n';
 
-  std::free(inputString);
-  std::free(spaceRemovedResult);
-  std::free(latinRemovedResult);
+  free(inputString);
+  free(spaceRemovedResult);
+  free(latinRemovedResult);
 
   return 0;
 }
