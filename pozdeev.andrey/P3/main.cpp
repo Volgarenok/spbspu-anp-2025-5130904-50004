@@ -1,28 +1,25 @@
-#include "pozdeev.hpp"
+#include "matrix_utils.hpp"
 #include <iostream>
 #include <fstream>
+#include <stdexcept>
+#include <new>
 
-int main(int argc, char* argv[])
+int main(int argc, char * argv[])
 {
-  int exit = 0;
-
-  if (argc != 4) {
-    std::cerr << ((argc < 4)
-      ? "Not enough arguments"
-      : "Too many arguments")
-      << std::endl;
-
+  if (argc < 4) {
+    std::cerr << "Not enough arguments" << std::endl;
+    return 1;
+  }
+  if (argc > 4) {
+    std::cerr << "Too many arguments" << std::endl;
     return 1;
   }
 
-  int num = pozdeev::numAnalysis(argv[1]);
-
-  if (num == pozdeev::ERROR_INVALID_FORMAT) {
-    std::cerr << "First parameter is not a number" << std::endl;
-    return 1;
-  }
-  if (num == pozdeev::ERROR_INVALID_VALUE) {
-    std::cerr << "First parameter is out of range (must be 1 or 2)" << std::endl;
+  int taskNum = 0;
+  try {
+    taskNum = pozdeev::numAnalysis(argv[1]);
+  } catch (const std::exception & e) {
+    std::cerr << e.what() << std::endl;
     return 1;
   }
 
@@ -35,36 +32,50 @@ int main(int argc, char* argv[])
   std::ofstream fout(argv[3]);
   if (!fout.is_open()) {
     std::cerr << "ERROR: Could not open output file" << std::endl;
-    fin.close();
     return 2;
   }
 
-  int temp_rows = 0, temp_cols = 0;
-  if (!(fin >> temp_rows) || !(fin >> temp_cols)) {
+  size_t rows = 0;
+  size_t cols = 0;
+  if (!(fin >> rows >> cols)) {
     std::cerr << "ERROR: Invalid matrix dimensions format or file is empty" << std::endl;
-    fin.close();
-    fout.close();
     return 2;
   }
 
-  if (temp_rows < 0 || temp_cols < 0) {
-    std::cerr << "ERROR: Matrix dimensions cannot be negative" << std::endl;
-    fin.close();
-    fout.close();
-    return 2;
-  }
+  const size_t numElements = rows * cols;
 
-  size_t rows = static_cast<size_t>(temp_rows);
-  size_t cols = static_cast<size_t>(temp_cols);
+  int staticMatrix[pozdeev::MAX_STATIC_SIZE];
+  int * dynamicMatrix = nullptr;
+  int * matrixToProcess = nullptr;
 
-  if (num == 1) {
-    exit = pozdeev::processStatic(fin, fout, rows, cols);
+  if (taskNum == 1) {
+    matrixToProcess = staticMatrix;
   } else {
-    exit = pozdeev::processDynamic(fin, fout, rows, cols);
+    try {
+      dynamicMatrix = new int[numElements];
+    } catch (const std::bad_alloc &) {
+      std::cerr << "ERROR: Memory allocation failed" << std::endl;
+      return 2;
+    }
+    matrixToProcess = dynamicMatrix;
   }
 
-  fin.close();
-  fout.close();
+  pozdeev::inputMatrix(fin, matrixToProcess, numElements);
 
-  return exit;
+  if (!fin) {
+    std::cerr << "ERROR: Invalid matrix element or not enough elements" << std::endl;
+    delete[] dynamicMatrix;
+    return 2;
+  }
+
+  if (taskNum == 1) {
+    const int result = pozdeev::countNonSequentialRows(matrixToProcess, rows, cols);
+    fout << result << "\n";
+  } else {
+    pozdeev::spiral(matrixToProcess, rows, cols);
+    pozdeev::outputMatrix(fout, matrixToProcess, rows, cols);
+  }
+
+  delete[] dynamicMatrix;
+  return 0;
 }
