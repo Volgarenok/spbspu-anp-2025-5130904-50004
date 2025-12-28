@@ -75,7 +75,6 @@ int ** nepochatova::readMatrix(const std::string &filename, size_t &n, size_t &m
         throw std::runtime_error("Invalid matrix data");
     }
   }
-
   return arr;
 }
 void nepochatova::writeMatrix(std::ofstream& out, const int* const* arr, size_t n, size_t m) {
