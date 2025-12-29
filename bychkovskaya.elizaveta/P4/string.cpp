@@ -3,52 +3,44 @@
 #include <fstream>
 #include "string.hpp"
 
-char* bychkovskaya::create(size_t size)
-{
-  char* array = reinterpret_cast<char*>(malloc(sizeof(char) * size));
-  return array;
-}
-
 char* bychkovskaya::getline(std::istream& in, size_t& size)
 {
   char elem = '\0';
-  size = 1;
+  size = 0;
+  size_t workSize = 1;
   size_t cap = 1;
   size_t extendedCap = 0;
   bool is_skipws = in.flags() & std::ios_base::skipws;
   if (is_skipws) {
     in >> std::noskipws;
   }
-  char* data = create(cap);
+  char* data = reinterpret_cast< char* >(malloc(sizeof(char) * cap));
   if (data == nullptr) {
-    throw std::runtime_error("Not enough memory");
+    return nullptr;
   }
   while (in >> elem && elem != '\n') {
-    if (size == cap) {
+    if (workSize == cap) {
       extendedCap = 2 * cap;
-      char* tmp = create(extendedCap);
+      char* tmp = reinterpret_cast< char* >(malloc(sizeof(char) * extendedCap));
       if (tmp == nullptr) {
         free(data);
-        throw std::runtime_error("Not enough memory");
+        return nullptr;
       }
       cap = extendedCap;
-      for (size_t i = 0; i < size - 1; ++i) {
+      for (size_t i = 0; i < workSize - 1; ++i) {
         tmp[i] = data[i];
       }
       free(data);
       data = tmp;
     }
-    data[size - 1] = elem;
-    ++size;
+    data[workSize - 1] = elem;
+    ++workSize;
   }
-  if (in.eof() || in.bad()) {
-    free(data);
-    throw std::invalid_argument("Input failed");
-  }
-  data[size - 1] = '\0';
+  data[workSize - 1] = '\0';
   if (is_skipws) {
     in >> std::skipws;
   }
+  size = workSize;
   return data;
 }
 

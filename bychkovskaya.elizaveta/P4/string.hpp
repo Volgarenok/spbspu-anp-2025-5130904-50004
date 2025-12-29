@@ -4,12 +4,9 @@
 #include <fstream>
 
 namespace bychkovskaya {
-
-  char* create(size_t size);
   char* getline(std::istream& in, size_t& size);
   void latrmv(const char* str, char* result);
   void excsnd(const char* str1, const char* str2, char* result);
-
 }
 
 #endif
