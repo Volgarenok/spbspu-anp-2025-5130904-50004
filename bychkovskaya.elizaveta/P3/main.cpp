@@ -51,7 +51,7 @@ int main(int argc, char** argv)
     delete[] dynamicMatrix;
     std::cerr << "Wrong matrix input" << "\n";
     return 2;
-  } 
+  }
   std::ofstream output(argv[3]);
   bychkovskaya::outputMatrix(output, matrix, rows, cols);
     delete[] dynamicMatrix;
