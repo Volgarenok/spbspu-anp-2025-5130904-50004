@@ -23,9 +23,6 @@ std::ifstream& bychkovskaya::inputMatrix(std::ifstream& in, int* m, size_t rows,
   for (size_t i = 0; i < rows; ++i) {
     for (size_t j = 0; j < cols; ++j) {
       in >> m[i * cols + j];
-      if (!in) {
-        throw std::invalid_argument("Wrong matrix input");
-      }
     }
   }
   return in;
