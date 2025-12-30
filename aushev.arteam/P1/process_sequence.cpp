@@ -41,7 +41,6 @@ namespace aushev {
         }
         mon_run = 1;
       }
-
       prev = current;
     }
 

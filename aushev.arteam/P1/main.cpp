@@ -12,6 +12,5 @@ int main() {
 
   std::cout << eql_out << '\n';
   std::cout << mon_out << '\n';
-
   return 0;
 }

@@ -4,6 +4,5 @@
 namespace aushev {
 
 bool process_sequence(int& eql_result, int& mon_result);
-
 }
 #endif
