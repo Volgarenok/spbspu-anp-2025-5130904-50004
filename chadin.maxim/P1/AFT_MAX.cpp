@@ -3,7 +3,7 @@
 namespace chadin
 {
 
-int countAftMax(const int* sequence,int size)
+int countAftMax(const int* sequence, int size)
 {
   if (size <= 1)
   {
