@@ -1,12 +1,12 @@
+#include "matrix_work.hpp"
 #include <fstream>
 #include <cctype>
-#include "matrix_work.hpp"
 
 bool bychkovskaya::ifNumber(char* m)
 {
   size_t k = 0;
   size_t k1 = 0;
-  for (size_t i = 0; m[i]!='\0'; ++i) {
+  for (size_t i = 0; m[i] != '\0'; ++i) {
     if (isdigit(m[i])) {
       ++k;
     }
@@ -33,7 +33,7 @@ size_t bychkovskaya::cntColNsm(const int* m, size_t rows, size_t cols)
   size_t count = 0;
   for (size_t j = 0; j < cols; ++j) {
     size_t countCol = 0;
-    for (size_t i = 0; i < rows-1; ++i) {
+    for (size_t i = 0; i < rows - 1; ++i) {
       if (m[i * cols + j] == m[i * cols + j + cols]) {
         ++countCol;
       }
@@ -86,7 +86,3 @@ size_t bychkovskaya::cntNzrDig(const int* m, size_t rows, size_t cols)
     return count;
 }
 
-void bychkovskaya::outputMatrix(std::ofstream& out, const int* m, size_t rows, size_t cols) {
-  out << bychkovskaya::cntColNsm(m, rows, cols) << "\n";
-  out << bychkovskaya::cntNzrDig(m, rows, cols) << "\n";
-}

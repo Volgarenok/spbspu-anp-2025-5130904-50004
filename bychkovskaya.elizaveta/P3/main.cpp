@@ -53,7 +53,8 @@ int main(int argc, char** argv)
     return 2;
   }
   std::ofstream output(argv[3]);
-  bychkovskaya::outputMatrix(output, matrix, rows, cols);
+  output << bychkovskaya::cntColNsm(matrix, rows, cols) << "\n";
+  output << bychkovskaya::cntNzrDig(matrix, rows, cols) << "\n";
     delete[] dynamicMatrix;
 }
 
