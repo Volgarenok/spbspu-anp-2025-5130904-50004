@@ -55,6 +55,6 @@ int main(int argc, char** argv)
   std::ofstream output(argv[3]);
   output << bychkovskaya::cntColNsm(matrix, rows, cols) << "\n";
   output << bychkovskaya::cntNzrDig(matrix, rows, cols) << "\n";
-    delete[] dynamicMatrix;
+  delete[] dynamicMatrix;
 }
 
