@@ -1,7 +1,7 @@
+#include "string.hpp"
 #include <cctype>
 #include <iomanip>
 #include <fstream>
-#include "string.hpp"
 
 char* bychkovskaya::getline(std::istream& in, size_t& size)
 {
