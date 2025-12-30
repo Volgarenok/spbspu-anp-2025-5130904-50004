@@ -50,8 +50,6 @@ bool process_sequence(int& eql_result, int& mon_result) {
   if (mon_run > mon_result) {
     mon_result = mon_run;
   }
-
   return true;
 }
-
 }
