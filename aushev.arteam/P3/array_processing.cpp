@@ -120,5 +120,4 @@ void processDynamicArray(std::ifstream& input, std::ofstream& output) {
   free(matrix);
   output << result << "\n";
 }
-
 }
