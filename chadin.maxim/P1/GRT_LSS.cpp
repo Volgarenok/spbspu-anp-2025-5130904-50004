@@ -11,7 +11,6 @@ int countGrtLss(
   {
     return 0;
   }
-
   int count = 0;
   for (int i = 1; i < size - 1; ++i)
   {
@@ -20,7 +19,6 @@ int countGrtLss(
       ++count;
     }
   }
-
   return count;
 }
 
