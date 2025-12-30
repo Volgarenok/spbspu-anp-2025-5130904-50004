@@ -3,9 +3,6 @@
 
 namespace chadin
 {
-
-int countGrtLss(
-  const int* sequence, int size);
-
+int countGrtLss(const int* sequence, int size);
 }
 #endif
