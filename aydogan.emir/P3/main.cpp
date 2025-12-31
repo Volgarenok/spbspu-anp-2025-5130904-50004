@@ -1,8 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include <cstddef>
-#include <exception>
-#include <stdexcept>
 #include "matrix.hpp"
 
 int main(int argc, char** argv)
@@ -21,12 +19,6 @@ int main(int argc, char** argv)
   if (!argv[1] || argv[1][0] == '\0' || argv[1][1] != '\0')
   {
     std::cerr << "First parameter is out of range\n";
-    return 1;
-  }
-
-  if (argv[1][0] < '0' || argv[1][0] > '9')
-  {
-    std::cerr << "First parameter is not a number\n";
     return 1;
   }
 
@@ -74,45 +66,46 @@ int main(int argc, char** argv)
     return 0;
   }
 
-  try
+  constexpr std::size_t MAX = 10000;
+
+  std::size_t rr = static_cast<std::size_t>(r);
+  std::size_t cc = static_cast<std::size_t>(c);
+  std::size_t count = rr * cc;
+
+  int* a = nullptr;
+  int staticArray[MAX];
+
+  if (variant == 1)
   {
-    size_t count = static_cast< size_t >(r) * static_cast< size_t >(c);
-
-    if (variant == 1)
+    if (count > MAX)
     {
-      constexpr size_t MAX = 10000;
-      int a[MAX];
-
-      aydogan::readMatrix(in, a, static_cast< int >(count));
-      if (!in)
-      {
-        throw std::logic_error("Input error");
-      }
-
-      out << aydogan::numColLsr(r, c, a) << "\n";
-      out << aydogan::minSumMDG(r, c, a) << "\n";
+      std::cerr << "ERROR: Matrix is too big\n";
+      return 2;
     }
-    else
+    a = staticArray;
+  }
+  else
+  {
+    a = new int[count];
+  }
+
+  aydogan::readMatrix(in, a, count);
+  if (!in)
+  {
+    if (variant == 2)
     {
-      int* a = new int[count];
-
-      aydogan::readMatrix(in, a, static_cast< int >(count));
-      if (!in)
-      {
-        delete[] a;
-        throw std::logic_error("Input error");
-      }
-
-      out << aydogan::numColLsr(r, c, a) << "\n";
-      out << aydogan::minSumMDG(r, c, a) << "\n";
-
       delete[] a;
     }
-  }
-  catch (const std::exception& e)
-  {
-    std::cerr << "ERROR: " << e.what() << "\n";
+    std::cerr << "ERROR: Input error\n";
     return 2;
+  }
+
+  out << aydogan::numColLsr(r, c, a) << "\n";
+  out << aydogan::minSumMDG(r, c, a) << "\n";
+
+  if (variant == 2)
+  {
+    delete[] a;
   }
 
   return 0;

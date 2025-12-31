@@ -2,9 +2,9 @@
 #include <istream>
 #include <cstddef>
 
-std::istream& aydogan::readMatrix(std::istream& input, int* arr, int count)
+std::istream& aydogan::readMatrix(std::istream& input, int* arr, std::size_t count)
 {
-  for (int i = 0; i < count; ++i)
+  for (std::size_t i = 0; i < count; ++i)
   {
     input >> arr[i];
   }
@@ -18,18 +18,18 @@ int aydogan::numColLsr(int r, int c, const int* a)
     return 0;
   }
 
-  size_t rr = static_cast< size_t >(r);
-  size_t cc = static_cast< size_t >(c);
+  std::size_t rr = static_cast< std::size_t >(r);
+  std::size_t cc = static_cast< std::size_t >(c);
 
-  size_t bestCol = 1;
-  size_t bestLen = 0;
+  std::size_t bestCol = 1;
+  std::size_t bestLen = 0;
 
-  for (size_t col = 0; col < cc; ++col)
+  for (std::size_t col = 0; col < cc; ++col)
   {
-    size_t cur = 1;
-    size_t maxHere = 1;
+    std::size_t cur = 1;
+    std::size_t maxHere = 1;
 
-    for (size_t row = 1; row < rr; ++row)
+    for (std::size_t row = 1; row < rr; ++row)
     {
       int prev = a[(row - 1) * cc + col];
       int now  = a[row * cc + col];
@@ -65,20 +65,24 @@ long long aydogan::minSumMDG(int r, int c, const int* a)
     return 0;
   }
 
+  std::size_t rr = static_cast< std::size_t >(r);
+  std::size_t cc = static_cast< std::size_t >(c);
+
   long long best = 0;
   bool first = true;
 
-  for (int s = 0; s <= (r - 1) + (c - 1); ++s)
+  for (std::size_t s = 0; s <= (rr - 1) + (cc - 1); ++s)
   {
     long long sum = 0;
     bool has = false;
 
-    for (int i = 0; i < r; ++i)
+    for (std::size_t i = 0; i < rr; ++i)
     {
-      int j = s - i;
-      if (j >= 0 && j < c)
+      long long jll = static_cast< long long >(s) - static_cast< long long >(i);
+      if (jll >= 0 && static_cast< std::size_t >(jll) < cc)
       {
-        sum += a[i * c + j];
+        std::size_t j = static_cast< std::size_t >(jll);
+        sum += a[i * cc + j];
         has = true;
       }
     }
