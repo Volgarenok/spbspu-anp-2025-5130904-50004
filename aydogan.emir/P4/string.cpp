@@ -116,3 +116,4 @@ char* aydogan::appendDigits(const char* first, const char* second, char* dest) n
   dest[j] = '\0';
   return dest;
 }
+
