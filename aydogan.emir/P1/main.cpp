@@ -4,23 +4,33 @@
 
 int main()
 {
-  int num = 0;
-  aydogan::MonInc mon_inc;
-  aydogan::LocMin loc_min;
+    int num = 0;
+    aydogan::MonInc mon_inc;
+    aydogan::LocMin loc_min;
 
-  while (std::cin >> num && num != 0)
-  {
-    mon_inc(num);
-    loc_min(num);
-  }
+    size_t count = 0;
 
-  if (std::cin.fail() && !std::cin.eof())
-  {
-    std::cerr << "Input error\n";
-    return 1;
-  }
+    while ((std::cin >> num) && (num != 0))
+    {
+        mon_inc(num);
+        loc_min(num);
+        ++count;
+    }
 
-  std::cout << mon_inc() << "\n";
-  std::cout << loc_min() << "\n";
-  return 0;
+    if (std::cin.fail() && !std::cin.eof())
+    {
+        std::cerr << "Input error\n";
+        return 1;
+    }
+
+    if (count == 0)
+    {
+        std::cout << mon_inc() << "\n";
+        std::cerr << "Too short a sequence for LOC-MIN\n";
+        return 2;
+    }
+
+    std::cout << mon_inc() << "\n";
+    std::cout << loc_min() << "\n";
+    return 0;
 }

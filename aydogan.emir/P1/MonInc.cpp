@@ -19,7 +19,7 @@ void aydogan::MonInc::operator()(int n)
     return;
   }
 
-  if (n > prev_)
+  if (n >= prev_)
   {
     ++cur_len_;
   }
