@@ -23,7 +23,7 @@ bool validate_arguments(int argc, char* argv[])
   return true;
 }
 
-void read_matrix(const char* filename, int* matrix, int& rows, int& cols, int max_size)
+void em::read_matrix(const char* filename, int* matrix, int& rows, int& cols, int max_size)
 {
   rows = 0;
   cols = 0;
@@ -69,7 +69,7 @@ void read_matrix(const char* filename, int* matrix, int& rows, int& cols, int ma
   }
 }
 
-void read_matrix(const char* filename, int** matrix, int& rows, int& cols)
+void em::read_matrix(const char* filename, int** matrix, int& rows, int& cols)
 {
   rows = 0;
   cols = 0;
@@ -112,14 +112,14 @@ void read_matrix(const char* filename, int** matrix, int& rows, int& cols)
 
   if (file.fail())
   {
-    delete[] *matrix;
+    delete[] matrix[0];
     *matrix = nullptr;
     std::cerr << "Failed to read matrix from file";
     std::exit(2);
   }
 }
 
-void write_matrix(const char* filename, const int* matrix, int rows, int cols, bool smooth_matrix)
+void em::write_matrix(const char* filename, const int* matrix, int rows, int cols, bool smooth_matrix)
 {
   std::ofstream file(filename);
   if (!file.is_open())
@@ -157,7 +157,7 @@ void write_matrix(const char* filename, const int* matrix, int rows, int cols, b
   }
 }
 
-void process_left_bottom_clockwise(int* matrix, int rows, int cols)
+void em::process_left_bottom_clockwise(int* matrix, int rows, int cols)
 {
   if (!matrix || rows <= 0 || cols <= 0)
   {
@@ -214,7 +214,7 @@ void process_left_bottom_clockwise(int* matrix, int rows, int cols)
   }
 }
 
-void build_smooth_matrix(int* matrix, int rows, int cols)
+void em::build_smooth_matrix(int* matrix, int rows, int cols)
 {
   if (!matrix || rows <= 0 || cols <= 0)
   {
