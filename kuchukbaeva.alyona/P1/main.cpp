@@ -1,5 +1,5 @@
-#include "SubMax.hpp"
-#include "EqlSeq.hpp"
+#include "sub_max.hpp"
+#include "eql_seq.hpp"
 #include <iostream>
 
 int main()
@@ -21,18 +21,28 @@ int main()
   }
 
   int ret = 0;
-
-  if (sub_max.has())
+  try
   {
-    std::cout << sub_max.res() << "\n";
+    std::cout << sub_max() << "\n";
   }
-  else
+  catch (std::bad_alloc& e)
   {
-    std::cerr << "Error: not enough elements for SUB-MAX" << "\n";
+    std::cerr << e.what() << "\n";
     ret = 2;
   }
 
-  std::cout << eql_seq.res() << "\n";
+  try
+  {
+    std::cout << eql_seq() << "\n";
+  }
+  catch (std::bad_alloc& e)
+  {
+    std::cerr << e.what() << "\n";
+    if (ret == 0)
+    {
+      ret = 2;
+    }
+  }
   return ret;
 }
 

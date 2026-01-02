@@ -1,4 +1,4 @@
-#include "EqlSeq.hpp"
+#include "eql_seq.hpp"
 #include <cstddef>
 
 namespace kuchukbaeva
@@ -28,9 +28,12 @@ namespace kuchukbaeva
     cnt_++;
   }
 
-  size_t EqlSeq::res() const
+  size_t EqlSeq::operator() const
   {
+    if (cnt_ == 0)
+    {
+      throw std::logic_error("No elements");
+    }
     return max_;
   }
 }
-

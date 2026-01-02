@@ -1,4 +1,4 @@
-#include "SubMax.hpp"
+#include "sub_max.hpp"
 #include <limits>
 #include <stdexcept>
 
@@ -28,13 +28,12 @@ namespace kuchukbaeva
     ++cnt_;
   }
 
-  int SubMax::res() const
+  int SubMax::operator()() const
   {
+    if (cnt_ < 2)
+    {
+      throw std::logic_error("Not enough elements");
+    }
     return sec_;
-  }
-
-  bool SubMax::has() const
-  {
-    return cnt_ >= 2;
   }
 }

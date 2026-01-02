@@ -1,5 +1,5 @@
-#ifndef EQLSEQ_HPP
-#define EQLSEQ_HPP
+#ifndef EQL_SEQ_HPP
+#define EQL_SEQ_HPP
 #include <cstddef>
 
 namespace kuchukbaeva
@@ -8,7 +8,7 @@ namespace kuchukbaeva
   {
     EqlSeq();
     void operator()(int v);
-    size_t res() const;
+    size_t operator()() const;
   private:
     size_t max_;
     size_t cur_;

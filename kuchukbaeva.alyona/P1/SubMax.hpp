@@ -1,5 +1,5 @@
-#ifndef SUBMAX_HPP
-#define SUBMAX_HPP
+#ifndef SUB_MAX_HPP
+#define SUB_MAX_HPP
 #include <cstddef>
 
 namespace kuchukbaeva
@@ -8,8 +8,7 @@ namespace kuchukbaeva
   {
     SubMax();
     void operator()(int v);
-    int res() const;
-    bool has() const;
+    int operator()() const;
   private:
     int max_, sec_;
     size_t cnt_;
