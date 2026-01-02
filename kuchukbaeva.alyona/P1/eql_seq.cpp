@@ -1,5 +1,6 @@
 #include "eql_seq.hpp"
 #include <cstddef>
+#include <stdexcept>
 
 namespace kuchukbaeva
 {

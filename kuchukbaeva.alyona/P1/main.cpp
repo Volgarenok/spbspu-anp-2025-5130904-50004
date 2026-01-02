@@ -1,6 +1,7 @@
 #include "sub_max.hpp"
 #include "eql_seq.hpp"
 #include <iostream>
+#include <stdexcept>
 
 int main()
 {
