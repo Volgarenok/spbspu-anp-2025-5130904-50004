@@ -28,7 +28,7 @@ namespace kuchukbaeva
     cnt_++;
   }
 
-  size_t EqlSeq::operator() const
+  size_t EqlSeq::operator()() const
   {
     if (cnt_ == 0)
     {
