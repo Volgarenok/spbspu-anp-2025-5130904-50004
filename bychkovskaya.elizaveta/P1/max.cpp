@@ -1,4 +1,5 @@
 #include "max.hpp"
+#include <stdexcept>
 
 bychkovskaya::Max::Max():
   k_(0),
@@ -19,5 +20,8 @@ void bychkovskaya::Max::operator()(int num)
 
 size_t bychkovskaya::Max::operator()() const
 {
+  if (k_ == 0) {
+    throw std::invalid_argument("Not enough elements to count quantity of max");
+  }
   return res_;
 }

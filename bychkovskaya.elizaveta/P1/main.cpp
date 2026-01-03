@@ -2,13 +2,12 @@
 #include "max.hpp"
 #include "previous.hpp"
 
-int main() {
-  size_t count = 0;
+int main() 
+{
   bychkovskaya::Max max;
   bychkovskaya::MoreThanPrevious prev;
   int num = 0;
   while (std::cin >> num && num != 0) {
-    ++count;
     prev(num);
     max(num);
   }
@@ -16,12 +15,12 @@ int main() {
     std::cerr << "Wrong input" << "\n";
     return 1;
   }
-  if (num == 0 && count == 0) {
-    std::cout << prev() << "\n";
-    std::cerr << "Not enough elements to count quantity of max" << "\n";
+  std::cout << prev() << "\n";
+  try {
+    std::cout << max() << "\n";
+  } catch (const std::invalid_argument& e) {
+    std::cerr << e.what() << "\n";
     return 2;
   }
-  std::cout << prev() << "\n";
-  std::cout << max() << "\n";
   return 0;
 }
