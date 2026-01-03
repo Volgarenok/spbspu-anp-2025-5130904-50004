@@ -1,6 +1,7 @@
 #include <iostream>
-#include "MonInc.hpp"
-#include "LocMin.hpp"
+#include <stdexcept>
+#include "mon_inc.hpp"
+#include "loc_min.hpp"
 
 int main()
 {
@@ -23,14 +24,16 @@ int main()
         return 1;
     }
 
-    if (count == 0)
+    try
     {
-        std::cout << mon_inc() << "\n";
-        std::cerr << "Too short a sequence for LOC-MIN\n";
-        return 2;
+       std::cout << mon_inc() << "\n";
+       std::cout << loc_min() << "\n";
+    }
+    catch (const std::logic_error& e)
+    {
+       std::cerr << e.what() << "\n";
+       return 2;
     }
 
-    std::cout << mon_inc() << "\n";
-    std::cout << loc_min() << "\n";
     return 0;
 }
