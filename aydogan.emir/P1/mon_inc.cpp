@@ -26,7 +26,7 @@ void aydogan::MonInc::operator()(int n)
     prev_ = n;
 }
 
-std::size_t aydogan::MonInc::operator()() const
+size_t aydogan::MonInc::operator()() const
 {
     return max_len_;
 }
