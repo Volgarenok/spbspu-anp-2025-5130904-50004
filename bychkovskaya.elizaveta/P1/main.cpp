@@ -2,7 +2,7 @@
 #include "max.hpp"
 #include "previous.hpp"
 
-int main() 
+int main()
 {
   bychkovskaya::Max max;
   bychkovskaya::MoreThanPrevious prev;
