@@ -2,37 +2,34 @@
 #include <istream>
 #include <cstddef>
 
-std::istream& aydogan::readMatrix(std::istream& input, int* arr, std::size_t count)
+std::istream& aydogan::readMatrix(std::istream& input, int* arr, size_t count)
 {
-  for (std::size_t i = 0; i < count; ++i)
+  for (size_t i = 0; i < count; ++i)
   {
     input >> arr[i];
   }
   return input;
 }
 
-int aydogan::numColLsr(int r, int c, const int* a)
+int aydogan::numColLsr(size_t r, size_t c, const int* a)
 {
-  if (r <= 0 || c <= 0)
+  if (r == 0 || c == 0)
   {
     return 0;
   }
 
-  std::size_t rr = static_cast< std::size_t >(r);
-  std::size_t cc = static_cast< std::size_t >(c);
+  size_t bestCol = 1;
+  size_t bestLen = 0;
 
-  std::size_t bestCol = 1;
-  std::size_t bestLen = 0;
-
-  for (std::size_t col = 0; col < cc; ++col)
+  for (size_t col = 0; col < c; ++col)
   {
-    std::size_t cur = 1;
-    std::size_t maxHere = 1;
+    size_t cur = 1;
+    size_t maxHere = 1;
 
-    for (std::size_t row = 1; row < rr; ++row)
+    for (size_t row = 1; row < r; ++row)
     {
-      int prev = a[(row - 1) * cc + col];
-      int now  = a[row * cc + col];
+      int prev = a[(row - 1) * c + col];
+      int now  = a[row * c + col];
 
       if (now == prev)
       {
@@ -58,31 +55,28 @@ int aydogan::numColLsr(int r, int c, const int* a)
   return static_cast< int >(bestCol);
 }
 
-long long aydogan::minSumMDG(int r, int c, const int* a)
+long long aydogan::minSumMDG(size_t r, size_t c, const int* a)
 {
-  if (r <= 0 || c <= 0)
+  if (r == 0 || c == 0)
   {
     return 0;
   }
 
-  std::size_t rr = static_cast< std::size_t >(r);
-  std::size_t cc = static_cast< std::size_t >(c);
-
   long long best = 0;
   bool first = true;
 
-  for (std::size_t s = 0; s <= (rr - 1) + (cc - 1); ++s)
+  for (size_t s = 0; s <= (r - 1) + (c - 1); ++s)
   {
     long long sum = 0;
     bool has = false;
 
-    for (std::size_t i = 0; i < rr; ++i)
+    for (size_t i = 0; i < r; ++i)
     {
       long long jll = static_cast< long long >(s) - static_cast< long long >(i);
-      if (jll >= 0 && static_cast< std::size_t >(jll) < cc)
+      if (jll >= 0 && static_cast< size_t >(jll) < c)
       {
-        std::size_t j = static_cast< std::size_t >(jll);
-        sum += a[i * cc + j];
+        size_t j = static_cast< size_t >(jll);
+        sum += a[i * c + j];
         has = true;
       }
     }

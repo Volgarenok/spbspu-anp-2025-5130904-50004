@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cstddef>
+#include <new>
 #include "matrix.hpp"
 
 int main(int argc, char** argv)
@@ -44,8 +45,8 @@ int main(int argc, char** argv)
     return 2;
   }
 
-  int r = 0;
-  int c = 0;
+  size_t r = 0;
+  size_t c = 0;
 
   if (!(in >> r >> c))
   {
@@ -53,7 +54,7 @@ int main(int argc, char** argv)
     return 2;
   }
 
-  if ((r == 0 && c != 0) || (r != 0 && c == 0) || (r < 0 || c < 0))
+  if ((r == 0 && c != 0) || (r != 0 && c == 0))
   {
     std::cerr << "Invalid rows or columns\n";
     return 2;
@@ -66,27 +67,28 @@ int main(int argc, char** argv)
     return 0;
   }
 
-  constexpr std::size_t MAX = 10000;
-
-  std::size_t rr = static_cast<std::size_t>(r);
-  std::size_t cc = static_cast<std::size_t>(c);
-  std::size_t count = rr * cc;
+  constexpr size_t MAX = 10000;
+  size_t count = r * c;
 
   int* a = nullptr;
   int staticArray[MAX];
 
   if (variant == 1)
   {
-    if (count > MAX)
-    {
-      std::cerr << "ERROR: Matrix is too big\n";
-      return 2;
-    }
+
     a = staticArray;
   }
   else
   {
-    a = new int[count];
+    try
+    {
+      a = new int[count];
+    }
+    catch (const std::bad_alloc&)
+    {
+      std::cerr << "ERROR: Memory allocation failed\n";
+      return 2;
+    }
   }
 
   aydogan::readMatrix(in, a, count);

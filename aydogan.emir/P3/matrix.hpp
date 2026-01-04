@@ -6,9 +6,9 @@
 
 namespace aydogan
 {
-  std::istream& readMatrix(std::istream& input, int* arr, std::size_t count);
-  int numColLsr(int r, int c, const int* a);
-  long long minSumMDG(int r, int c, const int* a);
+  std::istream& readMatrix(std::istream& input, int* arr, size_t count);
+  int numColLsr(size_t r, size_t c, const int* a);
+  long long minSumMDG(size_t r, size_t c, const int* a);
 }
 
 #endif
