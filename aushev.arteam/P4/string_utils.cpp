@@ -1,42 +1,83 @@
 #include "string_utils.hpp"
-#include <cstddef>
+#include <iostream>
+#include <new>
 
-namespace aushev {
-
-int has_sam(const char* s1, const char* s2) {
-    if (!s1 || !s2) return 0;
-    const char* p1 = s1;
-    while (*p1) {
-        const char* p2 = s2;
-        while (*p2) {
-            if (*p1 == *p2) return 1;
-            ++p2;
-        }
-        ++p1;
-    }
+int aushev::has_sam(const char* s1, const char* s2) {
+  if (!s1 || !s2) {
     return 0;
-}
-
-char* spc_rmv(char* dst, const char* src) {
-    if (!dst || !src) return nullptr;
-    char* out = dst;
-    const char* in = src;
-    while (*in == ' ') ++in;
-    bool space_pending = false;
-    while (*in) {
-        if (*in == ' ') {
-            space_pending = true;
-        } else {
-            if (space_pending) {
-                *out++ = ' ';
-                space_pending = false;
-            }
-            *out++ = *in;
-        }
-        ++in;
+  }
+  for (size_t i = 0; s1[i] != '\0'; ++i) {
+    for (size_t j = 0; s2[j] != '\0'; ++j) {
+      if (s1[i] == s2[j]) {
+        return 1;
+      }
     }
-    *out = '\0';
-    return dst;
+  }
+  return 0;
 }
 
+char* aushev::spc_rmv(char* dst, const char* src) {
+  if (!dst || !src) {
+    return nullptr;
+  }
+  size_t out_idx = 0;
+  size_t in_idx = 0;
+
+  while (src[in_idx] == ' ') {
+    ++in_idx;
+  }
+
+  bool space_pending = false;
+  while (src[in_idx] != '\0') {
+    if (src[in_idx] == ' ') {
+      space_pending = true;
+    } else {
+      if (space_pending) {
+        dst[out_idx] = ' ';
+        ++out_idx;
+        space_pending = false;
+      }
+      dst[out_idx] = src[in_idx];
+      ++out_idx;
+    }
+    ++in_idx;
+  }
+  dst[out_idx] = '\0';
+  return dst;
+}
+
+char* aushev::read_line() {
+  char* buf = nullptr;
+  size_t len = 0;
+  size_t cap = 64;
+
+  try {
+    buf = new char[cap];
+  } catch (const std::bad_alloc&) {
+    return nullptr;
+  }
+
+  char ch;
+  while (std::cin.get(ch) && ch != '\n') {
+    if (len + 1 >= cap) {
+      cap *= 2;
+      char* tmp = nullptr;
+      try {
+        tmp = new char[cap];
+      } catch (const std::bad_alloc&) {
+        delete[] buf;
+        return nullptr;
+      }
+      for (size_t i = 0; i <= len; ++i) {
+        tmp[i] = buf[i];
+      }
+      delete[] buf;
+      buf = tmp;
+    }
+    buf[len] = ch;
+    ++len;
+  }
+  buf[len] = '\0';
+
+  return buf;
 }
