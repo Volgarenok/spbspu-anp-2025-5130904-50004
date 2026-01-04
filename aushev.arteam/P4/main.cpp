@@ -5,7 +5,7 @@
 int main() {
   char* buf = aushev::read_line();
   if (!buf) {
-    std::cerr << "Allocation error\n";
+    std::cerr << "Input error\n";
     return 1;
   }
 

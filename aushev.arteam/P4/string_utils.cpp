@@ -1,6 +1,7 @@
 #include "string_utils.hpp"
 #include <iostream>
 #include <new>
+#include <cstddef>
 
 int aushev::has_sam(const char* s1, const char* s2) {
   if (!s1 || !s2) {
@@ -58,7 +59,12 @@ char* aushev::read_line() {
   }
 
   char ch;
-  while (std::cin.get(ch) && ch != '\n') {
+  bool read_any = false;
+  while (std::cin.get(ch)) {
+    read_any = true;
+    if (ch == '\n') {
+      break;
+    }
     if (len + 1 >= cap) {
       cap *= 2;
       char* tmp = nullptr;
@@ -78,6 +84,11 @@ char* aushev::read_line() {
     ++len;
   }
   buf[len] = '\0';
+
+  if (!read_any && std::cin.eof()) {
+    delete[] buf;
+    return nullptr;
+  }
 
   return buf;
 }
