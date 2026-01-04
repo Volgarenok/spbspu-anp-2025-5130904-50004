@@ -49,6 +49,6 @@ int main()
     std::cerr << e.what() << '\n';
     error = 2;
   }
-  
+
   return error;
 }
