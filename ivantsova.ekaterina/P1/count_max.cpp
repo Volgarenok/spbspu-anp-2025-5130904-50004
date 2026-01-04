@@ -1,39 +1,41 @@
 #include "count_max.hpp"
+#include <stdexcept>
 
-namespace ivantsova
-{
-  CountMax::CountMax():
+ivantsova::CountMax::CountMax():
   maxInit_(false),
   max_(0),
   count_(0)
-  {}
+{}
 
-  void CountMax::operator()(int a)
+void ivantsova::CountMax::operator()(int a)
+{
+  if (!maxInit_)
   {
-    if (!maxInit_)
-    {
-      max_ = a;
-      count_ = 1;
-      maxInit_ = true;
-    }
-    else if (a > max_)
-    {
-      max_ = a;
-      count_ = 1;
-    }
-    else if (a == max_)
-    {
-      ++count_;
-    }
+    max_ = a;
+    count_ = 1;
+    maxInit_ = true;
   }
+  else if (a > max_)
+  {
+    max_ = a;
+    count_ = 1;
+  }
+  else if (a == max_)
+  {
+    ++count_;
+  }
+}
 
-  size_t CountMax::operator()()const
+void ivantsova::CountMax::isValid() const
+{
+  if (!maxInit_)
   {
-    return count_;
+    throw std::runtime_error("Cannot calculate the number of maximum elements");
   }
+}
 
-  bool CountMax::isValid()const
-  {
-    return maxInit_;
-  }
+size_t ivantsova::CountMax::operator()() const
+{
+  isValid();
+  return count_;
 }

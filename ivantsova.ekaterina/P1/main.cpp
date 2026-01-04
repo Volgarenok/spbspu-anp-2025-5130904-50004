@@ -11,12 +11,8 @@ int main()
   ivantsova::CountMax countMax;
   ivantsova::CountDivisible countDiv;
 
-  while (std::cin >> a)
+  while (std::cin >> a && a != 0)
   {
-    if (a == 0)
-    {
-      break;
-    }
     sequenceStart = true;
     countMax(a);
     countDiv(a);
@@ -34,26 +30,25 @@ int main()
     return 2;
   }
 
-  if (countMax.isValid())
+  try
   {
     std::cout << countMax() << "\n";
   }
-
-  else
+  catch (const std::runtime_error& e)
   {
-    std::cerr << "Cannot calculate the number of maximum elements" << "\n";
+    std::cerr << e.what() << "\n";
     error = 2;
   }
 
-  if (countDiv.isValid())
+  try
   {
     std::cout << countDiv() << "\n";
   }
-
-  else
+  catch(const std::runtime_error& e)
   {
-    std::cerr << "Cannot calculate the number of numbers divisible by the previous element" << "\n";
+    std::cerr << e.what() << '\n';
     error = 2;
   }
+  
   return error;
 }

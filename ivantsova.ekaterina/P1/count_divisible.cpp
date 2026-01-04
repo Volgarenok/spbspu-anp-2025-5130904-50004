@@ -1,43 +1,45 @@
 #include "count_divisible.hpp"
+#include <stdexcept>
 
-namespace ivantsova
-{
-  CountDivisible::CountDivisible():
+ivantsova::CountDivisible::CountDivisible():
   prev_(0),
   count_(0),
   hasPrev_(false)
-  {}
+{}
 
-  void CountDivisible::operator()(int a)
+void ivantsova::CountDivisible::operator()(int a)
+{
+  if (hasPrev_ && prev_ != 0)
   {
-    if (hasPrev_ && prev_ != 0)
+    if (prev_ > 0)
     {
-      if (prev_ > 0)
+      if (a % prev_ == 0)
       {
-        if (a % prev_ == 0)
-        {
-          ++count_;
-        }
-      }
-      else
-      {
-        if (a % (-prev_) == 0)
-        {
-          ++count_;
-        }
+        ++count_;
       }
     }
-    prev_ = a;
-    hasPrev_ = true;
+    else
+    {
+      if (a % (-prev_) == 0)
+      {
+        ++count_;
+      }
+    }
   }
+  prev_ = a;
+  hasPrev_ = true;
+}
 
-  size_t CountDivisible::operator()()const
+void ivantsova::CountDivisible::isValid() const
+{
+  if (!hasPrev_)
   {
-    return count_;
+    throw std::runtime_error("Cannot calculate the number of numbers divisible by the previous element");
   }
+}
 
-  bool CountDivisible::isValid()const
-  {
-    return hasPrev_;
-  }
+size_t ivantsova::CountDivisible::operator()() const
+{
+  isValid();
+  return count_;
 }

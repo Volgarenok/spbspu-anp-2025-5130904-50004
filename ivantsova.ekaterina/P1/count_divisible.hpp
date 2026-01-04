@@ -9,13 +9,13 @@ namespace ivantsova
     CountDivisible();
 
     void operator()(int a);
-    size_t operator()()const;
-    bool isValid()const;
+    size_t operator()() const;
 
   private:
     int prev_;
     size_t count_;
     bool hasPrev_;
+    void isValid() const;
   };
 }
 
