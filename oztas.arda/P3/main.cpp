@@ -57,10 +57,9 @@ int main(int argc, char* argv[])
   }
 
   if (taskNum == 1) {
-    int result = oztas::countNonZeroDiagonals(matrix, rows, cols);
+    const int result = oztas::countNonZeroDiagonals(matrix, rows, cols);
     output << result;
-  }
-  else if (taskNum == 2) {
+  } else if (taskNum == 2) {
     oztas::applyFillIncreasingWave(matrix, rows, cols);
     oztas::writeMatrix(output, matrix, rows, cols);
   }
