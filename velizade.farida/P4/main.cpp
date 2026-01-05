@@ -5,7 +5,6 @@
 
 int main()
 {
-  const size_t size = 1000;
   char* data = velizade::read_string(std::cin, size);
   if (!data)
   {

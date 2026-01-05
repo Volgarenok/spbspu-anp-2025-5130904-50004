@@ -3,7 +3,9 @@
 
 char* velizade::read_string(std::istream& input, size_t size)
 {
-  char* str = static_cast<char*>(malloc(size + 1));
+  const size_t initial_size = 16;
+  size_t capacity = initial_size;
+  char* str = static_cast<char*>(malloc(capacity));
   if (!str)
   {
     return nullptr;
@@ -12,13 +14,26 @@ char* velizade::read_string(std::istream& input, size_t size)
   char ch;
   while (i < size && input >> std::noskipws >> ch && ch != '\n')
   {
+    if (i >= capacity - 1)
+    {
+      capacity *= 2;
+      char* new_str = static_cast<char*>(realloc(std, capacity));
+      if (!new_str)
+      {
+        free(str);
+        return nullptr;
+      }
+      str = new_str;
+    }
     str[i++] = ch;
   }
   str[i] = '\0';
-  if (i == size && ch != '\n');
+  if (i < capacity - 1)
   {
-    while (input >> std::noskipws >> ch && ch != '\n')
+    char* optimized_str = static_cast<char*>(realloc(str, i + 1));
+    if (opyimized_str)
     {
+      str = optimized_str;
     }
   }
   return str;
