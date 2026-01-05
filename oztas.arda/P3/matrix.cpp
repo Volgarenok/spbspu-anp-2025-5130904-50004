@@ -1,5 +1,6 @@
 #include "matrix.hpp"
 #include <istream>
+#include <ostream>
 
 namespace oztas
 {
@@ -11,22 +12,26 @@ namespace oztas
     if (!(input >> rows >> cols)) {
       return false;
     }
-    
+
     if (rows < 0 || cols < 0) {
       return false;
     }
-    
+
     if (rows == 0 || cols == 0) {
       return true;
     }
 
-    for (int i = 0; i < rows; ++i) {
-      for (int j = 0; j < cols; ++j) {
-        if (!(input >> matrix[i * cols + j])) {
+    const size_t srows = static_cast< size_t >(rows);
+    const size_t scols = static_cast< size_t >(cols);
+
+    for (size_t i = 0; i < srows; ++i) {
+      for (size_t j = 0; j < scols; ++j) {
+        if (!(input >> matrix[i * scols + j])) {
           return false;
         }
       }
     }
+
     return true;
   }
 
@@ -36,9 +41,13 @@ namespace oztas
                    int cols)
   {
     output << rows << " " << cols;
-    for (int i = 0; i < rows; ++i) {
-      for (int j = 0; j < cols; ++j) {
-        output << " " << matrix[i * cols + j];
+
+    const size_t srows = static_cast< size_t >(rows);
+    const size_t scols = static_cast< size_t >(cols);
+
+    for (size_t i = 0; i < srows; ++i) {
+      for (size_t j = 0; j < scols; ++j) {
+        output << " " << matrix[i * scols + j];
       }
     }
   }
