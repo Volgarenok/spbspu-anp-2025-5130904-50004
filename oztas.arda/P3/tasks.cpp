@@ -1,26 +1,27 @@
 #include "tasks.hpp"
 
-int oztas::countNonZeroDiagonals(const int* matrix, size_t rows, size_t cols) {
+int oztas::countNonZeroDiagonals(const int* matrix, size_t rows, size_t cols)
+{
   int result = 0;
 
-  const int minOffset = -static_cast<int>(rows) + 1;
-  const int maxOffset = static_cast<int>(cols) - 1;
-  
+  const int minOffset = -static_cast< int >(rows) + 1;
+  const int maxOffset = static_cast< int >(cols) - 1;
+
   for (int offset = minOffset; offset <= maxOffset; ++offset) {
     bool hasElement = false;
     bool allNonZero = true;
 
     for (size_t i = 0; i < rows; ++i) {
-      const int j = static_cast<int>(i) + offset;
-      
-      if (j < 0 || j >= static_cast<int>(cols)) {
+      const int j = static_cast< int >(i) + offset;
+
+      if (j < 0 || j >= static_cast< int >(cols)) {
         continue;
       }
 
       hasElement = true;
-      
-      const size_t j_index = static_cast<size_t>(j);
-      if (matrix[i * cols + j_index] == 0) {
+
+      const size_t jIndex = static_cast< size_t >(j);
+      if (matrix[i * cols + jIndex] == 0) {
         allNonZero = false;
         break;
       }
@@ -34,7 +35,12 @@ int oztas::countNonZeroDiagonals(const int* matrix, size_t rows, size_t cols) {
   return result;
 }
 
-void oztas::applyFillIncreasingWave(int* matrix, size_t rows, size_t cols) {
+void oztas::applyFillIncreasingWave(int* matrix, size_t rows, size_t cols)
+{
+  if (rows == 0 || cols == 0) {
+    return;
+  }
+
   int value = 1;
 
   size_t top = 0;
@@ -46,25 +52,31 @@ void oztas::applyFillIncreasingWave(int* matrix, size_t rows, size_t cols) {
     for (size_t j = left; j < right; ++j) {
       matrix[top * cols + j] = value++;
     }
-    top++;
+    ++top;
 
     for (size_t i = top; i <= bottom; ++i) {
       matrix[i * cols + right] = value++;
     }
-    right--;
+    if (right == 0) {
+      break;
+    }
+    --right;
 
     if (top <= bottom) {
       for (size_t j = right + 1; j > left; --j) {
-        matrix[bottom * cols + j - 1] = value++;
+        matrix[bottom * cols + (j - 1)] = value++;
       }
-      bottom--;
+      if (bottom == 0) {
+        break;
+      }
+      --bottom;
     }
 
     if (left <= right) {
       for (size_t i = bottom + 1; i > top; --i) {
         matrix[(i - 1) * cols + left] = value++;
       }
-      left++;
+      ++left;
     }
   }
 }
