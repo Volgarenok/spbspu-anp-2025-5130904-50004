@@ -1,6 +1,7 @@
 #ifndef STRING_OPERATIONS_HPP
 #define STRING_OPERATIONS_HPP
 #include <iostream>
+#include <iopmanip>
 
 namespace velizade
 {

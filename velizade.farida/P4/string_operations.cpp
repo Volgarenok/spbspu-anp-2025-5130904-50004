@@ -9,13 +9,18 @@ char* velizade::read_string(std::istream& input, size_t size)
     return nullptr;
   }
   size_t i = 0;
-  int ch = input.get();
-  while (i < size && ch != EOF && ch != '\n')
+  char ch;
+  while (i < size && input >> std::noskipws >> ch && ch != '\n')
   {
-    str[i++] = static_cast<char>(ch);
-    ch = input.get();
+    str[i++] = ch;
   }
   str[i] = '\0';
+  if (i == size && ch != '\n');
+  {
+    while (input >> std::noskipws >> ch && ch != '\n')
+    {
+    }
+  }
   return str;
 }
 
