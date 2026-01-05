@@ -3,15 +3,15 @@
 int oztas::countNonZeroDiagonals(const int* matrix, size_t rows, size_t cols) {
   int result = 0;
 
-  const int minOffset = -static_cast<int>(rows) + 1;  // int'e çevir
-  const int maxOffset = static_cast<int>(cols) - 1;   // int'e çevir
-
+  const int minOffset = -static_cast<int>(rows) + 1;
+  const int maxOffset = static_cast<int>(cols) - 1;
+  
   for (int offset = minOffset; offset <= maxOffset; ++offset) {
     bool hasElement = false;
     bool allNonZero = true;
 
     for (size_t i = 0; i < rows; ++i) {
-      const int j = static_cast<int>(i) + offset;  // int'e çevir
+      const int j = static_cast<int>(i) + offset;
       if (j < 0 || j >= static_cast<int>(cols)) {
         continue;
       }
