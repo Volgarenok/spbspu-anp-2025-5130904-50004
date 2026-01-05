@@ -2,6 +2,7 @@
 #define OZTAS_T3_MATRIX_HPP
 
 #include <iosfwd>
+#include <cstddef>
 
 namespace oztas
 {
