@@ -1,7 +1,7 @@
-#include "sub_max.hpp"
-#include "eql_seq.hpp"
 #include <iostream>
 #include <stdexcept>
+#include "sub_max.hpp"
+#include "eql_seq.hpp"
 
 int main()
 {
@@ -26,7 +26,7 @@ int main()
   {
     std::cout << sub_max() << "\n";
   }
-  catch (std::bad_alloc& e)
+  catch (const std::logic_error& e)
   {
     std::cerr << e.what() << "\n";
     ret = 2;
@@ -36,13 +36,10 @@ int main()
   {
     std::cout << eql_seq() << "\n";
   }
-  catch (std::bad_alloc& e)
+  catch (const std::logic_error& e)
   {
     std::cerr << e.what() << "\n";
-    if (ret == 0)
-    {
-      ret = 2;
-    }
+    ret = 2;
   }
   return ret;
 }
