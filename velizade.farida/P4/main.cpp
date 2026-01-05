@@ -1,23 +1,22 @@
 #include "string_operations.hpp"
 #include <cstdlib>
-#include <cstring>
 #include <iostream>
 
 int main()
 {
-  char* data = velizade::read_string(std::cin, size);
+  size_t len = 0;
+  char* data = velizade::read_string(std::cin, len);
   if (!data)
   {
     std::cerr << "Memory error" << "\n";
     return 1;
   }
-  if (!data[0])
+  if (len == 0)
   {
     std::cerr << "Empty input" << "\n";
     free(data);
     return 1;
   }
-  size_t len = strlen(data);
   char* buf1 = reinterpret_cast<char*>(malloc(len + 1));
   char* buf2 = reinterpret_cast<char*>(malloc(len + 10));
   if (!buf1 || !buf2)

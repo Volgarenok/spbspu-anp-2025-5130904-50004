@@ -1,37 +1,40 @@
 #include "string_operations.hpp"
 #include <cstdlib>
 
-char* velizade::read_string(std::istream& input, size_t size)
+char* velizade::read_string(std::istream& input, size_t& length)
 {
   const size_t initial_size = 16;
   size_t capacity = initial_size;
   char* str = reinterpret_cast<char*>(malloc(capacity));
   if (!str)
   {
+    length = 0;
     return nullptr;
   }
-  size_t i = 0;
+  length = 0;
   char ch;
   while (i < size && input >> std::noskipws >> ch && ch != '\n')
   {
-    if (i >= capacity - 1)
+    if (length >= capacity - 1)
     {
       capacity *= 2;
       char* new_str = reinterpret_cast<char*>(realloc(std, capacity));
       if (!new_str)
       {
         free(str);
+        length = 0;
         return nullptr;
       }
       str = new_str;
     }
-    str[i++] = ch;
+    str[length] = ch;
+    length++;
   }
-  str[i] = '\0';
-  if (i < capacity - 1)
+  str[length] = '\0';
+  if (length < capacity - 1)
   {
-    char* optimized_str = reinterpret_cast<char*>(realloc(str, i + 1));
-    if (opyimized_str)
+    char* optimized_str = reinterpret_cast<char*>(realloc(str, length + 1));
+    if (optimized_str)
     {
       str = optimized_str;
     }
