@@ -1,14 +1,14 @@
 #include "Int_array.h"
 #include <memory>
 
-Int_array::Int_array():
+alekseev::Int_array::Int_array():
   data_(nullptr),
   counter_(0),
   size_(0)
 {
 }
 
-Int_array::Int_array(const Int_array & rhs):
+alekseev::Int_array::Int_array(const Int_array & rhs):
   data_(new int[rhs.size()]),
   counter_(rhs.counter_),
   size_(rhs.size_)
@@ -18,7 +18,7 @@ Int_array::Int_array(const Int_array & rhs):
   }
 }
 
-Int_array & Int_array::operator=(const Int_array & rhs)
+alekseev::Int_array & alekseev::Int_array::operator=(const Int_array & rhs)
 {
   if (this == std::addressof(rhs)) {
     return *this;
@@ -35,7 +35,7 @@ Int_array & Int_array::operator=(const Int_array & rhs)
   return *this;
 }
 
-Int_array::Int_array(Int_array && rhs) noexcept:
+alekseev::Int_array::Int_array(Int_array && rhs) noexcept:
   data_(rhs.data_),
   counter_(rhs.counter_),
   size_(rhs.size_)
@@ -43,7 +43,7 @@ Int_array::Int_array(Int_array && rhs) noexcept:
   rhs.data_ = nullptr;
 }
 
-Int_array & Int_array::operator=(Int_array && rhs) noexcept
+alekseev::Int_array & alekseev::Int_array::operator=(Int_array && rhs) noexcept
 {
   if (this == std::addressof(rhs)) {
     return *this;
@@ -55,19 +55,19 @@ Int_array & Int_array::operator=(Int_array && rhs) noexcept
   return *this;
 }
 
-Int_array::Int_array(size_t s):
+alekseev::Int_array::Int_array(size_t s):
   data_(new int[s]{0}),
   counter_(0),
   size_(s)
 {
 }
 
-Int_array::~Int_array()
+alekseev::Int_array::~Int_array()
 {
   delete[] data_;
 }
 
-void Int_array::add(int a) noexcept
+void alekseev::Int_array::add(int a) noexcept
 {
   for (size_t i = 0; i < size() - 1; ++i) {
     data_[i] = get(i + 1);
@@ -76,17 +76,17 @@ void Int_array::add(int a) noexcept
   ++counter_;
 }
 
-int Int_array::get(size_t id) const
+int alekseev::Int_array::get(size_t id) const
 {
   return data_[id];
 }
 
-size_t Int_array::number() const noexcept
+size_t alekseev::Int_array::number() const noexcept
 {
   return counter_;
 }
 
-size_t Int_array::size() const noexcept
+size_t alekseev::Int_array::size() const noexcept
 {
   return size_;
 }
