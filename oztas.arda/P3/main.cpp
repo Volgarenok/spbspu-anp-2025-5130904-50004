@@ -4,8 +4,7 @@
 #include "matrix.hpp"
 #include "tasks.hpp"
 
-int main(int argc, char* argv[])
-{
+int main(int argc, char* argv[]) {
   if (argc != 4) {
     std::cerr << "invalid arguments\n";
     return 1;
@@ -14,12 +13,10 @@ int main(int argc, char* argv[])
   int taskNum = 0;
   try {
     taskNum = std::stoi(argv[1]);
-  }
-  catch (const std::invalid_argument&) {
+  } catch (const std::invalid_argument&) {
     std::cerr << "invalid task number\n";
     return 1;
-  }
-  catch (const std::out_of_range&) {
+  } catch (const std::out_of_range&) {
     std::cerr << "task number out of range\n";
     return 1;
   }
