@@ -8,9 +8,17 @@ namespace oztas
                   int& rows,
                   int& cols)
   {
-    if (!(input >> rows >> cols)) return false;
-    if (rows < 0 || cols < 0) return false;
-    if (rows == 0 || cols == 0) return true;
+    if (!(input >> rows >> cols)) {
+      return false;
+    }
+    
+    if (rows < 0 || cols < 0) {
+      return false;
+    }
+    
+    if (rows == 0 || cols == 0) {
+      return true;
+    }
 
     for (int i = 0; i < rows; ++i) {
       for (int j = 0; j < cols; ++j) {
