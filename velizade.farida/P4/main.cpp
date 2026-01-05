@@ -21,7 +21,7 @@ int main()
   char* result2 = velizade::uni_two(data, "def_");
   if (!result1)
   {
-    std::cerr << "REP_SYM faild" << "\n";
+    std::cerr << "REP_SYM failed" << "\n";
     free(data);
     if (result2)
     {

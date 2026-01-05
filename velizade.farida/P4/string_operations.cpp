@@ -150,5 +150,5 @@ char* velizade::uni_two(const char* str1, const char* str2)
     }
   }
   buffer[pos] = '\0';
-  return 0;
+  return buffer;
 }
