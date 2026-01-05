@@ -4,7 +4,6 @@
 #include <fstream>
 
 namespace bychkovskaya {
-  bool ifNumber(char* m);
   std::ifstream& inputMatrix(std::ifstream& in, int* m, size_t rows, size_t cols);
   size_t cntColNsm(const int* m, size_t rows, size_t cols);
   size_t cntNzrDig(const int* m, size_t rows, size_t cols);

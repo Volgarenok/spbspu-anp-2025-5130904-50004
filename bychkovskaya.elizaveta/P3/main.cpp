@@ -14,14 +14,8 @@ int main(int argc, char** argv)
     return 1;
   }
   if (!((argv[1][0] == '1' || argv[1][0] == '2') && argv[1][1] == '\0')) {
-    if (bychkovskaya::ifNumber(argv[1]) == 1) {
-      std::cerr << "First parameter is out of range" << "\n";
-      return 1;
-    }
-    if (bychkovskaya::ifNumber(argv[1]) == 0) {
-      std::cerr << "First parameter is not a number" << "\n";
-      return 1;
-    }
+    std::cerr << "Wrong first parameter" << "\n";
+    return 1;
   }
   size_t rows = 0;
   size_t cols = 0;

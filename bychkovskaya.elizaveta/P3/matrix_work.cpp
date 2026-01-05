@@ -2,22 +2,6 @@
 #include <fstream>
 #include <cctype>
 
-bool bychkovskaya::ifNumber(char* m)
-{
-  size_t k = 0;
-  size_t k1 = 0;
-  for (size_t i = 0; m[i] != '\0'; ++i) {
-    if (isdigit(m[i])) {
-      ++k;
-    }
-    ++k1;
-  }
-  if (k == k1) {
-    return true;
-  }
-  return false;
-}
-
 std::ifstream& bychkovskaya::inputMatrix(std::ifstream& in, int* m, size_t rows, size_t cols)
 {
   for (size_t i = 0; i < rows; ++i) {
