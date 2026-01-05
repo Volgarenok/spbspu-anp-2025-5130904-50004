@@ -12,12 +12,15 @@ int oztas::countNonZeroDiagonals(const int* matrix, size_t rows, size_t cols) {
 
     for (size_t i = 0; i < rows; ++i) {
       const int j = static_cast<int>(i) + offset;
+      
       if (j < 0 || j >= static_cast<int>(cols)) {
         continue;
       }
 
       hasElement = true;
-      if (matrix[i * cols + static_cast<size_t>(j)] == 0) {
+      
+      const size_t j_index = static_cast<size_t>(j);
+      if (matrix[i * cols + j_index] == 0) {
         allNonZero = false;
         break;
       }
