@@ -17,36 +17,29 @@ int main()
     free(data);
     return 1;
   }
-  char* buf1 = reinterpret_cast<char*>(malloc(len + 1));
-  char* buf2 = reinterpret_cast<char*>(malloc(len + 10));
-  if (!buf1 || !buf2)
-  {
-    std::cerr << "Memory error" << "\n";
-    free(data);
-    free(buf1);
-    free(buf2);
-    return 1;
-  }
-  if (velizade::rep_sym(buf1, data) != 0)
+  char* result1 = velizade::rep_sym(data);
+  char* result2 = velizade::uni_two(data, "def_");
+  if (!result1)
   {
     std::cerr << "REP_SYM faild" << "\n";
     free(data);
-    free(buf1);
-    free(buf2);
+    if (result2)
+    {
+      free(result2);
+    }
     return 1;
   }
-  if (velizade::uni_two(buf2, data, "def_") != 0)
+  if (!result2)
   {
     std::cerr << "UNI_TWO failed" << "\n";
     free(data);
-    free(buf1);
-    free(buf2);
+    free(result1);
     return 1;
   }
-  std::cout << buf1 << "\n";
-  std::cout << buf2 << "\n";
+  std::cout << result1 << "\n";
+  std::cout << result2 << "\n";
   free(data);
-  free(buf1);
-  free(buf2);
+  free(result1);
+  free(result2);
   return 0;
 }

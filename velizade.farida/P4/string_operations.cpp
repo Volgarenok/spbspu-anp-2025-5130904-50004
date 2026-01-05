@@ -42,43 +42,98 @@ char* velizade::read_string(std::istream& input, size_t& length)
   return str;
 }
 
-int velizade::rep_sym(char* buffer, const char* str)
+char* velizade::rep_sym(const char* str)
 {
-  if (!buffer || !str)
+  if (!str)
   {
-    return 1;
+    return nullptr;
+  }
+  size_t unique_count = 0;
+  for (size_t i = 0; str[i]; i++)
+  {
+    int count = 0;
+    for(size_t j = 0; str[j]; j++)
+    {
+      if str[i] == str[j])
+      {
+        count++;
+      }
+    }
+    if (count > 1)
+    {
+      bool already_counted = false;
+      for (size_t k = 0; k < i; k++)
+      {
+        if (str[k] == str[i])
+        {
+          already_counted = true;
+          break;
+        }
+      }
+      if (!already_counted)
+      {
+        unique_count++;
+      }
+    }
+  }
+  char* buffer = reinterpret_cast<char*>(malloc(unique_count + 1));
+  if (!buffer)
+  {
+    return nullptr;
   }
   size_t pos = 0;
   for (size_t i = 0; str[i]; i++)
   {
-    bool already_added = false;
-    for (size_t k = 0; k < pos; k++)
+    int count = 0;
+    for (size_t j = 0; str[j]; j++)
     {
-      if (buffer[k] == str[i])
+      if (str[i] == str[j])
       {
-        already_added = true;
-        break;
+        count++;
       }
     }
-    if (already_added)
-    {
-      continue;
-    }
-    int count = 0;
     if (count > 1)
     {
-      buffer[pos++] = str[i];
+      bool already_added = false;
+      for (size_t k = 0; k < pos; k++)
+      {
+        if (buffer[k] == str[i])
+        {
+          already_added = true;
+          break;
+        }
+      }
+      if (!already_added)
+      {
+        buffer[pos++] = str[i];
+      }
     }
   }
   buffer[pos] = '\0';
-  return 0;
+  return buffer;
 }
 
-int velizade::uni_two(char* buffer, const char* str1, const char* str2)
+char* velizade::uni_two(const char* str1, const char* str2)
 {
-  if (!buffer || !str1 || !str2)
+  if (!str1 || !str2)
   {
-    return 1;
+    return nullptr;
+  }
+  size_t len1 = 0;
+  size_t len2 = 0;
+  while (str1[len1])
+  {
+    len1++;
+  }
+  while (str2[len2])
+  {
+    len2++;
+  }
+  size_t total_len = len1 + len2;
+  char* buffer = reinterpret_cast<char*>(malloc(total_len + 1));
+  if (!buffer)
+  {
+    return nullptr;
   }
   size_t i = 0;
   size_t j = 0;
