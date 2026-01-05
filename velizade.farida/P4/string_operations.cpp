@@ -54,7 +54,7 @@ char* velizade::rep_sym(const char* str)
     int count = 0;
     for(size_t j = 0; str[j]; j++)
     {
-      if str[i] == str[j])
+      if (str[i] == str[j])
       {
         count++;
       }
