@@ -9,7 +9,7 @@ namespace alekseev {
 
     void update(int a) override;
     size_t value() const override;
-    const char * my_name() const override;
+    const char * name_impl() const override;
     bool cnted() const noexcept override;
 
     private:

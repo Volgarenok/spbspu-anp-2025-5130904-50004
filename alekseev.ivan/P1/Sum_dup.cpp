@@ -18,7 +18,7 @@ size_t alekseev::Sum_dup::value() const
   return k_;
 }
 
-const char * alekseev::Sum_dup::my_name() const
+const char * alekseev::Sum_dup::name_impl() const
 {
   return "Sum_dup";
 }

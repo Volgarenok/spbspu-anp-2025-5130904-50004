@@ -18,7 +18,7 @@ size_t alekseev::Pth_trp::value() const
   return k_;
 }
 
-const char * alekseev::Pth_trp::my_name() const
+const char * alekseev::Pth_trp::name_impl() const
 {
   return "Pth_trp";
 }

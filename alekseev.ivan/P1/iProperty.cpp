@@ -15,7 +15,7 @@ size_t alekseev::iProperty::operator()() const
 
 const char * alekseev::iProperty::name() const
 {
-  return my_name();
+  return name_impl();
 }
 
 bool alekseev::iProperty::countered() const noexcept

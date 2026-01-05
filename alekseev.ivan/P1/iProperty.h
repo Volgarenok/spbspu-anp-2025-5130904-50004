@@ -21,7 +21,7 @@ namespace alekseev {
     private:
       virtual void update(int a) = 0;
       virtual size_t value() const = 0;
-      virtual const char * my_name() const = 0;
+      virtual const char * name_impl() const = 0;
       virtual bool cnted() const noexcept = 0;
   };
 
