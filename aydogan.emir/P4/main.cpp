@@ -15,9 +15,14 @@ int main()
   char* second = aydogan::readString(std::cin);
   if (!second)
   {
-    std::free(first);
-    std::cerr << "Input error\n";
-    return 1;
+    second = reinterpret_cast< char* >(std::malloc(1));
+    if (!second)
+    {
+      std::free(first);
+      std::cerr << "Memory allocation error\n";
+      return 1;
+    }
+    second[0] = '\0';
   }
 
   size_t len1 = 0;
@@ -32,7 +37,7 @@ int main()
     ++len2;
   }
 
-  char* no_vowels = static_cast< char* >(std::malloc(len1 + 1));
+  char* no_vowels = reinterpret_cast< char* >(std::malloc(len1 + 1));
   if (!no_vowels)
   {
     std::free(first);
@@ -44,7 +49,7 @@ int main()
   aydogan::removeVowels(first, no_vowels);
   std::cout << no_vowels << '\n';
 
-  char* with_digits = static_cast< char* >(std::malloc(len1 + len2 + 1));
+  char* with_digits = reinterpret_cast< char* >(std::malloc(len1 + len2 + 1));
   if (!with_digits)
   {
     std::free(first);
