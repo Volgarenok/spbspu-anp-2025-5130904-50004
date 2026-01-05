@@ -4,8 +4,8 @@
 
 int main()
 {
-  variants::LocalMax lm;
-  variants::SignChange sc;
+  velizade::LocalMax lm;
+  velizade ::SignChange sc;
   int val;
   bool got_any = false;
   int rc = 0;
