@@ -38,12 +38,13 @@ int main(int argc, char* argv[])
 
   int rows = 0;
   int cols = 0;
+  
   constexpr int MAX = 256;
   int matrix[MAX * MAX];
+  
   for (int i = 0; i < MAX * MAX; ++i) {
     matrix[i] = 0;
   }
-
 
   if (!oztas::readMatrix(input, matrix, rows, cols)) {
     std::cerr << "invalid matrix data\n";
