@@ -19,14 +19,6 @@ char* velizade::read_string(std::istream& input, size_t size)
   return str;
 }
 
-void velizade::print_string(std::ostream& output, const char* str)
-{
-  if (str)
-  {
-    output << str;
-  }
-}
-
 int velizade::rep_sym(char* buffer, const char* str)
 {
   if (!buffer || !str)

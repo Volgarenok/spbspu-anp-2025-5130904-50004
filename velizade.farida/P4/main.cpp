@@ -37,7 +37,7 @@ int main()
     free(buf2);
     return 1;
   }
-  if (velizade::uni_two(buf2, input, "def_") != 0)
+  if (velizade::uni_two(buf2, data, "def_") != 0)
   {
     std::cerr << "UNI_TWO failed" << "\n";
     free(data);
@@ -45,10 +45,8 @@ int main()
     free(buf2);
     return 1;
   }
-  velizade::print_string(std::cout, buf1);
-  std::cout << "\n";
-  velizade::print_string(std::cout, buf2);
-  std::cout << "\n";
+  std::cout << buf1 << "\n";
+  std::cout << buf2 << "\n";
   free(data);
   free(buf1);
   free(buf2);
