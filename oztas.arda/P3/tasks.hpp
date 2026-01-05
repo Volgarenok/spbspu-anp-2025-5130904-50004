@@ -5,9 +5,9 @@
 
 namespace oztas
 {
-  int countNonZeroDiagonals(const int* matrix, int rows, int cols);
+  int countNonZeroDiagonals(const int* matrix, size_t rows, size_t cols);
 
-  void applyFillIncreasingWave(int* matrix, int rows, int cols);
+  void applyFillIncreasingWave(int* matrix, size_t rows, size_t cols);
 }
 
 #endif
