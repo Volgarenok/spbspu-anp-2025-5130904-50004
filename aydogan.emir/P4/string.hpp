@@ -1,6 +1,6 @@
 #ifndef STRING_HPP
 #define STRING_HPP
-#include <cstddef>
+
 #include <iosfwd>
 
 namespace aydogan
@@ -11,4 +11,3 @@ namespace aydogan
 }
 
 #endif
-

@@ -7,8 +7,8 @@ namespace
 {
   bool isLatinVowel(char c) noexcept
   {
-return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y'
-|| c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U' || c == 'Y';
+    return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y' ||
+    c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U' || c == 'Y';
   }
 }
 
@@ -20,19 +20,21 @@ char* aydogan::readString(std::istream& in)
   }
 
   size_t capacity = 16;
-  char* buffer = reinterpret_cast< char* >(malloc(capacity));
+  char* buffer = static_cast< char* >(std::malloc(capacity));
   if (!buffer)
   {
     return nullptr;
   }
 
-  in >> std::noskipws;
-
   size_t length = 0;
   char c = '\0';
 
-  while (in >> c)
+  while (in.get(c))
   {
+    if (c == '\r')
+    {
+      continue;
+    }
     if (c == '\n')
     {
       break;
@@ -41,11 +43,10 @@ char* aydogan::readString(std::istream& in)
     if (length + 1 >= capacity)
     {
       size_t new_capacity = capacity * 2;
-      char* new_buffer =
-      reinterpret_cast< char* >(realloc(buffer, new_capacity));
+      char* new_buffer = static_cast< char* >(std::realloc(buffer, new_capacity));
       if (!new_buffer)
       {
-        free(buffer);
+        std::free(buffer);
         return nullptr;
       }
       buffer = new_buffer;
@@ -58,7 +59,7 @@ char* aydogan::readString(std::istream& in)
 
   if (!in && length == 0)
   {
-    free(buffer);
+    std::free(buffer);
     return nullptr;
   }
 
@@ -116,4 +117,3 @@ char* aydogan::appendDigits(const char* first, const char* second, char* dest) n
   dest[j] = '\0';
   return dest;
 }
-
