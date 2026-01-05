@@ -13,12 +13,12 @@ char* velizade::read_string(std::istream& input, size_t& length)
   }
   length = 0;
   char ch;
-  while (i < size && input >> std::noskipws >> ch && ch != '\n')
+  while (input >> std::noskipws >> ch && ch != '\n')
   {
     if (length >= capacity - 1)
     {
       capacity *= 2;
-      char* new_str = reinterpret_cast<char*>(realloc(std, capacity));
+      char* new_str = reinterpret_cast<char*>(realloc(str, capacity));
       if (!new_str)
       {
         free(str);
