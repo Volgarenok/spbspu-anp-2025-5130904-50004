@@ -39,12 +39,10 @@ int main(int argc, char* argv[])
   int rows = 0;
   int cols = 0;
   constexpr int MAX = 256;
-  int matrix[MAX][MAX];
-  for (int i = 0; i < MAX; ++i) {
-  for (int j = 0; j < MAX; ++j) {
-    matrix[i][j] = 0;
+  int matrix[MAX * MAX];
+  for (int i = 0; i < MAX * MAX; ++i) {
+    matrix[i] = 0;
   }
-}
 
 
   if (!oztas::readMatrix(input, matrix, rows, cols)) {
@@ -58,11 +56,11 @@ int main(int argc, char* argv[])
   }
 
   if (taskNum == 1) {
-    int result = oztas::countNonZeroDiagonals(&matrix[0][0], rows, cols);
+    int result = oztas::countNonZeroDiagonals(matrix, rows, cols);
     output << result;
   }
   else if (taskNum == 2) {
-    oztas::applyFillIncreasingWave(&matrix[0][0], rows, cols);
+    oztas::applyFillIncreasingWave(matrix, rows, cols);
     oztas::writeMatrix(output, matrix, rows, cols);
   }
 
