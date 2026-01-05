@@ -18,8 +18,8 @@ int main()
     return 1;
   }
   size_t len = strlen(data);
-  char* buf1 = static_cast<char*>(malloc(len + 1));
-  char* buf2 = static_cast<char*>(malloc(len + 10));
+  char* buf1 = reinterpret_cast<char*>(malloc(len + 1));
+  char* buf2 = reinterpret_cast<char*>(malloc(len + 10));
   if (!buf1 || !buf2)
   {
     std::cerr << "Memory error" << "\n";
