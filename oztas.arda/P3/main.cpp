@@ -1,10 +1,11 @@
 #include <iostream>
 #include <fstream>
-#include <cstdlib>
+
 #include "matrix.hpp"
 #include "tasks.hpp"
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[])
+{
   if (argc != 4) {
     std::cerr << "invalid arguments\n";
     return 1;
@@ -18,6 +19,11 @@ int main(int argc, char* argv[]) {
     return 1;
   } catch (const std::out_of_range&) {
     std::cerr << "task number out of range\n";
+    return 1;
+  }
+
+  if (taskNum != 1 && taskNum != 2) {
+    std::cerr << "unsupported task number\n";
     return 1;
   }
 
@@ -35,24 +41,39 @@ int main(int argc, char* argv[]) {
 
   int rows = 0;
   int cols = 0;
-  
-  constexpr int MAX = 256;
-  int matrix[MAX * MAX];
 
-  if (!oztas::readMatrix(input, matrix, rows, cols)) {
+  if (!(input >> rows >> cols)) {
     std::cerr << "invalid matrix data\n";
     return 2;
   }
+
+  if (rows < 0 || cols < 0) {
+    std::cerr << "invalid matrix data\n";
+    return 2;
+  }
+
+  constexpr int MAX = 256;
+  if (rows > MAX || cols > MAX) {
+    std::cerr << "invalid matrix data\n";
+    return 2;
+  }
+
+  int matrix[MAX * MAX];
 
   if (rows == 0 || cols == 0) {
     output << "0 0";
     return 0;
   }
 
+  if (!oztas::readMatrix(input, matrix, rows, cols)) {
+    std::cerr << "invalid matrix data\n";
+    return 2;
+  }
+
   if (taskNum == 1) {
     const int result = oztas::countNonZeroDiagonals(matrix, rows, cols);
     output << result;
-  } else if (taskNum == 2) {
+  } else {
     oztas::applyFillIncreasingWave(matrix, rows, cols);
     oztas::writeMatrix(output, matrix, rows, cols);
   }
