@@ -5,9 +5,9 @@
 
 namespace aydogan
 {
-  char * readString(std::istream & in);
-  char * removeVowels(const char * src, char * dest) noexcept;
-  char * appendDigits(const char * first, const char * second, char * dest) noexcept;
+  char* readString(std::istream& in);
+  char* removeVowels(const char* src, char* dest) noexcept;
+  char* appendDigits(const char* first, const char* second, char* dest) noexcept;
 }
 
 #endif

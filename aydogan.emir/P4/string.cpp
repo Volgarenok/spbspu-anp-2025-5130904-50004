@@ -31,13 +31,8 @@ char* aydogan::readString(std::istream& in)
   size_t length = 0;
   char c = '\0';
 
-  while (in >> c)
+  while ((in >> c) && (c != '\n'))
   {
-    if (c == '\n')
-    {
-      break;
-    }
-
     if (length + 1 >= capacity)
     {
       size_t new_capacity = capacity * 2;
