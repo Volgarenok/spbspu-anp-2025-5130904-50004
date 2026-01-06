@@ -1,22 +1,24 @@
 #ifndef RTH_TRP_HPP
 #define RTH_TRP_HPP
 
-#include "base.hpp"
+#include "sequence_analyzer.hpp"
 #include <cstddef>
+#include <stdexcept>
 
-namespace zinovev {
-
-struct RTH_TRP : Base
+namespace zinovev
 {
-  RTH_TRP();
-  void operator()() const override;
-  void operator()(int const x) override;
-  bool few_numbers();
+  class RTH_TRP : public SequenceAnalyzer
+  {
+  public:
+    RTH_TRP() = default;
 
- private:
-  int a_ = 0, b_ = 0, c_ = 0;
-  size_t pth_trp_;
-};
+  private:
+    void doOutput() const override;
+    void doProcess(int x) override;
+
+    int a_ = 0, b_ = 0, c_ = 0;
+    size_t pth_trp_ = 0;
+  };
 }
 
 #endif

@@ -1,21 +1,23 @@
 #ifndef EQL_SEQ_HPP
 #define EQL_SEQ_HPP
 
-#include "base.hpp"
+#include "sequence_analyzer.hpp"
 #include <cstddef>
 
-namespace zinovev {
-
-struct EQL_SEQ : Base
+namespace zinovev
 {
-  EQL_SEQ();
-  void operator()() const override;
-  void operator()(int const x) override;
+  class EQL_SEQ : public SequenceAnalyzer
+  {
+  public:
+    EQL_SEQ() = default;
 
- private:
-  int max_;
-  size_t eql_seq_;
-};
+  private:
+    void doOutput() const override;
+    void doProcess(int x) override;
+
+    int max_ = 0;
+    size_t eql_seq_ = 0;
+  };
 }
 
 #endif
