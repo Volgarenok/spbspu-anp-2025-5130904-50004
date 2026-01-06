@@ -1,7 +1,7 @@
 #include "loc_min.hpp"
 #include <stdexcept>
 
-aydogan::LocMin::LocMin() :
+aydogan::LocMin::LocMin():
   k_(0),
   a_(0),
   b_(0),
