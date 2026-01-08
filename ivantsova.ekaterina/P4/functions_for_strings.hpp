@@ -5,8 +5,8 @@
 namespace ivantsova
 {
   char * readLine(std::istream & in, size_t & size);
-  void interleaveStrings(const char * str1, const char * str2, char * result);
-  void addDigits(const char * str1, const char * str2, char * result, size_t & result_size);
+  const char * interleaveStrings(const char * str1, const char * str2, char * result);
+  const char * addDigits(const char * str1, const char * str2, char * result, size_t * result_size);
 }
 
 #endif

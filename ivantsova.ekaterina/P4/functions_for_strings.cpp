@@ -57,7 +57,7 @@ char * ivantsova::readLine(std::istream & in, size_t & size)
   return result;
 }
 
-void ivantsova::interleaveStrings(const char * str1, const char * str2, char * result)
+const char * ivantsova::interleaveStrings(const char * str1, const char * str2, char * result)
 {
   size_t i = 0;
   size_t j = 0;
@@ -74,9 +74,10 @@ void ivantsova::interleaveStrings(const char * str1, const char * str2, char * r
     }
   }
   result[index] = '\0';
+  return result;
 }
 
-void ivantsova::addDigits(const char * str1, const char * str2, char * result, size_t & result_size)
+const char * ivantsova::addDigits(const char * str1, const char * str2, char * result, size_t * result_size)
 {
   size_t i = 0;
   size_t j = 0;
@@ -93,6 +94,7 @@ void ivantsova::addDigits(const char * str1, const char * str2, char * result, s
     }
     j++;
   }
-  result_size = index;
+  *result_size = index;
   result[index] = '\0';
+  return result;
 }
