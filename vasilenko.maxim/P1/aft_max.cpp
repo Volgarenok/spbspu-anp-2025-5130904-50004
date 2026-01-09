@@ -4,15 +4,15 @@ vasilenko::Aft_max::Aft_max():
   max_value_(0),
   count_after_max_(0),
   max_found_(false),
-  has_elements_(false)
-{
-}
+  data_(Int_array(10000))
+{}
 
-void vasilenko::Aft_max::update(int a)
+void vasilenko::Aft_max::operator()(int a)
 {
-  if (!has_elements_) {
+  data_.add(a);
+
+  if (data_.number() == 1) {
     max_value_ = a;
-    has_elements_ = true;
     return;
   }
 
@@ -37,5 +37,5 @@ const char * vasilenko::Aft_max::my_name() const
 
 bool vasilenko::Aft_max::cnted() const noexcept
 {
-  return has_elements_;
+  return data_.number() > 0 && max_found_;
 }
