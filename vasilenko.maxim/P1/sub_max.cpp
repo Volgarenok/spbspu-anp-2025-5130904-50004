@@ -4,8 +4,7 @@ vasilenko::Sub_max::Sub_max():
   max_value_(0),
   second_max_value_(0),
   count_(0)
-{
-}
+{}
 
 void vasilenko::Sub_max::update(int a)
 {
