@@ -17,6 +17,7 @@ namespace vasilenko {
   private:
     int max_value_;
     int second_max_value_;
+    bool second_found_;
     Int_array data_;
   };
 }
