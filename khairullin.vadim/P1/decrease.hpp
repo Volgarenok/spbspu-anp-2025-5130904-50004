@@ -1,15 +1,17 @@
-#ifndef MAXIMUMS_HPP
-#define MAXIMUMS_HPP
+#ifndef DECREASE_HPP
+#define DECREASE_HPP
 #include <cstddef>
 namespace khairullin
 {
-  struct Maximums
+  struct Decrease
   {
-    Maximums();
+    Decrease();
     void operator()(int a);
     size_t operator()();
+  private:
     size_t k;
-    int maximum;
+    size_t max_mean;
+    int temp;
   };
 }
 #endif

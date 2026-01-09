@@ -1,8 +1,8 @@
-#include "Maximums.hpp"
+#include "maximums.hpp"
 
 khairullin::Maximums::Maximums():
-k{0},
-maximum{0}
+  k{0},
+  maximum{0}
 {}
 
 void khairullin::Maximums::operator()(int a)
@@ -17,6 +17,7 @@ void khairullin::Maximums::operator()(int a)
     k++;
   }
 }
+
 size_t khairullin::Maximums::operator()()
 {
   return k;
