@@ -10,8 +10,8 @@ namespace khairullin
     size_t operator()();
   private:
     size_t k;
-    size_t max_mean;
     int temp;
+    size_t max_mean;
   };
 }
 #endif
