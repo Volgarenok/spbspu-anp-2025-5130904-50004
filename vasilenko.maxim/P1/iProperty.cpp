@@ -2,11 +2,6 @@
 #include "aft_max.h"
 #include "sub_max.h"
 
-void vasilenko::iProperty::operator()(int a)
-{
-  (*this)(a);
-}
-
 size_t vasilenko::iProperty::operator()() const
 {
   return value();

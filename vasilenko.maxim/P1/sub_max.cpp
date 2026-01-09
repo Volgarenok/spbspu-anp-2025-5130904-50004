@@ -5,7 +5,8 @@ vasilenko::Sub_max::Sub_max():
   max_value_(0),
   second_max_value_(std::numeric_limits<int>::min()),
   data_(Int_array(2))
-{}
+{
+}
 
 void vasilenko::Sub_max::operator()(int a)
 {

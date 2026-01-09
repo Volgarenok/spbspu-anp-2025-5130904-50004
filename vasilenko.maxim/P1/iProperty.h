@@ -14,14 +14,13 @@ namespace vasilenko {
   struct iProperty {
     virtual ~iProperty() = default;
 
-    void operator()(int a);
+    virtual void operator()(int a) = 0;
     size_t operator()() const;
     const char * name() const;
     bool countered() const noexcept;
     std::ostream & print(std::ostream & out) const noexcept;
 
   private:
-    virtual void operator()(int a) = 0;
     virtual size_t value() const = 0;
     virtual const char * my_name() const = 0;
     virtual bool cnted() const noexcept = 0;
