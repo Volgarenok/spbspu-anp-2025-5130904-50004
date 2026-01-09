@@ -3,12 +3,13 @@
 
 #include "iProperty.h"
 #include "Int_array.h"
+#include <limits>
 
 namespace vasilenko {
   struct Sub_max final: iProperty {
     Sub_max();
 
-    void update(int a) override;
+    void operator()(int a) override;
     size_t value() const override;
     const char * my_name() const override;
     bool cnted() const noexcept override;
@@ -16,7 +17,7 @@ namespace vasilenko {
   private:
     int max_value_;
     int second_max_value_;
-    size_t count_;
+    Int_array data_;
   };
 }
 
