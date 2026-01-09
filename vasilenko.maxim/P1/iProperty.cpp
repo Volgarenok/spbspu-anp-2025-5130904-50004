@@ -4,7 +4,7 @@
 
 void vasilenko::iProperty::operator()(int a)
 {
-  update(a);
+  (*this)(a);
 }
 
 size_t vasilenko::iProperty::operator()() const
