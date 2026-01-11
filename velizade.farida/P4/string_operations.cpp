@@ -4,14 +4,15 @@
 
 char* velizade::read_string(std::istream& input, size_t& length)
 {
+  std::ios::fmtflags original_flags = input.flags();
   size_t capacity = 32;
   size_t size = 0;
   char* buffer = static_cast< char* >( malloc( capacity ) );
   if (!buffer)
   {
+    input.flags(original_flags);
     return nullptr;
   }
-  std::ios::fmtflags flags = input.flags();
   input >> std::noskipws;
   char ch;
   while (input >> ch && ch != '\n')
@@ -23,7 +24,7 @@ char* velizade::read_string(std::istream& input, size_t& length)
       if (!new_buffer)
       {
         free(buffer);
-        input.flags(flags);
+        input.flags(original_flags);
         return nullptr;
       }
       buffer = new_buffer;
@@ -32,7 +33,6 @@ char* velizade::read_string(std::istream& input, size_t& length)
     size++;
   }
   buffer[size] = '\0';
-  input.flags(flags);
   length = size;
   if (size + 1 < capacity)
   {
@@ -42,6 +42,7 @@ char* velizade::read_string(std::istream& input, size_t& length)
       buffer = exact_buffer;
     }
   }
+  input.flags(original_flags);
   return buffer;
 }
 
