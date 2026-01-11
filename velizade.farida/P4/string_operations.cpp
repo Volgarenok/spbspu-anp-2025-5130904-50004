@@ -6,7 +6,7 @@ char* velizade::read_string(std::istream& input, size_t& length)
 {
   size_t capacity = 32;
   size_t size = 0;
-  char* buffer = static_cast<char*>(malloc(capacity));
+  char* buffer = static_cast< char* >( malloc( capacity ) );
   if (!buffer)
   {
     return nullptr;
@@ -19,7 +19,7 @@ char* velizade::read_string(std::istream& input, size_t& length)
     if (size + 1 >= capacity)
     {
       capacity *= 2;
-      char* new_buffer = static_cast<char*>(realloc(buffer, capacity));
+      char* new_buffer = static_cast< char* >( realloc( buffer, capacity ) );
       if (!new_buffer)
       {
         free(buffer);
@@ -36,7 +36,7 @@ char* velizade::read_string(std::istream& input, size_t& length)
   length = size;
   if (size + 1 < capacity)
   {
-    char* exact_buffer = static_cast<char*>(realloc(buffer, size + 1));
+    char* exact_buffer = static_cast< char* >( realloc( buffer, size + 1 ) );
     if (exact_buffer)
     {
       buffer = exact_buffer;
