@@ -1,40 +1,26 @@
 #include "string_operations.hpp"
 #include <cstdlib>
-#include <ios>
+#include <iostream>
 
-char* velizade::read_string(std::istream& input, size_t size)
+char* velizade::read_string(std::istream& input, size_t& length)
 {
-  char* str = static_cast<char*>(malloc(size + 1));
-  if (!str)
-  {
-    return nullptr;
-  }
-  std::ios::fmtflags original_flags = input.flags();
-  input >> std::noskipws;
-  size_t i = 0;
-  char ch;
- try
-  {
-    while (i < size && input >> ch && ch != '\n')
+    std::ios::fmtflags flags = input.flags();
+    char* str = static_cast<char*>(malloc(length + 1));
+    if (!str)
     {
-      str[i++] = ch;
+        return nullptr;
+    }
+    size_t i = 0;
+    char ch;
+    input >> std::noskipws;
+    while (i < length && input >> ch && ch != '\n')
+    {
+        str[i++] = ch;
     }
     str[i] = '\0';
-    if (i == size && input && ch != '\n')
-    {
-      while (input >> ch && ch != '\n')
-      {
-      }
-    }
-  }
-  catch (const std::ios::failure& e)
-  {
-    input.flags(original_flags);
-    free(str);
-    throw;
-  }
-  input.flags(original_flags);
-  return str;
+    input.flags(flags);
+    length = i;
+    return str;
 }
 
 int velizade::rep_sym(char* buffer, const char* str)
