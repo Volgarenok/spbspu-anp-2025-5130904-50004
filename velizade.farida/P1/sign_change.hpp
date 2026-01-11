@@ -7,10 +7,8 @@ namespace velizade
   struct SignChange
   {
     SignChange();
-
     void operator()(int cur);
     size_t operator()() const;
-
   private:
     void check() const;
     bool hasPrev_;

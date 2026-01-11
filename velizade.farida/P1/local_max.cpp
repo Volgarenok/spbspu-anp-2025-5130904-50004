@@ -18,7 +18,6 @@ void velizade::LocalMax::operator()(int cur)
       ++count_;
     }
   }
-
   prev_ = next_;
   hasPrev_ = hasNext_;
   next_ = cur;

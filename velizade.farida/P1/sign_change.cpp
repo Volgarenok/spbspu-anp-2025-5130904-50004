@@ -16,7 +16,6 @@ void velizade::SignChange::operator()(int cur)
       ++count_;
     }
   }
-
   prev_ = cur;
   hasPrev_ = true;
 }
