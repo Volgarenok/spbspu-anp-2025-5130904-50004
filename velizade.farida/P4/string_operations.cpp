@@ -23,7 +23,7 @@ char* velizade::read_string(std::istream& input, size_t& length)
     return str;
 }
 
-int velizade::rep_sym(char* buffer, const char* str)
+char* velizade::rep_sym(const char* str)
 {
   if (!buffer || !str)
   {
@@ -55,7 +55,7 @@ int velizade::rep_sym(char* buffer, const char* str)
   return 0;
 }
 
-int velizade::uni_two(char* buffer, const char* str1, const char* str2)
+char* velizade::uni_two(const char* str1, const char* str2)
 {
   if (!buffer || !str1 || !str2)
   {
