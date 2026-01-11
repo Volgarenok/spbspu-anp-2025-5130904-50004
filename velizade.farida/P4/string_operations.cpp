@@ -4,23 +4,45 @@
 
 char* velizade::read_string(std::istream& input, size_t& length)
 {
-    std::ios::fmtflags flags = input.flags();
-    char* str = static_cast< char* >( malloc( length + 1 ) );
-    if (!str)
+  size_t capacity = 32;
+  size_t size = 0;
+  char* buffer = static_cast<char*>(malloc(capacity));
+  if (!buffer)
+  {
+    return nullptr;
+  }
+  std::ios::fmtflags flags = input.flags();
+  input >> std::noskipws;
+  char ch;
+  while (input >> ch && ch != '\n')
+  {
+    if (size + 1 >= capacity)
     {
+      capacity *= 2;
+      char* new_buffer = static_cast<char*>(realloc(buffer, capacity));
+      if (!new_buffer)
+      {
+        free(buffer);
+        input.flags(flags);
         return nullptr;
+      }
+      buffer = new_buffer;
     }
-    size_t i = 0;
-    char ch;
-    input >> std::noskipws;
-    while (i < length && input >> ch && ch != '\n')
+    buffer[size] = ch;
+    size++;
+  }
+  buffer[size] = '\0';
+  input.flags(flags);
+  length = size;
+  if (size + 1 < capacity)
+  {
+    char* exact_buffer = static_cast<char*>(realloc(buffer, size + 1));
+    if (exact_buffer)
     {
-        str[i++] = ch;
+      buffer = exact_buffer;
     }
-    str[i] = '\0';
-    input.flags(flags);
-    length = i;
-    return str;
+  }
+  return buffer;
 }
 
 char* velizade::rep_sym(const char* str)
