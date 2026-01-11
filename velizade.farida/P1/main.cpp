@@ -16,7 +16,17 @@ int main()
   }
   if (std::cin.fail())
   {
-    if (!std::cin.eof() || val != 0)
+    if (std::cin.eof() && !got_any)
+    {
+      std::cerr << "bad input" << "\n";
+      return 1;
+    }
+    else if (std::cin.eof() && got_any)
+    {
+      std::cerr << "bad input" << "\n";
+      return 1;
+    }
+    else if (!std::cin.eof())
     {
       std::cerr << "bad input" << "\n";
       return 1;
