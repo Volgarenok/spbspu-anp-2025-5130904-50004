@@ -2,8 +2,10 @@
 #include <iostream>
 #include <new>
 
-int main() {
-  char* buf = aushev::read_line();
+int main()
+{
+  size_t len = 0;
+  char* buf = aushev::read_line(len);
   if (!buf) {
     std::cerr << "Input error\n";
     return 1;
@@ -11,12 +13,7 @@ int main() {
 
   const char* second = "abc_ef";
   int result1 = aushev::has_sam(buf, second);
-  std::printf("%d\n", result1);
-
-  size_t len = 0;
-  while (buf[len] != '\0') {
-    ++len;
-  }
+  std::cout << result1 << '\n';
 
   char* clean = nullptr;
   try {
@@ -27,7 +24,7 @@ int main() {
     return 1;
   }
   aushev::spc_rmv(clean, buf);
-  std::puts(clean);
+  std::cout << clean << '\n';
 
   delete[] buf;
   delete[] clean;

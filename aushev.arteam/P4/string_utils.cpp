@@ -1,9 +1,10 @@
 #include "string_utils.hpp"
 #include <iostream>
 #include <new>
-#include <cstddef>
 
-int aushev::has_sam(const char* s1, const char* s2) {
+
+int aushev::has_sam(const char* s1, const char* s2)
+{
   if (!s1 || !s2) {
     return 0;
   }
@@ -17,7 +18,8 @@ int aushev::has_sam(const char* s1, const char* s2) {
   return 0;
 }
 
-char* aushev::spc_rmv(char* dst, const char* src) {
+char* aushev::spc_rmv(char* dst, const char* src)
+{
   if (!dst || !src) {
     return nullptr;
   }
@@ -47,10 +49,11 @@ char* aushev::spc_rmv(char* dst, const char* src) {
   return dst;
 }
 
-char* aushev::read_line() {
+char* aushev::read_line(size_t& len)
+{
   char* buf = nullptr;
-  size_t len = 0;
   size_t cap = 64;
+  len = 0;
 
   try {
     buf = new char[cap];
@@ -58,9 +61,10 @@ char* aushev::read_line() {
     return nullptr;
   }
 
+  std::cin >> std::noskipws;
   char ch;
   bool read_any = false;
-  while (std::cin.get(ch)) {
+  while (std::cin >> ch) {
     read_any = true;
     if (ch == '\n') {
       break;
