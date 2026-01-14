@@ -32,9 +32,8 @@ int main()
     free(input_str);
     return 1;
   }
-  ivantsova::interleaveStrings(input_str, second_str_for_ils, size, result_for_ils);
-  ivantsova::printString(std::cout, result_for_ils);
-
+  const char * ils_result = ivantsova::interleaveStrings(input_str, second_str_for_ils, result_for_ils);
+  std::cout << ils_result << "\n";
   const char * second_str_for_ad = "g1h2k";
   size_t ad_size = 0;
   while (second_str_for_ad[ad_size] != '\0')
@@ -51,8 +50,8 @@ int main()
     return 1;
   }
   size_t actual_result_for_ad_size = 0;
-  ivantsova::addDigits(input_str, second_str_for_ad, size, result_for_ad, actual_result_for_ad_size);
-  ivantsova::printString(std::cout, result_for_ad);
+  const char * ad_result = ivantsova::addDigits(input_str, second_str_for_ad, result_for_ad, &actual_result_for_ad_size);
+  std::cout << ad_result << "\n";
   free(input_str);
   free(result_for_ils);
   free(result_for_ad);
