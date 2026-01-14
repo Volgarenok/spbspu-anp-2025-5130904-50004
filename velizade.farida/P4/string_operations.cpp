@@ -7,7 +7,7 @@ char* velizade::read_string(std::istream& input, size_t& length)
   std::ios::fmtflags original_flags = input.flags();
   size_t capacity = 32;
   size_t size = 0;
-  char* buffer = static_cast< char* >( malloc( capacity ) );
+  char* buffer = static_cast< char* >(malloc(capacity));
   if (!buffer)
   {
     input.flags(original_flags);
@@ -20,7 +20,7 @@ char* velizade::read_string(std::istream& input, size_t& length)
     if (size + 1 >= capacity)
     {
       capacity *= 2;
-      char* new_buffer = static_cast< char* >( realloc( buffer, capacity ) );
+      char* new_buffer = static_cast< char* >(realloc(buffer, capacity));
       if (!new_buffer)
       {
         free(buffer);
@@ -36,7 +36,7 @@ char* velizade::read_string(std::istream& input, size_t& length)
   length = size;
   if (size + 1 < capacity)
   {
-    char* exact_buffer = static_cast< char* >( realloc( buffer, size + 1 ) );
+    char* exact_buffer = static_cast< char* >(realloc(buffer, size + 1));
     if (exact_buffer)
     {
       buffer = exact_buffer;
@@ -80,7 +80,7 @@ char* velizade::rep_sym(const char* str)
       }
     }
   }
-  char* buffer = reinterpret_cast< char* >( malloc( unique_count + 1 ) );
+  char* buffer = reinterpret_cast< char* >(malloc(unique_count + 1));
   if (!buffer)
   {
     return nullptr;
@@ -133,7 +133,7 @@ char* velizade::uni_two(const char* str1, const char* str2)
     len2++;
   }
   size_t total_len = len1 + len2;
-  char* buffer = reinterpret_cast< char* >( malloc ( total_len + 1 ) );
+  char* buffer = reinterpret_cast< char* >(malloc(total_len + 1));
   if (!buffer)
   {
     return nullptr;
