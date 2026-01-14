@@ -1,7 +1,7 @@
-#include "rth_trp.hpp"
-#include "eql_seq.hpp"
 #include <iostream>
 #include <stdexcept>
+#include "rth_trp.hpp"
+#include "eql_seq.hpp"
 
 int main()
 {
