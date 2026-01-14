@@ -1,13 +1,13 @@
 #ifndef RTH_TRP_HPP
 #define RTH_TRP_HPP
 
-#include "sequence_analyzer.hpp"
 #include <cstddef>
 #include <stdexcept>
+#include "sequence_analyzer.hpp"
 
 namespace zinovev
 {
-  class RTH_TRP : public SequenceAnalyzer
+  class RTH_TRP: public SequenceAnalyzer
   {
   public:
     RTH_TRP() = default;

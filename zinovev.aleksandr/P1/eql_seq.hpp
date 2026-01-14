@@ -1,12 +1,12 @@
 #ifndef EQL_SEQ_HPP
 #define EQL_SEQ_HPP
 
-#include "sequence_analyzer.hpp"
 #include <cstddef>
+#include "sequence_analyzer.hpp"
 
 namespace zinovev
 {
-  class EQL_SEQ : public SequenceAnalyzer
+  class EQL_SEQ: public SequenceAnalyzer
   {
   public:
     EQL_SEQ() = default;
