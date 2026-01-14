@@ -5,17 +5,17 @@
 
 class SubMaxProcessor {
 public:
-    SubMaxProcessor();
+  SubMaxProcessor();
 
-    void Process(int value);
-    bool CanCalculate() const;
-    int GetResult() const;
+  void Process(int value);
+  bool CanCalculate() const;
+  int GetResult() const;
 
 private:
-    int max1_;
-    int max2_;
-    size_t total_count_;
-    bool initialized_;
+  int max1_;
+  int max2_;
+  size_t total_count_;
+  bool initialized_;
 };
 
 #endif
