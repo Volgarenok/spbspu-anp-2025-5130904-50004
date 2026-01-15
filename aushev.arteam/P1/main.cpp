@@ -1,16 +1,34 @@
-#include "process_sequence.hpp"
+#include "eql_seq.hpp"
+#include "mon_inc.hpp"
 #include <iostream>
 
 int main() {
-  int eql_out;
-  int mon_out;
+  aushev::eql_seq eql;
+  aushev::mon_inc mon;
+  aushev::sequence_metric* metrics[] = {&eql, &mon};
+  const size_t metric_count = sizeof(metrics) / sizeof(metrics[0]);
 
-  if (!aushev::process_sequence(eql_out, mon_out)) {
+  int value;
+  bool has_input = false;
+
+  while (std::cin >> value) {
+    if (value == 0) {
+      break;
+    }
+    has_input = true;
+    for (size_t i = 0; i < metric_count; ++i) {
+      (*metrics[i])(value);
+    }
+  }
+
+  if (!has_input) {
     std::cerr << "Invalid input\n";
     return 1;
   }
 
-  std::cout << eql_out << '\n';
-  std::cout << mon_out << '\n';
+  for (size_t i = 0; i < metric_count; ++i) {
+    std::cout << (*metrics[i])() << '\n';
+  }
+
   return 0;
 }
