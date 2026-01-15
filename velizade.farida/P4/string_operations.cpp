@@ -1,45 +1,49 @@
 #include "string_operations.hpp"
 #include <cstdlib>
+#include <iostream>
 
 char* velizade::read_string(std::istream& input, size_t& length)
 {
-  const size_t initial_size = 16;
-  size_t capacity = initial_size;
-  char* str = reinterpret_cast<char*>(malloc(capacity));
-  if (!str)
+  std::ios::fmtflags original_flags = input.flags();
+  size_t capacity = 32;
+  size_t size = 0;
+  char* buffer = static_cast< char* >(malloc(capacity));
+  if (!buffer)
   {
-    length = 0;
+    input.flags(original_flags);
     return nullptr;
   }
-  length = 0;
+  input >> std::noskipws;
   char ch;
-  while (input >> std::noskipws >> ch && ch != '\n')
+  while (input >> ch && ch != '\n')
   {
-    if (length >= capacity - 1)
+    if (size + 1 >= capacity)
     {
       capacity *= 2;
-      char* new_str = reinterpret_cast<char*>(realloc(str, capacity));
-      if (!new_str)
+      char* new_buffer = static_cast< char* >(realloc(buffer, capacity));
+      if (!new_buffer)
       {
-        free(str);
-        length = 0;
+        free(buffer);
+        input.flags(original_flags);
         return nullptr;
       }
-      str = new_str;
+      buffer = new_buffer;
     }
-    str[length] = ch;
-    length++;
+    buffer[size] = ch;
+    size++;
   }
-  str[length] = '\0';
-  if (length < capacity - 1)
+  buffer[size] = '\0';
+  length = size;
+  if (size + 1 < capacity)
   {
-    char* optimized_str = reinterpret_cast<char*>(realloc(str, length + 1));
-    if (optimized_str)
+    char* exact_buffer = static_cast< char* >(realloc(buffer, size + 1));
+    if (exact_buffer)
     {
-      str = optimized_str;
+      buffer = exact_buffer;
     }
   }
-  return str;
+  input.flags(original_flags);
+  return buffer;
 }
 
 char* velizade::rep_sym(const char* str)
@@ -76,7 +80,7 @@ char* velizade::rep_sym(const char* str)
       }
     }
   }
-  char* buffer = reinterpret_cast<char*>(malloc(unique_count + 1));
+  char* buffer = reinterpret_cast< char* >(malloc(unique_count + 1));
   if (!buffer)
   {
     return nullptr;
@@ -112,7 +116,6 @@ char* velizade::rep_sym(const char* str)
   buffer[pos] = '\0';
   return buffer;
 }
-
 char* velizade::uni_two(const char* str1, const char* str2)
 {
   if (!str1 || !str2)
@@ -130,7 +133,7 @@ char* velizade::uni_two(const char* str1, const char* str2)
     len2++;
   }
   size_t total_len = len1 + len2;
-  char* buffer = reinterpret_cast<char*>(malloc(total_len + 1));
+  char* buffer = reinterpret_cast< char* >(malloc(total_len + 1));
   if (!buffer)
   {
     return nullptr;

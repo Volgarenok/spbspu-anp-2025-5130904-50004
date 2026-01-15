@@ -23,10 +23,7 @@ int main()
   {
     std::cerr << "REP_SYM failed" << "\n";
     free(data);
-    if (result2)
-    {
-      free(result2);
-    }
+    free(result2);
     return 1;
   }
   if (!result2)
