@@ -110,7 +110,7 @@ void em::read_matrix(const char* filename, int** matrix, int& rows, int& cols)
 
   if (file.fail())
   {
-    delete[] *matrix;
+    delete[] matrix[0];
     *matrix = nullptr;
     std::cerr << "Failed to read matrix from file";
     std::exit(2);
