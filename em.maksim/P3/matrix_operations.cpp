@@ -3,9 +3,7 @@
 #include <iostream>
 #include <cstdlib>
 
-namespace em {
-
-bool validate_arguments(int argc, char* argv[])
+bool em::validate_arguments(int argc, char* argv[])
 {
   if (argc != 4)
   {
@@ -112,7 +110,7 @@ void em::read_matrix(const char* filename, int** matrix, int& rows, int& cols)
 
   if (file.fail())
   {
-    delete[] matrix[0];
+    delete[] *matrix;
     *matrix = nullptr;
     std::cerr << "Failed to read matrix from file";
     std::exit(2);
@@ -271,6 +269,4 @@ void em::build_smooth_matrix(int* matrix, int rows, int cols)
   }
 
   delete[] temp;
-}
-
 }
