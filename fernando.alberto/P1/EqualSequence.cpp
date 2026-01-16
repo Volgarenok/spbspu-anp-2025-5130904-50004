@@ -1,15 +1,15 @@
 #include "EqualSequence.hpp"
-#include <climits>
+#include <limits>
 
 alberto::EqualSequence::EqualSequence():
   max_count_(0),
   current_count_(0),
-  previous_value_(INT_MIN),
+  previous_value_(std::numeric_limits<int>::min()),
   first_element_(true)
 {
 }
 
-void alberto::EqualSequence::operator()(int n)
+void alberto::EqualSequence::operator()(const int n)
 {
   if (first_element_)
   {
