@@ -8,14 +8,14 @@ int main(int argc, char* argv[])
     if (argc != 4)
     {
         std::cerr << "Error: Wrong number of arguments\n";
-        return 2;
+        return 1;
     }
 
     const char* numArg = argv[1];
     if (strcmp(numArg, "1") != 0 && strcmp(numArg, "2") != 0)
     {
         std::cerr << "Error: First parameter must be 1 or 2\n";
-        return 2;
+        return 1;
     }
 
     const char* inputFile = argv[2];
