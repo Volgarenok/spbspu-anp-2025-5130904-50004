@@ -9,7 +9,7 @@ int main() {
     // Ler string da entrada padrão
     const size_t MAX_INPUT_SIZE = 1024;
     char* input = new (nothrow) char[MAX_INPUT_SIZE];
-    
+
     if (input == nullptr) {
         cerr << "Erro: Não foi possível alocar memória para a entrada" << endl;
         return 1;

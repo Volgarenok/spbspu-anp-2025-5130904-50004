@@ -42,7 +42,7 @@ size_t exc_snd(const char* src, char* dst, size_t dst_len) {
         char c = src[i];
         const char* pos = SECOND_STR;
         bool found = false;
-        
+
         // Procura o caractere na segunda string
         while (*pos != '\0') {
             if (*pos == c) {
