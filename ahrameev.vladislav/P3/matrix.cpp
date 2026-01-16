@@ -31,31 +31,41 @@ void ahrameev::processSpiralDecrease(const int* src, size_t rows, size_t cols, s
     int val = 1;
     size_t count = 0;
 
-    size_t top = 0, bottom = rows - 1, left = 0, right = cols - 1;
+    size_t top = 0;
+    size_t bottom = rows - 1;
+    size_t left = 0;
+    size_t right = cols - 1;
 
     while (count < total)
     {
+        // 1. Вверх по левому столбцу
         for (size_t i = bottom; i >= top && count < total; --i)
         {
             dst[i * cols + left] -= val++;
             ++count;
         }
         ++left;
+        if (count >= total) break;
 
+        // 2. Вправо по верхней строке
         for (size_t j = left; j <= right && count < total; ++j)
         {
             dst[top * cols + j] -= val++;
             ++count;
         }
         ++top;
+        if (count >= total) break;
 
+        // 3. Вниз по правому столбцу
         for (size_t i = top; i <= bottom && count < total; ++i)
         {
             dst[i * cols + right] -= val++;
             ++count;
         }
         --right;
+        if (count >= total) break;
 
+        // 4. Влево по нижней строке
         for (size_t j = right; j >= left && count < total; --j)
         {
             dst[bottom * cols + j] -= val++;
