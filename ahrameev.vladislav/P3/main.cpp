@@ -22,29 +22,22 @@ int main(int argc, char* argv[])
         return 2;
     }
 
-    if (input.peek() == std::ifstream::traits_type::eof())
-    {
-        std::cerr << "Error: Empty file\n";
-        input.close();
-        return 2;
-    }
-
-    int rows = 0;
-    int cols = 0;
+    size_t rows = 0;
+    size_t cols = 0;
     if (!ahrameev::readMatrixSize(input, &rows, &cols))
     {
-        std::cerr << "Error: Bad matrix size\n";
+        std::cerr << "Error: Bad matrix size or empty file\n";
         input.close();
         return 2;
     }
 
-    int fixedMatrix[100][100] = {};
+    int fixedMatrix[10000] = {};
     int* dynMatrix = nullptr;
     int* matrix = nullptr;
 
     if (strcmp(numArg, "1") == 0)
     {
-        matrix = &fixedMatrix[0][0];
+        matrix = fixedMatrix;
     }
     else if (strcmp(numArg, "2") == 0)
     {
@@ -58,17 +51,23 @@ int main(int argc, char* argv[])
         return 1;
     }
 
+    bool readSuccess = true;
     if (rows > 0 && cols > 0)
     {
-        for (int i = 0; i < rows; ++i)
+        for (size_t i = 0; i < rows; ++i)
         {
-            for (int j = 0; j < cols; ++j)
+            for (size_t j = 0; j < cols; ++j)
             {
-                input >> matrix[i * cols + j];
+                if (!(input >> matrix[i * cols + j]))
+                {
+                    readSuccess = false;
+                    break;
+                }
             }
+            if (!readSuccess) break;
         }
 
-        if (input.fail())
+        if (!readSuccess || input.fail())
         {
             std::cerr << "Error: Wrong matrix data\n";
             delete[] dynMatrix;

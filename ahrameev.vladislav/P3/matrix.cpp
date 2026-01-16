@@ -14,16 +14,11 @@ namespace ahrameev
         return (strcmp(n, "1") == 0) || (strcmp(n, "2") == 0);
     }
 
-    bool readMatrixSize(std::ifstream& input, int* rows, int* cols)
+    bool readMatrixSize(std::ifstream& input, size_t* rows, size_t* cols)
     {
-        int r = 0;
-        int c = 0;
+        size_t r = 0;
+        size_t c = 0;
         if (!(input >> r >> c))
-        {
-            return false;
-        }
-
-        if (r < 0 || c < 0)
         {
             return false;
         }
@@ -32,96 +27,95 @@ namespace ahrameev
         *cols = c;
         return true;
     }
+}
 
-    void processSpiralDecrease(const int* src, int rows, int cols, std::ofstream& output)
+void ahrameev::processSpiralDecrease(const int* src, size_t rows, size_t cols, std::ofstream& output)
+{
+    output << rows << " " << cols;
+
+    if (rows == 0 || cols == 0)
     {
-        output << rows << " " << cols;
-
-        if (rows > 0 && cols > 0)
-        {
-            int* dst = new int[rows * cols];
-            for (int i = 0; i < rows * cols; ++i)
-            {
-                dst[i] = src[i];
-            }
-
-            int total = rows * cols;
-            int val = 1;
-            int count = 0;
-
-            int top = 0;
-            int bottom = rows - 1;
-            int left = 0;
-            int right = cols - 1;
-
-            while (count < total)
-            {
-                for (int i = bottom; i >= top && count < total; --i)
-                {
-                    dst[i * cols + left] -= val;
-                    ++val;
-                    ++count;
-                }
-                ++left;
-
-                for (int j = left; j <= right && count < total; ++j)
-                {
-                    dst[top * cols + j] -= val;
-                    ++val;
-                    ++count;
-                }
-                ++top;
-
-                for (int i = top; i <= bottom && count < total; ++i)
-                {
-                    dst[i * cols + right] -= val;
-                    ++val;
-                    ++count;
-                }
-                --right;
-
-                for (int j = right; j >= left && count < total; --j)
-                {
-                    dst[bottom * cols + j] -= val;
-                    ++val;
-                    ++count;
-                }
-                --bottom;
-            }
-
-            for (int i = 0; i < rows; ++i)
-            {
-                for (int j = 0; j < cols; ++j)
-                {
-                    output << " " << dst[i * cols + j];
-                }
-            }
-
-            delete[] dst;
-        }
         output << "\n";
+        return;
     }
 
-    void processLowerTriangle(const int* matrix, int rows, int cols, std::ofstream& output)
+    int* dst = new int[rows * cols];
+    for (size_t i = 0; i < rows * cols; ++i)
     {
-        bool isTriangular = false;
+        dst[i] = src[i];
+    }
 
-        if (rows == cols && rows > 0)
+    size_t total = rows * cols;
+    int val = 1;
+    size_t count = 0;
+
+    size_t top = 0;
+    size_t bottom = rows - 1;
+    size_t left = 0;
+    size_t right = cols - 1;
+
+    while (count < total)
+    {
+        for (size_t i = bottom; i >= top && count < total; --i)
         {
-            isTriangular = true;
-            for (int i = 0; i < rows && isTriangular; ++i)
+            dst[i * cols + left] -= val++;
+            ++count;
+        }
+        ++left;
+
+        for (size_t j = left; j <= right && count < total; ++j)
+        {
+            dst[top * cols + j] -= val++;
+            ++count;
+        }
+        ++top;
+
+        for (size_t i = top; i <= bottom && count < total; ++i)
+        {
+            dst[i * cols + right] -= val++;
+            ++count;
+        }
+        --right;
+
+        for (size_t j = right; j >= left && count < total; --j)
+        {
+            dst[bottom * cols + j] -= val++;
+            ++count;
+        }
+        --bottom;
+    }
+
+    for (size_t i = 0; i < rows; ++i)
+    {
+        for (size_t j = 0; j < cols; ++j)
+        {
+            output << " " << dst[i * cols + j];
+        }
+    }
+
+    delete[] dst;
+    output << "\n";
+}
+
+void ahrameev::processLowerTriangle(const int* matrix, size_t rows, size_t cols, std::ofstream& output)
+{
+    bool isTriangular = false;
+
+    if (rows == cols && rows > 0)
+    {
+        isTriangular = true;
+        for (size_t i = 0; i < rows && isTriangular; ++i)
+        {
+            for (size_t j = i + 1; j < cols; ++j)
             {
-                for (int j = i + 1; j < cols; ++j)
+                if (matrix[i * cols + j] != 0)
                 {
-                    if (matrix[i * cols + j] != 0)
-                    {
-                        isTriangular = false;
-                        break;
-                    }
+                    isTriangular = false;
+                    break;
                 }
             }
         }
-
-        output << (isTriangular ? "true" : "false") << "\n";
     }
+
+    output << (isTriangular ? "true" : "false") << "\n";
 }
