@@ -1,4 +1,4 @@
-k#include <iostream>
+#include <iostream>
 #include <fstream>
 #include <cstring>
 #include "matrix.h"
