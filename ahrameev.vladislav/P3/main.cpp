@@ -11,6 +11,12 @@ int main(int argc, char* argv[])
         return 1;
     }
 
+    if (argv[1] == nullptr || argv[2] == nullptr || argv[3] == nullptr)
+    {
+        std::cerr << "Error: One or more arguments are null\n";
+        return 1;
+    }
+
     const char* numArg = argv[1];
     if (strcmp(numArg, "1") != 0 && strcmp(numArg, "2") != 0)
     {

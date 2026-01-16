@@ -3,14 +3,6 @@
 
 namespace ahrameev
 {
-    bool checkArguments(int argc, char* argv[])
-    {
-        if (argc != 4)
-            return false;
-        const char* n = argv[1];
-        return (strcmp(n, "1") == 0) || (strcmp(n, "2") == 0);
-    }
-
     bool readMatrixSize(std::ifstream& input, size_t* rows, size_t* cols)
     {
         size_t r = 0, c = 0;
