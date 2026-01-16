@@ -1,7 +1,7 @@
 #include "mon_inc.hpp"
 #include <limits>
 
-aydogan::MonInc::MonInc(): 
+aydogan::MonInc::MonInc():
   max_len_(0),
   cur_len_(0),
   prev_(std::numeric_limits< int >::max())
