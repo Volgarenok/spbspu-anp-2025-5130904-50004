@@ -5,13 +5,19 @@
 
 int main(int argc, char* argv[])
 {
-    if (!ahrameev::checkArguments(argc, argv))
+    if (argc != 4)
     {
-        std::cerr << "Error: Wrong arguments\n";
-        return 1;
+        std::cerr << "Error: Wrong number of arguments\n";
+        return 2;
     }
 
     const char* numArg = argv[1];
+    if (strcmp(numArg, "1") != 0 && strcmp(numArg, "2") != 0)
+    {
+        std::cerr << "Error: First parameter must be 1 or 2\n";
+        return 2;
+    }
+
     const char* inputFile = argv[2];
     const char* outputFile = argv[3];
 
@@ -43,12 +49,6 @@ int main(int argc, char* argv[])
     {
         dynMatrix = new int[rows * cols]();
         matrix = dynMatrix;
-    }
-    else
-    {
-        std::cerr << "Error: Invalid mode\n";
-        input.close();
-        return 1;
     }
 
     bool readSuccess = true;

@@ -6,23 +6,16 @@ namespace ahrameev
     bool checkArguments(int argc, char* argv[])
     {
         if (argc != 4)
-        {
             return false;
-        }
-
         const char* n = argv[1];
         return (strcmp(n, "1") == 0) || (strcmp(n, "2") == 0);
     }
 
     bool readMatrixSize(std::ifstream& input, size_t* rows, size_t* cols)
     {
-        size_t r = 0;
-        size_t c = 0;
+        size_t r = 0, c = 0;
         if (!(input >> r >> c))
-        {
             return false;
-        }
-
         *rows = r;
         *cols = c;
         return true;
@@ -32,7 +25,6 @@ namespace ahrameev
 void ahrameev::processSpiralDecrease(const int* src, size_t rows, size_t cols, std::ofstream& output)
 {
     output << rows << " " << cols;
-
     if (rows == 0 || cols == 0)
     {
         output << "\n";
@@ -41,18 +33,13 @@ void ahrameev::processSpiralDecrease(const int* src, size_t rows, size_t cols, s
 
     int* dst = new int[rows * cols];
     for (size_t i = 0; i < rows * cols; ++i)
-    {
         dst[i] = src[i];
-    }
 
     size_t total = rows * cols;
     int val = 1;
     size_t count = 0;
 
-    size_t top = 0;
-    size_t bottom = rows - 1;
-    size_t left = 0;
-    size_t right = cols - 1;
+    size_t top = 0, bottom = rows - 1, left = 0, right = cols - 1;
 
     while (count < total)
     {
@@ -100,7 +87,6 @@ void ahrameev::processSpiralDecrease(const int* src, size_t rows, size_t cols, s
 void ahrameev::processLowerTriangle(const int* matrix, size_t rows, size_t cols, std::ofstream& output)
 {
     bool isTriangular = false;
-
     if (rows == cols && rows > 0)
     {
         isTriangular = true;
@@ -116,6 +102,5 @@ void ahrameev::processLowerTriangle(const int* matrix, size_t rows, size_t cols,
             }
         }
     }
-
     output << (isTriangular ? "true" : "false") << "\n";
 }
