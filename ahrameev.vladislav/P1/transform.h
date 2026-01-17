@@ -4,14 +4,14 @@
 namespace ahrammev
 {
 
-    struct Result
-    {
-        int cntMin;
-        int aftMax;
-        bool aftMaxValid;
-    };
+	struct Result
+	{
+	int cntMin;
+	int aftMax;
+	bool aftMaxValid;
+	};
 
-    Result compute();
+	Result compute();
 
 }
 

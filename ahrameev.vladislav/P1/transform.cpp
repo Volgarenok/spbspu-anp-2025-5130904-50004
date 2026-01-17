@@ -1,83 +1,67 @@
 #include "transform.h"
 #include <iostream>
-#include <limits>
 
-namespace ahrammev {
-
-    static bool readInt(int& out)
-    {
-        if (!(std::cin >> out))
-        {
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            return false;
-        }
-        return true;
-    }
+namespace ahrammev
+{
 
     Result compute()
     {
-        Result res{};
-        res.aftMaxValid = true;
+        Result result{};
+        result.aftMaxValid = true;
 
-        int num;
-        bool first = true;
-
-        int minVal = 0;
-        int maxVal = 0;
-        int countMin = 0;
-        int maxPos = 0;
+        int num = 0;
         int pos = 0;
 
-        while (true)
+        bool first = true;
+
+        int minValue = 0;
+        int maxValue = 0;
+        int minCount = 0;
+        int lastMaxPos = 0;
+
+        while (std::cin >> num && num != 0)
         {
-            if (!readInt(num))
-            {
-                return res;
-            }
-
-            if (num == 0) {
-                break;
-            }
-
             ++pos;
 
             if (first)
             {
-                minVal = maxVal = num;
-                countMin = 1;
-                maxPos = 1;
+                minValue = num;
+                maxValue = num;
+                minCount = 1;
+                lastMaxPos = pos;
                 first = false;
             }
             else
             {
-                if (num < minVal) {
-                    minVal = num;
-                    countMin = 1;
+                if (num < minValue)
+                {
+                    minValue = num;
+                    minCount = 1;
                 }
-                else if (num == minVal) {
-                    ++countMin;
+                else if (num == minValue)
+                {
+                    ++minCount;
                 }
 
-                if (num > maxVal) {
-                    maxVal = num;
-                    maxPos = pos;
+                if (num >= maxValue)
+                {
+                    maxValue = num;
+                    lastMaxPos = pos;
                 }
             }
         }
 
-        res.cntMin = first ? 0 : countMin;
-
         if (first)
         {
-            res.aftMaxValid = false;
-        }
-        else
-        {
-            res.aftMax = pos - maxPos;
+            result.cntMin = 0;
+            result.aftMaxValid = false;
+            return result;
         }
 
-        return res;
+        result.cntMin = minCount;
+        result.aftMax = pos - lastMaxPos;
+
+        return result;
     }
 
 }
