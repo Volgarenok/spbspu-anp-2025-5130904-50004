@@ -6,19 +6,15 @@
 namespace pozdeev {
 
   struct LocalMax {
-  public:
     LocalMax();
     void operator()(int number);
-    size_t getResult() const;
-    bool hasResult() const;
+    size_t operator()() const;
 
   private:
-    size_t m_count;
+    size_t m_countResult;
+    size_t m_elementsCount;
     int m_left;
     int m_middle;
-    bool m_hasLeft;
-    bool m_hasMiddle;
-    bool m_processedAny;
   };
 
 }

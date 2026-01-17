@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdexcept>
 #include "mon_dec.hpp"
 #include "loc_max.hpp"
 
@@ -18,11 +19,11 @@ int main()
     return 1;
   }
 
-  std::cout << monDec.getResult() << "\n";
+  std::cout << monDec() << "\n";
 
-  if (locMax.hasResult()) {
-    std::cout << locMax.getResult() << "\n";
-  } else {
+  try {
+    std::cout << locMax() << "\n";
+  } catch (const std::logic_error&) {
     std::cerr << "Error: Sequence is too short for local maxima calculation\n";
     return 2;
   }

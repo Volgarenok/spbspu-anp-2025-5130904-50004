@@ -1,38 +1,33 @@
 #include "loc_max.hpp"
+#include <stdexcept>
 
-pozdeev::LocalMax::LocalMax() :
-  m_count(0),
+pozdeev::LocalMax::LocalMax():
+  m_countResult(0),
+  m_elementsCount(0),
   m_left(0),
-  m_middle(0),
-  m_hasLeft(false),
-  m_hasMiddle(false),
-  m_processedAny(false)
+  m_middle(0)
 {}
 
 void pozdeev::LocalMax::operator()(int number)
 {
-  m_processedAny = true;
-  if (!m_hasLeft) {
+  m_elementsCount++;
+  if (m_elementsCount == 1) {
     m_left = number;
-    m_hasLeft = true;
-  } else if (!m_hasMiddle) {
+  } else if (m_elementsCount == 2) {
     m_middle = number;
-    m_hasMiddle = true;
   } else {
     if (m_left < m_middle && m_middle > number) {
-      m_count++;
+      m_countResult++;
     }
     m_left = m_middle;
     m_middle = number;
   }
 }
 
-size_t pozdeev::LocalMax::getResult() const
+size_t pozdeev::LocalMax::operator()() const
 {
-  return m_count;
-}
-
-bool pozdeev::LocalMax::hasResult() const
-{
-  return m_processedAny;
+  if (m_elementsCount == 0) {
+    throw std::logic_error("Sequence is empty");
+  }
+  return m_countResult;
 }
