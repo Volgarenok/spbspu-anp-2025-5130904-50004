@@ -3,19 +3,22 @@
 
 #include <cstddef>
 
-class SubMaxProcessor {
-public:
-  SubMaxProcessor();
+namespace vasilenko
+{
+  class SecondMaxFinder
+  {
+  public:
+    SecondMaxFinder();
 
-  void Process(int value);
-  bool CanCalculate() const;
-  int GetResult() const;
+    void update(int number);
+    int getSecondMax() const;
+    bool isReady() const;
 
-private:
-  int max1_;
-  int max2_;
-  size_t total_count_;
-  bool initialized_;
-};
+  private:
+    int primaryMax_;
+    int secondaryMax_;
+    size_t processedCount_;
+  };
+}
 
 #endif

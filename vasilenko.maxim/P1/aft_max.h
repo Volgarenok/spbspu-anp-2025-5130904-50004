@@ -3,19 +3,21 @@
 
 #include <cstddef>
 
-class AftMaxProcessor {
-public:
-  AftMaxProcessor();
+namespace vasilenko
+{
+  class AfterMaxCounter
+  {
+  public:
+    AfterMaxCounter();
 
-  void Process(int value);
-  bool CanCalculate() const;
-  size_t GetResult() const;
+    void analyze(int number);
+    size_t getCountAfterMax() const;
 
-private:
-  int max_value_;
-  size_t count_after_;
-  size_t total_count_;
-  bool has_max_;
-};
+  private:
+    int currentMaximum_;
+    size_t elementsSinceMax_;
+    bool isFirstElement_;
+  };
+}
 
 #endif

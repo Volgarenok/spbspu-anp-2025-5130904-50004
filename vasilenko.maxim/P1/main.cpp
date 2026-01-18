@@ -1,77 +1,43 @@
 #include <iostream>
-#include <cstdlib>
-#include <limits>
-#include <cstring>
-#include "aft_max.h"
-#include "sub_max.h"
+#include "aft_max.hpp"
+#include "sub_max.hpp"
 
-enum ReadStatus {
-  kReadSuccess,
-  kReadZero,
-  kReadError
-};
+int main()
+{
+  vasilenko::AfterMaxCounter afterMaxTracker;
+  vasilenko::SecondMaxFinder secondMaxTracker;
 
-ReadStatus TryReadInt(int& result) {
-  char buffer[128];
-  if (!(std::cin >> buffer)) {
-    return kReadError;
+  int currentInput = 0;
+  size_t totalCount = 0;
+
+  while (std::cin >> currentInput && currentInput != 0)
+  {
+    afterMaxTracker.analyze(currentInput);
+    secondMaxTracker.update(currentInput);
+    totalCount++;
   }
 
-  char* end_ptr = nullptr;
-  long val = std::strtol(buffer, &end_ptr, 10);
-
-  if (end_ptr == buffer || *end_ptr != '\0') {
-    return kReadError;
+  if (std::cin.fail() && !std::cin.eof())
+  {
+    std::cerr << "Error: Input format is invalid\n";
+    return 1;
   }
 
-  if (val > std::numeric_limits<int>::max() || val < std::numeric_limits<int>::min()) {
-    return kReadError;
+  if (totalCount == 0)
+  {
+    std::cerr << "Error: Sequence is empty\n";
+    return 2;
   }
 
-  if (val == 0) {
-    return kReadZero;
+  std::cout << afterMaxTracker.getCountAfterMax() << "\n";
+
+  if (secondMaxTracker.isReady())
+  {
+    std::cout << secondMaxTracker.getSecondMax() << "\n";
   }
-
-  result = static_cast<int>(val);
-  return kReadSuccess;
-}
-
-int main() {
-  AftMaxProcessor aft_proc;
-  SubMaxProcessor sub_proc;
-  bool has_calc_error = false;
-
-  while (true) {
-    int current_val = 0;
-    ReadStatus status = TryReadInt(current_val);
-
-    if (status == kReadError) {
-      std::cerr << "Error: Invalid input sequence.\n";
-      return 1;
-    }
-
-    if (status == kReadZero) {
-      break;
-    }
-
-    aft_proc.Process(current_val);
-    sub_proc.Process(current_val);
-  }
-
-  if (aft_proc.CanCalculate()) {
-    std::cout << aft_proc.GetResult() << "\n";
-  } else {
-    has_calc_error = true;
-  }
-
-  if (sub_proc.CanCalculate()) {
-    std::cout << sub_proc.GetResult() << "\n";
-  } else {
-    has_calc_error = true;
-  }
-
-  if (has_calc_error) {
-    std::cerr << "Cannot calculate at least one property\n";
+  else
+  {
+    std::cerr << "Error: Not enough elements for second maximum\n";
     return 2;
   }
 

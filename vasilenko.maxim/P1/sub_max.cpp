@@ -1,36 +1,39 @@
 #include "sub_max.h"
 
-SubMaxProcessor::SubMaxProcessor()
-  : max1_(0), max2_(0), total_count_(0), initialized_(false) {
-}
+namespace vasilenko
+{
+  SecondMaxFinder::SecondMaxFinder():
+    primaryMax_(0),
+    secondaryMax_(0),
+    processedCount_(0)
+  {}
 
-void SubMaxProcessor::Process(int value) {
-  if (total_count_ == 0) {
-    max1_ = value;
-    total_count_ = 1;
-  } else if (total_count_ == 1) {
-    if (value > max1_) {
-      max2_ = max1_;
-      max1_ = value;
-    } else {
-      max2_ = value;
+  void SecondMaxFinder::update(int number)
+  {
+    processedCount_++;
+
+    if (processedCount_ == 1)
+    {
+      primaryMax_ = number;
     }
-    total_count_ = 2;
-    initialized_ = true;
-  } else {
-    if (value > max1_) {
-      max2_ = max1_;
-      max1_ = value;
-    } else if (value > max2_) {
-      max2_ = value;
+    else if (number > primaryMax_)
+    {
+      secondaryMax_ = primaryMax_;
+      primaryMax_ = number;
+    }
+    else if (processedCount_ == 2 || number > secondaryMax_)
+    {
+      secondaryMax_ = number;
     }
   }
-}
 
-bool SubMaxProcessor::CanCalculate() const {
-  return initialized_;
-}
+  bool SecondMaxFinder::isReady() const
+  {
+    return processedCount_ >= 2;
+  }
 
-int SubMaxProcessor::GetResult() const {
-  return max2_;
+  int SecondMaxFinder::getSecondMax() const
+  {
+    return secondaryMax_;
+  }
 }
