@@ -2,32 +2,51 @@
 
 int oztas::countNonZeroDiagonals(const int* matrix, size_t rows, size_t cols)
 {
+  if (rows == 0 || cols == 0)
+  {
+    return 0;
+  }
+
   int result = 0;
+  const size_t totalDiagonals = rows + cols - 1;
 
-  const int minOffset = -static_cast< int >(rows) + 1;
-  const int maxOffset = static_cast< int >(cols) - 1;
-
-  for (int offset = minOffset; offset <= maxOffset; ++offset) {
+  for (size_t diagonal = 0; diagonal < totalDiagonals; ++diagonal)
+  {
     bool hasElement = false;
     bool allNonZero = true;
+    size_t startRow = 0;
+    size_t startCol = 0;
 
-    for (size_t i = 0; i < rows; ++i) {
-      const int j = static_cast< int >(i) + offset;
+    if (diagonal < cols)
+    {
+      startRow = 0;
+      startCol = cols - 1 - diagonal;
+    }
+    else
+    {
+      startRow = diagonal - cols + 1;
+      startCol = 0;
+    }
 
-      if (j < 0 || j >= static_cast< int >(cols)) {
-        continue;
-      }
+    size_t i = startRow;
+    size_t j = startCol;
 
+    while (i < rows && j < cols)
+    {
       hasElement = true;
 
-      const size_t jIndex = static_cast< size_t >(j);
-      if (matrix[i * cols + jIndex] == 0) {
+      if (matrix[i * cols + j] == 0)
+      {
         allNonZero = false;
         break;
       }
+
+      ++i;
+      ++j;
     }
 
-    if (hasElement && allNonZero) {
+    if (hasElement && allNonZero)
+    {
       ++result;
     }
   }
