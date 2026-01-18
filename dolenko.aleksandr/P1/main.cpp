@@ -1,7 +1,8 @@
 #include <iostream>
 #include <climits>
 
-#include "functions.hpp"
+#include "div_rem.hpp"
+#include "evn_cnt.hpp"
 
 int main()
 {
@@ -34,8 +35,8 @@ int main()
   }
 
   bool div_rem_can_calculate = true;
-  int div_rem_result = dolenko::count_divisible_by_previous(sequence, count, div_rem_can_calculate);
-  int evn_cnt_result = dolenko::max_consecutive_even(sequence, count);
+  int div_rem_result = dolenko::DivRem::calculate(sequence, count, div_rem_can_calculate);
+  int evn_cnt_result = dolenko::EvnCnt::calculate(sequence, count);
 
   int return_code = 0;
   if (!div_rem_can_calculate)
