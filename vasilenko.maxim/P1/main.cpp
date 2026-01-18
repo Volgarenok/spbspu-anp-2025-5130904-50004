@@ -1,6 +1,6 @@
 #include <iostream>
-#include "aft_max.hpp"
-#include "sub_max.hpp"
+#include "aft_max.h"
+#include "sub_max.h"
 
 int main()
 {
