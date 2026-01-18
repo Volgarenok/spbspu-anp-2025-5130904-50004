@@ -3,22 +3,22 @@
 
 int main()
 {
-    const ahrammev::Result result = ahrammev::compute();
+  const ahrammev::Result result = ahrammev::compute();
 
-    if (std::cin.fail() && !std::cin.eof())
-    {
-        std::cerr << "Invalid input\n";
-        return 1;
-    }
+  if (std::cin.fail() && !std::cin.eof())
+  {
+    std::cerr << "Invalid input\n";
+    return 1;
+  }
 
     std::cout << result.cntMin << '\n';
 
-    if (!result.aftMaxValid)
-    {
-        std::cerr << "Cannot compute characteristic\n";
-        return 2;
-    }
+  if (!result.aftMaxValid)
+  {
+    std::cerr << "Cannot compute characteristic\n";
+    return 2;
+  }
 
-    std::cout << result.aftMax << '\n';
-    return 0;
+  std::cout << result.aftMax << '\n';
+  return 0;
 }
