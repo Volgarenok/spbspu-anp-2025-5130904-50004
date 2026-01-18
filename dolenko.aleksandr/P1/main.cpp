@@ -35,6 +35,7 @@ int main()
 
   bool div_rem_can_calculate = true;
   int div_rem_result = dolenko::count_divisible_by_previous(sequence, count, div_rem_can_calculate);
+  int evn_cnt_result = dolenko::max_consecutive_even(sequence, count);
 
   return 0;
 }
