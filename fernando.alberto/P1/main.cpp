@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstddef>
 
 #include "EqualSequence.hpp"
 #include "MonotonicIncreasing.hpp"
