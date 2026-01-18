@@ -2,10 +2,7 @@
 #include <istream>
 #include <ostream>
 
-bool oztas::readMatrix(std::istream& input,
-                       int matrix[],
-                       size_t rows,
-                       size_t cols)
+bool oztas::readMatrix(std::istream& input, int matrix[], size_t rows, size_t cols)
 {
   if (rows == 0 || cols == 0) {
     return true;
@@ -22,10 +19,7 @@ bool oztas::readMatrix(std::istream& input,
   return true;
 }
 
-void oztas::writeMatrix(std::ostream& output,
-                        const int matrix[],
-                        size_t rows,
-                        size_t cols)
+void oztas::writeMatrix(std::ostream& output, const int matrix[], size_t rows, size_t cols)
 {
   output << rows << " " << cols;
 
