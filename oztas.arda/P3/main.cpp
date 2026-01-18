@@ -4,36 +4,46 @@
 #include "matrix.hpp"
 #include "tasks.hpp"
 
-int main(int argc, char* argv[]) {
-  if (argc != 4) {
+int main(int argc, char* argv[])
+{
+  if (argc != 4)
+  {
     std::cerr << "invalid arguments\n";
     return 1;
   }
 
   int taskNum = 0;
-  try {
+  try
+  {
     taskNum = std::stoi(argv[1]);
-  } catch (const std::invalid_argument&) {
+  }
+  catch (const std::invalid_argument&)
+  {
     std::cerr << "invalid task number\n";
     return 1;
-  } catch (const std::out_of_range&) {
+  }
+  catch (const std::out_of_range&)
+  {
     std::cerr << "task number out of range\n";
     return 1;
   }
 
-  if (taskNum != 1 && taskNum != 2) {
+  if (taskNum != 1 && taskNum != 2)
+  {
     std::cerr << "unsupported task number\n";
     return 1;
   }
 
   std::ifstream input(argv[2]);
-  if (!input) {
+  if (!input)
+  {
     std::cerr << "input file error\n";
     return 2;
   }
 
   std::ofstream output(argv[3]);
-  if (!output) {
+  if (!output)
+  {
     std::cerr << "output file error\n";
     return 2;
   }
@@ -41,33 +51,50 @@ int main(int argc, char* argv[]) {
   size_t rows = 0;
   size_t cols = 0;
 
-  if (!(input >> rows >> cols)) {
+  if (!(input >> rows >> cols))
+  {
     std::cerr << "invalid matrix data\n";
     return 2;
   }
 
-  constexpr size_t MAX = 256;
-  if (rows > MAX || cols > MAX) {
-    std::cerr << "invalid matrix data\n";
-    return 2;
-  }
-
-  int matrix[MAX * MAX];
-
-  if (rows == 0 || cols == 0) {
+  if (rows == 0 || cols == 0)
+  {
     output << "0 0";
     return 0;
   }
 
-  if (!oztas::readMatrix(input, matrix, rows, cols)) {
-    std::cerr << "invalid matrix data\n";
-    return 2;
-  }
+  if (taskNum == 1)
+  {
+    int* matrix = new int[rows * cols];
 
-  if (taskNum == 1) {
+    if (!oztas::readMatrix(input, matrix, rows, cols))
+    {
+      std::cerr << "invalid matrix data\n";
+      delete[] matrix;
+      return 2;
+    }
+
     const int result = oztas::countNonZeroDiagonals(matrix, rows, cols);
     output << result;
-  } else {
+    delete[] matrix;
+  }
+  else
+  {
+    constexpr size_t max = 256;
+    if (rows > max || cols > max)
+    {
+      std::cerr << "invalid matrix data\n";
+      return 2;
+    }
+
+    int matrix[max * max];
+
+    if (!oztas::readMatrix(input, matrix, rows, cols))
+    {
+      std::cerr << "invalid matrix data\n";
+      return 2;
+    }
+
     oztas::applyFillIncreasingWave(matrix, rows, cols);
     oztas::writeMatrix(output, matrix, rows, cols);
   }
