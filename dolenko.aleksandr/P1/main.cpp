@@ -27,5 +27,11 @@ int main()
     count++;
   }
 
+  if (!std::cin.eof() && !std::cin.good())
+  {
+    std::cerr << "Error reading sequence" << "\n";
+    return 1;
+  }
+
   return 0;
 }
