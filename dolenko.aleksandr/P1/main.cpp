@@ -33,5 +33,8 @@ int main()
     return 1;
   }
 
+  bool div_rem_can_calculate = true;
+  int div_rem_result = dolenko::count_divisible_by_previous(sequence, count, div_rem_can_calculate);
+
   return 0;
 }
