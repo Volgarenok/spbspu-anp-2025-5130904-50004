@@ -37,5 +37,18 @@ int main()
   int div_rem_result = dolenko::count_divisible_by_previous(sequence, count, div_rem_can_calculate);
   int evn_cnt_result = dolenko::max_consecutive_even(sequence, count);
 
-  return 0;
+  int return_code = 0;
+  if (!div_rem_can_calculate)
+  {
+    std::cerr << "Cannot calculate DIV-REM: sequence too short" << "\n";
+    return_code = 2;
+  }
+
+  if (div_rem_can_calculate)
+  {
+    std::cout << div_rem_result << "\n";
+  }
+  std::cout << evn_cnt_result << "\n";
+
+  return return_code;
 }
