@@ -1,9 +1,10 @@
 #include "matrix_operations.hpp"
 #include <fstream>
 #include <iostream>
-#include <cstdlib>
 
-bool em::validate_arguments(int argc, char* argv[])
+namespace em {
+
+bool validate_arguments(int argc, char* argv[])
 {
   if (argc != 4)
   {
@@ -21,7 +22,7 @@ bool em::validate_arguments(int argc, char* argv[])
   return true;
 }
 
-void em::read_matrix(const char* filename, int* matrix, int& rows, int& cols, int max_size)
+bool read_matrix(const char* filename, int* matrix, int& rows, int& cols, int max_size)
 {
   rows = 0;
   cols = 0;
@@ -29,45 +30,41 @@ void em::read_matrix(const char* filename, int* matrix, int& rows, int& cols, in
   std::ifstream file(filename);
   if (!file.is_open())
   {
-    std::cerr << "Failed to read matrix from file";
-    std::exit(2);
+    return false;
   }
 
   file >> rows >> cols;
 
   if (file.fail() || rows < 0 || cols < 0)
   {
-    std::cerr << "Failed to read matrix from file";
-    std::exit(2);
+    return false;
   }
 
   if (rows == 0 && cols == 0)
   {
-    return;
+    return true;
   }
 
   if (rows * cols > max_size)
   {
-    std::cerr << "Failed to read matrix from file";
-    std::exit(2);
+    return false;
   }
 
-  for (size_t i = 0; i < static_cast<size_t>(rows); ++i)
+  for (int i = 0; i < rows; ++i)
   {
-    for (size_t j = 0; j < static_cast<size_t>(cols); ++j)
+    for (int j = 0; j < cols; ++j)
     {
-      file >> matrix[i * cols + j];
+      if (!(file >> matrix[i * cols + j]))
+      {
+        return false;
+      }
     }
   }
 
-  if (file.fail())
-  {
-    std::cerr << "Failed to read matrix from file";
-    std::exit(2);
-  }
+  return true;
 }
 
-void em::read_matrix(const char* filename, int** matrix, int& rows, int& cols)
+bool read_matrix(const char* filename, int** matrix, int& rows, int& cols)
 {
   rows = 0;
   cols = 0;
@@ -76,63 +73,58 @@ void em::read_matrix(const char* filename, int** matrix, int& rows, int& cols)
   std::ifstream file(filename);
   if (!file.is_open())
   {
-    std::cerr << "Failed to read matrix from file";
-    std::exit(2);
+    return false;
   }
 
   file >> rows >> cols;
 
   if (file.fail() || rows < 0 || cols < 0)
   {
-    std::cerr << "Failed to read matrix from file";
-    std::exit(2);
+    return false;
   }
 
   if (rows == 0 && cols == 0)
   {
-    return;
+    return true;
   }
 
   *matrix = new int[rows * cols]();
   if (!*matrix)
   {
-    std::cerr << "Failed to read matrix from file";
-    std::exit(2);
+    return false;
   }
 
-  for (size_t i = 0; i < static_cast<size_t>(rows); ++i)
+  for (int i = 0; i < rows; ++i)
   {
-    for (size_t j = 0; j < static_cast<size_t>(cols); ++j)
+    for (int j = 0; j < cols; ++j)
     {
-      file >> (*matrix)[i * cols + j];
+      if (!(file >> (*matrix)[i * cols + j]))
+      {
+        delete[] matrix[0];
+        *matrix = nullptr;
+        return false;
+      }
     }
   }
 
-  if (file.fail())
-  {
-    delete[] matrix[0];
-    *matrix = nullptr;
-    std::cerr << "Failed to read matrix from file";
-    std::exit(2);
-  }
+  return true;
 }
 
-void em::write_matrix(const char* filename, const int* matrix, int rows, int cols, bool smooth_matrix)
+bool write_matrix(const char* filename, const int* matrix, int rows, int cols, bool smooth_matrix)
 {
   std::ofstream file(filename);
   if (!file.is_open())
   {
-    std::cerr << "Failed to write matrix to file";
-    std::exit(2);
+    return false;
   }
 
   file << rows << " " << cols;
 
   if (rows > 0 && cols > 0)
   {
-    for (size_t i = 0; i < static_cast<size_t>(rows); ++i)
+    for (int i = 0; i < rows; ++i)
     {
-      for (size_t j = 0; j < static_cast<size_t>(cols); ++j)
+      for (int j = 0; j < cols; ++j)
       {
         file << " ";
         if (smooth_matrix)
@@ -148,14 +140,10 @@ void em::write_matrix(const char* filename, const int* matrix, int rows, int col
     }
   }
 
-  if (!file.good())
-  {
-    std::cerr << "Failed to write matrix to file";
-    std::exit(2);
-  }
+  return file.good();
 }
 
-void em::process_left_bottom_clockwise(int* matrix, int rows, int cols)
+void process_left_bottom_clockwise(int* matrix, int rows, int cols)
 {
   if (!matrix || rows <= 0 || cols <= 0)
   {
@@ -212,7 +200,7 @@ void em::process_left_bottom_clockwise(int* matrix, int rows, int cols)
   }
 }
 
-void em::build_smooth_matrix(int* matrix, int rows, int cols)
+void build_smooth_matrix(int* matrix, int rows, int cols)
 {
   if (!matrix || rows <= 0 || cols <= 0)
   {
@@ -222,13 +210,12 @@ void em::build_smooth_matrix(int* matrix, int rows, int cols)
   int* temp = new int[rows * cols]();
   if (!temp)
   {
-    std::cerr << "Failed to allocate memory";
-    std::exit(2);
+    return;
   }
 
-  for (size_t i = 0; i < static_cast<size_t>(rows); ++i)
+  for (int i = 0; i < rows; ++i)
   {
-    for (size_t j = 0; j < static_cast<size_t>(cols); ++j)
+    for (int j = 0; j < cols; ++j)
     {
       int sum = 0;
       int count = 0;
@@ -242,8 +229,8 @@ void em::build_smooth_matrix(int* matrix, int rows, int cols)
             continue;
           }
 
-          int ni = static_cast<int>(i) + di;
-          int nj = static_cast<int>(j) + dj;
+          int ni = i + di;
+          int nj = j + dj;
           if (ni >= 0 && ni < rows && nj >= 0 && nj < cols)
           {
             sum += matrix[ni * cols + nj];
@@ -263,10 +250,12 @@ void em::build_smooth_matrix(int* matrix, int rows, int cols)
     }
   }
 
-  for (size_t i = 0; i < static_cast<size_t>(rows * cols); ++i)
+  for (int i = 0; i < rows * cols; ++i)
   {
     matrix[i] = temp[i];
   }
 
   delete[] temp;
+}
+
 }
