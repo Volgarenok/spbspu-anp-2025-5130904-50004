@@ -1,108 +1,76 @@
 #include "matrix.h"
-#include <cstring>
 
 namespace ahrameev
 {
-  bool readMatrixSize(std::ifstream& input, size_t* rows, size_t* cols)
+
+  bool is_upper_triangular(const int* matrix, size_t rows, size_t cols)
   {
-    size_t r = 0, c = 0;
-    if (!(input >> r >> c))
-    return false;
-    *rows = r;
-    *cols = c;
-    return true;
-  }
-}
-
-void ahrameev::processSpiralDecrease(const int* src, size_t rows, size_t cols, std::ofstream& output)
-{
-  output << rows << " " << cols;
-  if (rows == 0 || cols == 0)
-  {
-    output << "\n";
-    return;
-  }
-
-  int* dst = new int[rows * cols];
-  for (size_t i = 0; i < rows * cols; ++i)
-  dst[i] = src[i];
-
-  size_t total = rows * cols;
-  int val = 1;
-  size_t count = 0;
-
-  int top = 0;
-  int bottom = static_cast<int>(rows) - 1;
-  int left = 0;
-  int right = static_cast<int>(cols) - 1;
-
-  while (count < total)
-  {
-
-    for (int i = bottom; i >= top && count < total; --i)
+    if (rows == 0 || cols == 0)
     {
-      dst[i * static_cast<int>(cols) + left] -= val++;
-      ++count;
+      return false;
     }
-      ++left;
-      if (count >= total) break;
 
-
-    for (int j = left; j <= right && count < total; ++j)
+    for (size_t i = 1; i < rows; ++i)
     {
-      dst[top * static_cast<int>(cols) + j] -= val++;
-      ++count;
-    }
-      ++top;
-      if (count >= total) break;
-
-
-    for (int i = top; i <= bottom && count < total; ++i)
-    {
-      dst[i * static_cast<int>(cols) + right] -= val++;
-      ++count;
-    }
-      --right;
-      if (count >= total) break;
-
-
-    for (int j = right; j >= left && count < total; --j)
-    {
-      dst[bottom * static_cast<int>(cols) + j] -= val++;
-      ++count;
-    }
-      --bottom;
-  }
-
-  for (size_t i = 0; i < rows; ++i)
-  {
-    for (size_t j = 0; j < cols; ++j)
-    {
-      output << " " << dst[i * cols + j];
-    }
-  }
-
-  delete[] dst;
-  output << "\n";
-}
-
-void ahrameev::processLowerTriangle(const int* matrix, size_t rows, size_t cols, std::ofstream& output)
-{
-  bool isTriangular = false;
-  if (rows == cols && rows > 0)
-  {
-    isTriangular = true;
-    for (size_t i = 0; i < rows && isTriangular; ++i)
-    {
-      for (size_t j = i + 1; j < cols; ++j)
+      for (size_t j = 0; j < i && j < cols; ++j)
       {
         if (matrix[i * cols + j] != 0)
         {
-          isTriangular = false;
-          break;
+          return false;
         }
       }
     }
+
+    return true;
   }
-  output << (isTriangular ? "true" : "false") << "\n";
+
+  void build_spiral(const int* src, int* dst, size_t rows, size_t cols)
+  {
+    size_t top = 0;
+    size_t bottom = rows - 1;
+    size_t left = 0;
+    size_t right = cols - 1;
+
+    size_t index = 0;
+    size_t total = rows * cols;
+
+    while (index < total)
+    {
+      for (size_t j = left; j <= right && index < total; ++j)
+      {
+        dst[top * cols + j] = src[index];
+        ++index;
+      }
+      ++top;
+
+      for (size_t i = top; i <= bottom && index < total; ++i)
+      {
+        dst[i * cols + right] = src[index];
+        ++index;
+      }
+      if (right == 0)
+      {
+        break;
+      }
+      --right;
+
+      for (size_t j = right + 1; j-- > left && index < total;)
+      {
+        dst[bottom * cols + j] = src[index];
+        ++index;
+      }
+      if (bottom == 0)
+      {
+        break;
+      }
+      --bottom;
+
+      for (size_t i = bottom + 1; i-- > top && index < total;)
+      {
+        dst[i * cols + left] = src[index];
+        ++index;
+      }
+      ++left;
+    }
+  }
 }

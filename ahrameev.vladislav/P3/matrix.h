@@ -1,13 +1,12 @@
-#ifndef MATRIX
-#define MATRIX
+#ifndef MATRIX_H
+#define MATRIX_H
 
-#include <fstream>
+#include <cstddef>
 
 namespace ahrameev
 {
-  bool readMatrixSize(std::ifstream& input, size_t* rows, size_t* cols);
-  void processSpiralDecrease(const int* src, size_t rows, size_t cols, std::ofstream& output);
-  void processLowerTriangle(const int* matrix, size_t rows, size_t cols, std::ofstream& output);
+  bool is_upper_triangular(const int* matrix, size_t rows, size_t cols);
+  void build_spiral(const int* src, int* dst, size_t rows, size_t cols);
 }
 
 #endif
