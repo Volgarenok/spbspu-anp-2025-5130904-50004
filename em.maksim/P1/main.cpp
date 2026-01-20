@@ -29,9 +29,16 @@ int main() {
     EvnCnt evn_cnt;
 
     int x;
+    bool has_elements = false;
     while (std::cin >> x && x != 0) {
+        has_elements = true;
         inc_seq(x);
         evn_cnt(x);
+    }
+
+    if (!has_elements) {
+        std::cerr << "Sequence too short to compute characteristics\n";
+        return 2;
     }
 
     std::cout << inc_seq() << '\n';
