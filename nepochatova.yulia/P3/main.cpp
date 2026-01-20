@@ -1,38 +1,72 @@
 #include <iostream>
+#include <fstream>
 #include <stdexcept>
 #include "io.h"
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
+  size_t n = 0, m = 0;
+  int** arr = nullptr;
+  bool dynamic = false;
+
+  const size_t MAX_N = 100;
+  const size_t MAX_M = 100;
+
+  int staticMatrix[MAX_N][MAX_M];
+  int* staticRows[MAX_N];
+
   try {
     nepochatova::checkArgs(argc, argv);
 
-    size_t n = 0, m = 0;
-    bool useDynamic = false;
+    dynamic = (argv[1][0] == '2');
 
-    if (argv[1][0] == '1')
-      useDynamic = false;
-    else if (argv[1][0] == '2')
-      useDynamic = true;
-    else
-      throw std::invalid_argument("Invalid memory choice");
+    std::ifstream in(argv[2]);
+    if (!in)
+      throw std::runtime_error("Input file can't be opened");
 
-    int** arr = nepochatova::readMatrix(argv[2], n, m, useDynamic);
+    if (!(in >> n >> m))
+      throw std::runtime_error("Invalid matrix format");
 
+    if (n == 0 || m == 0) {
+      std::ofstream out(argv[3]);
+      out << "0 0\n";
+      return 0;
+    }
+
+    if (!dynamic) {
+      if (n > MAX_N || m > MAX_M)
+        throw std::runtime_error("Array too large");
+
+      for (size_t i = 0; i < n; ++i)
+        staticRows[i] = staticMatrix[i];
+
+      arr = staticRows;
+    }
+    else {
+      arr = new int*[n];
+      for (size_t i = 0; i < n; ++i)
+        arr[i] = new int[m];
+    }
+
+    nepochatova::readMatrix(argv[2], arr, n, m);
     nepochatova::transformMatrixSpiral(arr, n, m);
 
-    std::ofstream out("output.txt");
+    std::ofstream out(argv[3]);
     nepochatova::writeMatrix(out, arr, n, m);
-
-    if (useDynamic) {
+  }
+  catch (...) {
+    if (dynamic && arr) {
       for (size_t i = 0; i < n; ++i)
         delete[] arr[i];
       delete[] arr;
     }
-  }
-  catch (const std::exception &e) {
-    std::cerr << "Error: " << e.what() << std::endl;
     return 1;
+  }
+
+  if (dynamic) {
+    for (size_t i = 0; i < n; ++i)
+      delete[] arr[i];
+    delete[] arr;
   }
 
   return 0;
