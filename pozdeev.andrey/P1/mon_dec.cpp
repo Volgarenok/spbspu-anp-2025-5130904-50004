@@ -5,7 +5,7 @@
 pozdeev::MonotoneDecreasing::MonotoneDecreasing():
   m_maxLength(0),
   m_currentLength(0),
-  m_lastValue(std::numeric_limits<int>::min())
+  m_lastValue(std::numeric_limits< int >::min())
 {}
 
 void pozdeev::MonotoneDecreasing::operator()(int number)
