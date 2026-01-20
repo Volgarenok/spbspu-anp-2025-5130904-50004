@@ -35,7 +35,7 @@ std::ostream& writeArr(std::ostream& output, const int* arr, size_t rows, size_t
 
 void increaseElements(int* arr, size_t rows, size_t cols)
 {
-  if (rows == 0  cols == 0)
+  if (rows == 0 || cols == 0)
   {
     return;
   }
@@ -88,7 +88,7 @@ void increaseElements(int* arr, size_t rows, size_t cols)
 
 int countDiagonals(const int* arr, size_t rows, size_t cols)
 {
-  if (rows == 0  cols == 0)
+  if (rows == 0 || cols == 0)
   {
     return 0;
   }
