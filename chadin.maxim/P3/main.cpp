@@ -42,6 +42,7 @@ int main(int argc, char** argv)
 
   if (argv[1][0] == '1')
   {
+    // Статический массив — размер гарантированно ≤ 10000 по условию
     int arr[10000] = {};
     chadin::readArr(input, arr, rows, cols);
     if (!input)
@@ -59,6 +60,7 @@ int main(int argc, char** argv)
   else if (argv[1][0] == '2')
   {
     size_t total = rows * cols;
+    // Проверка на переполнение при умножении
     if (rows != 0 && total / rows != cols)
     {
       std::cerr << "Too large matrix" << "\n";

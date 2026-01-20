@@ -40,49 +40,40 @@ void increaseElements(int* arr, size_t rows, size_t cols)
     return;
   }
 
-  size_t left = 0;
-  size_t right = cols - 1;
-  size_t top = 0;
-  size_t bottom = rows - 1;
+  int left = 0;
+  int right = static_cast<int>(cols) - 1;
+  int top = 0;
+  int bottom = static_cast<int>(rows) - 1;
   int step = 1;
 
   while (left <= right && top <= bottom)
   {
-    for (size_t i = bottom; i >= top; --i)
+    for (int i = bottom; i >= top; --i)
     {
-      arr[i * cols + left] += step++;
+      arr[i * static_cast<int>(cols) + left] += step++;
     }
     ++left;
-    if (left > right)
-    {
-      break;
-    }
+    if (left > right) break;
 
-    for (size_t j = left; j <= right; ++j)
+    for (int j = left; j <= right; ++j)
     {
-      arr[bottom * cols + j] += step++;
-    }
-    --bottom;
-    if (top > bottom)
-    {
-      break;
-    }
-
-    for (size_t j = right; j >= left; --j)
-    {
-      arr[top * cols + j] += step++;
+      arr[top * static_cast<int>(cols) + j] += step++;
     }
     ++top;
-    if (top > bottom)
-    {
-      break;
-    }
+    if (top > bottom) break;
 
-    for (size_t i = top; i <= bottom; ++i)
+    for (int i = top; i <= bottom; ++i)
     {
-      arr[i * cols + right] += step++;
+      arr[i * static_cast<int>(cols) + right] += step++;
     }
     --right;
+    if (left > right) break;
+
+    for (int j = right; j >= left; --j)
+    {
+      arr[bottom * static_cast<int>(cols) + j] += step++;
+    }
+    --bottom;
   }
 }
 
@@ -100,6 +91,7 @@ int countDiagonals(const int* arr, size_t rows, size_t cols)
     bool has_zero = false;
     size_t r = 0;
     size_t c = start_col;
+    size_t len = 0;
     while (r < rows && c < cols)
     {
       if (arr[r * cols + c] == 0)
@@ -109,8 +101,9 @@ int countDiagonals(const int* arr, size_t rows, size_t cols)
       }
       ++r;
       ++c;
+      ++len;
     }
-    if (!has_zero)
+    if (!has_zero && len >= 2)
     {
       ++count;
     }
@@ -121,6 +114,7 @@ int countDiagonals(const int* arr, size_t rows, size_t cols)
     bool has_zero = false;
     size_t r = start_row;
     size_t c = 0;
+    size_t len = 0;
     while (r < rows && c < cols)
     {
       if (arr[r * cols + c] == 0)
@@ -130,8 +124,9 @@ int countDiagonals(const int* arr, size_t rows, size_t cols)
       }
       ++r;
       ++c;
+      ++len;
     }
-    if (!has_zero)
+    if (!has_zero && len >= 2)
     {
       ++count;
     }
