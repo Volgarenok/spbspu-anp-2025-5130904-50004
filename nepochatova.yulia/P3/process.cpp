@@ -66,7 +66,6 @@ void nepochatova::transformMatrixCircular(int** arr, size_t n, size_t m) {
         }
       }
     }
-
     if (left < right) {
       for (size_t i = bottom - 1; i > top; i--){
         arr[i][left] += layer;
