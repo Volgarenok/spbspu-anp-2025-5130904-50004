@@ -1,18 +1,26 @@
 #include <iostream>
 #include <fstream>
 #include <cstddef>
+#include <cstdlib>
 #include "matrix.h"
 
 int main(int argc, char* argv[])
 {
-  if (argc != 3)
+  if (argc != 4)
   {
     std::cerr << "Error: wrong arguments count\n";
     return 1;
   }
 
-  std::ifstream input(argv[1]);
-  std::ofstream output(argv[2]);
+  int mode = std::atoi(argv[1]);
+  if (mode != 1 && mode != 2)
+  {
+    std::cerr << "Error: wrong mode\n";
+    return 1;
+  }
+
+  std::ifstream input(argv[2]);
+  std::ofstream output(argv[3]);
 
   if (!input || !output)
   {
@@ -29,22 +37,51 @@ int main(int argc, char* argv[])
     return 2;
   }
 
-  int* src = new int[rows * cols];
+  if (rows == 0 || cols == 0)
+  {
+    output << rows << " " << cols << "\n";
+    return 0;
+  }
+
+  int* src = nullptr;
+  int* dst = nullptr;
+
+  if (mode == 1)
+  {
+    if (rows * cols > 10000)
+    {
+      std::cerr << "Error: matrix too large\n";
+      return 2;
+    }
+
+    static int static_src[10000];
+    static int static_dst[10000];
+
+    src = static_src;
+    dst = static_dst;
+  }
+  else
+  {
+    src = new int[rows * cols];
+    dst = new int[rows * cols];
+  }
 
   for (size_t i = 0; i < rows * cols; ++i)
   {
     if (!(input >> src[i]))
     {
-      delete[] src;
+      if (mode == 2)
+      {
+        delete[] src;
+        delete[] dst;
+      }
       std::cerr << "Error: invalid matrix data\n";
       return 2;
     }
   }
 
-  bool triangular = ahrameev::is_upper_triangular(src, rows, cols);
-  output << std::boolalpha << triangular << "\n";
-
-  int* dst = new int[rows * cols];
+  bool is_lower = ahrameev::is_upper_triangular(src, rows, cols);
+  output << std::boolalpha << is_lower << "\n";
 
   ahrameev::build_spiral(src, dst, rows, cols);
 
@@ -59,9 +96,11 @@ int main(int argc, char* argv[])
     output << "\n";
   }
 
-  delete[] dst;
-  delete[] src;
+  if (mode == 2)
+  {
+    delete[] src;
+    delete[] dst;
+  }
 
   return 0;
 }
-
