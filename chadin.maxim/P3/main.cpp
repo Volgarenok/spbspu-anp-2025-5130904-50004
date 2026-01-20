@@ -1,7 +1,6 @@
 #include "matrix_actions.hpp"
 #include <iostream>
 #include <fstream>
-#include <cstdlib>
 
 int main(int argc, char** argv)
 {
@@ -27,15 +26,15 @@ int main(int argc, char** argv)
   std::ifstream input(argv[2]);
   std::ofstream output(argv[3]);
 
-  if (!input.is_open() || !output.is_open())
+  if (!input.is_open()  !output.is_open())
   {
     std::cerr << "Error opening files" << "\n";
     return 1;
   }
 
-  std::size_t rows = 0;
-  std::size_t cols = 0;
-  if (!(input >> rows) || !(input >> cols))
+  size_t rows = 0;
+  size_t cols = 0;
+  if (!(input >> rows)  !(input >> cols))
   {
     std::cerr << "Incorrect number of rows or columns" << "\n";
     return 2;
@@ -43,11 +42,6 @@ int main(int argc, char** argv)
 
   if (argv[1][0] == '1')
   {
-    if (rows > 10000 || cols > 10000 || rows * cols > 10000)
-    {
-      std::cerr << "Too large matrix" << "\n";
-      return 2;
-    }
     int arr[10000] = {};
     chadin::readArr(input, arr, rows, cols);
     if (!input)
@@ -58,12 +52,13 @@ int main(int argc, char** argv)
     input.close();
 
     int result = chadin::countDiagonals(arr, rows, cols);
-    chadin::writeArr(output, arr, rows, cols, result);
+    output << result << "\n";
+    chadin::writeArr(output, arr, rows, cols);
   }
 
   else if (argv[1][0] == '2')
   {
-    std::size_t total = rows * cols;
+    size_t total = rows * cols;
     if (rows != 0 && total / rows != cols)
     {
       std::cerr << "Too large matrix" << "\n";
@@ -94,7 +89,7 @@ int main(int argc, char** argv)
     input.close();
 
     chadin::increaseElements(arr, rows, cols);
-    chadin::writeArr(output, arr, rows, cols, 0);
+    chadin::writeArr(output, arr, rows, cols);
 
     delete[] arr;
   }
