@@ -1,10 +1,8 @@
 #include "inc_seq.hpp"
 
-namespace em {
+em::IncSeq::IncSeq() : first_(true), prev_(0), count_(0) {}
 
-IncSeq::IncSeq() : first_(true), prev_(0), count_(0) {}
-
-void IncSeq::operator()(int value) {
+void em::IncSeq::operator()(int value) {
     if (first_) {
         first_ = false;
     } else if (value > prev_) {
@@ -13,12 +11,10 @@ void IncSeq::operator()(int value) {
     prev_ = value;
 }
 
-std::size_t IncSeq::operator()() const {
+std::size_t em::IncSeq::operator()() const {
     return count_;
 }
 
-const char* IncSeq::name() const {
+const char* em::IncSeq::name() const {
     return "inc-seq";
-}
-
 }

@@ -18,6 +18,6 @@ private:
     std::size_t count_;
 };
 
-} // namespace em
+}
 
 #endif

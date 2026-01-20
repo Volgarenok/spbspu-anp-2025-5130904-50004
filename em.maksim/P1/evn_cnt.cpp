@@ -1,10 +1,8 @@
 #include "evn_cnt.hpp"
 
-namespace em {
+em::EvnCnt::EvnCnt() : current_(0), max_(0) {}
 
-EvnCnt::EvnCnt() : current_(0), max_(0) {}
-
-void EvnCnt::operator()(int value) {
+void em::EvnCnt::operator()(int value) {
     if (value % 2 == 0) {
         ++current_;
         if (current_ > max_) max_ = current_;
@@ -13,12 +11,10 @@ void EvnCnt::operator()(int value) {
     }
 }
 
-std::size_t EvnCnt::operator()() const {
+std::size_t em::EvnCnt::operator()() const {
     return max_;
 }
 
-const char* EvnCnt::name() const {
+const char* em::EvnCnt::name() const {
     return "evn-cnt";
-}
-
 }

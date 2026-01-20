@@ -15,9 +15,7 @@ static bool is_valid_sequence() {
 }
 
 int main() {
-    using namespace em;
-
-    if (!is_valid_sequence()) {
+    if (!em::is_valid_sequence()) {
         std::cerr << "Invalid input sequence\n";
         return 1;
     }
@@ -25,8 +23,8 @@ int main() {
     std::cin.clear();
     std::cin.seekg(0);
 
-    IncSeq inc_seq;
-    EvnCnt evn_cnt;
+    em::IncSeq inc_seq;
+    em::EvnCnt evn_cnt;
 
     int x;
     bool has_elements = false;
