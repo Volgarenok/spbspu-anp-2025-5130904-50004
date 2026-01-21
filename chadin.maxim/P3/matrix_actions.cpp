@@ -1,10 +1,7 @@
 #include "matrix_actions.hpp"
 #include <iostream>
 
-namespace chadin
-{
-
-std::istream& readArr(std::istream& input, int* arr, size_t rows, size_t cols)
+std::istream& chadin::readArr(std::istream& input, int* arr, size_t rows, size_t cols)
 {
   for (size_t i = 0; i < rows * cols; ++i)
   {
@@ -16,7 +13,7 @@ std::istream& readArr(std::istream& input, int* arr, size_t rows, size_t cols)
   return input;
 }
 
-std::ostream& writeArr(std::ostream& output, const int* arr, size_t rows, size_t cols)
+std::ostream& chadin::writeArr(std::ostream& output, const int* arr, size_t rows, size_t cols)
 {
   for (size_t i = 0; i < rows; ++i)
   {
@@ -33,7 +30,7 @@ std::ostream& writeArr(std::ostream& output, const int* arr, size_t rows, size_t
   return output;
 }
 
-void increaseElements(int* arr, size_t rows, size_t cols)
+void chadin::increaseElements(int* arr, size_t rows, size_t cols)
 {
   if (rows == 0 || cols == 0)
   {
@@ -77,7 +74,7 @@ void increaseElements(int* arr, size_t rows, size_t cols)
   }
 }
 
-int countDiagonals(const int* arr, size_t rows, size_t cols)
+int chadin::countDiagonals(const int* arr, size_t rows, size_t cols)
 {
   if (rows == 0 || cols == 0)
   {
@@ -133,6 +130,4 @@ int countDiagonals(const int* arr, size_t rows, size_t cols)
   }
 
   return count;
-}
-
 }
