@@ -56,7 +56,8 @@ int oztas::countNonZeroDiagonals(const int* matrix, size_t rows, size_t cols)
 
 void oztas::applyFillIncreasingWave(int* matrix, size_t rows, size_t cols)
 {
-  if (rows == 0 || cols == 0) {
+  if (rows == 0 || cols == 0) 
+  {
     return;
   }
 
@@ -67,32 +68,41 @@ void oztas::applyFillIncreasingWave(int* matrix, size_t rows, size_t cols)
   size_t left = 0;
   size_t right = cols - 1;
 
-  while (top <= bottom && left <= right) {
-    for (size_t j = left; j < right; ++j) {
+  while (top <= bottom && left <= right) 
+  {
+    for (size_t j = left; j < right; ++j) 
+    {
       matrix[top * cols + j] = value++;
     }
     ++top;
 
-    for (size_t i = top; i <= bottom; ++i) {
+    for (size_t i = top; i <= bottom; ++i) 
+    {
       matrix[i * cols + right] = value++;
     }
-    if (right == 0) {
+    if (right == 0) 
+    {
       break;
     }
     --right;
 
-    if (top <= bottom) {
-      for (size_t j = right + 1; j > left; --j) {
+    if (top <= bottom) 
+    {
+      for (size_t j = right + 1; j > left; --j) 
+      {
         matrix[bottom * cols + (j - 1)] = value++;
       }
-      if (bottom == 0) {
+      if (bottom == 0)
+      {
         break;
       }
       --bottom;
     }
 
-    if (left <= right) {
-      for (size_t i = bottom + 1; i > top; --i) {
+    if (left <= right)
+    {
+      for (size_t i = bottom + 1; i > top; --i)
+      {
         matrix[(i - 1) * cols + left] = value++;
       }
       ++left;
