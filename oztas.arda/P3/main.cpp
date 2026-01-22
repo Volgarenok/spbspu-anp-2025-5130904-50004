@@ -17,14 +17,9 @@ int main(int argc, char* argv[])
   {
     taskNum = std::stoi(argv[1]);
   }
-  catch (const std::invalid_argument&)
+  catch (const std::exception&)
   {
     std::cerr << "invalid task number\n";
-    return 1;
-  }
-  catch (const std::out_of_range&)
-  {
-    std::cerr << "task number out of range\n";
     return 1;
   }
 
@@ -57,46 +52,58 @@ int main(int argc, char* argv[])
     return 2;
   }
 
-  if (rows == 0 || cols == 0)
-  {
-    output << "0 0";
-    return 0;
-  }
-
   if (taskNum == 1)
   {
-    int* matrix = new int[rows * cols];
+    constexpr size_t MAX = 256;
+    if (rows > MAX || cols > MAX)
+    {
+      std::cerr << "invalid matrix data\n";
+      return 2;
+    }
+
+    int matrix[MAX * MAX];
+
+    if (rows == 0 || cols == 0)
+    {
+      output << "0 0";
+      return 0;
+    }
 
     if (!oztas::readMatrix(input, matrix, rows, cols))
     {
       std::cerr << "invalid matrix data\n";
-      delete[] matrix;
       return 2;
     }
 
     const int result = oztas::countNonZeroDiagonals(matrix, rows, cols);
     output << result;
-    delete[] matrix;
   }
   else
   {
-    constexpr size_t max = 256;
-    if (rows > max || cols > max)
+    if (rows == 0 || cols == 0)
     {
-      std::cerr << "invalid matrix data\n";
+      output << "0 0";
+      return 0;
+    }
+
+    int* matrix = new (std::nothrow) int[rows * cols];
+    if (!matrix)
+    {
+      std::cerr << "memory allocation error\n";
       return 2;
     }
 
-    int matrix[max * max];
-
     if (!oztas::readMatrix(input, matrix, rows, cols))
     {
+      delete[] matrix;
       std::cerr << "invalid matrix data\n";
       return 2;
     }
 
     oztas::applyFillIncreasingWave(matrix, rows, cols);
     oztas::writeMatrix(output, matrix, rows, cols);
+
+    delete[] matrix;
   }
 
   return 0;
