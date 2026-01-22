@@ -17,5 +17,12 @@ int main()
     return 1;
   }
 
+  if (!str1 || str1[0] == '\0')
+  {
+    std::cerr << "Missing string\n";
+    delete[] str1;
+    return 1;
+  }
+
   return 0;
 }
