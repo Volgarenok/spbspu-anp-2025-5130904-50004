@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
-#include <cstddef>
 #include <cstdlib>
+#include <cstddef>
 #include "matrix.h"
 
 int main(int argc, char* argv[])
@@ -43,6 +43,9 @@ int main(int argc, char* argv[])
     return 0;
   }
 
+  int static_src[10000];
+  int static_dst[10000];
+
   int* src = nullptr;
   int* dst = nullptr;
 
@@ -54,16 +57,22 @@ int main(int argc, char* argv[])
       return 2;
     }
 
-    static int static_src[10000];
-    static int static_dst[10000];
-
     src = static_src;
     dst = static_dst;
   }
   else
   {
-    src = new int[rows * cols];
-    dst = new int[rows * cols];
+    try
+    {
+      src = new int[rows * cols];
+      dst = new int[rows * cols];
+    }
+    catch (...)
+    {
+      delete[] src;
+      std::cerr << "Error: memory allocation failed\n";
+      return 2;
+    }
   }
 
   for (size_t i = 0; i < rows * cols; ++i)
@@ -80,8 +89,8 @@ int main(int argc, char* argv[])
     }
   }
 
-  bool is_lower = ahrameev::is_upper_triangular(src, rows, cols);
-  output << std::boolalpha << is_lower << "\n";
+  bool is_triangular = ahrameev::is_upper_triangular(src, rows, cols);
+  output << std::boolalpha << is_triangular << "\n";
 
   ahrameev::build_spiral(src, dst, rows, cols);
 
@@ -101,6 +110,4 @@ int main(int argc, char* argv[])
     delete[] src;
     delete[] dst;
   }
-
-  return 0;
 }
