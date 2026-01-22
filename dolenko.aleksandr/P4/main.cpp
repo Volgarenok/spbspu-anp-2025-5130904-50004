@@ -47,5 +47,8 @@ int main()
     return 1;
   }
 
+  size_t distinct_count = dolenko::dif_lat(str1);
+  std::cout << distinct_count << "\n";
+
   return 0;
 }
