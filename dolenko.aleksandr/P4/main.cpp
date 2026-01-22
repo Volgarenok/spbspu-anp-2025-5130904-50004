@@ -35,5 +35,18 @@ int main()
     size2++;
   }
 
+  try
+  {
+    str_unified = new char[size1 + size2];
+  }
+  catch (const std::exception& msg)
+  {
+    std::cerr << msg.what();
+    delete[] str1;
+    delete[] str_unified;
+    return 1;
+  }
+
+  
   return 0;
 }
