@@ -19,7 +19,7 @@ int main()
 
   if (!str1 || str1[0] == '\0')
   {
-    std::cerr << "No string\n";
+    std::cerr << "Missing string\n";
     delete[] str1;
     return 1;
   }
