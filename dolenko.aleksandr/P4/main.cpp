@@ -24,6 +24,16 @@ int main()
     return 1;
   }
 
+  size_t size1 = 0;
+  size_t size2 = 0;
+  while (str1[size1] != '\0')
+  {
+    size1++;
+  }
+  while (str2[size2] != '\0')
+  {
+    size2++;
+  }
 
   return 0;
 }
