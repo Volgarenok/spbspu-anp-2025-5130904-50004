@@ -53,5 +53,7 @@ int main()
   dolenko::uni_two(str_unified, str1, str2);
   std::cout << str_unified << "\n";
 
+  delete[] str1;
+  delete[] str_unified;
   return 0;
 }
