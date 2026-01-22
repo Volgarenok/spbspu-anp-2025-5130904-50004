@@ -18,7 +18,11 @@ size_t dif_lat(const char* arr)
     if (std::isalpha(symb))
     {
       ind = symb - 'a';
-     
+      if (!info[ind])
+      {
+        info[ind] = true;
+        ++count;
+      }
     }
   }
 
