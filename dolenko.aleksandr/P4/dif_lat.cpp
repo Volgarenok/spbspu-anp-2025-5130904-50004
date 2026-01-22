@@ -12,6 +12,15 @@ size_t dif_lat(const char* arr)
   const size_t alp = 26;
   bool info[alp] = {};
 
+  for (size_t i = 0; arr[i] != '\0'; ++i)
+  {
+    symb = std::tolower(arr[i]);
+    if (std::isalpha(symb))
+    {
+      ind = symb - 'a';
+     
+    }
+  }
 
   return count;
 }
