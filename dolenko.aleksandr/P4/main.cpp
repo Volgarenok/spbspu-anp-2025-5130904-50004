@@ -50,5 +50,8 @@ int main()
   size_t distinct_count = dolenko::dif_lat(str1);
   std::cout << distinct_count << "\n";
 
+  dolenko::uni_two(str_unified, str1, str2);
+  std::cout << str_unified << "\n";
+
   return 0;
 }
