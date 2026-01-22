@@ -4,40 +4,40 @@
 
 int main()
 {
-  vasilenko::AfterMaxCounter afterMaxTracker;
-  vasilenko::SecondMaxFinder secondMaxTracker;
+  vasilenko::AftMax aftCounter;
+  vasilenko::SubMax subFinder;
 
-  int currentInput = 0;
-  size_t totalCount = 0;
+  int input = 0;
+  size_t total = 0;
 
-  while (std::cin >> currentInput && currentInput != 0)
+  while (std::cin >> input && input != 0)
   {
-    afterMaxTracker.analyze(currentInput);
-    secondMaxTracker.update(currentInput);
-    totalCount++;
+    aftCounter(input);
+    subFinder(input);
+    total++;
   }
 
   if (std::cin.fail() && !std::cin.eof())
   {
-    std::cerr << "Error: Input format is invalid\n";
+    std::cerr << "Input error\n";
     return 1;
   }
 
-  if (totalCount == 0)
+  if (total == 0)
   {
-    std::cerr << "Error: Sequence is empty\n";
+    std::cerr << "Empty sequence\n";
     return 2;
   }
 
-  std::cout << afterMaxTracker.getCountAfterMax() << "\n";
+  std::cout << aftCounter() << "\n";
 
-  if (secondMaxTracker.isReady())
+  if (subFinder.isReady())
   {
-    std::cout << secondMaxTracker.getSecondMax() << "\n";
+    std::cout << subFinder() << "\n";
   }
   else
   {
-    std::cerr << "Error: Not enough elements for second maximum\n";
+    std::cerr << "Not enough elements for SubMax\n";
     return 2;
   }
 

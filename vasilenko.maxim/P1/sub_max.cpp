@@ -2,38 +2,38 @@
 
 namespace vasilenko
 {
-  SecondMaxFinder::SecondMaxFinder():
-    primaryMax_(0),
-    secondaryMax_(0),
-    processedCount_(0)
+  SubMax::SubMax():
+    max1_(0),
+    max2_(0),
+    cnt_(0)
   {}
 
-  void SecondMaxFinder::update(int number)
+  void SubMax::operator()(int num)
   {
-    processedCount_++;
+    cnt_++;
 
-    if (processedCount_ == 1)
+    if (cnt_ == 1)
     {
-      primaryMax_ = number;
+      max1_ = num;
     }
-    else if (number > primaryMax_)
+    else if (num > max1_)
     {
-      secondaryMax_ = primaryMax_;
-      primaryMax_ = number;
+      max2_ = max1_;
+      max1_ = num;
     }
-    else if (processedCount_ == 2 || number > secondaryMax_)
+    else if (cnt_ == 2 || num > max2_)
     {
-      secondaryMax_ = number;
+      max2_ = num;
     }
   }
 
-  bool SecondMaxFinder::isReady() const
+  bool SubMax::isReady() const
   {
-    return processedCount_ >= 2;
+    return cnt_ >= 2;
   }
 
-  int SecondMaxFinder::getSecondMax() const
+  int SubMax::operator()() const
   {
-    return secondaryMax_;
+    return max2_;
   }
 }

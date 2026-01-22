@@ -5,19 +5,19 @@
 
 namespace vasilenko
 {
-  class SecondMaxFinder
+  class SubMax
   {
   public:
-    SecondMaxFinder();
+    SubMax();
 
-    void update(int number);
-    int getSecondMax() const;
+    void operator()(int num);
+    int operator()() const;
     bool isReady() const;
 
   private:
-    int primaryMax_;
-    int secondaryMax_;
-    size_t processedCount_;
+    int max1_;
+    int max2_;
+    size_t cnt_;
   };
 }
 

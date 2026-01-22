@@ -5,18 +5,18 @@
 
 namespace vasilenko
 {
-  class AfterMaxCounter
+  class AftMax
   {
   public:
-    AfterMaxCounter();
+    AftMax();
 
-    void analyze(int number);
-    size_t getCountAfterMax() const;
+    void operator()(int num);
+    size_t operator()() const;
 
   private:
-    int currentMaximum_;
-    size_t elementsSinceMax_;
-    bool isFirstElement_;
+    int max_;
+    size_t count_;
+    bool isFirst_;
   };
 }
 

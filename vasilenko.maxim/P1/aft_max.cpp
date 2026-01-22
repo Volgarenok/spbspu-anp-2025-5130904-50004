@@ -2,34 +2,34 @@
 
 namespace vasilenko
 {
-  AfterMaxCounter::AfterMaxCounter():
-    currentMaximum_(0),
-    elementsSinceMax_(0),
-    isFirstElement_(true)
+  AftMax::AftMax():
+    max_(0),
+    count_(0),
+    isFirst_(true)
   {}
 
-  void AfterMaxCounter::analyze(int number)
+  void AftMax::operator()(int num)
   {
-    if (isFirstElement_)
+    if (isFirst_)
     {
-      currentMaximum_ = number;
-      isFirstElement_ = false;
+      max_ = num;
+      isFirst_ = false;
       return;
     }
 
-    if (number > currentMaximum_)
+    if (num > max_)
     {
-      currentMaximum_ = number;
-      elementsSinceMax_ = 0;
+      max_ = num;
+      count_ = 0;
     }
     else
     {
-      elementsSinceMax_++;
+      count_++;
     }
   }
 
-  size_t AfterMaxCounter::getCountAfterMax() const
+  size_t AftMax::operator()() const
   {
-    return elementsSinceMax_;
+    return count_;
   }
 }
