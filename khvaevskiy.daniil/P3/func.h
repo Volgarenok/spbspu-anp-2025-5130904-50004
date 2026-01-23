@@ -1,6 +1,8 @@
 #ifndef FUNC_H
 #define FUNC_H
 
+#include <fstream>
+
 namespace Khvaevskii
 {
   bool readMatrixFixed (std::ifstream& file, int* matrix, int rows, int cols);
@@ -12,4 +14,3 @@ namespace Khvaevskii
 }
 
 #endif
-

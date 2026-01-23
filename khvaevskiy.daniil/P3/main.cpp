@@ -11,7 +11,6 @@ int main (int argc, char* argv[])
     return 1;
   }
 
-
   if (argv[1][0] != '1' && argv[1][0] != '2')
   {
     std::cerr << "First parameter is out of range\n";
@@ -44,9 +43,11 @@ int main (int argc, char* argv[])
     return 2;
   }
 
+
   if (is_fixed)
   {
     int fixed_matrix[10000];
+
     if (!Khvaevskii::readMatrixFixed (infile, fixed_matrix, 100, 100))
     {
       infile.close ();
@@ -67,6 +68,7 @@ int main (int argc, char* argv[])
     }
     rows = static_cast<int> (temp_rows);
     cols = static_cast<int> (temp_cols);
+
     if (rows < 0 || cols < 0 || rows > 100 || cols > 100)
     {
       infile.close ();
@@ -117,7 +119,7 @@ int main (int argc, char* argv[])
     }
 
     int result = Khvaevskii::countSaddlePoints (matrix, rows, cols);
-    outfile << result << "\n";
+    outfile << result << "\n";\
 
     Khvaevskii::freeMatrix (matrix);
   }

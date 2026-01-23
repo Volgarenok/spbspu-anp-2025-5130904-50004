@@ -31,6 +31,11 @@ bool Khvaevskii::readMatrixFixed (std::ifstream& file, int* matrix, int rows, in
   int actual_rows = static_cast<int> (temp_rows);
   int actual_cols = static_cast<int> (temp_cols);
 
+  if (actual_rows > rows || actual_cols > cols)
+  {
+    return false;
+  }
+
   if (static_cast<long long> (actual_rows) * actual_cols > 10000)
   {
     return false;
@@ -203,4 +208,3 @@ int Khvaevskii::countSaddlePoints (int* matrix, int rows, int cols)
 
   return count;
 }
-
