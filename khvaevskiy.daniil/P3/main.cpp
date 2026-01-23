@@ -3,108 +3,127 @@
 #include <cstdlib>
 #include "func.h"
 
-int main(int argc, char* argv[])
+int main (int argc, char* argv[])
 {
-    if (argc != 4)
+  if (argc != 4)
+  {
+    std::cerr << "Usage: " << argv[0] << " num input output\n";
+    return 1;
+  }
+
+
+  if (argv[1][0] != '1' && argv[1][0] != '2')
+  {
+    std::cerr << "First parameter is out of range\n";
+    return 1;
+  }
+  if (argv[1][1] != '\0')
+  {
+    std::cerr << "First parameter is not a number\n";
+    return 1;
+  }
+
+  char* input_filename = argv[2];
+  char* output_filename = argv[3];
+
+  int rows, cols;
+  int* matrix = nullptr;
+  bool is_fixed = (argv[1][0] == '1');
+
+  std::ifstream infile (input_filename);
+  if (!infile.is_open ())
+  {
+    std::cerr << "Error reading matrix from file\n";
+    return 2;
+  }
+
+  std::ofstream outfile (output_filename);
+  if (!outfile.is_open ())
+  {
+    infile.close ();
+    return 2;
+  }
+
+  if (is_fixed)
+  {
+    int fixed_matrix[10000];
+    if (!Khvaevskii::readMatrixFixed (infile, fixed_matrix, 100, 100))
     {
-        std::cerr << "Usage: " << argv[0] << " num input output" << std::endl;
-        return 1;
+      infile.close ();
+      outfile.close ();
+      std::cerr << "Error reading matrix from file\n";
+      return 2;
     }
 
-    char* endptr;
-    long num = strtol(argv[1], &endptr, 10);
-
-    if (*endptr != '\0' || (num != 1 && num != 2))
+    infile.close ();
+    infile.open (input_filename);
+    long long temp_rows, temp_cols;
+    if (!(infile >> temp_rows >> temp_cols))
     {
-        std::cerr << "First parameter is out of range" << std::endl;
-        return 1;
+      infile.close ();
+      outfile.close ();
+      std::cerr << "Error reading matrix dimensions from file\n";
+      return 2;
+    }
+    rows = static_cast<int> (temp_rows);
+    cols = static_cast<int> (temp_cols);
+    if (rows < 0 || cols < 0 || rows > 100 || cols > 100)
+    {
+      infile.close ();
+      outfile.close ();
+      std::cerr << "Invalid matrix dimensions\n";
+      return 2;
     }
 
-    char* input_filename = argv[2];
-    char* output_filename = argv[3];
-
-    int rows, cols;
-
-    if (num == 1)
+    infile.close ();
+    infile.open (input_filename);
+    infile >> temp_rows >> temp_cols;
+    for (int i = 0; i < rows; i++)
     {
-        int matrix[100][100];
-
-        if (!Khvaevskii::readMatrixFixed(input_filename, matrix, rows, cols))
+      for (int j = 0; j < cols; j++)
+      {
+        long long temp_val;
+        if (!(infile >> temp_val))
         {
-            std::cerr << "Error reading matrix from file" << std::endl;
-            return 2;
+          infile.close ();
+          outfile.close ();
+          std::cerr << "Error reading matrix elements from file\n";
+          return 2;
         }
-
-        int** temp_matrix = static_cast<int**>(malloc(rows * sizeof(int*)));
-        if (!temp_matrix)
+        if (!Khvaevskii::isValidNumber (temp_val))
         {
-            std::cerr << "Memory allocation failed" << std::endl;
-            return 2;
+          infile.close ();
+          outfile.close ();
+          std::cerr << "Invalid matrix element\n";
+          return 2;
         }
-
-        for (int i = 0; i < rows; i++)
-        {
-            temp_matrix[i] = static_cast<int*>(malloc(cols * sizeof(int)));
-            if (!temp_matrix[i])
-            {
-                for (int k = 0; k < i; k++)
-                {
-                    free(temp_matrix[k]);
-                }
-                free(temp_matrix);
-                std::cerr << "Memory allocation failed" << std::endl;
-                return 2;
-            }
-            for (int j = 0; j < cols; j++)
-            {
-                temp_matrix[i][j] = matrix[i][j];
-            }
-        }
-
-        long long result = Khvaevskii::maxSumDiagonal(temp_matrix, rows, cols);
-
-        std::ofstream outfile(output_filename);
-        if (!outfile.is_open())
-        {
-            for (int i = 0; i < rows; i++)
-            {
-                free(temp_matrix[i]);
-            }
-            free(temp_matrix);
-            return 2;
-        }
-        outfile << result << std::endl;
-        outfile.close();
-
-        for (int i = 0; i < rows; i++)
-        {
-            free(temp_matrix[i]);
-        }
-        free(temp_matrix);
+        fixed_matrix[i * cols + j] = static_cast<int> (temp_val);
+      }
     }
-    else
+    matrix = fixed_matrix;
+
+    long long result = Khvaevskii::maxSumDiagonal (matrix, rows, cols);
+    outfile << result << "\n";
+  }
+  else
+  {
+    matrix = Khvaevskii::readMatrixDynamic (infile, rows, cols);
+    if (!matrix)
     {
-        int** matrix = Khvaevskii::readMatrixDynamic(input_filename, rows, cols);
-
-        if (!matrix)
-        {
-            std::cerr << "Error reading matrix from file" << std::endl;
-            return 2;
-        }
-
-        int result = Khvaevskii::countSaddlePoints(matrix, rows, cols);
-
-        std::ofstream outfile(output_filename);
-        if (!outfile.is_open())
-        {
-            Khvaevskii::freeMatrix(matrix, rows);
-            return 2;
-        }
-        outfile << result << std::endl;
-        outfile.close();
-
-        Khvaevskii::freeMatrix(matrix, rows);
+      infile.close ();
+      outfile.close ();
+      std::cerr << "Error reading matrix from file\n";
+      return 2;
     }
 
-    return 0;
+    int result = Khvaevskii::countSaddlePoints (matrix, rows, cols);
+    outfile << result << "\n";
+
+    Khvaevskii::freeMatrix (matrix);
+  }
+
+  infile.close ();
+  outfile.close ();
+
+  return 0;
 }
