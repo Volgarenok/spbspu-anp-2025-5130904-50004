@@ -98,10 +98,16 @@ int main(int argc, char* argv[])
 
   for (size_t i = 0; i < rows; ++i)
   {
-    for (size_t j = 0; j < cols; ++j)
+    if (cols > 0)
     {
-      output << dst[i * cols + j] << " ";
+      output << dst[i * cols];
     }
+
+    for (size_t j = 1; j < cols; ++j)
+    {
+      output << " " << dst[i * cols + j];
+    }
+
     output << "\n";
   }
 
