@@ -2,7 +2,8 @@
 #include <stdexcept>
 #include "io.h"
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
   size_t n = 0, m = 0, allocatedRows = 0;
 
   int **arr = nullptr;
@@ -51,7 +52,6 @@ int main(int argc, char **argv) {
 
     std::ofstream out(argv[3]);
     nepochatova::writeMatrix(out, arr, n, m);
-
   } catch (...) {
     if (dynamic && arr) {
       for (size_t i = 0; i < allocatedRows; ++i)

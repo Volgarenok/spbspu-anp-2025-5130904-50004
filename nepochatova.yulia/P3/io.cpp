@@ -2,8 +2,7 @@
 #include <stdexcept>
 #include "io.h"
 
-int nepochatova::checkArgs(int argc, char **argv)
-{
+int nepochatova::checkArgs(int argc, char **argv) {
   if (argc < 4) {
     throw std::invalid_argument("Not enough arguments");
   }
@@ -28,8 +27,7 @@ int nepochatova::checkArgs(int argc, char **argv)
   return 0;
 }
 
-void nepochatova::readMatrix(const std::string& filename, int** arr, size_t& n, size_t& m)
-{
+void nepochatova::readMatrix(const std::string &filename, int **arr, size_t &n, size_t &m) {
   std::ifstream in(filename);
   if (!in)
     throw std::runtime_error("Input file can't be opened");
@@ -48,7 +46,7 @@ void nepochatova::readMatrix(const std::string& filename, int** arr, size_t& n, 
   }
 }
 
-void nepochatova::writeMatrix(std::ofstream& out, const int* const* arr, size_t n, size_t m) {
+void nepochatova::writeMatrix(std::ofstream &out, const int *const*arr, size_t n, size_t m) {
   if (arr == nullptr || n == 0 || m == 0) {
     out << "0 0\n";
     return;
