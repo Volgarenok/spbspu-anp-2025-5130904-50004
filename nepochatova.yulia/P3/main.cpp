@@ -15,6 +15,8 @@ int main(int argc, char** argv)
   int staticMatrix[MAX_N][MAX_M];
   int* staticRows[MAX_N];
 
+  size_t allocatedRows = 0;
+
   try {
     nepochatova::checkArgs(argc, argv);
 
@@ -44,8 +46,10 @@ int main(int argc, char** argv)
     }
     else {
       arr = new int*[n];
-      for (size_t i = 0; i < n; ++i)
+      for (size_t i = 0; i < n; ++i) {
         arr[i] = new int[m];
+        ++allocatedRows;
+      }
     }
 
     nepochatova::readMatrix(argv[2], arr, n, m);
@@ -53,10 +57,10 @@ int main(int argc, char** argv)
 
     std::ofstream out(argv[3]);
     nepochatova::writeMatrix(out, arr, n, m);
-  }
-  catch (...) {
+
+  }catch (...) {
     if (dynamic && arr) {
-      for (size_t i = 0; i < n; ++i)
+      for (size_t i = 0; i < allocatedRows; ++i)
         delete[] arr[i];
       delete[] arr;
     }
@@ -64,7 +68,7 @@ int main(int argc, char** argv)
   }
 
   if (dynamic) {
-    for (size_t i = 0; i < n; ++i)
+    for (size_t i = 0; i < allocatedRows; ++i)
       delete[] arr[i];
     delete[] arr;
   }

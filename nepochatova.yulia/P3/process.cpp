@@ -14,7 +14,9 @@ void nepochatova::transformMatrixSpiral(int** arr, size_t n, size_t m)
       arr[bottom][j] += increment;
       increment++;
     }
-    if (bottom == 0) break;
+    if (bottom == 0) {
+      break;
+    }
     bottom--;
 
     for (size_t i = bottom; i >= top; i--) {
@@ -24,7 +26,9 @@ void nepochatova::transformMatrixSpiral(int** arr, size_t n, size_t m)
         break;
       }
     }
-    if (right == 0) break;
+    if (right == 0) {
+      break;
+    }
     right--;
 
     if (top <= bottom) {
