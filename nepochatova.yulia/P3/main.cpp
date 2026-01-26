@@ -1,28 +1,26 @@
-#include <iostream>
 #include <fstream>
 #include <stdexcept>
 #include "io.h"
 
-int main(int argc, char** argv)
-{
+int main(int argc, char **argv) {
   size_t n = 0, m = 0, allocatedRows = 0;
 
-  int** arr = nullptr;
+  int **arr = nullptr;
   bool dynamic = false;
 
   const size_t MAX_N = 100;
   const size_t MAX_M = 100;
 
   int staticMatrix[MAX_N][MAX_M];
-  int* staticRows[MAX_N];
+  int *staticRows[MAX_N];
 
   try {
     nepochatova::checkArgs(argc, argv);
 
-    dynamic = (argv[1][0] == '2');
+    dynamic = argv[1][0] == '2';
 
     std::ifstream in(argv[2]);
-    if (!in)
+    if (!in.is_open())
       throw std::runtime_error("Input file can't be opened");
 
     if (!(in >> n >> m))
@@ -35,29 +33,27 @@ int main(int argc, char** argv)
     }
 
     if (!dynamic) {
-      if (n > MAX_N || m > MAX_M)
+      if (n > MAX_N || m > MAX_M) {
         throw std::runtime_error("Array too large");
-
-      for (size_t i = 0; i < n; ++i)
+      }
+      for (size_t i = 0; i < n; ++i) {
         staticRows[i] = staticMatrix[i];
-
+      }
       arr = staticRows;
-    }
-    else {
-      arr = new int*[n];
+    } else {
+      arr = new int *[n];
       for (size_t i = 0; i < n; ++i) {
         arr[i] = new int[m];
         ++allocatedRows;
       }
     }
-
     nepochatova::readMatrix(argv[2], arr, n, m);
     nepochatova::transformMatrixSpiral(arr, n, m);
 
     std::ofstream out(argv[3]);
     nepochatova::writeMatrix(out, arr, n, m);
 
-  }catch (...) {
+  } catch (...) {
     if (dynamic && arr) {
       for (size_t i = 0; i < allocatedRows; ++i)
         delete[] arr[i];
@@ -70,6 +66,5 @@ int main(int argc, char** argv)
       delete[] arr[i];
     delete[] arr;
   }
-
   return 0;
 }

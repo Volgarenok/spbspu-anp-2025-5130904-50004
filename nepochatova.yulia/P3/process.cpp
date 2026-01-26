@@ -84,5 +84,4 @@ void nepochatova::transformMatrixCircular(int** arr, size_t n, size_t m) {
     right--;
     layer++;
   }
-
 }
