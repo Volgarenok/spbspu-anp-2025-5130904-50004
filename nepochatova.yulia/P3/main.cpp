@@ -31,7 +31,6 @@ int main(int argc, char **argv) {
       out << "0 0\n";
       return 0;
     }
-
     if (!dynamic) {
       if (n > MAX_N || m > MAX_M) {
         throw std::runtime_error("Array too large");
